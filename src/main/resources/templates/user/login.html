@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+<meta charset="UTF-8">
+<title>toy</title>
+
+<!-- CSS -->
+<th:block th:replace="style :: style" />
+
+</head>
+
+<body>
+
+	<div class="form-join">
+		<div class="form-join-left">
+			<img src="">
+		</div>
+		<div class="form-join-right">
+			<form th:action="@{/login}" method="post">
+				<div class="mb-3">
+					<div class="form-group">
+						<label class="form-label">아이디</label>
+						<input type="text" id="userId" name="userId" class="form-control required">
+					</div>
+				</div>
+				<div class="mb-3">
+					<div class="form-group">
+						<label class="form-label">비밀번호</label>
+						<input type="text" id="userPwd" name="userPwd" class="form-control required">
+					</div>
+				</div>
+				
+				<button type="submit" class="btn btn-secondary active">로그인</button>
+			</form>
+		</div>
+	</div>
+	
+</body>
+
+</html>

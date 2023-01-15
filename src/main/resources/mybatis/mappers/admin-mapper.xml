@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.toy.admin.mapper.AdminMapper">
+
+	<select id="selectAuthModel" resultType="AdminDTO">
+		SELECT MODEL_NAME FROM TOY_AUTH_MODEL WHERE USE_YN = 'Y'
+	</select>
+	
+	<select id="selectListUser" resultType="UserDTO">
+		SELECT USER_NO 			AS userNo
+		     , USER_ID 			AS userId
+		     , USER_EMAIL 		AS userEmail
+		     , USER_NICKNAME 	AS userNickname
+		     , PROVIDER			AS provider
+		     , ROLE				AS role
+		     , I_DATE			AS IDate
+		FROM   toy.T_PERSON
+		WHERE  1=1
+		AND    USE_YN = 'Y'
+	</select>
+	
+</mapper>

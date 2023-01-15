@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.toy.security.mapper.SecurityMapper">
+	
+	<insert id="saveUser" parameterType="UserDTO">
+		INSERT INTO toy.T_PERSON
+			(USER_NO, USER_ID, USER_PWD, USER_EMAIL, USER_NICKNAME, PROVIDER, ROLE)
+		VALUES
+			(nextval(toy.T_PERSON_SEQ), LOWER(#{ userId }), #{ userPwd }, LOWER(#{ userEmail }), #{ userNickname }, #{ provider }, #{ role })
+	</insert>
+	
+	<select id="findByUserId" resultType="UserDTO">
+		SELECT * FROM toy.T_PERSON WHERE USE_YN = 'Y' AND USER_ID = #{ userId }
+	</select>
+	
+	<select id="findByUserEmail" resultType="UserDTO">
+		SELECT * FROM toy.T_PERSON WHERE USE_YN = 'Y' AND USER_EMAIL = #{ userEmail }
+	</select>
+	
+	<select id="findByUserNickname" resultType="UserDTO">
+		SELECT * FROM toy.T_PERSON WHERE USE_YN = 'Y' AND USER_NICKNAME = #{ userNickname }
+	</select>
+	
+</mapper>

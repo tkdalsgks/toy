@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>toy, 관리자</title>
+
+<th:block th:replace="style :: javascript" />
+<th:block th:replace="style :: style" />
+<th:block th:replace="style :: admin" />
+
+
+</head>
+<body>
+
+	<div class="form-join">
+		<div class="form-join-left">
+			<table id="selectListUser" style="width: 900px;">
+			<thead>
+				<tr>
+					<td style="width: 50px;">번호</td>
+					<td style="width: 100px;">아이디</td>
+					<td style="width: 200px;">이메일</td>
+					<td style="width: 150px;">닉네임</td>
+					<td style="width: 100px;">가입경로</td>
+					<td style="width: 100px;">권한</td>
+					<td style="width: 200px;">가입일</td>
+			</thead>
+			<tbody>
+				<tr th:each="list : ${selectListUser}" style="border-bottom: 1px solid black; height: 30px;">
+					<td th:text="${list.userNo}"></td>
+					<td th:text="${list.userId}"></td>
+					<td th:text="${list.userEmail}"></td>
+					<td th:text="${list.userNickname}"></td>
+					<td th:text="${list.provider}"></td>
+					<td th:text="${list.role}"></td>
+					<td th:text="${#temporals.format(list.IDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+			</tbody>
+		</table>
+		</div>
+		<div class="form-join-right">
+		</div>
+	</div>
+	
+	
+
+</body>
+</html>
