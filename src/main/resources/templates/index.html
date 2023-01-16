@@ -5,7 +5,6 @@
 <meta charset="UTF-8">
 <title>toy</title>
 
-<!-- CSS -->
 <th:block th:replace="style :: style" />
 
 </head>
@@ -30,8 +29,8 @@
 					</div>
 				</form>
 				<div class="form-login-sns">
-					<a href="/oauth2/authorization/kakao" style="text-align: center;"><img src="/img/login/kakao_login_medium_narrow.png" class="login-kakao"></a>
-					<a href="/oauth2/authorization/google"><img src="/img/login/btn_google_signin_light_normal_web.png" class="login-google"></a>
+					<a href="/oauth2/authorization/kakao" style="text-align: center;"><img src="/img/app/login/kakao_login_medium_narrow.png" class="login-kakao"></a>
+					<a href="/oauth2/authorization/google"><img src="/img/app/login/btn_google_signin_light_normal_web.png" class="login-google"></a>
 					<a href="/join"><button type="submit" class="btn btn-secondary login-join">회원가입</button></a>
 				</div>
 			</div>
@@ -41,12 +40,17 @@
 					Logged in as: <span id="user" th:text="${user}"></span><br>
 					<a href="/logout" class="btn btn-secondary active">로그아웃</a>
 				</div>
+				<div sec:authorize="hasRole('ROLE_USER')">
+					<a href="/chat" class="btn btn-secondary active">채팅</a>
+				</div>
 				<div sec:authorize="hasRole('ROLE_ADMIN')">
 					<a href="/admin" class="btn btn-secondary active">관리자</a>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<th:block th:replace="style :: javascript" />
 	
 </body>
 

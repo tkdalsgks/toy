@@ -4,9 +4,8 @@
 <meta charset="UTF-8">
 <title>toy, 관리자</title>
 
-<th:block th:replace="style :: javascript" />
 <th:block th:replace="style :: style" />
-<th:block th:replace="style :: admin" />
+<th:block th:replace="style :: css-admin" />
 
 
 </head>
@@ -41,7 +40,8 @@
 		</div>
 	</div>
 	
-	
+	<th:block th:replace="style :: javascript" />
+	<th:block th:replace="style :: js-admin" />
 
 </body>
 </html>
