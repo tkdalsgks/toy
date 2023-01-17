@@ -9,6 +9,12 @@
 	<link rel="stylesheet" href="/css/app/basic.css" />
 </th:block>
 
+<th:block th:fragment="javascript">
+	<!-- Jquery, Bootstrap -->
+	<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+</th:block>
+
 <!-- Admin -->
 <th:block th:fragment="css-admin">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
@@ -32,13 +38,8 @@
 	<link rel="stylesheet" type="text/css" href="/css/app/chat.css" />
 </th:block>
 
-
-
-<th:block th:fragment="javascript">
-	<!-- Jquery, Bootstrap -->
-	<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
-	<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+<th:block th:fragment="js-chat">
+	<script type="text/javascript" src="/js/app/chat.js"></script>
 </th:block>
-
 
 </html>

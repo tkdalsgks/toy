@@ -1,7 +1,10 @@
 package com.project.toy.websocket.handler;
 
+import java.text.ParseException;
 import java.util.HashMap;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -27,11 +30,16 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		// 소켓 연결
 		super.afterConnectionEstablished(session);
 		map.put(session.getId(), session);
+		JSONObject obj = new JSONObject();
+		obj.put("type", "getId");
+		obj.put("sessionId", session.getId());
+		session.sendMessage(new TextMessage(obj.toJSONString()));
 	}
 	
 	@Override
@@ -39,5 +47,14 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		// 소켓 종료
 		map.remove(session.getId());
 		super.afterConnectionClosed(session, status);
+	}
+	
+	@SuppressWarnings("unused")
+	private static JSONObject JsonToObjectParser(String jsonStr) throws Exception {
+		JSONParser parser = new JSONParser();
+		JSONObject obj = null;
+		obj = (JSONObject) parser.parse(jsonStr);
+		
+		return obj;
 	}
 }

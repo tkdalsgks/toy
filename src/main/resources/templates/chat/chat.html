@@ -11,57 +11,13 @@
 </head>
 
 <body>
-	
-	<script type="text/javascript">
-		var ws;
-		
-		function wsOpen() {
-			ws = new WebSocket("ws://" + location.host + "/chatting");
-			wsEvt();
-		}
-		
-		function wsEvt() {
-			ws.onopen = function(data) {
-				// 소켓이 열리면 초기화 세팅
-			}
-			
-			ws.onmessage = function(data) {
-				var msg = data.data;
-				if(msg != null && msg.trim() != "") {
-					$("#chat").append("<p>" + msg + "</p>");
-				}
-			}
-			
-			document.addEventListener("keypress", function(e) {
-				if(e.keyCode == 13) {
-					send();
-				}
-			});
-		}
-		
-		function chatName() {
-			var userName = $("#userName").val();
-			if(userName == null || userName.trim() == "") {
-				alert("사용자 이름을 입력해주세요.");
-				$("#userName").focus();
-			} else {
-				wsOpen();
-				$("#yourName").hide();
-				$("#yourMsg").show();
-			}
-		}
-		
-		function send() {
-			var uN = $("#userName").val();
-			var msg = $("#chatting").val();
-			ws.send(uN + " : " + msg);
-			$("#chatting").val("");
-		}
-	</script>
+
 	<div class="form-join">
 		<div class="form-join-left">
 			<div id="container" class="container">
-				<h3>채팅</h3>
+				<h1>채팅</h1>
+				<input type="hidden" id="sessionId" value="">
+				
 				<div id="chat" class="chat">
 				</div>
 				
@@ -91,6 +47,7 @@
 	</div>
 	
 	<th:block th:replace="style :: javascript" />
+	<th:block th:replace="style :: js-chat" />
 	
 </body>
 
