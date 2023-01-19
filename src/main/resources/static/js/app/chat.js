@@ -1,63 +1,79 @@
-var ws;
-		
-function wsOpen() {
-	ws = new WebSocket("ws://" + location.host + "/chatting");
-	wsEvt();
-}
-
-function wsEvt() {
-	ws.onopen = function(data) {
-		// 소켓이 열리면 초기화 세팅
-	}
-	
-	ws.onmessage = function(data) {
-		// 메세지를 받으면 동작
-		var msg = data.data;
-		if(msg != null && msg.trim() != "") {
-			var d = JSON.parse(msg);
-			if(d.type == "getId") {
-				var si = d.sessionId != null ? d.sessionId : "";
-				if(si != "") {
-					$("#sessionId").val(si);
-				}
-			} else if(d.type == "message") {
-				if(d.sessionId == $("#sessionId").val()) {
-					$("#chat").append("<p class='me'>나 : " + d.msg + "</p>");
-				} else {
-					$("#chat").append("<p class='others'>" + d.userName + " : " + d.msg + "</p>");
-				}
-			} else {
-				console.warn("unknown type!");
-			}
-		}
-	}
-	
-	document.addEventListener("keypress", function(e) {
-		if(e.keyCode == 13) {
+$(document).ready(function() {
+	document.addEventListener("keypress", function(e){
+		if(e.keyCode == 13){ //enter press
 			send();
 		}
 	});
-}
-
-function chatName() {
-	var userName = $("#userName").val();
-	if(userName == null || userName.trim() == "") {
-		alert("사용자 이름을 입력해주세요.");
-		$("#userName").focus();
-	} else {
-		wsOpen();
-		$("#yourName").hide();
-		$("#yourMsg").show();
+		
+	$("#disconn").on("click", (e) => {
+	    disconnect();
+	});
+	
+	$("#button-send").on("click", (e) => {
+	    send();
+	});
+	
+	const websocket = new WebSocket("ws://localhost:8081/ws/chat");
+	
+	websocket.onmessage = onMessage;
+	websocket.onopen = onOpen;
+	websocket.onclose = onClose;
+	
+	function send(){
+	
+	    let msg = document.getElementById("msg");
+	
+	    console.log(username + ":" + msg.value);
+	    websocket.send(username + ":" + msg.value);
+	    msg.value = '';
 	}
-}
-
-function send() {
-	var option = {
-			type: "message",
-			sessionId: $("#sessionId").val(),
-			userName: $("#userName").val(),
-			msg: $("#chatting").val()
+	
+	// 채팅창에서 나갔을 때
+	function onClose(evt) {
+	    var str = username + ": 님이 방을 나가셨습니다.";
+	    websocket.send(str);
 	}
-	ws.send(JSON.stringify(option))
-	$("#chatting").val("");
-}
+	
+	// 채팅창에 들어왔을 때
+	function onOpen(evt) {
+	    var str = username + ": 님이 입장하셨습니다.";
+	    websocket.send(str);
+	}
+	
+	function onMessage(msg) {
+	    var data = msg.data;
+	    var sessionId = null;
+	    // 데이터를 보낸 사람
+	    var message = null;
+	    var arr = data.split(":");
+	
+	    for(var i=0; i<arr.length; i++) {
+	        console.log('arr[' + i + ']: ' + arr[i]);
+	    }
+	
+	    var cur_session = username;
+	
+	    // 현재 세션에 로그인 한 사람
+	    console.log("cur_session : " + cur_session);
+	    sessionId = arr[0];
+	    message = arr[1];
+	
+	    console.log("sessionID : " + sessionId);
+	    console.log("cur_session : " + cur_session);
+	
+	    // 로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
+	    if(sessionId == cur_session) {
+	        var str = "<div class='col-6'>";
+	        str += "<div class='alert alert-secondary'>";
+	        str += "<b>" + sessionId + " : " + message + "</b>";
+	        str += "</div></div>";
+	        $("#msgArea").append(str);
+	    } else {
+	    	var str = "<div class='col-6'>";
+	        str += "<div class='alert alert-warning'>";
+	        str += "<b>" + sessionId + " : " + message + "</b>";
+	        str += "</div></div>";
+	        $("#msgArea").append(str);
+	    }
+	}
+});

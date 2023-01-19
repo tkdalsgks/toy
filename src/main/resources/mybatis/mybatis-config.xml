@@ -9,6 +9,8 @@
 	<typeAliases>
 		<typeAlias type="com.project.toy.user.dto.UserDTO" alias="UserDTO" />
 		<typeAlias type="com.project.toy.admin.dto.AdminDTO" alias="AdminDTO" />
+		<typeAlias type="com.project.toy.chat.dto.ChatMessageDTO" alias="ChatMessageDTO" />
+		<typeAlias type="com.project.toy.chat.dto.ChatRoomDTO" alias="ChatRoomDTO" />
 
 	</typeAliases>
 	

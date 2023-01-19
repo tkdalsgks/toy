@@ -21,10 +21,13 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
+				.headers().frameOptions().sameOrigin()
+			.and()
 				.csrf().disable()					
 				.httpBasic().disable()
 				.authorizeRequests()
 					.antMatchers("/", "/login", "/join").permitAll()
+					.antMatchers("/chat/**").hasAuthority("ROLE_USER")
 					.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 			.and()
 				.logout()

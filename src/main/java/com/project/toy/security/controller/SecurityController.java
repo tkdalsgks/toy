@@ -13,8 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.project.toy.chat.service.ChatRoomService;
 import com.project.toy.security.mapper.SecurityMapper;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UserDTO;
@@ -26,7 +29,11 @@ public class SecurityController {
 	@Autowired
 	private SecurityMapper securityMapper;
 	
-	@Autowired UserService userService;
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private ChatRoomService chatRoomService;
 	
 	@Autowired
 	private HttpSession session;
@@ -46,9 +53,23 @@ public class SecurityController {
 		SessionUser user = (SessionUser) session.getAttribute("user");
 		if(user != null) {
 			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
 		
 		return "index";		
+	}
+	
+	@GetMapping("/popup")
+	public String popup(String roomId, String name, Authentication auth, Model model) {
+		log.info("***** Main Page Call *****");
+		
+		SessionUser user = (SessionUser) session.getAttribute("user");
+		if(user != null) {
+			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("list", chatRoomService.findAllRooms());
+		}
+		
+		return "popup";
 	}
 	
 	/**
