@@ -8,58 +8,59 @@
 
 </head>
 <body>
+
+	<header th:replace="flags :: header"></header>
 	
 	<div class="form-join">
-		<div class="form-join-left">
-			<img src="">
-		</div>
-	
-		<div class="form-join-right">
-			<form th:action="@{/join}" method="post">
-				<div class="mb-3">
-					<div class="form-group">
-						<label class="form-label"><span class="text-danger">* </span>아이디</label>
-						<input type="text" id="userId" name="userId" class="form-control required">
-						<span id="checkUserId"></span>
-					</div>
+		<form th:action="@{/join}" method="post">
+			<div class="mb-3">
+				<div class="form-group">
+					<label class="form-label"><span class="text-danger">* </span>아이디</label>
+					<input type="text" id="userId" name="userId" class="form-control required">
+					<span id="checkUserId"></span>
 				</div>
-				<div class="mb-3">
-					<div class="form-group">
-						<label class="form-label"><span class="text-danger">* </span>비밀번호</label>
-						<input type="text" id="userPwd" name="userPwd" class="form-control required">
-						<span id="checkUserPwd"></span>
-					</div>
+			</div>
+			<div class="mb-3">
+				<div class="form-group">
+					<label class="form-label"><span class="text-danger">* </span>비밀번호</label>
+					<input type="text" id="userPwd" name="userPwd" class="form-control required">
+					<span id="checkUserPwd"></span>
 				</div>
-				<div class="mb-3">
-					<div class="form-group">
-						<label class="form-label"><span class="text-danger">* </span>비밀번호 확인</label>
-						<input type="text" id="userPwdConfirm" name="userPwdConfirm" class="form-control required">
-						<span id="checkUserPwdConfirm"></span>
-					</div>
+			</div>
+			<div class="mb-3">
+				<div class="form-group">
+					<label class="form-label"><span class="text-danger">* </span>비밀번호 확인</label>
+					<input type="text" id="userPwdConfirm" name="userPwdConfirm" class="form-control required">
+					<span id="checkUserPwdConfirm"></span>
 				</div>
-				<div class="mb-3">
-					<div class="form-group">
-						<label class="form-label"><span class="text-danger">* </span>닉네임</label>
-						<input type="text" id="userNickname" name="userNickname" class="form-control required">
-						<span id="checkUserNickname"></span>
-					</div>
+			</div>
+			<div class="mb-3">
+				<div class="form-group">
+					<label class="form-label"><span class="text-danger">* </span>닉네임</label>
+					<input type="text" id="userNickname" name="userNickname" class="form-control required">
+					<span id="checkUserNickname"></span>
 				</div>
-				<div class="mb-3">
-					<div class="form-group">
-						<label class="form-label"><span class="text-danger">* </span>이메일</label>
-						<input type="text" id="userEmail" name="userEmail" class="form-control required">
-						<span id="checkUserEmail"></span>
-					</div>
+			</div>
+			<div class="mb-3">
+				<div class="form-group">
+					<label class="form-label"><span class="text-danger">* </span>이메일</label>
+					<input type="text" id="userEmail" name="userEmail" class="form-control required">
+					<span id="checkUserEmail"></span>
 				</div>
-				
-				<button id="joinSubmit" type="submit" class="btn btn-secondary active" disabled="disabled">회원가입</button>
-			</form>
-		</div>
-	
+			</div>
+			
+			<button class="btn btn-secondary active" onclick="goHome();">이전</button>
+			<button id="joinSubmit" type="submit" class="btn btn-secondary active" disabled="disabled">회원가입</button>
+		</form>
 	</div>
 	
 	<th:block th:replace="style :: javascript" />
 	<th:block th:replace="style :: js-join" />
+	<script type="text/javascript">
+		function goHome() {
+			window.location.href="/";
+		}
+	</script>
 	
 </body>
 </html>

@@ -74,7 +74,7 @@ public class RoomController {
 		
 		rttr.addFlashAttribute("roomName", chatRoomService.createChatRoomDTO(name));
 		
-		return "redirect:/";
+		return "redirect:/toy";
 	}
 	
 }

@@ -86,7 +86,7 @@
 	        			msg.focus();
 	        		} else {
 	        			console.log(username + ":" + msg.value);
-	    	            stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
+	        			stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
 	        		}
 	        		msg.value = '';
 	        	}
@@ -100,7 +100,7 @@
         			msg.focus();
 	        	} else {
 	        		console.log(username + ":" + msg.value);
-		            stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
+	        		stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
 	        	}
 	        	msg.value = '';
 	        });

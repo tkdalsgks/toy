@@ -11,51 +11,33 @@
 
 <body>
 	
-	<div class="form-join">
-		<div class="form-join-left">
-		
+	<!-- contents -->
+	<div class="form-index">
+		<div sec:authorize="isAnonymous()">
+			<form th:action="@{/login}" method="post">
+				<div class="mb-3 form-group">
+					<input type="text" id="userId" name="userId" class="form-control required" placeholder="아이디">
+				</div>
+				<div class="form-group">
+					<input type="text" id="userPwd" name="userPwd" class="form-control required" placeholder="비밀번호">
+				</div>
+				<div class="form-login-general">
+					<button type="submit" class="btn btn-primary active login-general">로그인</button>
+				</div>
+			</form>
+			<div class="form-login-sns">
+				<a href="/oauth2/authorization/kakao" style="text-align: center;"><img src="/img/app/login/kakao_login_medium_narrow.png" class="login-kakao"></a><br>
+				<a href="/oauth2/authorization/google"><img src="/img/app/login/btn_google_signin_light_normal_web.png" class="login-google"></a><br>
+				<a href="/join"><button type="submit" class="btn btn-secondary login-join">회원가입</button></a>
+			</div>
 		</div>
-		<div class="form-join-right">
-			<div sec:authorize="isAnonymous()">
-				<form th:action="@{/login}" method="post">
-					<div class="mb-3 form-group">
-						<input type="text" id="userId" name="userId" class="form-control required" placeholder="아이디">
-					</div>
-					<div class="form-group">
-						<input type="text" id="userPwd" name="userPwd" class="form-control required" placeholder="비밀번호">
-					</div>
-					<div class="form-login-general">
-						<button type="submit" class="btn btn-primary active login-general">로그인</button>
-					</div>
-				</form>
-				<div class="form-login-sns">
-					<a href="/oauth2/authorization/kakao" style="text-align: center;"><img src="/img/app/login/kakao_login_medium_narrow.png" class="login-kakao"></a>
-					<a href="/oauth2/authorization/google"><img src="/img/app/login/btn_google_signin_light_normal_web.png" class="login-google"></a>
-					<a href="/join"><button type="submit" class="btn btn-secondary login-join">회원가입</button></a>
-				</div>
-			</div>
-			
-			<div sec:authorize="isAuthenticated()">
-				<div>
-					Logged in as: <span id="user" th:text="${user}"></span><br>
-					<a href="/logout" class="btn btn-secondary active">로그아웃</a>
-				</div>
-				<div sec:authorize="hasRole('ROLE_USER')">
-					<!-- popup -->
-					<button id="show">팝업열기</button>
-				</div>
-				<div sec:authorize="hasRole('ROLE_ADMIN')">
-					<a href="/admin" class="btn btn-secondary active">관리자</a>
-				</div>
-			</div>
-			
-			
-		   	
+		
+		<div sec:authorize="isAuthenticated()">
+			<a href="/logout" class="btn btn-secondary active">로그아웃</a>
 		</div>
 	</div>
 	
 	<th:block th:replace="style :: javascript" />
-	<th:block th:replace="flags/popup :: popup" />
 	
 </body>
 

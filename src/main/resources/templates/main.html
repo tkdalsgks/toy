@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+<meta charset="UTF-8">
+<title>toy</title>
+
+<th:block th:replace="style :: style" />
+
+</head>
+
+<body>
+
+	<header th:replace="flags :: header"></header>
+	
+	<!-- contents -->
+	<div class="form-join">
+		<span>[ 메인 ]</span>
+	</div>
+	
+	<!-- popup -->
+	<div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" class="openPopup">
+		<button id="show" class="btn btn-secondary active" onclick="openPopup();">O</button>
+	</div>
+	
+	<th:block th:replace="style :: javascript" />
+	<th:block th:replace="popup :: popup" />
+	
+</body>
+
+</html>

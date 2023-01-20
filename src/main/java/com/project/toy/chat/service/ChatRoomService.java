@@ -56,6 +56,7 @@ public class ChatRoomService {
 		return room;
 	}
 	
+	/*
 	public void plusUserCnt(String roomId) {
 		ChatRoomDTO room = chatRoomDTO.get(roomId);
 		room.setUserCount(room.getUserCount() + 1);
@@ -110,4 +111,5 @@ public class ChatRoomService {
 		
 		return list;
 	}
+	*/
 }

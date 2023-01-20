@@ -8,14 +8,11 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.toy.chat.service.ChatRoomService;
 import com.project.toy.security.mapper.SecurityMapper;
@@ -46,8 +43,8 @@ public class SecurityController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/")
-	public String login(Authentication auth, Model model) {
+	@GetMapping("/toy")
+	public String login(Model model) {
 		log.info("***** Main Page Call *****");
 		
 		SessionUser user = (SessionUser) session.getAttribute("user");
@@ -56,11 +53,11 @@ public class SecurityController {
 			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
 		
-		return "index";		
+		return "main";		
 	}
 	
 	@GetMapping("/popup")
-	public String popup(String roomId, String name, Authentication auth, Model model) {
+	public String popup(String roomId, String name, Model model) {
 		log.info("***** Main Page Call *****");
 		
 		SessionUser user = (SessionUser) session.getAttribute("user");

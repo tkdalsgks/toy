@@ -4,15 +4,26 @@
 <!-- Basic -->
 <th:block th:fragment="style">
 	<!-- Reset, Basic -->
-	<link rel="stylesheet" href="/css/app/reset.css" />
-	<link rel="stylesheet" href="/css/lib/bootstrap.min.css" />
-	<link rel="stylesheet" href="/css/app/basic.css" />
+	<link rel="stylesheet" th:href="@{/css/app/reset.css}" />
+	<link rel="stylesheet" th:href="@{/css/lib/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/basic.css}" />
 </th:block>
 
 <th:block th:fragment="javascript">
 	<!-- Jquery, Bootstrap -->
 	<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
 	<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+</th:block>
+
+<!-- Popup -->
+<th:block th:fragment="css-popup">
+	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
+</th:block>
+
+<th:block th:fragment="js-popup">
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+	<script type="text/javascript" src="/js/app/popup.js"></script>
 </th:block>
 
 <!-- Admin -->
@@ -33,18 +44,9 @@
 	<script type="text/javascript" src="/js/app/join.js"></script>
 </th:block>
 
-<!-- Chat -->
-<th:block th:fragment="css-rooms">
-	<link rel="stylesheet" type="text/css" href="/css/app/rooms.css" />
-</th:block>
-
-<th:block th:fragment="js-rooms">
-	<script type="text/javascript" src="/js/app/rooms.js"></script>
-</th:block>
-
 <!-- Room -->
 <th:block th:fragment="css-room">
-	<link rel="stylesheet" type="text/css" href="/css/app/room.css" />
+	<link rel="stylesheet" th:href="@{/css/app/room.css}" />
 </th:block>
 
 <th:block th:fragment="js-room">

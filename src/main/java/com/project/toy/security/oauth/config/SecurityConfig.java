@@ -26,7 +26,7 @@ public class SecurityConfig {
 				.csrf().disable()					
 				.httpBasic().disable()
 				.authorizeRequests()
-					.antMatchers("/", "/login", "/join").permitAll()
+					.antMatchers("/", "/main", "/login", "/join").permitAll()
 					.antMatchers("/chat/**").hasAuthority("ROLE_USER")
 					.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 			.and()
@@ -37,7 +37,7 @@ public class SecurityConfig {
 				.formLogin()
 					.loginPage("/").permitAll()
 					.loginProcessingUrl("/login")
-					.defaultSuccessUrl("/")
+					.defaultSuccessUrl("/toy")
 					.failureUrl("/")
 					.usernameParameter("userId")
 					.passwordParameter("userPwd")
@@ -45,7 +45,7 @@ public class SecurityConfig {
 			.and()
 				.oauth2Login()
 					.loginPage("/").permitAll()
-					.defaultSuccessUrl("/")
+					.defaultSuccessUrl("/toy")
 					.userInfoEndpoint()
 					.userService(customOAuth2UserService);
 		
