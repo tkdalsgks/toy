@@ -37,6 +37,19 @@ public class SecurityController {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
+	@GetMapping({"", "/"})
+	public String main(Model model) {
+		
+		SessionUser user = (SessionUser) session.getAttribute("user");
+		if(user != null) {
+			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("list", chatRoomService.findAllRooms());
+			return "main";
+		} else {
+			return "index";
+		}
+	}
+	
 	/**
 	 * 메인 홈
 	 * @param auth
@@ -54,19 +67,6 @@ public class SecurityController {
 		}
 		
 		return "main";		
-	}
-	
-	@GetMapping("/popup")
-	public String popup(String roomId, String name, Model model) {
-		log.info("***** Main Page Call *****");
-		
-		SessionUser user = (SessionUser) session.getAttribute("user");
-		if(user != null) {
-			model.addAttribute("user", user.getUserNickname());
-			model.addAttribute("list", chatRoomService.findAllRooms());
-		}
-		
-		return "popup";
 	}
 	
 	/**
@@ -148,7 +148,4 @@ public class SecurityController {
 		
 		return map;
 	}
-	
-	
-
 }

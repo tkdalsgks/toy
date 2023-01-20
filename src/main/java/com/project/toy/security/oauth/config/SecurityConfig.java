@@ -27,7 +27,7 @@ public class SecurityConfig {
 				.httpBasic().disable()
 				.authorizeRequests()
 					.antMatchers("/", "/main", "/login", "/join").permitAll()
-					.antMatchers("/chat/**").hasAuthority("ROLE_USER")
+					.antMatchers("/toy/**", "/chat/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
 					.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 			.and()
 				.logout()

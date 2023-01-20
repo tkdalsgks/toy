@@ -20,7 +20,7 @@
 	
 	<!-- popup -->
 	<div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" class="openPopup">
-		<button id="show" class="btn btn-secondary active" onclick="openPopup();">O</button>
+		<img src="/img/app/chat/chat.png" id="show" onclick="openPopup();">
 	</div>
 	
 	<th:block th:replace="style :: javascript" />

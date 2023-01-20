@@ -2,6 +2,7 @@ package com.project.toy.chat.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.toy.chat.service.ChatRoomService;
@@ -41,7 +43,7 @@ public class RoomController {
 		
 		model.addAttribute("list", chatRoomService.findAllRooms());
 		
-		return "index";
+		return "main";
 	}
 	
 	/**
@@ -69,12 +71,13 @@ public class RoomController {
 	 * @return
 	 */
 	@PostMapping("/room")
+	@ResponseBody
 	public String create(@RequestParam String name, RedirectAttributes rttr, Model model) {
 		log.info("# Create Chat Room, name : " + name);
 		
 		rttr.addFlashAttribute("roomName", chatRoomService.createChatRoomDTO(name));
 		
-		return "redirect:/toy";
+		return rttr.toString();
 	}
 	
 }

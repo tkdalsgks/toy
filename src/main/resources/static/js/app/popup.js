@@ -19,7 +19,7 @@ function close() {
 	$("#menuChat").hide();
 	$("#chatFirst").show();
 	$("#chatSecond").hide();
-	$("#chatThrid").hide();
+	$("#chatThird").hide();
 	$(".openPopup").show();
 }
 
