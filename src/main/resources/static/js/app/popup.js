@@ -52,3 +52,15 @@ $(document).ready(function() {
             $("form").submit();
     });
 });
+
+$("#createChatRoom").on("click", function() {
+	$.ajax({
+		url: "chat/room",
+		type: "post",
+		dataType: "json",
+		data: { "name": $("#roomName").val() },
+		success: function() {
+			location.replace("");
+		}
+	});
+});

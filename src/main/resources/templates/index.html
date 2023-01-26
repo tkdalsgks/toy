@@ -1,18 +1,29 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				layout:decorate="~{layouts/layout}">
 
 <head>
 <meta charset="UTF-8">
 <title>toy</title>
 
-<th:block th:replace="style :: style" />
+<th:block layout:fragment="css">
+	<!-- RESET, DEFAULT -->
+	<link rel="stylesheet" th:href="@{/css/app/reset.css}" />
+	<link rel="stylesheet" th:href="@{/css/lib/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/index.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/default.css}" />
+	<!-- POPUP -->
+	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
+</th:block>
 
 </head>
 
 <body>
 	
-	<!-- contents -->
-	<div class="form-index">
+	<!-- CONTENT -->
+	<div layout:fragment="content" class="form-index">
 		<div sec:authorize="isAnonymous()">
 			<form th:action="@{/login}" method="post">
 				<div class="mb-3 form-group">
@@ -37,7 +48,11 @@
 		</div>
 	</div>
 	
-	<th:block th:replace="style :: javascript" />
+	<th:block layout:fragment="script">
+		<!-- Jquery, Bootstrap -->
+		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+	</th:block>
 	
 </body>
 

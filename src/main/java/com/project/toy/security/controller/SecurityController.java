@@ -12,9 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.toy.chat.service.ChatRoomService;
+import com.project.toy.common.dto.MessageDTO;
 import com.project.toy.security.mapper.SecurityMapper;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UserDTO;
@@ -51,25 +53,6 @@ public class SecurityController {
 	}
 	
 	/**
-	 * 메인 홈
-	 * @param auth
-	 * @param model
-	 * @return
-	 */
-	@GetMapping("/toy")
-	public String login(Model model) {
-		log.info("***** Main Page Call *****");
-		
-		SessionUser user = (SessionUser) session.getAttribute("user");
-		if(user != null) {
-			model.addAttribute("user", user.getUserNickname());
-			model.addAttribute("list", chatRoomService.findAllRooms());
-		}
-		
-		return "main";		
-	}
-	
-	/**
 	 * 소셜 로그인 및 회원가입, 일반 로그인
 	 * @return
 	 */
@@ -96,15 +79,16 @@ public class SecurityController {
 	 * @param userDTO
 	 */
 	@PostMapping("/join")
-	public String saveUser(UserDTO userDTO) {
+	public String saveUser(UserDTO userDTO, String userId, Model model) {
+		MessageDTO message;
 		
-		try {
+		if(securityMapper.findByUserId(userId) != null) {
+			message = new MessageDTO("회원가입 오류 !\n회원가입을 처음부터 다시 진행해주세요.", "/join", RequestMethod.POST, null);
+		} else {
 			userService.saveUser(userDTO);
-			
-			return "redirect:/";
-		} catch(Exception e) {
-			throw new RuntimeException();
+			message = new MessageDTO("회원가입이 완료되었습니다.", "/", RequestMethod.POST, null);
 		}
+		return showMessageAndRedirect(message, model);
 	}
 	
 	@ResponseBody
@@ -147,5 +131,17 @@ public class SecurityController {
 		}
 		
 		return map;
+	}
+	
+	/**
+	 * 성공/실패 메세지를 띄우고 해당 주소 리다이렉트
+	 * @param message
+	 * @param model
+	 * @return
+	 */
+	private String showMessageAndRedirect(final MessageDTO message, Model model) {
+		model.addAttribute("message", message);
+		
+		return "common/messageRedirect";
 	}
 }

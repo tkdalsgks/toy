@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				layout:decorate="~{layouts/layout}">
+
 <head>
 <meta charset="UTF-8">
 <title>toy, 관리자</title>
 
-<th:block th:replace="style :: style" />
-<th:block th:replace="style :: css-admin" />
-
+<th:block layout:fragment="css">
+	<!-- RESET, DEFAULT -->
+	<link rel="stylesheet" th:href="@{/css/app/reset.css}" />
+	<link rel="stylesheet" th:href="@{/css/lib/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/index.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/default.css}" />
+	<!-- POPUP -->
+	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
+</th:block>
 
 </head>
 <body>
-	
-	<header th:replace="flags :: header"></header>
 
-	<div class="form-join">
+	<div layout:fragment="content" class="form-join">
 		<div class="form-join-left">
 			<table id="selectListUser" style="width: 900px;">
 			<thead>
@@ -42,8 +50,16 @@
 		</div>
 	</div>
 	
-	<th:block th:replace="style :: javascript" />
-	<th:block th:replace="style :: js-admin" />
+	<th:block layout:fragment="script">
+		<!-- Jquery, Bootstrap -->
+		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+		<!-- POPUP -->
+		<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+		<script type="text/javascript" src="/js/app/popup.js"></script>
+	</th:block>
 
 </body>
+
 </html>

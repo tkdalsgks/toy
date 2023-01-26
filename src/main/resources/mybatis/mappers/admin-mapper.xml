@@ -4,10 +4,14 @@
 <mapper namespace="com.project.toy.admin.mapper.AdminMapper">
 
 	<select id="selectAuthModel" resultType="AdminDTO">
+		/* com.project.toy.admin.dto.AdminDTO */
+		
 		SELECT MODEL_NAME FROM TOY_AUTH_MODEL WHERE USE_YN = 'Y'
 	</select>
 	
 	<select id="selectListUser" resultType="UserDTO">
+		/* com.project.toy.user.dto.UserDTO */
+		
 		SELECT USER_NO 			AS userNo
 		     , USER_ID 			AS userId
 		     , USER_EMAIL 		AS userEmail

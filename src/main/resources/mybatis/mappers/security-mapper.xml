@@ -4,6 +4,8 @@
 <mapper namespace="com.project.toy.security.mapper.SecurityMapper">
 	
 	<insert id="saveUser" parameterType="UserDTO">
+		/* com.project.toy.user.dto.UserDTO */
+		
 		INSERT INTO toy.T_PERSON
 			(USER_NO, USER_ID, USER_PWD, USER_EMAIL, USER_NICKNAME, PROVIDER, ROLE)
 		VALUES
@@ -11,14 +13,20 @@
 	</insert>
 	
 	<select id="findByUserId" resultType="UserDTO">
+		/* com.project.toy.user.dto.UserDTO */
+		
 		SELECT * FROM toy.T_PERSON WHERE USE_YN = 'Y' AND USER_ID = #{ userId }
 	</select>
 	
 	<select id="findByUserEmail" resultType="UserDTO">
+		/* com.project.toy.user.dto.UserDTO */
+		
 		SELECT * FROM toy.T_PERSON WHERE USE_YN = 'Y' AND USER_EMAIL = #{ userEmail }
 	</select>
 	
 	<select id="findByUserNickname" resultType="UserDTO">
+		/* com.project.toy.user.dto.UserDTO */
+		
 		SELECT * FROM toy.T_PERSON WHERE USE_YN = 'Y' AND USER_NICKNAME = #{ userNickname }
 	</select>
 	

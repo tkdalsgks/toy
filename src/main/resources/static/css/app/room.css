@@ -1,5 +1,5 @@
-@charset "EUC-KR";
 
+/* ROOM */
 .chat-msgArea { width: 300px; margin: 0 auto; }
 .chat-enter { text-align: center; margin-bottom: 0; }
 .chat-me { text-align: right; }
