@@ -1,66 +1,98 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				layout:decorate="~{layouts/layout}">
 <head>
 <meta charset="UTF-8">
 <title>toy, 회원가입</title>
 
-<th:block th:replace="style :: style" />
+<th:block layout:fragment="css">
+	<!-- RESET, DEFAULT -->
+	<link rel="stylesheet" th:href="@{/css/app/reset.css}" />
+	<link rel="stylesheet" th:href="@{/css/lib/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/index.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/default.css}" />
+	<!-- POPUP -->
+	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
+</th:block>
 
 </head>
 <body>
-
-	<header th:replace="flags :: header"></header>
 	
-	<div class="form-join">
+	<div layout:fragment="content" class="form-join">
+		<div class="duplicate-info">
+			<span id="checkUserId">아이디는 영문, 숫자로 이루어진 4~20자리로 입력해주세요.</span><br>
+			<span id="checkUserPwd">비밀번호는 영문 대/소문자, 숫자, 특수문자가 모두 1개이상 포함된 8~16자리로 입력해주세요.</span><br>
+			<span id="checkUserPwdConfirm">입력한 두 비밀번호가 다릅니다.</span><br>
+			<span id="checkUserNickname">닉네임은 특수문자를 제외한 2~10자리로 입력해주세요.</span><br>
+			<span id="checkUserEmail">올바르지 않은 이메일 형식입니다.</span>
+		</div>
 		<form th:action="@{/join}" method="post">
 			<div class="mb-3">
-				<div class="form-group">
+				<div class="form-group-join" style="">
 					<label class="form-label"><span class="text-danger">* </span>아이디</label>
 					<input type="text" id="userId" name="userId" class="form-control required">
-					<span id="checkUserId"></span>
+					<img src="/img/app/join/check.png" id="imgCheckId" class="img-check-id">
+					<img src="/img/app/join/cancel.png" id="imgCancelId" class="img-cancel-id">
+					<button type="button" id="duplicateUserId" class="btn btn-primary btn-duplicate-id">중복확인</button>
+				</div>
+				<div style="">
 				</div>
 			</div>
 			<div class="mb-3">
-				<div class="form-group">
+				<div class="form-group-join">
 					<label class="form-label"><span class="text-danger">* </span>비밀번호</label>
 					<input type="text" id="userPwd" name="userPwd" class="form-control required">
-					<span id="checkUserPwd"></span>
+					<img src="/img/app/join/check.png" id="imgCheckPwd" class="img-check-pwd">
+					<img src="/img/app/join/cancel.png" id="imgCancelPwd" class="img-cancel-pwd">
 				</div>
 			</div>
 			<div class="mb-3">
-				<div class="form-group">
+				<div class="form-group-join">
 					<label class="form-label"><span class="text-danger">* </span>비밀번호 확인</label>
 					<input type="text" id="userPwdConfirm" name="userPwdConfirm" class="form-control required">
-					<span id="checkUserPwdConfirm"></span>
+					<img src="/img/app/join/check.png" id="imgCheckConfirm" class="img-check-confirm">
+					<img src="/img/app/join/cancel.png" id="imgCancelConfirm" class="img-cancel-confirm">
 				</div>
 			</div>
 			<div class="mb-3">
-				<div class="form-group">
+				<div class="form-group-join">
 					<label class="form-label"><span class="text-danger">* </span>닉네임</label>
 					<input type="text" id="userNickname" name="userNickname" class="form-control required">
-					<span id="checkUserNickname"></span>
+					<img src="/img/app/join/check.png" id="imgCheckName" class="img-check-name">
+					<img src="/img/app/join/cancel.png" id="imgCancelName" class="img-cancel-name">
 				</div>
 			</div>
 			<div class="mb-3">
-				<div class="form-group">
+				<div class="form-group-join">
 					<label class="form-label"><span class="text-danger">* </span>이메일</label>
 					<input type="text" id="userEmail" name="userEmail" class="form-control required">
-					<span id="checkUserEmail"></span>
+					<img src="/img/app/join/check.png" id="imgCheckEmail" class="img-check-email">
+					<img src="/img/app/join/cancel.png" id="imgCancelEmail" class="img-cancel-email">
+					<button type="button" id="duplicateUserEmail" class="btn btn-primary btn-duplicate-email">중복확인</button>
 				</div>
 			</div>
-			
-			<button class="btn btn-secondary active" onclick="goHome();">이전</button>
-			<button id="joinSubmit" type="submit" class="btn btn-secondary active" disabled="disabled">회원가입</button>
+			<div class="mb-3">
+				<div class="form-group-signed">
+					<button type="button" class="btn btn-secondary" onclick="goHome();">취소</button>
+					<button type="submit" id="joinSubmit" class="btn btn-secondary" disabled="disabled">회원가입</button>
+				</div>
+			</div>
 		</form>
 	</div>
 	
-	<th:block th:replace="style :: javascript" />
-	<th:block th:replace="style :: js-join" />
-	<script type="text/javascript">
-		function goHome() {
-			window.location.href="/";
-		}
-	</script>
+	<th:block layout:fragment="script">
+		<!-- Jquery, Bootstrap -->
+		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+		<!-- JOIN -->
+		<script type="text/javascript" src="/js/app/join.js"></script>
+		<script type="text/javascript">
+			function goHome() {
+				window.location.href="/";
+			}
+		</script>
+	</th:block>
 	
 </body>
 </html>

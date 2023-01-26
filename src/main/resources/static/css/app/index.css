@@ -1,0 +1,45 @@
+
+/* INDEX */
+.form-index { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) }
+
+/* MAIN */
+body { margin: 30px auto; }
+.form-join { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 700px; }
+.form-group { text-align: center; margin: 20px 0 0 0; }
+.form-group > input { width: 250px; height: 45px; margin: 0 auto; }
+.form-group > a { padding: 0 auto; font-size: 13px; color: #808080 }
+
+.form-login { text-align: center; position: absolute; left: 50%; top: 50%; }
+.form-login2 { transform: translate(-50%,-50%) }
+
+.form-login-general { text-align: center; }
+.form-login-sns { text-align: center; }
+.login-general { width: 183px; height: 45px; margin: 20px 0 3px 9px; }
+.login-kakao { margin: 3px 0 3px 9px; }
+.login-google { margin: 3px 0 0 5px; }
+.login-join { width: 183px; height: 45px; margin: 50px 0 3px 9px; }
+.find-password { font-size: 13px; margin: 5px 0 0 28px; color: #808080; }
+
+/* HEADER */
+.header { position: absolute; right: 0; transform: translate(-10%, 0); text-align: right; }
+.header a { text-decoration: none; color: black; }
+
+/* JOIN */
+.duplicate-info { background-color: #F5F5DC; margin-bottom: 50px; padding: 20px 20px 20px 20px; border-radius: 20px; color: #A9A9A9; font-weight: 800; }
+.form-group-join { font-weight: 800; text-align: center; margin: 20px 0 0 0; }
+.form-group-signed { font-weight: 800; text-align: center; margin: 20px 0 0 0; }
+.form-group-join > input { width: 250px; height: 45px; margin: 0 auto; }
+.form-group-join > a { padding: 0 auto; font-size: 13px; color: #808080 }
+.btn-duplicate-id { position: absolute; top: 50%; left: 50%; transform: translate(160%, -295%); width: 85px; height: 45px; }
+.btn-duplicate-email { position: absolute; top: 50%; left: 50%; transform: translate(160%, 550%); width: 85px; height: 45px; }
+
+#imgCheckId { display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, -595%); width: 20px; height: 20px; }
+#imgCancelId { display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, -595%); width: 20px; height: 20px; }
+#imgCheckPwd { display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, -120%); width: 20px; height: 20px; }
+#imgCancelPwd { display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, -120%); width: 20px; height: 20px; }
+#imgCheckConfirm { display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, 355%); width: 20px; height: 20px; }
+#imgCancelConfirm { display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, 355%); width: 20px; height: 20px; }
+#imgCheckName { display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, 830%); width: 20px; height: 20px; }
+#imgCancelName { display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, 830%); width: 20px; height: 20px; }
+#imgCheckEmail { display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, 1305%); width: 20px; height: 20px; }
+#imgCancelEmail {display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, 1305%); width: 20px; height: 20px; }

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:fragment="header">
+	<div sec:authorize="isAuthenticated()" class="header">
+		<nav class="nav flex-column">
+			<a class="nav-link" href="/">홈</a>
+			<a class="nav-link" href="/board">게시판</a>
+			<a class="nav-link" href="/logout" >로그아웃<br>(<span id="user" th:text="${user}"></span>)</a>
+		</nav>
+	</div>
+</div>

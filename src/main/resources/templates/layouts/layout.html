@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta charset="UTF-8">
+<title>toy, layout</title>
+<meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1, user-scalable=yes, initial-scale=1.0" />
+
+<!-- CSS -->
+<th:block layout:fragment="css"></th:block>
+
+</head>
+
+<body>
+	
+	<!-- HEADER -->
+	<th:block th:replace="fragments/header :: header"></th:block>
+	
+	<!-- CONTENT -->
+	<th:block layout:fragment="content"></th:block>
+	
+	<!-- FOOTER -->
+	<th:block th:replace="fragments/footer :: footer"></th:block>
+	
+	<!-- JAVASCRIPT -->
+	<th:block layout:fragment="script"></th:block>
+	
+</body>
+
+</html>
