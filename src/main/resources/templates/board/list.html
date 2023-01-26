@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				layout:decorate="~{layouts/layout}">
+
+<head>
+<meta charset="UTF-8">
+<title>toy, 게시판</title>
+
+<th:block layout:fragment="css">
+	<!-- RESET, DEFAULT -->
+	<link rel="stylesheet" th:href="@{/css/app/reset.css}" />
+	<link rel="stylesheet" th:href="@{/css/lib/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/index.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/default.css}" />
+	<!-- POPUP -->
+	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
+	<!-- BOARD -->
+	<link rel="stylesheet" th:href="@{/css/app/board.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/button.css}" />
+</th:block>
+
+</head>
+
+<body>
+	
+	<div layout:fragment="content" class="container">
+		<div class="page_tits">
+		    <h3>게시판 리스트</h3>
+		    <p class="path"><strong>현재 위치 :</strong> <span>게시판 리스트</span> <span>상세보기</span> <span>작성/수정</span></p>
+		</div>
+		
+		<div class="content">
+			<section>
+			<!--/* 검색 */-->
+			<div class="search_box">
+				<form id="searchForm" onsubmit="return false;" autocomplete="off">
+					<div class="sch_group fl">
+						<select id="searchType" name="searchType" title="검색 유형 선택">
+							<option value="">전체 검색</option>
+							<option value="title">제목</option>
+							<option value="content">내용</option>
+							<option value="writer">작성자</option>
+						</select>
+						<input type="text" id="keyword" name="keyword" placeholder="키워드를 입력해 주세요." title="키워드 입력" />
+						<button type="button" class="bt_search" onclick="movePage(1);"><i class="fas fa-search"></i><span class="skip_info">검색</span></button>
+					</div>
+				</form>
+			</div>
+			
+			<!--/* 일반 리스트 */-->
+			<table class="tb tb_col">
+				<colgroup>
+					<col style="width:50px;" /><col style="width:7.5%;" /><col style="width:auto;" /><col style="width:10%;" /><col style="width:15%;" /><col style="width:7.5%;" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col"><input type="checkbox" /></th>
+						<th scope="col">번호</th>
+						<th scope="col">제목</th>
+						<th scope="col">작성자</th>
+						<th scope="col">등록일</th>
+						<th scope="col">조회수</th>
+					</tr>
+				</thead>
+				<tbody id="list"></tbody>
+			</table>
+			
+			<!--/* 페이지네이션 */-->
+			<div class="paging"></div>
+			
+			<!--/* 버튼 */-->
+			<p class="btn_set tr">
+				<a th:href="@{/board/write}" class="btns btn_st3 btn_mid">글쓰기</a>
+			</p>
+			</section>
+		</div>
+		<!--/* .content */-->
+	</div>
+	
+	<th:block layout:fragment="script">
+		<!-- Jquery, Bootstrap -->
+		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+		<!-- POPUP -->
+		<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+		<script type="text/javascript" src="/js/app/popup.js"></script>
+		<!-- BOARD -->
+		<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.7/dayjs.min.js"></script>
+		<script type="text/javascript" src="/js/app/board.js"></script>
+		<script th:inline="javascript">
+		/*<![CDATA[*/
+			window.onload = () => {
+				setQueryStringParams();
+				
+				findAllBoard();
+			}
+			
+			// 쿼리 스트링 파라미터 셋팅
+	        function setQueryStringParams() {
+				if ( !location.search ) {
+					return false;
+				}
+				
+				const form = document.getElementById('searchForm');
+				
+				new URLSearchParams(location.search).forEach((value, key) => {
+					if (form[key]) {
+						form[key].value = value;
+					}
+				})
+			}
+			
+			// 게시글 리스트 조회
+			function findAllBoard() {
+				const notice = [[ ${notice} ]];
+				const list = [[ ${boards.list} ]];
+				
+				if ( !list.length ) {
+					document.getElementById('list').innerHTML = '<td colspan="6"><div className="no_data_msg">검색된 결과가 없습니다.</div></td>';
+					drawPage();
+				}
+				
+				const pagination = [[ ${boards.pagination} ]];
+				const params = [[ ${params} ]];
+				let num = pagination.totalRecordCount - ((params.page - 1) * params.recordSize);
+				
+				drawList(notice, list, num);
+				drawPage(pagination, params);
+			}
+			
+			// 리스트 HTML draw
+			function drawList(notice, list, num) {
+
+			    let html = '';
+			    
+			    notice.forEach(row => {
+			        html += `
+			            <tr>
+			                <td><input type="checkbox" /></td>
+			                <td style="background-color: #E05E6D; color: white; font-weight: 700;">${row.noticeYn === false ? num-- : '공지'}</td>
+			                <td class="tl"><a href="javascript:void(0);" onclick="goViewPage(${row.id});">${row.title}</a></td>
+			                <td>${row.writer}</td>
+			                <td>${dayjs(row.createdDate).format('YYYY-MM-DD HH:mm')}</td>
+			                <td>${row.viewCnt}</td>
+			            </tr>
+			        `;
+			    })
+
+			    list.forEach(row => {
+			        html += `
+			            <tr>
+			                <td><input type="checkbox" /></td>
+			                <td>${row.noticeYn === false ? num-- : '공지'}</td>
+			                <td class="tl"><a href="javascript:void(0);" onclick="goViewPage(${row.id});">${row.title}</a></td>
+			                <td>${row.writer}</td>
+			                <td>${dayjs(row.createdDate).format('YYYY-MM-DD HH:mm')}</td>
+			                <td>${row.viewCnt}</td>
+			            </tr>
+			        `;
+			    })
+
+			    document.getElementById('list').innerHTML = html;
+			}
+			
+			// 페이지 HTML draw
+			function drawPage(pagination, params) {
+				if ( !pagination || !params ) {
+					document.querySelector('.paging').innerHTML = '';
+					throw new Error('Missing required parameters...');
+				}
+				
+				let html = '';
+				
+				// 첫 페이지, 이전 페이지
+				if (pagination.existPrevPage) {
+					html += `
+							<a href="javascript:void(0);" onclick="movePage(1)" class="page_bt first">&lt;&lt;</a>
+							<a href="javascript:void(0);" onclick="movePage(${pagination.startPage - 1})" class="page_bt prev">&lt;</a>
+							`;
+				}
+				
+				// 페이지 번호
+				html += '<p>';
+				for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+					html += (i !== params.page)
+					? `<a href="javascript:void(0);" onclick="movePage(${i});">${i}</a>`
+					: `<span class="on">${i}</span>`
+				}
+				html += '</p>';
+				
+				// 다음 페이지, 마지막 페이지
+				if (pagination.existNextPage) {
+					html += `
+							<a href="javascript:void(0);" onclick="movePage(${pagination.endPage + 1});" class="page_bt next">&gt;</a>
+							<a href="javascript:void(0);" onclick="movePage(${pagination.totalPageCount});" class="page_bt last">&gt;&gt;</a>
+							`;
+				}
+				
+				document.querySelector('.paging').innerHTML = html;
+			}
+			
+			// 페이지 이동
+			function movePage(page) {
+			    const form = document.getElementById('searchForm');
+			    const queryParams = {
+			          page: (page) ? page : 1
+			        , recordSize: 10
+			        , pageSize: 10
+			        , searchType: form.searchType.value
+			        , keyword: form.keyword.value
+			    }
+			    location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
+			}
+			
+			// 게시글 상세 페이지로 이동
+		    function goViewPage(id) {
+		        const queryString = (location.search) ? location.search + `&id=${id}` : `?id=${id}`;
+		        location.href = '/board/detail' + queryString;
+		    }
+		/*]]>*/
+		</script>
+	</th:block>
+	
+</body>
+
+</html>

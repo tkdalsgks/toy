@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.toy.board.mapper.BoardMapper">
+	
+	<sql id="boardColumns">
+		ID
+		, TITLE
+		, CONTENT
+		, WRITER
+		, VIEW_CNT
+		, NOTICE_YN
+		, DELETE_YN
+		, I_DATE
+		, U_DATE
+	</sql>
+	
+	<!-- 게시글 검색 -->
+	<sql id="search">
+		<!-- 검색 키워드가 있을 때 -->
+		<if test="keyword != null and keyword != ''">
+			<choose>
+				<!-- 검색 유형이 있을 때 -->
+				<when test="searchType != null and searchType != ''">
+					<choose>
+						<when test="'title'.equals( searchType )">
+							AND TITLE LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<when test="'content'.equals( searchType )">
+							AND CONTENT LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<when test="'writer'.equals( searchType )">
+							AND WRITER LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+					</choose>
+				</when>
+				<!-- 전체 검색일 때 -->
+				<otherwise>
+					AND (
+						TITLE LIKE CONCAT('%', #{keyword}, '%')
+						OR CONTENT LIKE CONCAT('%', #{keyword}, '%')
+						OR WRITER LIKE CONCAT('%', #{keyword}, '%')
+					)
+				</otherwise>
+			</choose>
+		</if>
+	</sql>
+	
+	<!-- 작성 -->
+	<insert id="saveBoard" parameterType="BoardRequestDTO">
+		/* com.project.toy.board.dto.BoardRequestDTO */
+		
+		INSERT INTO BOARD ( <include refid="boardColumns" /> )
+		VALUES ( #{ id }, #{ title }, #{ content }, #{ writer }, 0, #{ noticeYn }, 0, NOW(), NULL ) 
+	</insert>
+	
+	<!-- 상세보기 -->
+	<select id="findByBoardId" resultType="BoardResponseDTO">
+		/* com.project.toy.board.dto.BoardResponseTO */
+		
+		SELECT <include refid="boardColumns" />
+		FROM   BOARD
+		WHERE  1=1
+		AND    ID = #{ value }
+	</select>
+	
+	<!-- 수정 -->
+	<update id="updateBoard" parameterType="BoardRequestDTO">
+		/* com.project.toy.board.dto.BoardRequestDTO */
+		
+		UPDATE BOARD
+		SET    U_DATE = NOW()
+		     , TITLE = #{ title }
+		     , CONTENT = #{ content }
+		     , WRITER = #{ writer }
+		     , NOTICE_YN = #{ noticeYn }
+		WHERE  1=1
+		AND    id = #{ id }
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteByBoardId" parameterType="long">
+		UPDATE BOARD
+		SET    DELETE_YN = 1
+		WHERE  1=1
+		AND    ID = #{ id }
+	</delete>
+	
+	<!-- 일반 리스트 -->
+	<select id="findAll" parameterType="SearchDTO" resultType="BoardResponseDTO">
+		/* com.project.toy.board.dto.BoardResponseDTO */
+		
+		SELECT <include refid="boardColumns" />
+		FROM   BOARD
+		WHERE  1=1
+		AND    NOTICE_YN = 0
+		AND    DELETE_YN = 0
+		<include refid="search" />
+		ORDER BY ID DESC
+		LIMIT  #{ pagination.limitStart }, #{ recordSize }
+	</select>
+	
+	<!-- 공지 리스트 -->
+	<select id="findNotice" resultType="BoardResponseDTO">
+		/* com.project.toy.board.dto.BoardResponseDTO */
+		
+		SELECT <include refid="boardColumns" />
+		FROM   BOARD
+		WHERE  1=1
+		AND    NOTICE_YN = 1
+		AND    DELETE_YN = 0
+		ORDER BY ID DESC
+		LIMIT  2
+	</select>
+	
+	<!-- 게시글 수 카운팅 -->
+	<select id="countBoard" parameterType="SearchDTO" resultType="int">
+		/* com.project.toy.common.dto.SearchDTO */
+		
+		SELECT COUNT(1)
+		FROM   BOARD
+		WHERE  1=1
+		AND    DELETE_YN = 0
+		<include refid="search" />
+	</select>
+	
+</mapper>
