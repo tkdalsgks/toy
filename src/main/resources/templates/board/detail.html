@@ -32,6 +32,9 @@
 		</div>
 		
 		<div class="content">
+			<input type="hidden" id="writer" name="writer" th:value="${board.writerId}">
+			<input type="hidden" id="userId" name="userId" th:value="${userId}">
+			
 	        <section>
 	            <table class="tb tb_row">
 	                <colgroup>
@@ -46,15 +49,15 @@
 	                        <td th:text="${#temporals.format( board.IDate, 'yyyy-MM-dd HH:mm' )}"></td>
 	                    </tr>
 	                    <tr>
-	                        <th scope="row">제목</th>
-	                        <td>[[ ${board.title} ]]</td>
+	                    	<th scope="row">작성자</th>
+	                        <td>[[ ${board.writer} ]]</td>
 	
-	                        <th scope="row">조회</th>
+	                        <th scope="row">조회수</th>
 	                        <td colspan="3">[[ ${board.viewCnt} ]]</td>
 	                    </tr>
 	                    <tr>
-	                        <th scope="row">이름</th>
-	                        <td colspan="3">[[ ${board.writer} ]]</td>
+	                        <th scope="row">제목</th>
+	                        <td colspan="3">[[ ${board.title} ]]</td>
 	                    </tr>
 	                    <tr>
 	                        <th scope="row">내용</th>
@@ -63,9 +66,9 @@
 	                </tbody>
 	            </table>
 	            <p class="btn_set">
-	                <a th:href="@{/board/write( id=${board.id} )}" class="btns btn_bdr4 btn_mid" onclick="goWritePage();">수정</a>
+	                <a class="btns btn_bdr4 btn_mid" onclick="goWritePage();">수정</a>
 	                <button class="btns btn_bdr1 btn_mid" onclick="deleteBoard();">삭제</button>
-	                <a th:href="@{/board}" class="btns btn_bdr3 btn_mid" onclick="goListPage();">뒤로</a>
+	                <a href="javascript:history.go(-1)" class="btns btn_bdr3 btn_mid" onclick="goListPage();">뒤로</a>
 	            </p>
 	        </section>
 	    </div>
@@ -88,27 +91,33 @@
 			
 			// 게시글 삭제
 	        function deleteBoard() {
-	            
 	            const id = [[ ${board.id} ]];
 	            if ( !confirm(id + "번 게시글을 삭제할까요?") ) {
 	                return false;
 	            }
-	    
-	            let inputHtml = '';
-	            new URLSearchParams(location.search).forEach((value, key) => {
-	                inputHtml += `<input type="hidden" name="${key}" value="${value}" />`;
-	            })
-	    
-	            const formHtml = `
-	                <form id="deleteForm" action="/board/delete" method="post">
-	                    ${inputHtml}
-	                </form>
-	            `;
-	    
-	            const doc = new DOMParser().parseFromString(formHtml, 'text/html');
-	            const form = doc.body.firstChild;
-	            document.body.append(form);
-	            document.getElementById('deleteForm').submit();
+	            
+	            const writer = document.getElementById('writer').value;
+	        	const userId = document.getElementById('userId').value;
+	        	
+	        	if(writer != userId) {
+	        		alert("권한이 없습니다.");
+	        	} else {
+	        		let inputHtml = '';
+		            new URLSearchParams(location.search).forEach((value, key) => {
+		                inputHtml += `<input type="hidden" name="${key}" value="${value}" />`;
+		            })
+		            
+		            const formHtml = `
+		                <form id="deleteForm" action="/board/delete" method="post">
+		                    ${inputHtml}
+		                </form>
+		            `;
+		            
+		            const doc = new DOMParser().parseFromString(formHtml, 'text/html');
+		            const form = doc.body.firstChild;
+		            document.body.append(form);
+		            document.getElementById('deleteForm').submit();
+	        	}
 	        }
 		
 			// 게시글 리스트 페이지로 이동
@@ -120,8 +129,17 @@
 			
 			// 게시글 수정 페이지로 이동
 	        function goWritePage() {
-	            location.href = '/board/write' + location.search;
+	        	const writer = document.getElementById('writer').value;
+	        	const userId = document.getElementById('userId').value;
+	        	
+	        	if(writer != userId) {
+	        		alert("권한이 없습니다.");
+	        	} else {
+			        location.href = '/board/write' + location.search;
+	        	}
+	        	/* th:href="@{/board/write( id=${board.id} )}"  */
 	        }
+			
 		/*]]>*/
 		</script>
 	</th:block>

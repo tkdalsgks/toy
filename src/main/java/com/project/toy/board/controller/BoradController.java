@@ -78,11 +78,18 @@ public class BoradController {
 		SessionUser user = (SessionUser) session.getAttribute("user");
 		if(user != null) {
 			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
 		
 		BoardResponseDTO board = boardService.findByBoardId(id);
-		model.addAttribute("board", board);
+		
+		if(board != null) {
+			model.addAttribute("board", board);
+		} else {
+			MessageDTO message = new MessageDTO("존재하지 않거나 이미 삭제된 게시글입니다.", "/board", RequestMethod.POST, null);
+			return showMessageAndRedirect(message, model);
+		}
 		
 		return "board/detail";
 	}
@@ -119,8 +126,11 @@ public class BoradController {
 	 */
 	@PostMapping("/board/save")
 	public String save(final BoardRequestDTO params, Model model) {
+		SessionUser user = (SessionUser) session.getAttribute("user");
+		params.setWriterId(user.getUserId());
+		
 		boardService.saveBoard(params);
-		MessageDTO message = new MessageDTO("게시글 생성이 완료되었습니다.", "/board", RequestMethod.GET, null);
+		MessageDTO message = new MessageDTO("게시글 생성이 완료되었습니다.", "/board", RequestMethod.POST, null);
 		
 		return showMessageAndRedirect(message, model);
 	}
@@ -134,7 +144,7 @@ public class BoradController {
 	@PostMapping("board/update")
 	public String update(final BoardRequestDTO params, Model model) {
 		boardService.updateBoard(params);
-		MessageDTO message = new MessageDTO("게시글 수정이 완료되었습니다.", "/board", RequestMethod.GET, null);
+		MessageDTO message = new MessageDTO("게시글 수정이 완료되었습니다.", "/board", RequestMethod.POST, null);
 		
 		return showMessageAndRedirect(message, model);
 	}
