@@ -43,7 +43,7 @@
 							<option value="content">내용</option>
 							<option value="writer">작성자</option>
 						</select>
-						<input type="text" id="keyword" name="keyword" placeholder="키워드를 입력해 주세요." title="키워드 입력" />
+						<input type="text" id="keyword" name="keyword" onkeyup="enterkey();" placeholder="키워드를 입력해 주세요." title="키워드 입력" />
 						<button type="button" class="bt_search" onclick="movePage(1);"><i class="fas fa-search"></i><span class="skip_info">검색</span></button>
 					</div>
 				</form>
@@ -97,6 +97,12 @@
 				
 				findAllBoard();
 			}
+			
+			function enterkey() {
+				if(event.keyCode == 13) {
+					movePage(1);
+				}
+			};
 			
 			// 쿼리 스트링 파라미터 셋팅
 	        function setQueryStringParams() {
@@ -153,7 +159,7 @@
 			        html += `
 			            <tr>
 			                <td><input type="checkbox" /></td>
-			                <td>${row.noticeYn === false ? num-- : '공지'}</td>
+			                <td>${row.noticeYn === false ? row.id : '공지'}</td>
 			                <td class="tl"><a href="javascript:void(0);" onclick="goViewPage(${row.id});">${row.title}</a></td>
 			                <td>${row.writer}</td>
 			                <td>${dayjs(row.createdDate).format('YYYY-MM-DD HH:mm')}</td>

@@ -45,13 +45,17 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th sec:authorize="hasRole('ROLE_ADMIN')" scope="row">공지글</th>
-								<td sec:authorize="hasRole('ROLE_ADMIN')"><span class="chkbox"><input type="checkbox" id="isNotice" name="isNotice" class="chk" /><i></i><label for="isNotice"> 설정</label></span></td>
-								<th sec:authorize="hasRole('ROLE_USER')" scope="row">공지글</th>
-								<td sec:authorize="hasRole('ROLE_USER')"><span class="chkbox"><input type="checkbox" id="isNotice" name="isNotice" class="chk" readonly/><i></i><label for="isNotice"> 설정</label></span></td>
+								<th scope="row">공지글</th>
+								<td sec:authorize="hasAnyRole('ROLE_ADMIN')"><span class="chkbox"><input type="checkbox" id="isNotice" name="isNotice" class="chk" /><i></i><label for="isNotice"> 설정</label></span></td>
+								<td sec:authorize="hasAnyRole('ROLE_USER')"><span class="chkbox"><input type="checkbox" id="isNotice" name="isNotice" class="chk" disabled="disabled" /><i></i><label for="isNotice"> 설정</label></span></td>
 								
 								<th scope="row">등록일</th>
 								<td colspan="3"><input type="text" id="IDate" name="IDate" readonly /></td>
+							</tr>
+							
+							<tr>
+								<th>작성자 <span class="es">필수 입력</span></th>
+								<td colspan="3"><input type="text" id="writer" name="writer" maxlength="10" th:value="${user}" readonly /></td>
 							</tr>
 							
 							<tr>
@@ -60,13 +64,8 @@
 							</tr>
 							
 							<tr>
-								<th>이름 <span class="es">필수 입력</span></th>
-								<td colspan="3"><input type="text" id="writer" name="writer" maxlength="10" placeholder="이름을 입력해 주세요." /></td>
-							</tr>
-							
-							<tr>
 								<th>내용 <span class="es">필수 입력</span></th>
-								<td colspan="3"><textarea id="content" name="content" cols="50" rows="10" placeholder="내용을 입력해 주세요."></textarea></td>
+								<td colspan="3"><textarea id="content" name="content" cols="150" rows="10" placeholder="내용을 입력해 주세요."></textarea></td>
 							</tr>
 						</tbody>
 					</table>
@@ -74,7 +73,7 @@
 				
 				<p class="btn_set">
 					<button id="saveBtn" class="btns btn_st3 btn_mid" onclick="saveBoard();">저장</button>
-					<a th:href="@{/board}" class="btns btn_bdr3 btn_mid">뒤로</a>
+					<a href="javascript:history.go(-1)" class="btns btn_bdr3 btn_mid">뒤로</a>
 				</p>
 			</section>
 		</div>

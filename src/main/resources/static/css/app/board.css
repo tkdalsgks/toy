@@ -224,8 +224,8 @@ input[readonly], select[readonly], textarea[readonly], .readonly, input[disabled
 .chkbox {position:relative; padding-left:25px; display:inline-block; color:#333;}
 .chkbox input[type="checkbox"], .chkbox i {position:absolute; top:3px; left:0px; width:15px; height:15px;}
 .chkbox input[type="checkbox"] {opacity:0; cursor:pointer; z-index:5;}
-.chkbox i {display:inline-block; border:1px solid #ccc; border-radius:2px; z-index:3;}
-.chkbox input:checked+i {border-color:#999;}
+.chkbox i {display:inline-block; border:1px solid #DA70D6; background-color: #DA70D6; border-radius:2px; z-index:3;}
+.chkbox input:checked+i {border-color:#999; background-color: white;}
 .chkbox input:checked+i::before {background-position:-115px 0; width:10px; height:11px; position:absolute; top:50%; left:50%; margin:-5px 0 0 -5px;}
 /* radio */
 .radio_group {overflow:hidden;}
