@@ -32,23 +32,16 @@ public class AdminController {
 	public String admin(Authentication auth, Model model) {
 		log.info("***** Admin Page Call *****");
 		
-		System.out.println(auth);
-		if(auth == null) {
-			return "redirect:/join";
-		}
-		
 		SessionUser user = (SessionUser) session.getAttribute("user");
-		if(user != null) {
+		if(auth != null) {
+			List<UserDTO> selectListUser = adminService.selectListUser();
+			List<AdminDTO> selectAuthModel = adminService.selectAuthModel();
+
 			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("selectListUser", selectListUser);
+			model.addAttribute("selectAuthModel", selectAuthModel);
+			
 		}
-		
-		List<UserDTO> selectListUser = adminService.selectListUser();
-		model.addAttribute("selectListUser", selectListUser);
-		
-		List<AdminDTO> selectAuthModel = adminService.selectAuthModel();
-		model.addAttribute("selectAuthModel", selectAuthModel);
-		
 		return "admin/admin";
 	}
-
 }

@@ -1,12 +1,16 @@
 package com.project.toy.security.oauth.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.project.toy.security.handler.CustomAuthenticationFailureHandler;
+import com.project.toy.security.handler.CustomAuthenticationSuccessHandler;
 import com.project.toy.security.service.CustomOAuth2UserService;
 
 import lombok.AllArgsConstructor;
@@ -16,37 +20,47 @@ import lombok.AllArgsConstructor;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	private final CustomOAuth2UserService customOAuth2UserService;
+	@Autowired
+	private CustomOAuth2UserService customOAuth2UserService;
+	
+	@Autowired
+	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+	
+	@Autowired
+	private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 				.headers().frameOptions().sameOrigin()
 			.and()
-				.csrf().disable()					
-				.httpBasic().disable()
+				.csrf().disable()
 				.authorizeRequests()
-					.antMatchers("/", "/main", "/login", "/join").permitAll()
+					.antMatchers("/", "/login", "/join").permitAll()
 					.antMatchers("/chat/**", "/board/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
 					.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+					.anyRequest().authenticated()
 			.and()
 				.logout()
 					.logoutSuccessUrl("/")
 					.invalidateHttpSession(true)
-					.deleteCookies("JSESSIONID")
+					.deleteCookies("JSESSIONID", "Cookie_userId")
 			.and()
 				.formLogin()
-					.loginPage("/").permitAll()
+					.loginPage("/")
 					.loginProcessingUrl("/login")
 					.defaultSuccessUrl("/")
 					.failureUrl("/")
 					.usernameParameter("userId")
 					.passwordParameter("userPwd")
-			.and().httpBasic()
+					.successHandler(customAuthenticationSuccessHandler)
+					.failureHandler(customAuthenticationFailureHandler)
+					.permitAll()
 			.and()
 				.oauth2Login()
-					.loginPage("/").permitAll()
+					.loginPage("/")
 					.defaultSuccessUrl("/")
+					.permitAll()
 					.userInfoEndpoint()
 					.userService(customOAuth2UserService);
 		
@@ -54,7 +68,17 @@ public class SecurityConfig {
 	}
 	
 	@Bean
+	public WebSecurityCustomizer webSecurityCustomizer() {
+		return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
+	}
+	
+	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
+	/**
+	 *  Spring Security 5.7.0 Update
+	 *  https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
+	 */
 }

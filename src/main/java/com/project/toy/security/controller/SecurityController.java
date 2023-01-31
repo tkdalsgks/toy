@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,10 +41,9 @@ public class SecurityController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@GetMapping({"", "/"})
-	public String main(Model model) {
-		
+	public String index(Authentication auth, Model model) {
 		SessionUser user = (SessionUser) session.getAttribute("user");
-		if(user != null) {
+		if(auth != null) {
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("list", chatRoomService.findAllRooms());
 			return "main";
@@ -53,23 +53,12 @@ public class SecurityController {
 	}
 	
 	/**
-	 * 소셜 로그인 및 회원가입, 일반 로그인
-	 * @return
-	 */
-	@GetMapping("/login")
-	public String login() {
-		log.info("***** User Login Call *****");
-		
-		return "user/login";
-	}
-	
-	/**
 	 * 회원가입 페이지
 	 * @return
 	 */
 	@GetMapping("/join")
 	public String join() {
-		log.info("***** User Page Call *****");
+		log.info("***** Join Page Call *****");
 		
 		return "user/join";
 	}

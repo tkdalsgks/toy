@@ -45,5 +45,9 @@ public class UserService {
         return userDTO;
 	}
 	
+	public UserDTO selectUser(UserDTO userDTO) {
+		return securityMapper.findByUserId(userDTO.getUserId());
+	}
+	
 	
 }

@@ -39,9 +39,9 @@ public class CustomUserService implements UserDetailsService {
             log.info("-----");
             session.setAttribute("user", new SessionUser(userDTO));
             
-			return new CustomUserDetails(userDTO);
+            return new CustomUserDetails(userDTO);
+		} else {
+			throw new UsernameNotFoundException(userId + "는 존재하지 않는 아이디입니다.");
 		}
-		
-		return null;
 	}
 }

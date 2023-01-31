@@ -24,34 +24,40 @@
 	
 	<!-- CONTENT -->
 	<div layout:fragment="content" class="form-index">
-		<div sec:authorize="isAnonymous()">
-			<form th:action="@{/login}" method="post">
-				<div class="mb-3 form-group">
-					<input type="text" id="userId" name="userId" class="form-control required" placeholder="아이디">
-				</div>
-				<div class="form-group">
-					<input type="text" id="userPwd" name="userPwd" class="form-control required" placeholder="비밀번호">
-				</div>
-				<div class="form-login-general">
-					<button type="submit" class="btn btn-primary active login-general">로그인</button>
-				</div>
-			</form>
+	
+		<div sec:authorize="isAnonymous()" id="form-index-one">
 			<div class="form-login-sns">
 				<a href="/oauth2/authorization/kakao" style="text-align: center;"><img src="/img/app/login/kakao_login_medium_narrow.png" class="login-kakao"></a><br>
 				<a href="/oauth2/authorization/google"><img src="/img/app/login/btn_google_signin_light_normal_web.png" class="login-google"></a><br>
-				<a href="/join"><button type="submit" class="btn btn-secondary login-join">회원가입</button></a>
+				<button type="button" id="others-login" class="btn btn-secondary others-login">다른 방법으로 로그인</button>
 			</div>
 		</div>
 		
-		<div sec:authorize="isAuthenticated()">
-			<a href="/logout" class="btn btn-secondary active">로그아웃</a>
+		<div sec:authorize="isAnonymous()" id="form-index-two">
+			<div class="mb-3 form-group">
+				<input type="text" id="userId" name="userId" class="form-control required" placeholder="아이디">
+			</div>
+			<div class="form-group">
+				<input type="text" id="userPwd" name="userPwd" class="form-control required" placeholder="비밀번호">
+			</div>
+			<label class="custom-control custom-checkbox m-0">
+				<a href="">아이디/비밀번호 찾기</a>
+			</label>
+			<div>
+			</div>
+			<div class="form-login-general">
+				<button type="button" id="login-general" class="btn btn-primary login-general">로그인</button><br>
+				<a th:href="@{/join}"><button type="button" class="btn btn-secondary login-join">회원가입</button></a>
+			</div>
 		</div>
+		
 	</div>
 	
 	<th:block layout:fragment="script">
 		<!-- Jquery, Bootstrap -->
 		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
 		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/app/index.js"></script>
 	</th:block>
 	
 </body>
