@@ -35,7 +35,7 @@ var index = {
            		userPwd: $("#userPwd").val()
            },
            success: function(res) {
-           		if(res.code === '100') {
+           		if(res.code === '200') {
 	            	window.location = "/";
             	} else {
             		alert(res.message);
