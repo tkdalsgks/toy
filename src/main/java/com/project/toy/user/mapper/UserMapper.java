@@ -1,10 +1,13 @@
 package com.project.toy.user.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
+
+import com.project.toy.user.dto.LockUserDTO;
 
 @Mapper
-@Repository
-public class UserMapper {
+public interface UserMapper {
+
+	public LockUserDTO findByLockUser(String userId);
+	public void updateFailLogin(LockUserDTO params);
 
 }

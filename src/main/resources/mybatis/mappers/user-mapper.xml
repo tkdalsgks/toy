@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.toy.user.mapper.UserMapper">
+	
+	<select id="findByLockUser" parameterType="UserDTO" resultType="LockUserDTO">
+		/* com.project.toy.user.dto.LockUserDTO */
+		
+		SELECT USER_ID, FAIL_CNT, LOCK_YN, LOCK_DATE
+		FROM   T_PERSON
+		WHERE  1=1
+		AND    USER_ID = #{ userId }
+		AND    USE_YN = 'Y'
+	</select>
+	
+	<update id="updateFailLogin" parameterType="LockUserDTO">
+		/* com.project.toy.user.dto.LockUserDTO */
+		
+		UPDATE T_PERSON
+		SET    FAIL_CNT = #{ failCnt }
+		     , LOCK_YN = #{ lockYn }
+     	<if test = "failCnt == 5">
+     	     , LOCK_DATE = NOW()
+     	</if>
+     	WHERE  1=1
+     	AND    USER_ID = #{ userId }
+     	AND    USE_YN = 'Y'
+   </update>
+	
+</mapper>

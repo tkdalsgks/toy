@@ -7,8 +7,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.toy.security.mapper.SecurityMapper;
+import com.project.toy.user.dto.LockUserDTO;
 import com.project.toy.user.dto.Role;
 import com.project.toy.user.dto.UserDTO;
+import com.project.toy.user.mapper.UserMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,6 +18,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
 
+	@Autowired
+	private UserMapper userMapper;
+	
 	@Autowired
 	private SecurityMapper securityMapper;
 	
@@ -45,5 +50,16 @@ public class UserService {
         return userDTO;
 	}
 	
+	public UserDTO selectUser(UserDTO params) {
+		return securityMapper.findByUserId(params.getUserId());
+	}
+	
+	public LockUserDTO selectLockUser(UserDTO params) {
+		return userMapper.findByLockUser(params.getUserId());
+	}
+
+	public void updateFailLogin(LockUserDTO params) {
+		userMapper.updateFailLogin(params);
+	}
 	
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,15 +44,16 @@ public class BoradController {
 	/**
 	 * 게시판 리스트 조회
 	 * @param params
+	 * @param auth
 	 * @param model
 	 * @return
 	 */
 	@GetMapping("/board")
-	public String list(@ModelAttribute("params") final SearchDTO params, Model model) {
+	public String list(@ModelAttribute("params") final SearchDTO params, Authentication auth, Model model) {
 		log.info("***** Board Page Call *****");
 		
 		SessionUser user = (SessionUser) session.getAttribute("user");
-		if(user != null) {
+		if(auth != null) {
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
@@ -68,15 +70,16 @@ public class BoradController {
 	/**
 	 * 게시글 상세페이지 조회
 	 * @param id
+	 * @param auth
 	 * @param model
 	 * @return
 	 */
 	@GetMapping("/board/detail")
-	public String detail(@RequestParam Long id, Model model) {
+	public String detail(@RequestParam Long id, Authentication auth, Model model) {
 		log.info("# Board Page Detail?id = " + id);
 		
 		SessionUser user = (SessionUser) session.getAttribute("user");
-		if(user != null) {
+		if(auth != null) {
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("list", chatRoomService.findAllRooms());
@@ -97,15 +100,16 @@ public class BoradController {
 	/**
 	 * 게시글 작성/수정 페이지
 	 * @param id
+	 * @param auth
 	 * @param model
 	 * @return
 	 */
 	@GetMapping("/board/write")
-	public String write(@RequestParam(value = "id", required = false) final Long id, Model model) {
+	public String write(@RequestParam(value = "id", required = false) final Long id, Authentication auth, Model model) {
 		log.info("# Board Page Write?id = " + id);
 		
 		SessionUser user = (SessionUser) session.getAttribute("user");
-		if(user != null) {
+		if(auth != null) {
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
