@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.project.toy.security.oauth.config.CustomUserDetails;
 import com.project.toy.security.service.CustomUserService;
+import com.project.toy.user.dto.LockUserDTO;
 import com.project.toy.user.dto.UserDTO;
 import com.project.toy.user.service.UserService;
 
@@ -46,10 +47,19 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			throw new BadCredentialsException("존재하지 않는 아이디입니다.");
 		} else {
 			resultUserPwd = userInfo.getUserPwd();
+			LockUserDTO lockUserDTO = userService.selectLockUser(params);
 			
 			// 비밀번호 체크
 			if(!bCryptPasswordEncoder.matches(userPwd, resultUserPwd)) {
-				throw new BadCredentialsException("입력하신 비밀번호가 일치하지 않습니다.");
+				int failCount = lockUserDTO.getFailCnt() + 1;
+				lockUserDTO.setFailCnt(failCount);
+				lockUserDTO.setLockYn(failCount >= 5 ? "Y" : "N");
+				userService.updateFailLogin(lockUserDTO);
+				
+				throw new BadCredentialsException("비밀번호를 " + failCount + "회 틀렸습니다." + "\n5회 이상 틀릴 경우 계정이 잠깁니다.\n");
+			} else {
+				lockUserDTO.setFailCnt(0);
+				userService.updateFailLogin(lockUserDTO);
 			}
 		}
 		

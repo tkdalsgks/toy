@@ -36,8 +36,6 @@ var index = {
            },
            success: function(res) {
            		if(res.code === '100') {
-           			console.log(res.code);
-           			alert("로그인 되었습니다.");
 	            	window.location = "/";
             	} else {
             		alert(res.message);
