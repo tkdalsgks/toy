@@ -28,7 +28,7 @@
 	<div layout:fragment="content" class="container">
 		<div class="page_tits">
 			<h3>작성/수정</h3>
-			<p class="path"><strong>현재 위치 :</strong> <span>게시판 리스트</span> <span>상세보기</span> <span>작성/수정</span></p>
+			<p class="path"><strong>현재 위치 :</strong> <span>게시판 리스트</span> <span>상세보기</span> <span><b>작성/수정</b></span></p>
 		</div>
 		
 		<div class="content">
@@ -65,7 +65,7 @@
 							
 							<tr>
 								<th>내용 <span class="es">필수 입력</span></th>
-								<td colspan="3"><textarea id="content" name="content" cols="150" rows="10" placeholder="내용을 입력해 주세요."></textarea></td>
+								<td colspan="3"><textarea id="content" name="content" cols="150" rows="15" placeholder="내용을 입력해 주세요."></textarea></td>
 							</tr>
 						</tbody>
 					</table>
@@ -81,9 +81,12 @@
 	</div>
 	
 	<th:block layout:fragment="script">
+		<!-- FONT AWESOME -->
+		<script src="https://kit.fontawesome.com/77ad8525ff.js"></script>
 		<!-- Jquery, Bootstrap -->
 		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
 		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/app/header.js"></script>
 		<!-- POPUP -->
 		<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>

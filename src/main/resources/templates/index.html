@@ -25,6 +25,9 @@
 	<!-- CONTENT -->
 	<div layout:fragment="content" class="form-index">
 	
+		<div class="index-brand">
+			<i class="fa-sharp fa-solid fa-cloud"></i>
+		</div>
 		<div sec:authorize="isAnonymous()" id="form-index-one">
 			<div class="form-login-sns">
 				<a href="/oauth2/authorization/kakao" style="text-align: center;"><img src="/img/app/login/kakao_login_medium_narrow.png" class="login-kakao"></a><br>
@@ -54,10 +57,13 @@
 	</div>
 	
 	<th:block layout:fragment="script">
+		<!-- FONT AWESOME -->
+		<script src="https://kit.fontawesome.com/77ad8525ff.js"></script>
 		<!-- Jquery, Bootstrap -->
 		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
 		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/js/app/index.js"></script>
+		<script type="text/javascript" src="/js/app/header.js"></script>
 	</th:block>
 	
 </body>
