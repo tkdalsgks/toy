@@ -52,5 +52,9 @@ public class BoardService {
 	public void deleteBoard(Long id) {
 		boardMapper.deleteByBoardId(id);
 	}
+	
+	public void countHits(Long id) {
+		boardMapper.countHits(id);
+	}
 
 }

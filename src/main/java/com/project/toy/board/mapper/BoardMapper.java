@@ -18,4 +18,5 @@ public interface BoardMapper {
 	public void updateBoard(BoardRequestDTO params);
 	public void deleteByBoardId(Long id);
 	public int countBoard(SearchDTO params);
+	public void countHits(Long id);
 }
