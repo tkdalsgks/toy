@@ -18,8 +18,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.project.toy.chat.service.ChatRoomService;
 import com.project.toy.user.dto.SessionUser;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "chat", description = "채팅 API")
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/chat")
@@ -38,6 +41,7 @@ public class RoomController {
 	 * @param auth
 	 * @param model
 	 */
+	@Operation(summary = "채팅방 조회", description = "채팅방 조회")
 	@GetMapping("/room")
 	public void getRoom(String roomId, Authentication auth, Model model) {
 		log.info("# get Chat Room, roomId : " + roomId);
@@ -57,6 +61,7 @@ public class RoomController {
 	 * @param model
 	 * @return
 	 */
+	@Operation(summary = "채팅방 개설", description = "채팅방 개설 메서드")
 	@ResponseBody
 	@PostMapping("/room")
 	public String create(@RequestParam String name, RedirectAttributes rttr, Model model) {

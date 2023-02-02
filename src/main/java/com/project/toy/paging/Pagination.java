@@ -2,17 +2,32 @@ package com.project.toy.paging;
 
 import com.project.toy.common.dto.SearchDTO;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
+@Schema(description = "페이징")
 @Getter
 public class Pagination {
 
-	private int totalRecordCount;	// 전체 데이터 수
-	private int totalPageCount;		// 전체 페이지 수
-	private int startPage;			// 첫 페이지 번호
-	private int endPage;			// 끝 페이지 번호
-	private int limitStart;			// LIMIT 시작 위치
-	private boolean existPrevPage;	// 이전 페이지 존재 여부
+	@Schema(description = "전체 데이터 수")
+	private int totalRecordCount;
+	
+	@Schema(description = "전체 페이지 수")
+	private int totalPageCount;
+	
+	@Schema(description = "첫 페이지 번호")
+	private int startPage;
+	
+	@Schema(description = "끝 페이지 번호")
+	private int endPage;
+	
+	@Schema(description = "LIMIT 시작 위치")
+	private int limitStart;
+	
+	@Schema(description = "이전 페이지 존재 여부")
+	private boolean existPrevPage;
+	
+	@Schema(description = "다음 페이지 존재 여부")
 	private boolean existNextPage;	// 다음 페이지 존재 여부
 	
 	public Pagination(int totalRecordCount, SearchDTO params) {

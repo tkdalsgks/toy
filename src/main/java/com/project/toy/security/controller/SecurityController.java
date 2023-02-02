@@ -23,6 +23,10 @@ import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UserDTO;
 import com.project.toy.user.service.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "index", description = "로그인 및 회원가입 API")
 @Controller
 public class SecurityController {
 	
@@ -40,6 +44,7 @@ public class SecurityController {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
+	@Operation(summary = "메인 홈", description = "메인 홈 조회")
 	@GetMapping({"", "/"})
 	public String index(Authentication auth, Model model) {
 		SessionUser user = (SessionUser) session.getAttribute("user");
@@ -56,6 +61,7 @@ public class SecurityController {
 	 * 회원가입 페이지
 	 * @return
 	 */
+	@Operation(summary = "회원가입 페이지", description = "회원가입 페이지 조회")
 	@GetMapping("/join")
 	public String join() {
 		log.info("***** Join Page Call *****");
@@ -67,6 +73,7 @@ public class SecurityController {
 	 * 일반 회원가입
 	 * @param userDTO
 	 */
+	@Operation(summary = "회원가입", description = "일반 사용자 회원가입 메서드")
 	@PostMapping("/join")
 	public String saveUser(UserDTO userDTO, String userId, Model model) {
 		MessageDTO message;
@@ -80,6 +87,7 @@ public class SecurityController {
 		return showMessageAndRedirect(message, model);
 	}
 	
+	@Operation(summary = "아이디 중복확인", description = "아이디 중복확인 메서드")
 	@ResponseBody
 	@PostMapping("/check/id")
 	public Map<String, String> checkId(String userId) {
@@ -94,6 +102,7 @@ public class SecurityController {
 		return map;
 	}
 	
+	@Operation(summary = "닉네임 중복확인", description = "닉네임 중복확인 메서드")
 	@ResponseBody
 	@PostMapping("/check/nickname")
 	public Map<String, String> checkNickname(String userNickname) {
@@ -108,6 +117,7 @@ public class SecurityController {
 		return map;
 	}
 	
+	@Operation(summary = "이메일중복확인", description = "이메일 중복확인 메서드")
 	@ResponseBody
 	@PostMapping("/check/email")
 	public Map<String, String> checkEmail(String userEmail) {
