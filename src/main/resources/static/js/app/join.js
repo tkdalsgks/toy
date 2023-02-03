@@ -1,14 +1,15 @@
 // 회원가입 아이디 유효성 검사
 $('#duplicateUserId').on('click' ,function() {
 	const id = document.getElementById('userId').value;
-	const checkResult = document.getElementById('checkUserId');
-	const exp = /^(?=.*[a-z0-9])[a-z0-9]{4,16}$/;	
+	const checkUserId = document.getElementById('checkUserId');
+	const userId = document.getElementById('userId');
+	const exp = /^(?=.*[a-z0-9])[a-z0-9]{4,16}$/;
 	
 	const imgCheckId = document.getElementById('imgCheckId');
 	const imgCancelId = document.getElementById('imgCancelId');
 	
 	if(!id.match(exp)) {
-    	checkResult.innerHTML = '아이디는 영문, 숫자로 이루어진 4~20자리로 입력해주세요.'
+    	checkUserId.innerHTML = '아이디는 영문, 숫자로 이루어진 4~20자리로 입력해주세요.'
     	imgCheckId.style.display = 'none';
     	imgCancelId.style.display = 'initial';
     } else if(id.match(exp)) {
@@ -19,19 +20,20 @@ $('#duplicateUserId').on('click' ,function() {
 			dataType : "json",
 			success : function(data) {
 				if(data.result == "false") {
-					checkResult.innerHTML = '아이디는 영문, 숫자로 이루어진 4~20자리로 입력해주세요. 이미 사용중인 아이디입니다.';
-					checkResult.style.color = '#DC143C';
+					checkUserId.innerHTML = '아이디는 영문, 숫자로 이루어진 4~20자리로 입력해주세요. 이미 사용중인 아이디입니다.';
+					checkUserId.style.color = '#DC143C';
 					imgCheckId.style.display = 'none';
 					imgCancelId.style.display = 'initial';
 		        } else if(data.result == "true") {
-		        	checkResult.innerHTML = '사용 가능한 아이디입니다.';
-					checkResult.style.color = '#DA70D6';
+		        	checkUserId.innerHTML = '사용 가능한 아이디입니다.';
+					checkUserId.style.color = '#DA70D6';
 		        	imgCheckId.style.display = 'initial';
 		        	imgCancelId.style.display = 'none';
+		        	userId.disabled = 'true';
 		        }
 		    },
 		    error: function(data){
-		    	console.log("error: " + data);
+		    	alert("잠시후 재시도 바랍니다.");
 		    }
 		});
 	}
@@ -110,7 +112,10 @@ $('#userNickname').on('keyup' ,function() {
 		        	imgCheckName.style.display = 'initial';
 		        	imgCancelName.style.display = 'none';
 		        }
-		    }
+		    },
+			error: function(data) {
+				alert("잠시후 재시도 바랍니다.");
+			}
 		});
 	}
 });
@@ -128,6 +133,7 @@ $('#userEmail').on('keyup' ,function() {
     	checkUserEmail.innerHTML = '올바르지 않은 이메일 형식입니다.'
     	imgCheckEmail.style.display = 'none';
     	imgCancelEmail.style.display = 'initial';
+    	$('#check-email').prop('disabled', true);
     } else if(email.match(exp)) {
 		$.ajax({
 			url : "/check/email",
@@ -140,13 +146,18 @@ $('#userEmail').on('keyup' ,function() {
 					checkUserEmail.style.color = '#DC143C';
 					imgCheckEmail.style.display = 'none';
 					imgCancelEmail.style.display = 'initial';
+					$('#check-email').prop('disabled', true);
 		        } else if(data.result == "true") {
 		        	checkUserEmail.innerHTML = '사용 가능한 이메일입니다.';
 		        	checkUserEmail.style.color = '#DA70D6';
 		        	imgCheckEmail.style.display = 'initial';
 		        	imgCancelEmail.style.display = 'none';
+		        	$('#check-email').prop('disabled', false);
 		        }
-		    }
+		    },
+			error: function(data) {
+				alert("잠시후 재시도 바랍니다.");
+			}
 		});
 	}
 });
@@ -159,3 +170,24 @@ $("#userId, #userPwd, #userPwdConfirm, #userNickname, #userEmail").change(functi
     	$('#joinSubmit').prop('disabeld', true);
     }
 });
+
+
+$('#check-email').click(function() {
+	const email = document.getElementById('userEmail').value;
+	const checkInput = $('#check-email-number');
+	
+	$.ajax({
+		type : 'post',
+		url : '/check/mail',
+		data : { "userEmail" : $("#userEmail").val() },
+		success : function(data) {
+			checkInput.attr('disabled', false);
+			code = data;
+			alert('입력한 이메일로 인증번호가 전송되었습니다.');
+		},
+		error: function(data) {
+			alert("잠시후 재시도 바랍니다.");
+		}
+	});
+});
+

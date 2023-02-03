@@ -14,6 +14,8 @@
 	<link rel="stylesheet" th:href="@{/css/app/default.css}" />
 	<!-- POPUP -->
 	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
+	<!-- FIND -->
+	<link rel="stylesheet" th:href="@{/css/app/find.css}" />
 </th:block>
 
 </head>
@@ -27,57 +29,66 @@
 			<span id="checkUserNickname">닉네임은 특수문자를 제외한 2~10자리로 입력해주세요.</span><br>
 			<span id="checkUserEmail">올바르지 않은 이메일 형식입니다.</span>
 		</div>
-		<form th:action="@{/join}" method="post">
-			<div class="mb-3">
-				<div class="form-group-join">
-					<label class="form-label"><span class="text-danger">* </span>아이디</label>
-					<input type="text" id="userId" name="userId" class="form-control required">
-					<img src="/img/app/join/check.png" id="imgCheckId" class="img-check-id">
-					<img src="/img/app/join/cancel.png" id="imgCancelId" class="img-cancel-id">
-					<button type="button" id="duplicateUserId" class="btn btn-primary btn-duplicate-id">중복확인</button>
+		<div class="form-join">
+			<form th:action="@{/join}" method="post">
+				<div class="mb-3">
+					<div class="form-group-join">
+						<label class="form-label"><span class="text-danger">* </span>아이디</label>
+						<input type="text" id="userId" name="userId" class="form-control required">
+						<img src="/img/app/join/check.png" id="imgCheckId" class="img-check-id">
+						<img src="/img/app/join/cancel.png" id="imgCancelId" class="img-cancel-id">
+						<button type="button" id="duplicateUserId" class="btn btn-primary btn-duplicate-id">중복확인</button>
+					</div>
+					<div style="">
+					</div>
 				</div>
-				<div style="">
+				<div class="mb-3">
+					<div class="form-group-join">
+						<label class="form-label"><span class="text-danger">* </span>비밀번호</label>
+						<input type="text" id="userPwd" name="userPwd" class="form-control required">
+						<img src="/img/app/join/check.png" id="imgCheckPwd" class="img-check-pwd">
+						<img src="/img/app/join/cancel.png" id="imgCancelPwd" class="img-cancel-pwd">
+					</div>
 				</div>
-			</div>
-			<div class="mb-3">
-				<div class="form-group-join">
-					<label class="form-label"><span class="text-danger">* </span>비밀번호</label>
-					<input type="text" id="userPwd" name="userPwd" class="form-control required">
-					<img src="/img/app/join/check.png" id="imgCheckPwd" class="img-check-pwd">
-					<img src="/img/app/join/cancel.png" id="imgCancelPwd" class="img-cancel-pwd">
+				<div class="mb-3">
+					<div class="form-group-join">
+						<label class="form-label"><span class="text-danger">* </span>비밀번호 확인</label>
+						<input type="text" id="userPwdConfirm" name="userPwdConfirm" class="form-control required">
+						<img src="/img/app/join/check.png" id="imgCheckConfirm" class="img-check-confirm">
+						<img src="/img/app/join/cancel.png" id="imgCancelConfirm" class="img-cancel-confirm">
+					</div>
 				</div>
-			</div>
-			<div class="mb-3">
-				<div class="form-group-join">
-					<label class="form-label"><span class="text-danger">* </span>비밀번호 확인</label>
-					<input type="text" id="userPwdConfirm" name="userPwdConfirm" class="form-control required">
-					<img src="/img/app/join/check.png" id="imgCheckConfirm" class="img-check-confirm">
-					<img src="/img/app/join/cancel.png" id="imgCancelConfirm" class="img-cancel-confirm">
+				<div class="mb-3">
+					<div class="form-group-join">
+						<label class="form-label"><span class="text-danger">* </span>닉네임</label>
+						<input type="text" id="userNickname" name="userNickname" class="form-control required">
+						<img src="/img/app/join/check.png" id="imgCheckName" class="img-check-name">
+						<img src="/img/app/join/cancel.png" id="imgCancelName" class="img-cancel-name">
+					</div>
 				</div>
-			</div>
-			<div class="mb-3">
-				<div class="form-group-join">
-					<label class="form-label"><span class="text-danger">* </span>닉네임</label>
-					<input type="text" id="userNickname" name="userNickname" class="form-control required">
-					<img src="/img/app/join/check.png" id="imgCheckName" class="img-check-name">
-					<img src="/img/app/join/cancel.png" id="imgCancelName" class="img-cancel-name">
+				<div class="mb-3">
+					<div class="form-group-join">
+						<label class="form-label"><span class="text-danger">* </span>이메일</label>
+						<input type="text" id="userEmail" name="userEmail" class="form-control required">
+						<img src="/img/app/join/check.png" id="imgCheckEmail" class="img-check-email">
+						<img src="/img/app/join/cancel.png" id="imgCancelEmail" class="img-cancel-email">
+						<button type="button" id="check-email" class="btn btn-primary btn-check-email" disabled="disabled">이메일 인증</button>
+					</div>
 				</div>
-			</div>
-			<div class="mb-3">
-				<div class="form-group-join">
-					<label class="form-label"><span class="text-danger">* </span>이메일</label>
-					<input type="text" id="userEmail" name="userEmail" class="form-control required">
-					<img src="/img/app/join/check.png" id="imgCheckEmail" class="img-check-email">
-					<img src="/img/app/join/cancel.png" id="imgCancelEmail" class="img-cancel-email">
+				<div class="mb-3">
+					<div class="form-group-join">
+						<label class="form-label"><span class="text-danger">* </span>인증번호</label>
+						<input type="text" id="check-email-number" class="form-control required" placeholder="인증번호를 입력해주세요." disabled="disabled">
+					</div>
 				</div>
-			</div>
-			<div class="mb-3">
-				<div class="form-group-signed">
-					<button type="button" class="btn btn-secondary" onclick="goHome();">취소</button>
-					<button type="submit" id="joinSubmit" class="btn btn-secondary" disabled="disabled">회원가입</button>
+				<div class="mb-3">
+					<div class="form-group-signed">
+						<button type="button" class="btn btn-secondary" onclick="goHome();">취소</button>
+						<button type="submit" id="joinSubmit" class="btn btn-secondary" disabled="disabled">회원가입</button>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
 	
 	<th:block layout:fragment="script">

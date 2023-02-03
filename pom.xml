@@ -134,6 +134,26 @@
 		    <artifactId>springdoc-openapi-ui</artifactId>
 		    <version>1.6.9</version>
 		</dependency>
+		
+		<!-- EMAIL -->
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+		
+		<!-- SPRING CONTEXT SUPPORT -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		
+		<!-- CONFIGURATION -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
 	<build>
