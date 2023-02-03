@@ -117,7 +117,7 @@ public class SecurityController {
 		return map;
 	}
 	
-	@Operation(summary = "이메일중복확인", description = "이메일 중복확인 메서드")
+	@Operation(summary = "이메일 중복확인", description = "이메일 중복확인 메서드")
 	@ResponseBody
 	@PostMapping("/check/email")
 	public Map<String, String> checkEmail(String userEmail) {
@@ -127,6 +127,44 @@ public class SecurityController {
 			map.put("result", "true");
 		} else {
 			map.put("result", "false");
+		}
+		
+		return map;
+	}
+	
+	@Operation(summary = "아이디 찾기", description = "아이디 찾기 메서드")
+	@ResponseBody
+	@PostMapping("/find/id")
+	public Map<String, String> findId(String userEmail) {
+		Map<String, String> map = new HashMap<String, String>();
+		
+		UserDTO userDTO = userService.findByUserId(userEmail);
+		if(userDTO == null) {
+			map.put("result", "false");
+		} else {
+			String userId = userDTO.getUserId();
+			System.out.println("123123 " + userId);
+			map.put("findId", userId);
+			map.put("result", "true");
+		}
+		
+		return map;
+	}
+	
+	@Operation(summary = "비밀번호 찾기", description = "비밀번호 찾기 메서드")
+	@ResponseBody
+	@PostMapping("/find/password")
+	public Map<String, String> findPassword(String userId, String userEmail) {
+		Map<String, String> map = new HashMap<String, String>();
+		
+		UserDTO userDTO = userService.findByUserPwd(userId, userEmail);
+		if(userDTO == null) {
+			map.put("result", "false");
+		} else {
+			String userPwd = userDTO.getUserPwd();
+			System.out.println("123123 " + userPwd);
+			map.put("findPwd", userPwd);
+			map.put("result", "true");
 		}
 		
 		return map;

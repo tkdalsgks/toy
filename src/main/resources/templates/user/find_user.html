@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:fragment="find">
+
+	<div sec:authorize="isAnonymous()" class="find-background">
+		<div class="find-window">
+	   		
+			<div class="find-popup">
+				<div class="find-close">
+					<button id="find-close" class="btn-close" onclick="findClose();"></button>
+				</div>
+				
+				<div id="find" class="find">
+					<button onclick="findId();">아이디 찾기</button>
+					<button onclick="findPwd();">비밀번호 찾기</button>
+				</div>
+	   			
+	   			<!-- 아이디 찾기 -->
+	   			<div id="find-id" class="find-id">
+	   				<div class="find-id-email">
+		   				<label class="form-label">아이디 찾기</label><br>
+		   				<input type="text" id="findIdEmail" name="findIdEmail" placeholder="이메일을 입력해주세요."><br>
+		   				<button id="findUserId">찾기</button>
+	   				</div>
+	   			</div>
+	   			
+	   			<!-- 비밀번호 찾기 -->
+	   			<div id="find-pwd" class="find-pwd">
+	   				<div class="find-pwd-id">
+		   				<label class="form-label">비밀번호 찾기</label><br>
+		   				<input type="text" id="findPwdId" name="findPwdId" placeholder="아이디를 입력해주세요."><br>
+		   				<input type="text" id="findPwdEmail" name="findPwdEmail" placeholder="이메일을 입력해주세요."><br>
+		   				<button id="findUserPwd">찾기</button>
+	   				</div>
+	   			</div>
+			    
+	   		</div>
+	   		
+	    	<div><div></div></div>
+		</div>
+	</div>
+	
+</div>

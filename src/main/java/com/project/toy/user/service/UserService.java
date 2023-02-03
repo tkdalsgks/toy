@@ -62,4 +62,11 @@ public class UserService {
 		userMapper.updateFailLogin(params);
 	}
 	
+	public UserDTO findByUserId(String userEmail) {
+		return userMapper.findByUserId(userEmail);
+	}
+	
+	public UserDTO findByUserPwd(String userId, String userEmail) {
+		return userMapper.findByUserPwd(userId, userEmail);
+	}	
 }
