@@ -55,7 +55,7 @@ function commonAjax(url, parameter, type, calbak, contentType){
 			calbak(res);
 		},
 		error : function(err){
-			console.log('error');
+			alert("잠시후 재시도 바랍니다.");
 			calbak(err);
 		}
 	});

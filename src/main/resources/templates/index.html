@@ -16,6 +16,8 @@
 	<link rel="stylesheet" th:href="@{/css/app/default.css}" />
 	<!-- POPUP -->
 	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
+	<!-- FIND -->
+	<link rel="stylesheet" th:href="@{/css/app/find.css}" />
 </th:block>
 
 </head>
@@ -26,7 +28,7 @@
 	<div layout:fragment="content" class="form-index">
 	
 		<div class="index-brand">
-			<i class="fa-sharp fa-solid fa-cloud"></i>
+			<a th:href="@{/}"><i class="fa-sharp fa-solid fa-cloud"></i></a>
 		</div>
 		<div sec:authorize="isAnonymous()" id="form-index-one">
 			<div class="form-login-sns">
@@ -44,7 +46,7 @@
 				<input type="text" id="userPwd" name="userPwd" class="form-control required" placeholder="비밀번호">
 			</div>
 			<label class="custom-control custom-checkbox m-0">
-				<a href="">아이디/비밀번호 찾기</a>
+				<button type="button" id="find-show" class="find-user" onclick="findOpenPopup();">아이디/비밀번호 찾기</button>
 			</label>
 			<div>
 			</div>
@@ -64,6 +66,8 @@
 		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/js/app/index.js"></script>
 		<script type="text/javascript" src="/js/app/header.js"></script>
+		<!-- FIND -->
+		<script type="text/javascript" src="/js/app/find.js"></script>
 	</th:block>
 	
 </body>

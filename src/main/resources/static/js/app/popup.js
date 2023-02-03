@@ -61,6 +61,9 @@ $("#createChatRoom").on("click", function() {
 		data: { "name": $("#roomName").val() },
 		success: function() {
 			location.replace("");
+		},
+		error: function() {
+			alert("잠시후 재시도 바랍니다.");
 		}
 	});
 });

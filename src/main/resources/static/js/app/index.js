@@ -40,6 +40,9 @@ var index = {
             	} else {
             		alert(res.message);
             	}
+           },
+           error: function(res) {
+           		alert("잠시후 재시도 바랍니다.");
            }
         });
 	}
