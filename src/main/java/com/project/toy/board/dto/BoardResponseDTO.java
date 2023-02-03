@@ -2,19 +2,40 @@ package com.project.toy.board.dto;
 
 import java.time.LocalDateTime;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
+@Schema(description = "게시글 응답")
 @Getter
 public class BoardResponseDTO {
 
+	@Schema(description = "번호", nullable = false)
 	private Long id;
-	private String title;			// 제목
-	private String content;			// 내용
-	private String writerId;		// 작성자 아이디
-	private String writer;			// 작성자
-	private int viewCnt;			// 조회수
-	private Boolean noticeYn;		// 공지글 여부
-	private Boolean deleteYn;		// 삭제 여부
-	private LocalDateTime IDate;	// 생성일시
-	private LocalDateTime UDate;	// 수정일시
+	
+	@Schema(description = "제목", nullable = false)
+	private String title;
+	
+	@Schema(description = "내용", nullable = false)
+	private String content;
+	
+	@Schema(description = "작성자 아이디")
+	private String writerId;
+	
+	@Schema(description = "작성자")
+	private String writer;
+	
+	@Schema(description = "조회수")
+	private int viewCnt;
+	
+	@Schema(description = "공지글 여부")
+	private Boolean noticeYn;
+	
+	@Schema(description = "삭제 여부")
+	private Boolean deleteYn;
+	
+	@Schema(description = "생성일시", defaultValue = "NOW()")
+	private LocalDateTime IDate;
+	
+	@Schema(description = "수정일시", defaultValue = "NOW()")
+	private LocalDateTime UDate;
 }

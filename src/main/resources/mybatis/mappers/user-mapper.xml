@@ -26,5 +26,17 @@
      	AND    USER_ID = #{ userId }
      	AND    USE_YN = 'Y'
    </update>
+   
+   <select id="findByUserId" resultType="UserDTO">
+		/* com.project.toy.user.dto.UserDTO */
+		
+		SELECT * FROM toy.T_PERSON WHERE USE_YN = 'Y' AND USER_EMAIL = LOWER(#{ userEmail })
+	</select>
+	
+	<select id="findByUserPwd" resultType="UserDTO">
+		/* com.project.toy.user.dto.UserDTO */
+		
+		SELECT * FROM toy.T_PERSON WHERE USE_YN = 'Y' ANd USER_ID = LOWER(#{ userId }) AND USER_EMAIL = LOWER(#{ userEmail })
+	</select>
 	
 </mapper>

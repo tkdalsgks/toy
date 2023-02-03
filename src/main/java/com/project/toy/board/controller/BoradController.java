@@ -31,6 +31,10 @@ import com.project.toy.common.dto.SearchDTO;
 import com.project.toy.paging.PagingResponse;
 import com.project.toy.user.dto.SessionUser;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "board", description = "게시글 API")
 @Controller
 public class BoradController {
 	
@@ -46,12 +50,13 @@ public class BoradController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	/**
-	 * 게시판 리스트 조회
+	 * 게시글 리스트 조회
 	 * @param params
 	 * @param auth
 	 * @param model
 	 * @return
 	 */
+	@Operation(summary = "리스트 조회", description = "게시글 리스트 조회")
 	@GetMapping("/board")
 	public String list(@ModelAttribute("params") final SearchDTO params, Authentication auth, Model model) {
 		log.info("***** Board Page Call *****");
@@ -78,6 +83,7 @@ public class BoradController {
 	 * @param model
 	 * @return
 	 */
+	@Operation(summary = "상세페이지 조회", description = "게시글 상세페이지 조회")
 	@Transactional
 	@GetMapping("/board/detail")
 	public String detail(@RequestParam Long id, HttpServletRequest request, HttpServletResponse response, Authentication auth, Model model) {
@@ -135,6 +141,7 @@ public class BoradController {
 	 * @param model
 	 * @return
 	 */
+	@Operation(summary = "작성/수정 페이지 조회", description = "게시글 작성/수정 페이지 조회")
 	@GetMapping("/board/write")
 	public String write(@RequestParam(value = "id", required = false) final Long id, Authentication auth, Model model) {
 		log.info("# Board Page Write?id = " + id);
@@ -159,6 +166,7 @@ public class BoradController {
 	 * @param model
 	 * @return
 	 */
+	@Operation(summary = "신규 게시글 생성", description = "신규 게시글 생성 메서드")
 	@PostMapping("/board/save")
 	public String save(final BoardRequestDTO params, Model model) {
 		SessionUser user = (SessionUser) session.getAttribute("user");
@@ -176,6 +184,7 @@ public class BoradController {
 	 * @param model
 	 * @return
 	 */
+	@Operation(summary = "기존 게시글 수정", description = "기존 게시글 수정 메서드")
 	@PostMapping("board/update")
 	public String update(final BoardRequestDTO params, Model model) {
 		boardService.updateBoard(params);
@@ -191,6 +200,7 @@ public class BoradController {
 	 * @param model
 	 * @return
 	 */
+	@Operation(summary = "게시글 삭제", description = "게시글 삭제 메서드")
 	@PostMapping("/board/delete")
 	public String delete(@RequestParam final Long id, final SearchDTO queryParams, Model model) {
 		boardService.deleteBoard(id);

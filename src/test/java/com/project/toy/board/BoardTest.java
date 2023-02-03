@@ -1,7 +1,5 @@
 package com.project.toy.board;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +10,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.project.toy.board.dto.BoardRequestDTO;
 import com.project.toy.board.dto.BoardResponseDTO;
 import com.project.toy.board.mapper.BoardMapper;
-import com.project.toy.paging.PagingResponse;
 
 @SpringBootTest
 public class BoardTest {
