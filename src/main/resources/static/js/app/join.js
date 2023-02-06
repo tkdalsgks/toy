@@ -2,7 +2,6 @@
 $('#duplicateUserId').on('click' ,function() {
 	const id = document.getElementById('userId').value;
 	const checkUserId = document.getElementById('checkUserId');
-	const userId = document.getElementById('userId');
 	const exp = /^(?=.*[a-z0-9])[a-z0-9]{4,16}$/;
 	
 	const imgCheckId = document.getElementById('imgCheckId');
@@ -12,6 +11,7 @@ $('#duplicateUserId').on('click' ,function() {
     	checkUserId.innerHTML = '아이디는 영문, 숫자로 이루어진 4~20자리로 입력해주세요.'
     	imgCheckId.style.display = 'none';
     	imgCancelId.style.display = 'initial';
+    	$("#duplicateUserId").attr("value", "");
     } else if(id.match(exp)) {
 		$.ajax({
 			url : "/check/id",
@@ -24,12 +24,15 @@ $('#duplicateUserId').on('click' ,function() {
 					checkUserId.style.color = '#DC143C';
 					imgCheckId.style.display = 'none';
 					imgCancelId.style.display = 'initial';
+					$("#duplicateUserId").attr("value", "");
 		        } else if(data.result == "true") {
 		        	checkUserId.innerHTML = '사용 가능한 아이디입니다.';
 					checkUserId.style.color = '#DA70D6';
 		        	imgCheckId.style.display = 'initial';
 		        	imgCancelId.style.display = 'none';
-		        	userId.disabled = 'true';
+		        	$('#userId').prop('disabled', true);
+		        	$('#duplicateUserId').prop('disabled', true);
+		        	$("#duplicateUserId").attr("value", "Y");
 		        }
 		    },
 		    error: function(data){
@@ -162,32 +165,122 @@ $('#userEmail').on('keyup' ,function() {
 	}
 });
 
-// 회원가입 버튼 비활성화 -> 활성화
-$("#userId, #userPwd, #userPwdConfirm, #userNickname, #userEmail").change(function() {
-    if( $("#userId").val() != "" && $("#userPwd").val() != "" && $('#userPwdConfirm').val() != "" && $('#userEmail').val() != "" && $('#userNickname').val() != "") {
-    	$('#joinSubmit').prop('disabled', false);
-    } else {
-    	$('#joinSubmit').prop('disabeld', true);
-    }
+// 이메일 인증 유효시간
+$(function() {
+	var display = $("#check-email-time");
+	var isCertification = false;
+	var key = "";
+	var timer = null;
+	var isRunning = false;
+	
+	// 이메일 인증 버튼
+	$('#check-email').click(function() {
+		$.ajax({
+			type : 'post',
+			url : '/check/mail',
+			data : { "userEmail" : $("#userEmail").val() },
+			success : function(data) {
+				isCertification = true;
+				var leftSec = 180;
+				if(isRunning) {
+					clearInterval(timer);
+					display.html("");
+					startTimer(leftSec, display);
+				} else {
+					startTimer(leftSec, display);
+				}
+				$('#check-email-number').prop('disabled', false);
+				$('#check-email-verify').prop('disabled', false);
+				code = data;
+				alert('입력한 이메일로 인증번호가 전송되었습니다.');
+			},
+			error: function(data) {
+				alert("잠시후 재시도 바랍니다.");
+			}
+		});
+	});
+	
+	function startTimer(count, display) {
+		var minutes, seconds;
+		timer = setInterval(function() {
+			minutes = parseInt(count / 60, 10);
+			seconds = parseInt(count % 60, 10);
+			
+			minutes = minutes < 10 ? "0" + minutes : minutes;
+			seconds = seconds < 10 ? "0" + seconds : seconds;
+			
+			display.html(minutes + ":" + seconds);
+			
+			// 타이머 끝
+			if(--count < 0) {
+				clearInterval(timer);
+				$('#check-email-number').prop('disabled', true);
+				$('#check-email-verify').prop('disabled', true);
+				isRunning = false;
+			}
+		}, 1000);
+		isRunning = true;
+	}
+	
+	// 인증 확인 버튼
+	$('#check-email-verify').click(function() {
+		$.ajax({
+			type : 'post',
+			url : '/check/verifyCode',
+			data : { "code" : $("#check-email-number").val() },
+			success : function(result) {
+				if(result == 1) {
+					isCertification = true;
+					clearInterval(timer);
+					$('#userEmail').prop('disabled', true);
+					$('#check-email').prop('disabled', true);
+					$('#joinSubmit').prop('disabled', false);
+					$('#check-email-number').prop('disabled', true);
+					$('#check-email-verify').prop('disabled', true);
+					$("#check-email-verify").attr("value", "Y");
+					alert("인증되었습니다.");
+				} else {
+					isCertification = false;
+					$("#check-email-verify").attr("value", "");
+					alert("인증번호를 다시 확인해주세요.");
+				}
+			},
+			error: function(result) {
+				alert("잠시후 재시도 바랍니다.");
+			}
+		});
+	});
 });
 
 
-$('#check-email').click(function() {
-	const email = document.getElementById('userEmail').value;
-	const checkInput = $('#check-email-number');
+
+
+
+$('#joinSubmit').click(function() {
+	const duplicate = document.getElementById('duplicateUserId').value;
+	const verify = document.getElementById('check-email-verify').value;
 	
-	$.ajax({
-		type : 'post',
-		url : '/check/mail',
-		data : { "userEmail" : $("#userEmail").val() },
-		success : function(data) {
-			checkInput.attr('disabled', false);
-			code = data;
-			alert('입력한 이메일로 인증번호가 전송되었습니다.');
-		},
-		error: function(data) {
-			alert("잠시후 재시도 바랍니다.");
-		}
-	});
+	if(duplicate != 'Y') {
+		alert("아이디 중복확인이 필요합니다.");
+	} else if(verify != 'Y') {
+		alert("이메일 인증이 필요합니다.");
+	} else {
+		$.ajax({
+			type : 'post',
+			url : '/join',
+			data : { "userId" : $("#userId").val(),
+					"userPwd" : $("#userPwd").val(),
+					"userPwdConfirm" : $("#userPwdConfirm").val(),
+					"userNickname" : $("#userNickname").val(),
+					"userEmail" : $("#userEmail").val() },
+			success : function(data) {
+				alert("회원가입이 완료되었습니다.");
+				location.href = "/";
+			},
+			error: function(data) {
+				alert("잠시후 재시도 바랍니다.");
+			}
+		});
+	}
 });
 
