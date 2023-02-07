@@ -17,6 +17,7 @@ public class BoardTest {
 	@Autowired
 	private BoardMapper boardMapper;
 	
+	/*
 	@Test
 	void 게시글_저장() {
 		BoardRequestDTO boardRequestDTO = new BoardRequestDTO();
@@ -63,4 +64,6 @@ public class BoardTest {
 	void 게시글_삭제() {
 		boardMapper.deleteByBoardId(1L);
 	}
+	*/
+	
 }

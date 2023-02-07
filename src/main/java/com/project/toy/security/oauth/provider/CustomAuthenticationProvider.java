@@ -6,6 +6,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -44,7 +45,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		
 		// 사용자 존재여부 체크
 		if(userInfo == null) {
-			throw new BadCredentialsException("존재하지 않는 아이디입니다.");
+			throw new UsernameNotFoundException("존재하지 않는 아이디입니다.");
 		} else {
 			resultUserPwd = userInfo.getUserPwd();
 			LockUserDTO lockUserDTO = userService.selectLockUser(params);

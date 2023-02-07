@@ -14,6 +14,16 @@ var index = {
     	$('#login-general').on('click' ,function() {
 			index.login();
     	});
+    	$('#userId').on('keyup', function(e) {
+    		if(e.keyCode === 13) {
+	    		index.login();    		
+    		}
+    	});
+    	$('#userPwd').on('keyup', function(e) {
+    		if(e.keyCode === 13) {
+	    		index.login();    		
+    		}
+    	});
     },
     login: function() {
     	if( ($("#userId").val() == "") || ( $("#userId").val() == null ) ) {

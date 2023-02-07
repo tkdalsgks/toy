@@ -38,10 +38,10 @@ public class CustomUserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		UserDTO userDTO = securityMapper.findByUserId(userId);
-		LockUserDTO lockUserDTO = userService.selectLockUser(userDTO);
 		
-		if(lockUserDTO.getLockYn().equals("N")) {
-			if(userDTO != null) {
+		if(userDTO != null) {
+			LockUserDTO lockUserDTO = userService.selectLockUser(userDTO);
+			if(lockUserDTO.getLockYn().equals("N")) {
 				log.info("-----");
 				log.info("General: 이미 가입된 유저입니다.");
 	            log.info("General: " + userDTO.getUserId());
@@ -49,11 +49,12 @@ public class CustomUserService implements UserDetailsService {
 	            session.setAttribute("user", new SessionUser(userDTO));
 	            
 	            return new CustomUserDetails(userDTO);
-			} else {
-				throw new UsernameNotFoundException(userId + "는 존재하지 않는 아이디입니다.");
+			} else {			
+				throw new LockedException("해당 계정이 잠겼습니다.\n비밀번호 찾기를 진행하여 새로운 비밀번호로 변경하세요.");
 			}
-		} else {			
-			throw new LockedException("해당 계정이 잠겼습니다.\n비밀번호 찾기를 진행하여 새로운 비밀번호로 변경하세요.");
+		} else {
+			throw new UsernameNotFoundException("존재하지 않는 아이디입니다.");
 		}
+		
 	}
 }
