@@ -32,7 +32,7 @@ public class EmailService {
 		MimeMessage message = emailSender.createMimeMessage();
 		
 		message.addRecipients(RecipientType.TO, to);
-		message.setSubject("이메일 인증 테스트");
+		message.setSubject("toy, 회원가입 인증 메일입니다.");
 		
 		String msg = "";
 		msg += "<div align='center' style='margin: 20px;'>";

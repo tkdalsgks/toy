@@ -52,6 +52,7 @@ body { padding-top: 110px; }
 .form-group-join > a { padding: 0 auto; font-size: 13px; color: #808080 }
 .btn-duplicate-id { position: absolute; top: 50%; left: 50%; transform: translate(160%, -600%); width: 85px; height: 45px; }
 .btn-check-email { position: absolute; top: 50%; left: 50%; transform: translate(135%, 245%); width: 100px; height: 45px; }
+.btn-check-email-verify { position: absolute; top: 50%; left: 50%; transform: translate(135%, 455%); width: 100px; height: 45px; }
 
 #imgCheckId { display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, -1290%); width: 20px; height: 20px; }
 #imgCancelId { display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, -1290%); width: 20px; height: 20px; }
@@ -62,4 +63,6 @@ body { padding-top: 110px; }
 #imgCheckName { display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, 135%); width: 20px; height: 20px; }
 #imgCancelName { display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, 135%); width: 20px; height: 20px; }
 #imgCheckEmail { display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, 610%); width: 20px; height: 20px; }
-#imgCancelEmail {display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, 610%); width: 20px; height: 20px; }
+#imgCancelEmail { display: none; position: absolute; top: 50%; left: 50%; transform: translate(480%, 610%); width: 20px; height: 20px; }
+
+#check-email-time { position: absolute; top: 50%; left: 50%; transform: translate(210%, 960%); color: rgba(0, 0, 0, 0.4); }
