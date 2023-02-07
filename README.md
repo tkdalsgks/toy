@@ -1,5 +1,7 @@
+[![Build Status](https://app.travis-ci.com/tkdalsgks/toy.svg?branch=main)](https://app.travis-ci.com/tkdalsgks/toy)
+<br><br>
 <div align='center'>
-<strong>:mag_right:&nbsp;&nbsp;Project Skils</strong>
+<strong>:mag_right:&nbsp;&nbsp;Project Skils&nbsp;</strong>
 <br><br>
 <img src="https://img.shields.io/badge/AWS EC2-FF9900?style=flat&logo=amazonec2&logoColor=white"/>&nbsp;<img src="https://img.shields.io/badge/AWS RDS-527FFF?style=flat&logo=amazonrds&logoColor=white"/>&nbsp;<img src="https://img.shields.io/badge/MariaDB-003545?style=flat&logo=mariadb&logoColor=white"/>&nbsp;<img src="https://img.shields.io/badge/Travis CI-3EAAAF?style=flat&logo=travisci&logoColor=white"/><br>
 <img src="https://img.shields.io/badge/JAVA-007396?style=flat&logo=java&logoColor=white">&nbsp;<img src="https://img.shields.io/badge/SRPINGBOOT-6DB33F?style=flat&logo=springboot&logoColor=white"/><br>
