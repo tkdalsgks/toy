@@ -9,7 +9,7 @@ server:
 spring:
   profiles: 
     active: local
-    include: oauth, email, travis
+    include: profile, oauth, email
     
 mybatis: 
   config-location: classpath:mybatis/mybatis-config.xml
