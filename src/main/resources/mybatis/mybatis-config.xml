@@ -14,8 +14,8 @@
 		<typeAlias type="com.project.toy.chat.dto.ChatRoomDTO" alias="ChatRoomDTO" />
 		<typeAlias type="com.project.toy.board.dto.BoardRequestDTO" alias="BoardRequestDTO" />
 		<typeAlias type="com.project.toy.board.dto.BoardResponseDTO" alias="BoardResponseDTO" />
-		<!-- <typeAlias type="com.project.toy.comment.dto.CommentRequestDTO" alias="CommentRequestDTO" />
-		<typeAlias type="com.project.toy.comment.dto.CommentResponseDTO" alias="CommentResponseDTO" /> -->
+		<typeAlias type="com.project.toy.comment.dto.CommentRequestDTO" alias="CommentRequestDTO" />
+		<typeAlias type="com.project.toy.comment.dto.CommentResponseDTO" alias="CommentResponseDTO" />
 		<typeAlias type="com.project.toy.common.dto.MessageDTO" alias="MessageDTO" />
 		<typeAlias type="com.project.toy.common.dto.SearchDTO" alias="SearchDTO" />
 

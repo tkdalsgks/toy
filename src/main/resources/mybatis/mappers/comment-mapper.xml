@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.toy.comment.mapper.CommentMapper">
+	
+	<sql id="commentColumns">
+		ID
+		, BOARD_ID
+		, CONTENT
+		, WRITER
+		, DELETE_YN
+		, I_DATE
+		, U_DATE
+	</sql>
+	
+	<!-- 저장 -->
+	<insert id="save" parameterType="CommentRequestDTO" useGeneratedKeys="true" keyProperty="id">
+		/* com.project.toy.comment.dto.CommentRequestDTO */
+		
+		INSERT INTO COMMENT ( <include refid="commentColumns" /> )
+		VALUES ( #{ id }, #{ boardId }, #{ content }, #{ writer }, 0, NOW(), NULL )
+	</insert>
+	
+	<!-- 수정 -->
+	<update id="update" parameterType="CommentRequestDTO">
+		/* com.project.toy.comment.dto.CommentRequestDTO */
+		
+		UPDATE COMMENT
+		SET    U_DATE = NOW()
+		     , CONTENT = #{ content }
+		     , writer = #{ writer }
+		WHERE  1=1
+		AND    ID = #{ id }
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteById" parameterType="long">
+		UPDATE COMMENT
+		SET    DELETE_YN = 1
+		WHERE  1=1
+		AND    ID = #{ id }
+	</delete>
+	
+	<!-- 리스트 조회 -->
+	<select id="findAll" parameterType="long" resultType="CommentResponseDTO">
+		/* com.project.toy.comment.dto.CommentResponseDTO */
+		
+		SELECT <include refid="commentColumns" />
+		FROM   COMMENT
+		WHERE  1=1
+		AND    DELETE_YN = 0
+		AND    BOARD_ID = #{ value }
+		ORDER BY ID DESC
+	</select>
+	
+</mapper>
