@@ -14,7 +14,7 @@
 	</sql>
 	
 	<!-- 저장 -->
-	<insert id="save" parameterType="CommentRequestDTO" useGeneratedKeys="true" keyProperty="id">
+	<insert id="saveComment" parameterType="CommentRequestDTO" useGeneratedKeys="true" keyProperty="id">
 		/* com.project.toy.comment.dto.CommentRequestDTO */
 		
 		INSERT INTO COMMENT ( <include refid="commentColumns" /> )
@@ -22,13 +22,13 @@
 	</insert>
 	
 	<!-- 수정 -->
-	<update id="update" parameterType="CommentRequestDTO">
+	<update id="updateComment" parameterType="CommentRequestDTO">
 		/* com.project.toy.comment.dto.CommentRequestDTO */
 		
 		UPDATE COMMENT
 		SET    U_DATE = NOW()
 		     , CONTENT = #{ content }
-		     , writer = #{ writer }
+		     , WRITER = #{ writer }
 		WHERE  1=1
 		AND    ID = #{ id }
 	</update>

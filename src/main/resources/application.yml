@@ -11,6 +11,10 @@ spring:
     active: local
     include: profile, oauth, email
     
+  mvc:
+    converters:
+      preferred-json-mapper: gson
+    
 mybatis: 
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mappers/*-mapper.xml
@@ -19,5 +23,6 @@ springdoc:
   swagger-ui: 
     path: /swagger-ui.html
     use-root-path: true
+
 
     
