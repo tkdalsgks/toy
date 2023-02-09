@@ -2,24 +2,16 @@
 /* CSS Document */
 
 /* 페이지 타이틀 */
-.page_tits {position:relative; margin-bottom:20px;}
-.page_tits .path {position:absolute; bottom:0; right:0; color:#444;}
-.page_tits .path > span {display:inline-block; position:relative; padding-left:12px;}
-.page_tits .path > span::before {content:'>'; font-family:dotum; color:#777; position:absolute; top:50%; left:0; margin-top:-7px;}
-.page_tits .path > strong + span {padding-left:0;}
-.page_tits .path > strong + span:before {display:none;}
+.page_tits { position:relative; margin-left: 50px; margin-bottom:20px; }
+.page_tits_name { font-size: 30px; font-weight: 600; }
+.page_tits .path { position:absolute; bottom:0; right:0; color:#444; }
+.page_tits .path > span { display:inline-block; position:relative; padding-left:12px; }
+.page_tits .path > span::before { content:'>'; font-family:dotum; color:#777; position:absolute; top:50%; left:0; margin-top:-7px; }
+.page_tits .path > strong + span { padding-left:0; }
+.page_tits .path > strong + span:before { display:none; }
 
 /* 컨텐츠 간격 */
-section {margin-top:80px;}
-section:first-child, #tabmenu + section {margin-top:0;}
-
-/* 탭메뉴 */
-#tabmenu * {box-sizing:border-box;}
-#tabmenu {font-size:0; margin:0 0 30px; position:relative; z-index:1;}
-#tabmenu::after {content:''; display:block; width:100%; height:1px; background:#cfcfcf; position:absolute; bottom:0; left:0;}
-#tabmenu li {display:inline-block; font-size:15px; letter-spacing:0; margin-left:-1px; margin-top:-1px; overflow:hidden; vertical-align:top; *display:inline; zoom:1;}
-#tabmenu li a {display:block; font-size:14px; font-weight:500; line-height:40px; width:100%; padding:0 15px; min-width:150px; background:#f6f6f6; border:1px solid #cfcfcf; color:inherit; text-align:center; position:relative;}
-#tabmenu li a.on {background:#fff; border-bottom-color:#fff; color:#f78601; z-index:1;}
+section { margin-top: 30px; margin-bottom: 80px; }
 
 /* 테이블 스타일 ------------------------------- */
 .tb {width:100%; border:1px solid #dedede; margin-top:20px;}
@@ -39,6 +31,7 @@ section:first-child, #tabmenu + section {margin-top:0;}
 .tb_row td {height:40px;}
 .tb_row .btns {height:38px; line-height:38px;}
 .viewcon {min-height:100px;}
+
 /* 게시글정보 */
 .add_info {font-size:13px; font-weight:300; margin-top:10px;}
 .add_info > span {position:relative; display:inline-block; padding:0 10px; color:#999;}
@@ -87,58 +80,56 @@ h4 + .search_box {margin-top:10px;}
 .paging .last::after {background-position:-49px 0; width:12px; margin-left:-6px;}
 .paging .prev, .paging .last {margin-left:-1px;}
 
-/* 댓글 */
-.cm_write {margin:4% 0 15px 0;}
-.cm_write input[type="text"], .cm_write input[type="password"], .cm_write textarea, .cm_list .cm_re_input textarea {padding:10px;}
-.cm_write .cm_writer {margin-bottom:5px;}
-.cm_write .cm_writer label {color:#111; margin-right:10px;}
-.cm_write .cm_writer input:first-child {width:100px; margin-left:0;}
-.cm_write .cm_writer input {width:130px; background:none; padding:5px 1%;}
-.cm_write .wr_input {overflow:hidden; max-width:360px; margin-bottom:0.7%;}
-.cm_write .wr_input > span {float:left; width:49%;}
-.cm_write .wr_input > span + span {margin-left:2%;}
-.cm_write .wr_input input {border:1px solid #ccc;}
-.cm_write .cm_input {position:relative; background:#fff; border:1px solid #ccc;}
-.cm_write .cm_input > span {display:block; text-align:right; position:relative;}
-.cm_write .cm_input > span i {position:absolute; top:11px; left:10px; font-size:13px; color:#999;}
-.cm_input textarea {width:100%; height:90px; background:#f9f9f9; border:0; border-bottom:1px solid #ccc;}
-.cm_input .btns {width:76px; height:40px; line-height:38px; background:#139dc8; border-radius:0; color:#fff; padding:0; margin:0; font-size:15px; position:relative; right:-1px;}
+/* 수정, 삭제, 뒤로 */
+.board-btn { text-align: right; margin-bottom: 10px; overflow: hidden; }
 
-/* 댓글리스트 */
-.cm_list {border-bottom:1px solid #ddd; font-size:14px;}
-.cm_list > div {overflow:hidden; border-top:1px solid #e0e0e0; padding:15px 0; position:relative;}
-.cm_list > div .writer_img {display:inline-block; position:absolute; top:11px; left:0;}
-.cm_list > div .writer_img img {width:30px; height:30px; border-radius:100%;}
-.cm_list > div .writer {padding:0 0 0 40px;}
-.cm_list > div .writer em {font-size:14px; font-style:normal; color:#222; display:inline-block; margin-right:20px;}
-.cm_list > div .writer span.date {display:inline-block; font-size:13px; font-weight:300; color:#a4a5a3; position:relative; padding-left:10px; margin-left:1%;}
-.cm_list > div .writer .bt {position:relative; margin-left:10px; padding-left:10px;}
-.cm_list > div .writer span.date::before, .cm_list > div .writer .bt::before {content:''; display:block; background:#c4c4c4; width:1px; height:14px; position:absolute; top:3px; left:0;}
-.cm_list > div .writer .bt button {display:inline-block; border:0; padding:0; background-position:-383px -81px; width:17px; height:17px; text-indent:-9999px; cursor:pointer;}
-.cm_list > div .func_btns {position:absolute; top:15px; right:0;}
-.cm_list > div .func_btns button {height:22px; line-height:20px; padding:0 5px; font-size:12px; background:#fff; color:#999; border:1px solid #c1c1c1;}
-.cm_list > div .cont {margin-top:10px;}
-.cm_list > div .cont .txt_con {line-height:1.6; margin:7px 0; color:#888; word-break:break-all;}
-.cm_list > div .cont .date {color:#999; font-size:12px; font-family:Arial, Helvetica, sans-serif; letter-spacing:0; display:block;}
-.cm_list > div .cm_bt {display:inline-block; font-size:12px; color:#777; border:1px solid #ccc; height:22px; line-height:20px; margin-top:7px; padding:0 5px;}
-.cm_list > div:first-child {border:0;}
-.cm_list > div .cm_answer {position:relative; border-top:1px dashed #ddd; margin-top:15px; padding-top:15px; padding-left:25px;}
-.cm_list > div .cm_answer::before {content:''; background-position:-85px 0; width:8px; height:10px; text-align:center; position:absolute; top:19px; left:10px;}
-.cm_list > div .cm_answer > div {position:relative;}
-.cm_list > div .cm_answer .writer_img {left:25px;}
-.cm_list .cm_re_info, .cm_list .cm_re_input {margin-top:10px;}
-.cm_list .cm_re_info > button {background-color:#f7f7f7; border:1px solid #ddd; border-radius:3px; color:#777; font-size:12px;}
-.cm_list .cm_re_info > span {display:inline-block; position:relative; padding:0 12px; font-size:13px; color:#999;}
-.cm_list .cm_re_info > span:first-child {padding-left:0;}
-.cm_list .cm_re_info > span:before {content:''; background:#ccc; width:1px; height:12px; position:absolute; top:4px; left:0;}
-.cm_list .cm_re_info > span:first-child::before {display:none;}
-.cm_list .cm_re_input {position:relative; border:1px solid #ccc;}
-.cm_list .cm_re_input span {display:block; text-align:right;}
-.cm_list .cm_re_input textarea {height:50px; background:#fff; border:0; border-bottom:1px solid #eee;}
-.cm_list .cm_re_input .btns {height:36px; line-height:34px;}
-.cm_list .hide_view {display:none;}
-.cm_list .hide_view.open {display:block;}
-.cm_list .cm_none {text-align:center; color:#999; padding:25px 0; margin:50px 0; position:relative;}
+/* 댓글 */
+.comment-main { margin-left: 50px; margin-bottom: 40px; }
+.comment-main-name { font-size: 30px; font-weight: 600; }
+.comment-list { margin: 0 auto; width: 1200px; list-style: none; padding-left: 0; }
+.comment-li { margin-bottom: 15px; }
+.comment-img { width: 25px; height: 25px; margin-right: 5px; }
+.comment-name { margin-right: 20px; }
+.comment-time { margin-right: 5px; }
+.comment-content { width: 100px; margin-top: 20px; word-break: break-all; }
+.comment-input-group { width: 1200px; margin: 0 auto; margin-top: 20px; margin-bottom: 50px; }
+.comment-input {  }
+.comment-input-btn { align-items: center; }
+.comment-input-btn i { font-size: 25px; }
+.input-group { width: 90%; }
+
+@media (max-width: 1300px) {
+	.comment-list { width: 1100px; }
+}
+
+@media (max-width: 1200px) {
+	.comment-list { width: 1000px; }
+}
+
+@media (max-width: 1100px) {
+	.comment-list { width: 900px; }
+}
+
+@media (max-width: 1000px) {
+	.comment-list { width: 800px; }
+}
+
+@media (max-width: 900px) {
+	.comment-list { width: 700px; }
+}
+
+@media (max-width: 800px) {
+	.comment-list { width: 600px; }
+}
+
+@media (max-width: 700px) {
+	.comment-list { width: 500px; }
+}
+
+@media (max-width: 500px) {
+	.comment-list { width: 350px; }
+	.path { display: none; }
+}
 
 /* 별점평가 */
 .star_score {display:inline-block; overflow:hidden; width:auto; vertical-align:top;}

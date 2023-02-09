@@ -119,6 +119,7 @@ public class BoradController {
 		if(auth != null) {
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("userId", user.getUserId());
+			model.addAttribute("userName", user.getUserNickname());
 			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
 		
@@ -171,7 +172,7 @@ public class BoradController {
 	public String save(final BoardRequestDTO params, Model model) {
 		SessionUser user = (SessionUser) session.getAttribute("user");
 		params.setWriterId(user.getUserId());
-		params.setContent(params.getContent().replace("\r\n", System.lineSeparator()));
+		params.setContent(params.getContent().replace("/(?:\r\n|\r|\n)/g", "<br/>"));
 		
 		boardService.saveBoard(params);
 		MessageDTO message = new MessageDTO("게시글 생성이 완료되었습니다.", "/board", RequestMethod.POST, null);

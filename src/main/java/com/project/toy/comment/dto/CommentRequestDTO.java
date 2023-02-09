@@ -12,4 +12,5 @@ public class CommentRequestDTO {
 	private String boardId;
 	private String content;
 	private String writer;
+	private String writerId;
 }

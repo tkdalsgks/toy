@@ -15,7 +15,9 @@ public class CommentResponseDTO {
 	
 	private String writer;
 	
-	private Boolean deleteYn;
+	private String writerId;
+	
+	private String deleteYn;
 	
 	private LocalDateTime IDate;
 	
