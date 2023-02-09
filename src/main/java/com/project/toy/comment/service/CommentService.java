@@ -19,36 +19,45 @@ public class CommentService {
 	@Autowired
 	private CommentMapper commentMapper;
 	
-	// 저장
-	@Transactional
-	public Long saveComment(final CommentRequestDTO params) {
-		commentMapper.saveComment(params);
-		
-		return params.getId();
-	}
-	
-	// 상세정보 조회
 	public CommentResponseDTO findByCommentId(final Long id) {
 		return commentMapper.findByCommentId(id);
 	}
 	
-	// 수정
 	@Transactional
-	public Long updateComment(final CommentRequestDTO params) {
-		commentMapper.updateComment(params);
-		
-		return params.getId();
+	public boolean saveComment(CommentRequestDTO params) {
+		int queryResult = 0;
+
+		if (params.getId() == null) {
+			queryResult = commentMapper.saveComment(params);
+		}
+
+		return (queryResult == 1) ? true : false;
 	}
 	
-	// 삭제
 	@Transactional
-	public Long deleteComment(final Long id) {
-		commentMapper.deleteByCommentId(id);
-		
-		return id;
+	public boolean updateComment(CommentRequestDTO params) {
+		int queryResult = 0;
+
+		if (params.getId() != null) {
+			queryResult = commentMapper.updateComment(params);
+		}
+
+		return (queryResult == 1) ? true : false;
 	}
 	
-	// 리스트 조회
+	@Transactional
+	public boolean deleteComment(Long id) {
+		int queryResult = 0;
+		
+		CommentResponseDTO comment = commentMapper.findByCommentId(id);
+		
+		if (comment != null && "N".equals(comment.getDeleteYn())) {
+			queryResult = commentMapper.deleteComment(id);
+		}
+
+		return (queryResult == 1) ? true : false;
+	}
+	
 	public List<CommentResponseDTO> findAll(final Long boardId) {
 		return commentMapper.findAll(boardId);
 	}

@@ -31,15 +31,13 @@
 		    <div class="modal-dialog modal-dialog-centered" role="document">
 		        <div class="modal-content">
 		            <div class="modal-header">
-		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                <span aria-hidden="true">&times;</span>
-		                </button>
+		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		            </div>
 		            <div class="modal-body">
 		                <form>
 		                    <div class="form-group">
 		                        <label for="modalWriter" class="col-form-label">작성자</label>
-		                        <input type="text" id="modalWriter" class="form-control" placeholder="작성자를 입력해 주세요." />
+		                        <input type="text" id="modalWriter" class="form-control" readonly />
 		                    </div>
 		                    <div class="form-group">
 		                        <label for="modalContent" class="col-form-label">내용</label>
@@ -48,16 +46,15 @@
 		                </form>
 		            </div>
 		            <div class="modal-footer">
-		                <button type="button" id="btnModalCancel" class="btn btn-default waves-effect waves-light" data-dismiss="modal">취소하기</button>
-		                <button type="button" id="btnCommentUpdate" class="btn btn-primary waves-effect waves-light" onclick="updateComment();">수정하기</button>
-		                <button type="button" id="btnCommentDelete" class="btn btn-danger waves-effect waves-light">삭제하기</button>
+		                <button type="button" id="btnCommentUpdate" class="btn btn-primary waves-effect waves-light" onclick="updateComment();">수정</button>
+		                <button type="button" id="btnCommentDelete" class="btn btn-danger waves-effect waves-light">삭제</button>
 		            </div>
 		        </div>
 		    </div>
 		</div>
 		
 		<div class="page_tits">
-		    <h3>상세보기</h3>
+		    <span class="page_tits_name">상세보기</span>
 		    <p class="path"><strong>현재 위치 :</strong> <span>게시판 리스트</span> <span><b>상세보기</b></span> <span>작성/수정</span></p>
 		</div>
 		
@@ -66,6 +63,11 @@
 			<input type="hidden" id="userId" name="userId" th:value="${userId}">
 			
 	        <section>
+	        	<p class="board-btn">
+	                <a class="btns btn_bdr4 btn_mid" onclick="goWritePage();">수정</a>
+	                <button class="btns btn_bdr1 btn_mid" onclick="deleteBoard();">삭제</button>
+	                <a href="javascript:history.go(-1)" class="btns btn_bdr3 btn_mid" onclick="goListPage();">뒤로</a>
+	            </p>
 	            <table class="tb tb_row">
 	                <colgroup>
 	                    <col style="width:10%;" /><col style="width:23%;" /><col style="width:10%;" /><col style="width:23%;" />
@@ -76,7 +78,7 @@
 	                        <td th:text="${board.noticeYn == false ? '일반' : '공지'}"></td>
 	
 	                        <th scope="row">등록일</th>
-	                        <td th:text="${#temporals.format( board.IDate, 'yyyy-MM-dd HH:mm' )}"></td>
+	                        <td th:text="${#temporals.format( board.IDate, 'yyyy-MM-dd HH:mm:ss' )}"></td>
 	                    </tr>
 	                    <tr>
 	                    	<th scope="row">작성자</th>
@@ -95,31 +97,25 @@
 	                    </tr>
 	                </tbody>
 	            </table>
-	            <p class="btn_set">
-	                <a class="btns btn_bdr4 btn_mid" onclick="goWritePage();">수정</a>
-	                <button class="btns btn_bdr1 btn_mid" onclick="deleteBoard();">삭제</button>
-	                <a href="javascript:history.go(-1)" class="btns btn_bdr3 btn_mid" onclick="goListPage();">뒤로</a>
-	            </p>
 	        </section>
 	    </div>
 	    
 		<div class="box-content">
 			<div class="card-content">
-				<div class="clearfix">
-					<h4 class="box-title pull-left">댓글</h4>
-					<!-- /.box-title -->
+				<div class="clearfix comment-main">
+					<span class="box-title pull-left comment-main-name">댓글</span>
 				</div>
 
 				<form class="form-horizontal form-view">
-					<div class="input-group margin-bottom-20">
-						<input type="text" id="content" class="form-control" />
-						<div class="input-group-btn">
-							<button type="button" class="btn waves-effect waves-light" th:onclick="insertComment([[ ${board.id} ]])">
+					<ul class="notice-list comment-list"></ul>
+					<div class="input-group margin-bottom-20 comment-input-group">
+						<input type="text" id="content" class="form-control comment-input" />
+						<div class="comment-input-btn">
+							<button type="button" class="btn waves-effect waves-light" th:onclick="insertComment([[ ${board.id} ]]);">
 							<i class="fa fa-commenting" aria-hidden="true"></i>
 							</button>
 						</div>
 					</div>
-					<ul class="notice-list"></ul>
 				</form>
 			</div>
 		</div>
@@ -197,14 +193,14 @@
 	        $(function() {
 				printCommentList();
 			});
-
+	        
 			function openModal(id, writer, content) {
-
+				
 				$("#commentModal").modal("toggle");
-
+				
 				document.getElementById("modalWriter").value = writer;
 				document.getElementById("modalContent").value = content;
-
+				
 				document.getElementById("btnCommentUpdate").setAttribute("onclick", "updateComment("+ id +")");
 				document.getElementById("btnCommentDelete").setAttribute("onclick", "deleteComment("+ id +")");
 			}
@@ -220,9 +216,9 @@
 				}
 
 				var uri = [[ @{/comments} ]];
-				var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
-				var params = {"boardId": boardId, "content": content.value, "writer": "관리자"};
-
+				var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
+				var params = { "boardId": boardId, "content": content.value, "writerId": [[ ${userId} ]], "writer": [[ ${userName} ]] };
+				
 				$.ajax({
 					url: uri,
 					type: "POST",
@@ -230,16 +226,16 @@
 					dataType: "json",
 					data: JSON.stringify(params),
 					success: function(response) {
-						if (response.result == false) {
+						if(response.result == false) {
 							alert("댓글 등록에 실패하였습니다.");
 							return false;
 						}
-
+						
 						printCommentList();
 						content.value = "";
 					},
 					error: function(xhr, status, error) {
-						alert("에러가 발생하였습니다.");
+						alert("잠시후 재시도 해주세요.");
 						return false;
 					}
 				});
@@ -249,11 +245,11 @@
 			function updateComment(id) {
 				var writer = document.getElementById("modalWriter");
 				var content = document.getElementById("modalContent");
-			
+				
 				var uri = [[ @{/comments/} ]] + id;
-				var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "PATCH"};
-				var params = {"id": id, "writer": writer.value, "content": content.value};
-			
+				var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "PATCH" };
+				var params = { "id": id, "writer": writer.value, "content": content.value };
+				
 				$.ajax({
 					url: uri,
 					type: "PATCH",
@@ -264,16 +260,49 @@
 						if (response.result == false) {
 							alert("댓글 수정에 실패하였습니다.");
 							return false;
+						} else if(response.result == "isUnauthorized") {
+							alert(response.message);
 						}
-						console.log('1 ' + response.params);
-						console.log('2 ' + response.result);
-			
 						printCommentList();
 						$("#commentModal").modal("hide");
 					},
 					error: function(response) {
-						alert("에러가 발생하였습니다.");
+						alert("잠시후 재시도 해주세요.");
 						console.log(response.result);
+						return false;
+					}
+				});
+			}
+			
+			// 댓글 삭제
+			function deleteComment(id) {
+				
+				if (!confirm('댓글을 삭제하시겠어요?')) {
+					return false;
+				}
+				
+				var uri = [[ @{/comments/} ]] + id;
+				var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "DELETE"};
+				
+				$.ajax({
+					url: uri,
+					type: "DELETE",
+					headers: headers,
+					dataType: "json",
+					success: function(response) {
+						if (response.result == false) {
+							alert("댓글 삭제에 실패하였습니다.");
+							return false;
+						} else if(response.result == "isUnauthorized") {
+							alert(response.message);
+						} else {
+							alert(response.message);
+						}
+						printCommentList();
+						$("#commentModal").modal("hide");							
+					},
+					error: function(xhr, status, error) {
+						alert("에러가 발생하였습니다.");
 						return false;
 					}
 				});
@@ -281,24 +310,26 @@
 			
 			// 댓글 리스트 출력
 			function printCommentList() {
-
+				
 				var uri = [[ @{/comments/} + ${board.id} ]];
-
+				
 				$.get(uri, function(response) {
 					if (isEmpty(response) == false) {
 						var commentsHtml = "";
 
 						$(response.commentList).each(function(id, comment) {
 							commentsHtml += `
-								<li>
-									<span class="name">${comment.writer}</span>
-									<span class="desc">${comment.content}</span>
-									<span class="time">${moment(comment.insertTime).format('YYYY-MM-DD HH:mm:ss')}</span>
-									<button type="button" onclick="openModal(${comment.id}, '${comment.writer}', '${comment.content}' )" class="glyphicon glyphicon-pencil"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i></button>
+								<li class="comment-li">
+									<img src="/img/app/chat/chat.png" class="comment-img">
+									<strong class="name comment-name">${comment.writer}</strong>
+									<span class="time comment-time">${moment(comment.IDate).format('YYYY-MM-DD HH:mm:ss')}</span>
+									<span onclick="openModal(${comment.id}, '${comment.writer}', '${comment.content}' )" class="material-symbols-outlined" style="cursor: pointer; font-size: 15px;">edit</span>
+									<br>
+									<span class="desc comment-content">${comment.content}</span>
 								</li>
 							`;
 						});
-
+						
 						$(".notice-list").html(commentsHtml);
 					}
 				}, "json");
