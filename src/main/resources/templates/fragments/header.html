@@ -26,9 +26,11 @@
 								<span id="user" th:text="${user}"></span>
 							</a>
 							<ul class="dropdown-menu">
+								<li sec:authorize="hasRole('ROLE_ADMIN')"><a class="dropdown-item" th:href="@{/admin}">메인</a></li>
 								<li><a class="dropdown-item" th:href="@{/}">메인</a></li>
 								<li><a class="dropdown-item" href="#">마이페이지</a></li>
-								<li><a class="dropdown-item" th:href="@{/logout}" >로그아웃</a></li>
+								<li><a class="dropdown-item" th:href="@{/board}">게시판</a>
+								<li><a class="dropdown-item" th:href="@{/logout}">로그아웃</a></li>
 							</ul>
 						</li>
 					</ul>
