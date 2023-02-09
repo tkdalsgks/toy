@@ -1,3 +1,4 @@
+<a href="http://ec2-3-39-65-139.ap-northeast-2.compute.amazonaws.com/" target="_blank">프로젝트 바로가기</a>
 [![Build Status](https://app.travis-ci.com/tkdalsgks/toy.svg?branch=main)](https://app.travis-ci.com/tkdalsgks/toy)
 <br><br>
 <div align='center'>
@@ -12,11 +13,11 @@
 
 <strong>:game_die:&nbsp;&nbsp;Commit Message</strong>
 <br><br>
-- feat	   : 새로운 기능 추가<br>
-- fix	   : 버그 수정<br>
-- docs	   : 문서 수정<br>
-- style	   : 코드 formatting, 세미콜론(;) 누락, 코드 변경이 없는 경우, 스타일 수정<br>
-- refactor : 코드 리팩토링<br>
-- test	   : 테스트 코드, 테스트 코드 추가<br>
-- chore	   : 빌드 업무 수정, 패키지 매니저 수정<br>
+feat	   : 새로운 기능 추가<br>
+fix	   : 버그 수정<br>
+docs	   : 문서 수정<br>
+style	   : 코드 formatting, 세미콜론(;) 누락, 코드 변경이 없는 경우, 스타일 수정<br>
+refactor : 코드 리팩토링<br>
+test	   : 테스트 코드, 테스트 코드 추가<br>
+chore	   : 빌드 업무 수정, 패키지 매니저 수정<br>
 </div>
