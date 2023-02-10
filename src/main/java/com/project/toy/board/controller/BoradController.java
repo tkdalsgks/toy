@@ -28,6 +28,8 @@ import com.project.toy.board.service.BoardService;
 import com.project.toy.chat.service.ChatRoomService;
 import com.project.toy.common.dto.MessageDTO;
 import com.project.toy.common.dto.SearchDTO;
+import com.project.toy.likes.dto.LikesDTO;
+import com.project.toy.likes.service.LikesService;
 import com.project.toy.paging.PagingResponse;
 import com.project.toy.user.dto.SessionUser;
 
@@ -43,6 +45,9 @@ public class BoradController {
 	
 	@Autowired
 	private ChatRoomService chatRoomService;
+	
+	@Autowired
+	private LikesService likesService;
 	
 	@Autowired
 	private HttpSession session;
@@ -124,9 +129,19 @@ public class BoradController {
 		}
 		
 		BoardResponseDTO board = boardService.findByBoardId(id);
+		LikesDTO likesDTO = new LikesDTO();
 		
 		if(board != null) {
 			model.addAttribute("board", board);
+			
+			likesDTO.setBoardId(board.getId());
+			likesDTO.setUserId(user.getUserId());
+			
+			if(likesService.findLikes(likesDTO) == 0) {
+				model.addAttribute("likes", "♡");
+			} else {
+				model.addAttribute("likes", "♥");
+			}
 		} else {
 			MessageDTO message = new MessageDTO("존재하지 않거나 이미 삭제된 게시글입니다.", "/board", RequestMethod.POST, null);
 			return showMessageAndRedirect(message, model);
