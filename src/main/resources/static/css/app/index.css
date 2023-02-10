@@ -7,6 +7,10 @@
 .form-index { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) }
 .index-brand { text-align: center; margin-bottom: 50px; font-size: 25px; color: #DA70D6; }
 
+@media (min-width: 1400px) {
+	.container { max-width: 1200px; }
+}
+
 /* MAIN */
 body { padding-top: 110px; }
 .form-main { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 700px; text-align: center; }
@@ -41,6 +45,25 @@ body { padding-top: 110px; }
 .navbar-brand { margin-right: 5rem; font-size: 30px; }
 .nav-item { margin-right: 3rem; font-size: 18px; }
 .fa-sharp { color: #DA70D6; }
+
+.header-mobile { position: fixed; z-index: 1; top: 0; left: 0; right: 0; padding: 16px 150px 0 150px; transition: background 350ms ease 5s; background: var(--color-background);
+			opacity: 0.85; backdrop-filter: blur(10px); font-weight: 800; }
+.header-mobile a { text-decoration: none; color: black; }
+.navbar-brand-mobile { margin-right: 5rem; font-size: 30px; }
+.nav-item-mobile { margin-right: 3rem; font-size: 18px; }
+
+@media (min-width: 992px) {
+	.header-mobile { display: none; }
+}
+
+@media (max-width: 991px) {
+	.header { display: none; }
+}
+
+@media (max-width: 600px) {
+	.header { display: none; }
+	.navbar-brand-mobile { display: none; }
+}
 
 /* JOIN */
 .form-join { position: absolute; top: 50%; left: 50%; transform: translate(-30%, -50%); width: 700px; text-align: center; }

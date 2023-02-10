@@ -13,6 +13,15 @@
 /* 컨텐츠 간격 */
 section { margin-top: 30px; margin-bottom: 80px; }
 
+/* 본문 내용 ------------------------------- */
+.board-title { display: flex; align-items: center; justify-content: space-between; padding: 0 20px 10px 20px; font-size: 20px; font-weight: 600; }
+.board-info { display: flex; align-items: center; justify-content: space-between; border-radius: 10px; background-color: #e0f2f1; line-height: 30px; padding: 5px 15px 5px 15px; }
+.board-writer { margin-right: 10px; font-weight: 600; }
+.board-view { margin-right: 10px; font-weight: 600; }
+.board-contents { padding: 10px 20px 0 20px; min-height: 100px; }
+
+.board-line {  }
+
 /* 테이블 스타일 ------------------------------- */
 .tb {width:100%; border:1px solid #dedede; margin-top:20px;}
 .tb:first-child {margin-top:0;}
@@ -31,12 +40,6 @@ section { margin-top: 30px; margin-bottom: 80px; }
 .tb_row td {height:40px;}
 .tb_row .btns {height:38px; line-height:38px;}
 .viewcon {min-height:100px;}
-
-/* 게시글정보 */
-.add_info {font-size:13px; font-weight:300; margin-top:10px;}
-.add_info > span {position:relative; display:inline-block; padding:0 10px; color:#999;}
-.add_info > span:first-child {padding-left:0;}
-.add_info > span i {position:relative; display:inline-block; margin-right:3px;}
 
 /* 필수입력표시 */
 .es {display:inline-block; text-indent:-99999px; background-position:-65px 0; width:6px; height:7px; margin-left:3px; vertical-align:middle; position:relative; top:-2px;}
@@ -80,23 +83,24 @@ h4 + .search_box {margin-top:10px;}
 .paging .last::after {background-position:-49px 0; width:12px; margin-left:-6px;}
 .paging .prev, .paging .last {margin-left:-1px;}
 
-/* 수정, 삭제, 뒤로 */
+/* 좋아요, 수정, 삭제, 뒤로 */
+.board-likes { border: none; background-color: initial; font-size: 20px; justify-content: right; }
 .board-btn { text-align: right; margin-bottom: 10px; overflow: hidden; }
 
 /* 댓글 */
 .comment-main { margin-left: 50px; margin-bottom: 40px; }
 .comment-main-name { font-size: 30px; font-weight: 600; }
 .comment-list { margin: 0 auto; width: 1200px; list-style: none; padding-left: 0; }
-.comment-li { margin-bottom: 15px; }
+.comment-li { background-color: 1px solid #F6F7F8; border: 1px solide #dedede; padding: 10px; margin-bottom: 15px; }
 .comment-img { width: 25px; height: 25px; margin-right: 5px; }
-.comment-name { margin-right: 20px; }
-.comment-time { margin-right: 5px; }
+.comment-name { font-size: 16px; margin-right: 20px; }
+.comment-time { font-size: 14px; color: gray; margin-right: 5px; }
 .comment-content { width: 100px; margin-top: 20px; word-break: break-all; }
 .comment-input-group { width: 1200px; margin: 0 auto; margin-top: 20px; margin-bottom: 50px; }
 .comment-input {  }
 .comment-input-btn { align-items: center; }
 .comment-input-btn i { font-size: 25px; }
-.input-group { width: 90%; }
+.input-group { width: 95%; }
 
 @media (max-width: 1300px) {
 	.comment-list { width: 1100px; }
@@ -119,15 +123,24 @@ h4 + .search_box {margin-top:10px;}
 }
 
 @media (max-width: 800px) {
-	.comment-list { width: 600px; }
+	.comment-list { width: 700px; }
 }
 
 @media (max-width: 700px) {
 	.comment-list { width: 500px; }
+	.path { display: none; }
+}
+
+@media (max-width: 600px) {
+	.comment-list { width: 500px; }
+	.path { display: none; }
 }
 
 @media (max-width: 500px) {
-	.comment-list { width: 350px; }
+	.comment-list { width: 380px; }
+	.comment-img { width: 20px; height: 20px; }
+	.comment-name { font-size: 14px; }
+	.comment-time { font-size: 12px; }
 	.path { display: none; }
 }
 
