@@ -2,14 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.project.toy.security.mapper.SecurityMapper">
+
+	<sql id="loginLogColumns">
+		LOGIN_SEQ,
+		LOGIN_ID,
+		ACCESS_IP,
+		LOGIN_DATE
+	</sql>
+	
+	<sql id="userColumns">
+		USER_NO,
+		USER_ID,
+		USER_PWD,
+		USER_EMAIL,
+		USER_NICKNAME,
+		PROVIDER,
+		ROLE
+	</sql>
+	
+	<insert id="insertLoginLog" parameterType="LoginLogDTO">
+		INSERT INTO toy.LOGIN_LOG ( <include refid="loginLogColumns" /> )
+		VALUES ( nextval(toy.LOGIN_LOG_SEQ), #{ loginId }, #{ accessIp }, NOW() )
+	</insert>
 	
 	<insert id="saveUser" parameterType="UserDTO">
 		/* com.project.toy.user.dto.UserDTO */
 		
-		INSERT INTO toy.T_PERSON
-			(USER_NO, USER_ID, USER_PWD, USER_EMAIL, USER_NICKNAME, PROVIDER, ROLE)
-		VALUES
-			(nextval(toy.T_PERSON_SEQ), LOWER(#{ userId }), #{ userPwd }, LOWER(#{ userEmail }), #{ userNickname }, #{ provider }, #{ role })
+		INSERT INTO toy.T_PERSON ( <include refid="userColumns" /> )
+		VALUES ( nextval(toy.T_PERSON_SEQ.nextval), LOWER(#{ userId }), #{ userPwd }, LOWER(#{ userEmail }), #{ userNickname }, #{ provider }, #{ role } )
 	</insert>
 	
 	<select id="findByUserId" resultType="UserDTO">

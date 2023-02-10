@@ -1,5 +1,10 @@
 package com.project.toy.security.service;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -11,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.project.toy.common.dto.LoginLogDTO;
 import com.project.toy.security.mapper.SecurityMapper;
 import com.project.toy.security.oauth.config.CustomUserDetails;
 import com.project.toy.user.dto.LockUserDTO;
@@ -48,6 +54,11 @@ public class CustomUserService implements UserDetailsService {
 	            log.info("-----");
 	            session.setAttribute("user", new SessionUser(userDTO));
 	            
+	            LoginLogDTO loginLogDTO = new LoginLogDTO();
+	            loginLogDTO.setLoginId(userDTO.getUserId());
+	            loginLogDTO.setAccessIp(getLocalIpAddress());
+	            securityMapper.insertLoginLog(loginLogDTO);
+	            
 	            return new CustomUserDetails(userDTO);
 			} else {			
 				throw new LockedException("해당 계정이 잠겼습니다.\n비밀번호 찾기를 진행하여 새로운 비밀번호로 변경하세요.");
@@ -56,5 +67,27 @@ public class CustomUserService implements UserDetailsService {
 			throw new UsernameNotFoundException("존재하지 않는 아이디입니다.");
 		}
 		
+	}
+	
+	// 현재 접속한 로컬 IPv4 주소 반환
+	public static String getLocalIpAddress() {
+		String hostAddr = "";
+		try {
+			Enumeration<NetworkInterface> nienum = NetworkInterface.getNetworkInterfaces();
+			while (nienum.hasMoreElements()) {
+				NetworkInterface ni = nienum.nextElement();
+				Enumeration<InetAddress> ia = ni.getInetAddresses();
+				
+				while (ia.hasMoreElements()) {
+					InetAddress inetAddress = ia.nextElement();
+					if (!inetAddress.isLoopbackAddress() && !inetAddress.isLinkLocalAddress() && inetAddress.isSiteLocalAddress()) {
+						hostAddr = inetAddress.getHostAddress().toString();
+					}
+				}
+			}
+		} catch(SocketException e) {
+			e.printStackTrace();
+		}
+		return hostAddr;
 	}
 }

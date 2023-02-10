@@ -3,6 +3,7 @@ package com.project.toy.security.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.project.toy.common.dto.LoginLogDTO;
 import com.project.toy.user.dto.UserDTO;
 
 @Mapper
@@ -24,4 +25,6 @@ public interface SecurityMapper {
 	 * @return 
 	 */
 	public void saveUser(UserDTO userDTO);
+	
+	public void insertLoginLog(LoginLogDTO loginLogDTO);
 }

@@ -1,8 +1,12 @@
 package com.project.toy.security.service;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Enumeration;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +22,7 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import com.project.toy.common.dto.LoginLogDTO;
 import com.project.toy.security.mapper.SecurityMapper;
 import com.project.toy.security.oauth.config.OAuthAttributes;
 import com.project.toy.user.dto.SessionUser;
@@ -68,6 +73,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             log.info(attributes.getProvider() + ": " + attributes.getUserId());
             log.info("-----");
             userDTO = securityMapper.findByUserEmail(attributes.getUserEmail());
+            
+            LoginLogDTO loginLogDTO = new LoginLogDTO();
+            loginLogDTO.setLoginId(userDTO.getUserId());
+            loginLogDTO.setAccessIp(getLocalIpAddress());
+            securityMapper.insertLoginLog(loginLogDTO);
         } else {
         	userDTO = attributes.Entity();
         	
@@ -85,5 +95,27 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         }
 
         return userDTO;
+	}
+	
+	// 현재 접속한 로컬 IPv4 주소 반환
+	public static String getLocalIpAddress() {
+		String hostAddr = "";
+		try {
+			Enumeration<NetworkInterface> nienum = NetworkInterface.getNetworkInterfaces();
+			while (nienum.hasMoreElements()) {
+				NetworkInterface ni = nienum.nextElement();
+				Enumeration<InetAddress> ia = ni.getInetAddresses();
+				
+				while (ia.hasMoreElements()) {
+					InetAddress inetAddress = ia.nextElement();
+					if (!inetAddress.isLoopbackAddress() && !inetAddress.isLinkLocalAddress() && inetAddress.isSiteLocalAddress()) {
+						hostAddr = inetAddress.getHostAddress().toString();
+					}
+				}
+			}
+		} catch(SocketException e) {
+			e.printStackTrace();
+		}
+		return hostAddr;
 	}
 }
