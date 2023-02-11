@@ -5,22 +5,23 @@
 
 /* INDEX */
 .form-index { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) }
-.index-brand { text-align: center; margin-bottom: 50px; font-size: 40px; color: #DA70D6; }
+.index-brand { text-align: center; margin-bottom: 50px; }
+.index-brand img { width: 300px; height: 200px; }
 
 @media (min-width: 1600px) {
-	.container { max-width: 1300px; }
-}
-
-@media (max-width: 1599px) {
-	.container { max-width: 1200px; }
-}
-
-@media (max-width: 1400px) {
 	.container { max-width: 1100px; }
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1599px) {
 	.container { max-width: 1000px; }
+}
+
+@media (max-width: 1400px) {
+	.container { max-width: 900px; }
+}
+
+@media (max-width: 1300px) {
+	.container { max-width: 800px; }
 }
 
 /* MAIN */
@@ -46,7 +47,7 @@ body { padding-top: 110px; }
 #form-index-one { display: initial; }
 #form-index-two { display: none; }
 
-.find-user { width: 200px; margin-top: 5px; border: none; background-color: initial; text-align: left; font-size: 14px; color: gray; }
+.find-user { width: 200px; margin-top: 5px; margin-left: 50px; border: none; background-color: initial; text-align: left; font-size: 14px; color: gray; }
 .find-user:hover { color: #DA70D6; }
 
 
@@ -55,6 +56,7 @@ body { padding-top: 110px; }
 			opacity: 0.85; backdrop-filter: blur(10px); font-weight: 800; }
 .header a { text-decoration: none; color: black; }
 .navbar-brand { margin-right: 5rem; font-size: 30px; }
+.navbar-brand img { width: 80px; height: 50px; }
 .nav-item { margin-right: 3rem; font-size: 18px; }
 .fa-sharp { color: #DA70D6; }
 
@@ -62,6 +64,7 @@ body { padding-top: 110px; }
 			opacity: 0.85; backdrop-filter: blur(10px); font-weight: 800; }
 .header-mobile a { text-decoration: none; color: black; }
 .navbar-brand-mobile { margin-right: 5rem; font-size: 30px; }
+.navbar-brand-mobile img { width: 80px; height: 50px; }
 .nav-item-mobile { margin-right: 3rem; font-size: 18px; }
 
 @media (min-width: 992px) {
@@ -72,7 +75,7 @@ body { padding-top: 110px; }
 	.header { display: none; }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 632px) {
 	.header { display: none; }
 	.navbar-brand-mobile { display: none; }
 }

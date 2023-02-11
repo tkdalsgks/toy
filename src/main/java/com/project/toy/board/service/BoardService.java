@@ -33,8 +33,8 @@ public class BoardService {
 		return new PagingResponse<>(list, pagination);
 	}
 	
-	public List<BoardResponseDTO> findNotice() {
-		return boardMapper.findNotice();
+	public List<BoardResponseDTO> findNotice(SearchDTO params) {
+		return boardMapper.findNotice(params);
 	}
 	
 	public BoardResponseDTO findByBoardId(Long id) {

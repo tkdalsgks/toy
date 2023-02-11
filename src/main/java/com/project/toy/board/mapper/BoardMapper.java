@@ -12,7 +12,7 @@ import com.project.toy.common.dto.SearchDTO;
 public interface BoardMapper {
 
 	public List<BoardResponseDTO> findAll(SearchDTO params);
-	public List<BoardResponseDTO> findNotice();
+	public List<BoardResponseDTO> findNotice(SearchDTO params);
 	public BoardResponseDTO findByBoardId(Long id);
 	public void saveBoard(BoardRequestDTO params);
 	public void updateBoard(BoardRequestDTO params);
