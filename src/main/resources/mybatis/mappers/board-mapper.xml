@@ -10,6 +10,7 @@
 		, WRITER_ID
 		, WRITER
 		, VIEW_CNT
+		, COMMENT_CNT
 		, NOTICE_YN
 		, DELETE_YN
 		, I_DATE

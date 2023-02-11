@@ -26,6 +26,7 @@ import com.project.toy.board.dto.BoardRequestDTO;
 import com.project.toy.board.dto.BoardResponseDTO;
 import com.project.toy.board.service.BoardService;
 import com.project.toy.chat.service.ChatRoomService;
+import com.project.toy.comment.service.CommentService;
 import com.project.toy.common.dto.MessageDTO;
 import com.project.toy.common.dto.SearchDTO;
 import com.project.toy.likes.dto.LikesDTO;
@@ -42,6 +43,9 @@ public class BoradController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private CommentService commentService;
 	
 	@Autowired
 	private ChatRoomService chatRoomService;
@@ -75,7 +79,7 @@ public class BoradController {
 		PagingResponse<BoardResponseDTO> boards = boardService.findAll(params);
 		model.addAttribute("boards", boards);
 		
-		List<BoardResponseDTO> notice = boardService.findNotice();
+		List<BoardResponseDTO> notice = boardService.findNotice(params);
 		model.addAttribute("notice", notice);
 		
 		return "board/list";
@@ -137,10 +141,18 @@ public class BoradController {
 			likesDTO.setBoardId(board.getId());
 			likesDTO.setUserId(user.getUserId());
 			
-			if(likesService.findLikes(likesDTO) == 0) {
-				model.addAttribute("likes", "♡");
+			int comment = commentService.countComment(id);
+			
+			if(comment != 0) {
+				model.addAttribute("comment", comment);
 			} else {
-				model.addAttribute("likes", "♥");
+				model.addAttribute("comment", "0");
+			}
+			
+			if(likesService.findLikes(likesDTO) == 0) {
+				model.addAttribute("likes");
+			} else {
+				model.addAttribute("likes");
 			}
 		} else {
 			MessageDTO message = new MessageDTO("존재하지 않거나 이미 삭제된 게시글입니다.", "/board", RequestMethod.POST, null);
@@ -187,8 +199,8 @@ public class BoradController {
 	public String save(final BoardRequestDTO params, Model model) {
 		SessionUser user = (SessionUser) session.getAttribute("user");
 		params.setWriterId(user.getUserId());
-		params.setContent(params.getContent().replace("/(?:\r\n|\r|\n)/g", "<br/>"));
 		
+		params.setContent(params.getContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
 		boardService.saveBoard(params);
 		MessageDTO message = new MessageDTO("게시글 생성이 완료되었습니다.", "/board", RequestMethod.POST, null);
 		

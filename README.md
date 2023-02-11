@@ -1,4 +1,4 @@
-<a href="http://ec2-3-39-65-139.ap-northeast-2.compute.amazonaws.com/" target="_blank">프로젝트 바로가기</a>
+<a href="http://ec2-3-39-65-139.ap-northeast-2.compute.amazonaws.com/" target="_blank">프로젝트 바로가기(v23.02.12)</a>
 [![Build Status](https://app.travis-ci.com/tkdalsgks/toy.svg?branch=main)](https://app.travis-ci.com/tkdalsgks/toy)
 <br><br>
 <div align='center'>

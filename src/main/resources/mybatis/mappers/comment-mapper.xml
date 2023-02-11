@@ -31,6 +31,19 @@
 		VALUES ( #{ id }, #{ boardId }, #{ content }, #{ writerId }, #{ writer }, 'N', NOW(), NULL )
 	</insert>
 	
+	<!-- 댓글 수 업데이트 -->
+	<update id="updateCountComment" parameterType="CommentRequestDTO">
+		UPDATE BOARD B
+		SET    B.COMMENT_CNT = ( SELECT COUNT(1)
+		                         FROM   COMMENT C
+		                         WHERE  1=1
+		                         AND    C.DELETE_YN = 'N'
+		                         AND    C.BOARD_ID = #{ boardId } )
+		WHERE  1=1
+		AND    B.DELETE_YN = 0
+		AND    B.ID = #{ boardId }
+	</update>
+	
 	<!-- 수정 -->
 	<update id="updateComment" parameterType="CommentRequestDTO">
 		/* com.project.toy.comment.dto.CommentRequestDTO */
@@ -61,7 +74,18 @@
 		WHERE  1=1
 		AND    DELETE_YN = 'N'
 		AND    BOARD_ID = #{ value }
-		ORDER BY ID ASC
+		ORDER BY ID DESC
+	</select>
+	
+	<!-- 댓글 갯수 카운트 -->
+	<select id="countComment" parameterType="long" resultType="int">
+		/* com.project.toy.comment.dto.CommentResponseDTO */
+		
+		SELECT COUNT(1)
+		FROM   COMMENT
+		WHERE  1=1
+		AND    DELETE_YN = 'N'
+		AND    BOARD_ID = #{ boardId }
 	</select>
 	
 </mapper>

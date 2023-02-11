@@ -39,7 +39,7 @@
 		            <div class="modal-body">
 		                <form>
 		                    <div class="form-group">
-		                        <label for="modalWriter" class="col-form-label">작성자</label>
+		                        <label for="modalWriter" class="col-form-label">글쓴이</label>
 		                        <input type="text" id="modalWriter" class="form-control" readonly />
 		                    </div>
 		                    <div class="form-group">
@@ -74,15 +74,15 @@
 	            </p>
 	            <div class="board-title">
 		            <span class="board-title1">[[ ${board.title} ]]</span>
-		            <button id="board-likes" class="btns btn_mid board-likes"><span th:text="${likes}"></span></button>
+		            <button id="board-likes" class="btns btn_mid board-likes"><img src="/img/app/board/unlikes.png"></button>
 	            </div>
 	            <div class="board-info">
-		            <span><span class="board-writer">작성자</span>[[ ${board.writer} ]]</span>
-		            <span th:text="${#temporals.format( board.IDate, 'yyyy-MM-dd HH:mm:ss' )}"></span>
+		            <span><span class="board-writer">글쓴이</span>[[ ${board.writer} ]]</span>
+		            <span th:text="${#temporals.format( board.IDate, 'yyyy.MM.dd HH:mm' )}"></span>
 		            <span class="board-viewCnt1"><span class="board-view">조회수</span>[[ ${board.viewCnt} ]]</span>	            
 	            </div>
 	            <div class="board-contents">
-		            <span class="board-content">[[ ${board.content} ]]</span>            	
+		            <p class="board-content" th:utext="${board.content}"></p>            	
 	            </div>
 	        </section>
 	    </div>
@@ -91,19 +91,19 @@
 		<div class="box-content">
 			<div class="card-content">
 				<div class="clearfix comment-main">
-					<span class="box-title pull-left comment-main-name">댓글</span>
+					<i class="fas fa-comments"></i><span class="box-title pull-left comment-main-name">&nbsp;<span th:text="${comment}"></span>개의 댓글</span>
 				</div>
 
 				<form class="form-horizontal form-view">
-					<ul class="notice-list comment-list"></ul>
 					<div class="input-group margin-bottom-20 comment-input-group">
-						<input type="text" id="content" class="form-control comment-input" />
+						<input type="text" id="content" class="form-control comment-input" placeholder="댓글을 쓰려면 로그인이 필요합니다." style="margin-left: 15px; height: 60px;" />
 						<div class="comment-input-btn">
 							<button type="button" class="btn waves-effect waves-light" th:onclick="insertComment([[ ${board.id} ]]);">
 							<i class="fa fa-commenting" aria-hidden="true"></i>
 							</button>
 						</div>
 					</div>
+					<ul class="notice-list comment-list"></ul>
 				</form>
 			</div>
 		</div>
@@ -121,7 +121,6 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 		<script type="text/javascript" src="/js/app/popup.js"></script>
 		<!-- BOARD -->
-		<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.7/dayjs.min.js"></script>
 		<script type="text/javascript" src="/js/lib/moment.js"></script>
 		<script type="text/javascript" src="/js/app/board.js"></script>
 		<script th:inline="javascript">
@@ -216,6 +215,7 @@
 					success: function(response) {
 						if(response.result == false) {
 							alert("댓글 등록에 실패하였습니다.");
+							console.log(response.count);
 							return false;
 						}
 						
@@ -256,7 +256,6 @@
 					},
 					error: function(response) {
 						alert("잠시후 재시도 해주세요.");
-						console.log(response.result);
 						return false;
 					}
 				});
@@ -310,7 +309,7 @@
 								<li class="comment-li">
 									<img src="/img/app/chat/chat.png" class="comment-img">
 									<strong class="name comment-name">${comment.writer}</strong>
-									<span class="time comment-time">${moment(comment.IDate).format('YYYY-MM-DD HH:mm:ss')}</span>
+									<span class="time comment-time">${timeForToday(moment(comment.IDate).format('YYYY-MM-DD HH:mm'))}</span>
 									<span onclick="openModal(${comment.id}, '${comment.writer}', '${comment.content}' )" class="material-symbols-outlined" style="cursor: pointer; font-size: 15px;">edit</span>
 									<br>
 									<span class="desc comment-content">${comment.content}</span>
