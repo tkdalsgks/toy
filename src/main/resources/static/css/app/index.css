@@ -1,7 +1,8 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
-* { font-family: 'Gowun Dodum', sans-serif; }
+* { font-family: 'Pretendard'; font-weight: 200; font-display: swap; }
+body { color: #000000; }
 
 /* INDEX */
 .form-index { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) }
@@ -57,7 +58,8 @@ body { padding-top: 110px; }
 .header a { text-decoration: none; color: black; }
 .navbar-brand { margin-right: 5rem; font-size: 30px; }
 .navbar-brand img { width: 80px; height: 50px; }
-.nav-item { margin-right: 3rem; font-size: 18px; }
+.nav-item { margin-right: 3rem; font-size: 20px; }
+.nav-item a { font-weight: 300; }
 .fa-sharp { color: #DA70D6; }
 
 .header-mobile { position: fixed; z-index: 1; top: 0; left: 0; right: 0; padding: 16px 150px 0 150px; transition: background 350ms ease 5s; background: var(--color-background);
@@ -66,6 +68,7 @@ body { padding-top: 110px; }
 .navbar-brand-mobile { margin-right: 5rem; font-size: 30px; }
 .navbar-brand-mobile img { width: 80px; height: 50px; }
 .nav-item-mobile { margin-right: 3rem; font-size: 18px; }
+.nav-item-mobile a { font-weight: 300; }
 
 @media (min-width: 992px) {
 	.header-mobile { display: none; }

@@ -74,7 +74,7 @@
 	            </p>
 	            <div class="board-title">
 		            <span class="board-title1">[[ ${board.title} ]]</span>
-		            <button id="board-likes" class="btns btn_mid board-likes"><img src="/img/app/board/unlikes.png" style="width: 25px; height: 25px;"></button>
+		            <button id="board-likes" class="btns btn_mid board-likes"><img src="/img/app/board/unlikes.png"></button>
 	            </div>
 	            <div class="board-info">
 		            <span><span class="board-writer">글쓴이</span>[[ ${board.writer} ]]</span>
@@ -91,19 +91,19 @@
 		<div class="box-content">
 			<div class="card-content">
 				<div class="clearfix comment-main">
-					<i class="fas fa-comments"></i><span class="box-title pull-left comment-main-name">&nbsp;<span></span>개의 댓글</span>
+					<i class="fas fa-comments"></i><span class="box-title pull-left comment-main-name">&nbsp;<span th:text="${comment}"></span>개의 댓글</span>
 				</div>
 
 				<form class="form-horizontal form-view">
-					<ul class="notice-list comment-list"></ul>
 					<div class="input-group margin-bottom-20 comment-input-group">
-						<input type="text" id="content" class="form-control comment-input" />
+						<input type="text" id="content" class="form-control comment-input" placeholder="댓글을 쓰려면 로그인이 필요합니다." style="margin-left: 15px; height: 60px;" />
 						<div class="comment-input-btn">
 							<button type="button" class="btn waves-effect waves-light" th:onclick="insertComment([[ ${board.id} ]]);">
 							<i class="fa fa-commenting" aria-hidden="true"></i>
 							</button>
 						</div>
 					</div>
+					<ul class="notice-list comment-list"></ul>
 				</form>
 			</div>
 		</div>
@@ -215,6 +215,7 @@
 					success: function(response) {
 						if(response.result == false) {
 							alert("댓글 등록에 실패하였습니다.");
+							console.log(response.count);
 							return false;
 						}
 						

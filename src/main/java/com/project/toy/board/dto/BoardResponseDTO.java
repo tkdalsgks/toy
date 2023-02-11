@@ -24,8 +24,11 @@ public class BoardResponseDTO {
 	@Schema(description = "작성자")
 	private String writer;
 	
-	@Schema(description = "조회수")
+	@Schema(description = "조회 수")
 	private int viewCnt;
+	
+	@Schema(description = "댓글 수")
+	private int commentCnt;
 	
 	@Schema(description = "공지글 여부")
 	private Boolean noticeYn;

@@ -76,6 +76,7 @@ public class CommentController {
 		
 		try {
 			boolean save = commentService.saveComment(params);
+			commentService.updateCountComment(params);
 			jsonObj.addProperty("result", save);
 		} catch(DataAccessException e) {
 			jsonObj.addProperty("message", "데이터베이스 처리 과정에 문제가 발생하였습니다.");

@@ -26,6 +26,7 @@ import com.project.toy.board.dto.BoardRequestDTO;
 import com.project.toy.board.dto.BoardResponseDTO;
 import com.project.toy.board.service.BoardService;
 import com.project.toy.chat.service.ChatRoomService;
+import com.project.toy.comment.service.CommentService;
 import com.project.toy.common.dto.MessageDTO;
 import com.project.toy.common.dto.SearchDTO;
 import com.project.toy.likes.dto.LikesDTO;
@@ -42,6 +43,9 @@ public class BoradController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private CommentService commentService;
 	
 	@Autowired
 	private ChatRoomService chatRoomService;
@@ -136,6 +140,14 @@ public class BoradController {
 			
 			likesDTO.setBoardId(board.getId());
 			likesDTO.setUserId(user.getUserId());
+			
+			int comment = commentService.countComment(id);
+			
+			if(comment != 0) {
+				model.addAttribute("comment", comment);
+			} else {
+				model.addAttribute("comment", "0");
+			}
 			
 			if(likesService.findLikes(likesDTO) == 0) {
 				model.addAttribute("likes");

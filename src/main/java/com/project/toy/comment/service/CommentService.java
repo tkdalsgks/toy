@@ -61,4 +61,12 @@ public class CommentService {
 	public List<CommentResponseDTO> findAll(final Long boardId) {
 		return commentMapper.findAll(boardId);
 	}
+	
+	public int countComment(final Long boardId) {
+		return commentMapper.countComment(boardId);
+	}
+	
+	public void updateCountComment(CommentRequestDTO params) {
+		commentMapper.updateCountComment(params);
+	}
 }
