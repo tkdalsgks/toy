@@ -8,7 +8,7 @@ $('#duplicateUserId').on('click' ,function() {
 	const imgCancelId = document.getElementById('imgCancelId');
 	
 	if(!id.match(exp)) {
-    	checkUserId.innerHTML = '아이디는 영문, 숫자로 이루어진 4~20자리로 입력해주세요.'
+    	checkUserId.innerHTML = '아이디는 4~20자 사이의 영문, 숫자로 이루어져야 합니다.';
     	imgCheckId.style.display = 'none';
     	imgCancelId.style.display = 'initial';
     	$("#duplicateUserId").attr("value", "");
@@ -20,7 +20,7 @@ $('#duplicateUserId').on('click' ,function() {
 			dataType : "json",
 			success : function(data) {
 				if(data.result == "false") {
-					checkUserId.innerHTML = '아이디는 영문, 숫자로 이루어진 4~20자리로 입력해주세요. 이미 사용중인 아이디입니다.';
+					checkUserId.innerHTML = '이미 사용중인 아이디입니다.';
 					checkUserId.style.color = '#DC143C';
 					imgCheckId.style.display = 'none';
 					imgCancelId.style.display = 'initial';
@@ -49,7 +49,7 @@ $('#userPwd').on('keyup' ,function() {
 	const imgCancelPwd = document.getElementById('imgCancelPwd');
 	
 	if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W])[A-Za-z\d\W]{8,16}$/g.test($('#userPwd').val())) {
-		checkUserPwd.innerHTML = '비밀번호는 대/소문자, 숫자, 특수문자가 모두 포함된 8~16자리로 입력해주세요.';
+		checkUserPwd.innerHTML = '비밀번호는 8~16자 사이의 대/소문자, 숫자, 특수문자가 모두 포함되어야 합니다.';
 		checkUserPwd.style.color = '#DC143C';
 		imgCheckPwd.style.display = 'none';
 		imgCancelPwd.style.display = 'initial';
@@ -72,7 +72,7 @@ $('#userPwdConfirm').on('keyup', function () {
 	const imgCancelConfirm = document.getElementById('imgCancelConfirm');
 	
 	if(userPwd != userPwdConfirm) {
-		checkUserPwdConfirm.innerHTML = '입력한 비밀번호가 다릅니다.';
+		checkUserPwdConfirm.innerHTML = '입력한 비밀번호가 일치하지 않습니다.';
 		checkUserPwdConfirm.style.color = '#DC143C';
 	    imgCheckConfirm.style.display = 'none';
 		imgCancelConfirm.style.display = 'initial';
@@ -94,7 +94,7 @@ $('#userNickname').on('keyup' ,function() {
 	const imgCancelName = document.getElementById('imgCancelName');
 	
 	if(!nickname.match(exp)){
-    	checkUserNickname.innerHTML = '닉네임은 특수문자를 제외한 2~10자리로 입력해주세요.';
+    	checkUserNickname.innerHTML = '닉네임은 2~10자 사이의 한글, 영문, 숫자로 이루어져야 합니다.';
     	imgCheckName.style.display = 'none';
     	imgCancelName.style.display = 'initial';
     } else if(nickname.match(exp)) {
@@ -145,7 +145,7 @@ $('#userEmail').on('keyup' ,function() {
 			data : { "userEmail" : $("#userEmail").val() },
 			success : function(data) {
 				if(data.result == "false") {
-					checkUserEmail.innerHTML = '올바르지 않은 이메일 형식입니다. 이미 사용하고 있는 이메일입니다.';
+					checkUserEmail.innerHTML = '이미 사용중인 이메일입니다.';
 					checkUserEmail.style.color = '#DC143C';
 					imgCheckEmail.style.display = 'none';
 					imgCancelEmail.style.display = 'initial';
@@ -242,7 +242,7 @@ $(function() {
 				} else {
 					isCertification = false;
 					$("#check-email-verify").attr("value", "");
-					alert("인증번호를 다시 확인해주세요.");
+					alert("인증번호를 정확하게 입력해주세요.");
 				}
 			},
 			error: function(result) {
