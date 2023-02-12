@@ -103,7 +103,7 @@
 	    	
 	    	// 등록일 초기화
 	    	function initIDate() {
-	    		document.getElementById('IDate').value = moment().format('YYYY-MM-DD');
+	    		document.getElementById('IDate').value = moment().format('YYYY/MM/DD');
 	    	}
 	    	
 	    	// 게시글 상세정보 렌더링
@@ -118,7 +118,7 @@
 	    		const form = document.getElementById('saveForm');
 	    		const fields = ['id', 'title', 'content', 'writer', 'noticeYn'];
 	    		form.isNotice.checked = board.noticeYn;
-	    		form.IDate.value = moment(board.IDate).format('YYYY-MM-DD HH:mm');
+	    		form.IDate.value = moment(board.IDate).format('YYYY/MM/DD HH:mm');
 	    		
 	    		fields.forEach(field => {
 	    			form[field].value = board[field];

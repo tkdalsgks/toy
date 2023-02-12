@@ -153,7 +153,7 @@
 			                	<span class="commentCnt">${row.commentCnt > 1 ? row.commentCnt : ''}</span>
 			                </td>
 			                <td class="writer-notice">${row.writer}</td>
-			                <td class="time-notice">${timeForToday(moment(row.idate).format('YYYY.MM.DD'))}</td>
+			                <td class="time-notice">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</td>
 			                <td class="view-notice">${row.viewCnt}</td>
 			            </tr>
 			        `;
@@ -168,7 +168,7 @@
 			                	<span class="commentCnt">${row.commentCnt > 1 ? row.commentCnt : ''}</span>
 			                </td>
 			                <td class="writer">${row.writer}</td>
-			                <td class="time">${timeForToday(moment(row.idate).format('YYYY.MM.DD HH:mm'))}</td>
+			                <td class="time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</td>
 			                <td class="view">${row.viewCnt}</td>
 			            </tr>
 			        `;
