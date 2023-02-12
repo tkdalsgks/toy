@@ -37,7 +37,6 @@
 		SET    B.COMMENT_CNT = ( SELECT COUNT(1)
 		                         FROM   COMMENT C
 		                         WHERE  1=1
-		                         AND    C.DELETE_YN = 'N'
 		                         AND    C.BOARD_ID = #{ boardId } )
 		WHERE  1=1
 		AND    B.DELETE_YN = 0
@@ -59,7 +58,8 @@
 	<!-- 삭제 -->
 	<update id="deleteComment" parameterType="long">
 		UPDATE COMMENT
-		SET    DELETE_YN = 'Y'
+		SET    CONTENT = '[삭제된 댓글입니다.]'
+		     , DELETE_YN = 'Y'
 		     , U_DATE = NOW()
 		WHERE  1=1
 		AND    ID = #{ id }
@@ -72,19 +72,15 @@
 		SELECT <include refid="commentColumns" />
 		FROM   COMMENT
 		WHERE  1=1
-		AND    DELETE_YN = 'N'
 		AND    BOARD_ID = #{ value }
 		ORDER BY ID DESC
 	</select>
 	
 	<!-- 댓글 갯수 카운트 -->
 	<select id="countComment" parameterType="long" resultType="int">
-		/* com.project.toy.comment.dto.CommentResponseDTO */
-		
 		SELECT COUNT(1)
 		FROM   COMMENT
 		WHERE  1=1
-		AND    DELETE_YN = 'N'
 		AND    BOARD_ID = #{ boardId }
 	</select>
 	
