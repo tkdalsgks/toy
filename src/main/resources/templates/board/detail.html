@@ -78,7 +78,7 @@
 	            </div>
 	            <div class="board-info">
 		            <span><span class="board-writer">글쓴이</span>[[ ${board.writer} ]]</span>
-		            <span th:text="${#temporals.format( board.IDate, 'yyyy.MM.dd HH:mm' )}"></span>
+		            <span th:text="${#temporals.format( board.IDate, 'YYYY/MM/dd HH:mm' )}"></span>
 		            <span class="board-viewCnt1"><span class="board-view">조회수</span>[[ ${board.viewCnt} ]]</span>	            
 	            </div>
 	            <div class="board-contents">
@@ -319,7 +319,7 @@
 								<li class="comment-li">
 									<img src="/img/app/chat/chat.png" class="comment-img">
 									<strong class="name comment-name">${comment.writer}</strong>
-									<span class="time comment-time">${timeForToday(moment(comment.IDate).format('YYYY-MM-DD HH:mm'))}</span>
+									<span class="time comment-time">${timeForToday(moment(comment.IDate).format('YYYY/MM/DD HH:mm'))}</span>
 									<span onclick="openModal(${comment.id}, '${comment.writer}', '${comment.content}' )" class="material-symbols-outlined" style="cursor: pointer; font-size: 15px;">${comment.deleteYn != 'Y' ? 'edit' : ''}</span>
 									<br>
 									<span class="desc comment-content">${comment.content}</span>
