@@ -75,7 +75,7 @@ h4 + .search_box { margin-top: 10px; }
 .search_box { background: #f7f8fa; border: 1px solid #cfcfcf; box-shadow: 0 2px 0px rgba(80,80,80,0.05); padding: 10px 20px; margin: 25px 0; overflow: hidden; }
 .search_box input[type="text"], .search_box select, .search_box button { height: 34px; }
 .search_box input[type="text"], .search_box select { width: auto; padding: 4px 5px; border:1px solid #ddd; }
-.search_box input[type="text"] { width:300px; }
+.search_box input[type="text"] { width:200px; }
 .search_box_btn { width: 70px !important; }
 .sch_group button { background:#586a7d; border:0; padding:0; color:#fff; font-weight:bold; width:42px; line-height:34px; border-radius:3px; vertical-align:top; position:relative; }
 .search_box input#sDate { margin-right: 3px !important; }
@@ -102,12 +102,12 @@ h4 + .search_box { margin-top: 10px; }
 .board-btn { text-align: right; margin-bottom: 10px; overflow: hidden; }
 
 /* 댓글 */
-.box-content { margin-bottom: 100px; }
+.box-content { margin-bottom: 70px; }
 .comment-main { margin-bottom: 20px; align-items: center; padding: 5px 15px 5px 15px; font-size: 25px; }
 .comment-main-name { font-size: 25px; font-weight: 400; }
 .comment-main-mane span { font-weight: 400; }
 .comment-list { margin: 0 auto; width: 1200px; list-style: none; padding-left: 0; border-radius: 10px; background-color: #e0f2f1;  }
-.comment-li { background-color: 1px solid #F6F7F8; border: 1px solide #dedede; padding: 10px; line-height: 30px; }
+.comment-li { background-color: 1px solid #F6F7F8; border: 1px solide #dedede; padding: 15px; line-height: 30px; }
 .comment-img { width: 25px; height: 25px; margin-right: 4px; }
 .comment-name { font-size: 16px; color: #444444; margin-right: 15px; }
 .comment-time { font-size: 14px; color: #888888; margin-right: 5px; }
@@ -157,9 +157,16 @@ h4 + .search_box { margin-top: 10px; }
 
 @media (max-width: 500px) {
 	.comment-list { width: 450px; }
-	.comment-img { width: 20px; height: 20px; }
-	.comment-name { font-size: 14px; }
-	.comment-time { font-size: 12px; }
+	.path { display: none; }
+}
+
+@media (max-width: 500px) {
+	.comment-list { width: 380px; }
+	.path { display: none; }
+}
+
+@media (max-width: 400px) {
+	.comment-list { width: 360px; }
 	.path { display: none; }
 }
 
