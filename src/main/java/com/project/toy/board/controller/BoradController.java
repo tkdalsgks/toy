@@ -142,6 +142,7 @@ public class BoradController {
 			likesDTO.setUserId(user.getUserId());
 			
 			int comment = commentService.countComment(id);
+			int likesAll = likesService.selectLikes(likesDTO);
 			
 			if(comment != 0) {
 				model.addAttribute("comment", comment);
@@ -149,10 +150,16 @@ public class BoradController {
 				model.addAttribute("comment", "0");
 			}
 			
-			if(likesService.findLikes(likesDTO) == 0) {
-				model.addAttribute("likes");
+			if(likesAll != 0) {
+				model.addAttribute("likesAll", likesAll);
 			} else {
-				model.addAttribute("likes");
+				model.addAttribute("likesAll", likesAll);
+			}
+			
+			if(likesService.findLikes(likesDTO) == 0) {
+				model.addAttribute("likes", 0);
+			} else {
+				model.addAttribute("likes", 1);
 			}
 		} else {
 			MessageDTO message = new MessageDTO("존재하지 않거나 이미 삭제된 게시글입니다.", "/board", RequestMethod.POST, null);

@@ -74,7 +74,10 @@
 	            </p>
 	            <div class="board-title">
 		            <span class="board-title1">[[ ${board.title} ]]</span>
-		            <button id="board-likes" class="btns btn_mid board-likes"><img src="/img/app/board/unlikes.png"></button>
+		            <button id="board-likes" class="btns btn_mid board-likes">
+		            	<img th:src="${likes != 0 ? '/img/app/board/likes.png' : '/img/app/board/unlikes.png'}" th:onclick="insertLikes([[ ${board.id} ]]);" class="board-likes">
+		            	<span>[[ ${likesAll} ]]</span>
+		            </button>
 	            </div>
 	            <div class="board-info">
 		            <span><span class="board-writer">글쓴이</span>[[ ${board.writer} ]]</span>
@@ -215,7 +218,6 @@
 					success: function(response) {
 						if(response.result == false) {
 							alert("댓글 등록에 실패하였습니다.");
-							console.log(response.count);
 							return false;
 						}
 						
@@ -312,7 +314,6 @@
 				$.get(uri, function(response) {
 					if (isEmpty(response) == false) {
 						var commentsHtml = "";
-						console.log(response);
 
 						$(response.commentList).each(function(id, comment) {
 							commentsHtml += `
@@ -331,6 +332,38 @@
 					}
 				}, "json");
 			}
+			
+			// 게시글 좋아요, 취소
+			function insertLikes(boardId) {
+
+				var uri = [[ @{/board/likes} ]];
+				var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
+				var params = { "boardId": boardId, "userId": [[ ${userId} ]] };
+				
+				$.ajax({
+					url: uri,
+					type: "POST",
+					headers: headers,
+					dataType: "json",
+					data: JSON.stringify(params),
+					success: function(response) {
+						if(response.todayLikes >= 5) {
+							alert(response.message);
+							return false;
+						} else if(response.result == false) {
+							alert("게시글 좋아요에 실패하였습니다.");
+							return false;
+						} else {
+							window.location.reload(true);						
+						}
+					},
+					error: function(xhr, status, error) {
+						alert("잠시후 재시도 해주세요.");
+						return false;
+					}
+				});
+			}
+			
 		/*]]>*/
 		</script>
 	</th:block>
