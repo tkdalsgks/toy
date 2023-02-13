@@ -7,6 +7,9 @@ import com.project.toy.likes.dto.LikesDTO;
 @Mapper
 public interface LikesMapper {
 
+	public int selectLikes(LikesDTO params);
 	public int findLikes(LikesDTO params);
-
+	public int saveLikes(LikesDTO params);
+	public int deleteLikes(LikesDTO params);
+	public int selectTodayLikes(LikesDTO params);
 }

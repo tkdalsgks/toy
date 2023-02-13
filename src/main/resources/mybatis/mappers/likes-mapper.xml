@@ -3,10 +3,50 @@
 
 <mapper namespace="com.project.toy.likes.mapper.LikesMapper">
 
+	<sql id="likesColumns">
+		ID,
+		BOARD_ID,
+		USER_ID,
+		I_DATE
+	</sql>
+	
+	<select id="selectLikes" parameterType="LikesDTO" resultType="int">
+		SELECT COUNT(1) FROM BOARD_LIKES WHERE BOARD_ID = #{ boardId } AND USE_YN = 'Y'
+	</select>
+	
+	<!-- 좋아요한 게시글 카운트 -->
 	<select id="findLikes" resultType="int">
 		/* com.project.toy.likes.dto.LikesDTO */
 		
-		SELECT COUNT(1) FROM BOARD_LIKES WHERE BOARD_ID = #{ boardId } AND USER_ID = #{ userId }
+		SELECT COUNT(1) FROM BOARD_LIKES WHERE BOARD_ID = #{ boardId } AND USER_ID = #{ userId } AND USE_YN = 'Y'
+	</select>
+	
+	<!-- 좋아요 -->
+	<insert id="saveLikes" parameterType="LikesDTO">
+		/* com.project.toy.likes.dto.LikesDTO */
+		
+		INSERT INTO toy.BOARD_LIKES ( <include refid="likesColumns" /> )
+		VALUES ( nextval(BOARD_LIKES_SEQ), #{ boardId }, #{ userId }, NOW() )
+	</insert>
+	
+	<!-- 취소 -->
+	<update id="deleteLikes" parameterType="LikesDTO">
+		/* com.project.toy.likes.dto.LikesDTO */
+		
+		UPDATE toy.BOARD_LIKES
+		SET    USE_YN = 'N'
+		WHERE  1=1
+		AND    BOARD_ID = #{ boardId }
+		AND    USER_ID = #{ userId }
+	</update>
+	
+	<!-- 오늘 좋아요 누른 횟수 -->
+	<select id="selectTodayLikes" parameterType="LikesDTO" resultType="int">
+		SELECT COUNT(1)
+		FROM   BOARD_LIKES
+		WHERE  USER_ID = #{ userId }
+		AND    I_DATE BETWEEN (SELECT DATE_FORMAT(NOW(), '%Y-%m-%d') FROM DUAL) AND NOW()
+		AND    USE_YN = 'Y'
 	</select>
 	
 </mapper>

@@ -98,6 +98,7 @@ h4 + .search_box { margin-top: 10px; }
 
 /* 좋아요, 수정, 삭제, 뒤로 */
 .board-likes { border: none; background-color: initial; font-size: 20px; justify-content: right; }
+.board-likes span { margin-left: 5px; font-size: 15px; }
 .board-likes img { width: 20px; height: 20px; }
 .board-btn { text-align: right; margin-bottom: 10px; overflow: hidden; }
 
