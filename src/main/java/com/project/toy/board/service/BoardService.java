@@ -10,6 +10,7 @@ import com.project.toy.board.dto.BoardRequestDTO;
 import com.project.toy.board.dto.BoardResponseDTO;
 import com.project.toy.board.mapper.BoardMapper;
 import com.project.toy.common.dto.SearchDTO;
+import com.project.toy.likes.dto.LikesDTO;
 import com.project.toy.paging.Pagination;
 import com.project.toy.paging.PagingResponse;
 
@@ -37,6 +38,10 @@ public class BoardService {
 		return boardMapper.findNotice(params);
 	}
 	
+	public List<LikesDTO> findLikesBest(SearchDTO params) {
+		return boardMapper.findLikesBest(params);
+	}
+	
 	public BoardResponseDTO findByBoardId(Long id) {
 		return boardMapper.findByBoardId(id);
 	}
@@ -56,5 +61,4 @@ public class BoardService {
 	public void countHits(Long id) {
 		boardMapper.countHits(id);
 	}
-
 }

@@ -82,6 +82,9 @@ public class BoradController {
 		List<BoardResponseDTO> notice = boardService.findNotice(params);
 		model.addAttribute("notice", notice);
 		
+		List<LikesDTO> likes = boardService.findLikesBest(params);
+		model.addAttribute("likes", likes);
+		
 		return "board/list";
 	}
 	

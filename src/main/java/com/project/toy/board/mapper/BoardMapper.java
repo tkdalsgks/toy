@@ -7,12 +7,14 @@ import org.apache.ibatis.annotations.Mapper;
 import com.project.toy.board.dto.BoardRequestDTO;
 import com.project.toy.board.dto.BoardResponseDTO;
 import com.project.toy.common.dto.SearchDTO;
+import com.project.toy.likes.dto.LikesDTO;
 
 @Mapper
 public interface BoardMapper {
 
 	public List<BoardResponseDTO> findAll(SearchDTO params);
 	public List<BoardResponseDTO> findNotice(SearchDTO params);
+	public List<LikesDTO> findLikesBest(SearchDTO params);
 	public BoardResponseDTO findByBoardId(Long id);
 	public void saveBoard(BoardRequestDTO params);
 	public void updateBoard(BoardRequestDTO params);

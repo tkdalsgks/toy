@@ -52,7 +52,7 @@
 			<!-- 일반 리스트 -->
 			<table class="tb tb_col">
 				<colgroup>
-					<col style="width:7%;" /><col style="width:auto;" /><col style="width:15%;" /><col style="width:10%;" /><col style="width:7%;" />
+					<col style="width:10%;" /><col style="width:auto;" /><col style="width:15%;" /><col style="width:7%;" /><col style="width:7%;" />
 				</colgroup>
 				<thead>
 					<tr>
@@ -125,6 +125,7 @@
 			function findAllBoard() {
 				const notice = [[ ${notice} ]];
 				const list = [[ ${boards.list} ]];
+				const likes = [[ ${likes} ]];
 				
 				if ( !list.length ) {
 					document.getElementById('list').innerHTML = '<td colspan="6"><div className="no_data_msg">검색된 결과가 없습니다.</div></td>';
@@ -135,12 +136,12 @@
 				const params = [[ ${params} ]];
 				let num = pagination.totalRecordCount - ((params.page - 1) * params.recordSize);
 				
-				drawList(notice, list, num);
+				drawList(notice, list, likes, num);
 				drawPage(pagination, params);
 			}
 			
 			// 리스트 HTML draw
-			function drawList(notice, list, num) {
+			function drawList(notice, list, likes, num) {
 
 			    let html = '';
 			    
@@ -158,7 +159,22 @@
 			            </tr>
 			        `;
 			    })
-
+			    
+			    likes.forEach(row => {
+			        html += `
+			            <tr>
+			                <td class="tap-likes">${row.noticeYn === false ? '좋아요' : row.id}</td>
+			                <td class="title-likes">
+			                	<a href="javascript:void(0);" onclick="goViewPage(${row.id});">${row.title}</a>
+			                	<span class="commentCnt">${row.commentCnt > 1 ? row.commentCnt : ''}</span>
+			                </td>
+			                <td class="writer-likes">${row.writer}</td>
+			                <td class="time-likes">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</td>
+			                <td class="view-likes">${row.viewCnt}</td>
+			            </tr>
+			        `;
+			    })
+			    
 			    list.forEach(row => {
 			        html += `
 			            <tr>

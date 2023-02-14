@@ -38,6 +38,12 @@ section { margin-top: 30px; margin-bottom: 80px; }
 .tb_col .writer-notice { text-align: center; background: #f6f6f6; }
 .tb_col .time-notice { text-align: center; background: #f6f6f6; }
 .tb_col .view-notice { text-align: center; background: #f6f6f6; }
+.tb_col .tap-likes { text-align: center; background: #f6f6f6; color: #A0A0FF; font-weight: 800; }
+.tb_col .title-likes { text-align: left; background: #f6f6f6; }
+.tb_col .title-likes a:hover { cursor: pointer; text-decoration: underline; }
+.tb_col .writer-likes { text-align: center; background: #f6f6f6; }
+.tb_col .time-likes { text-align: center; background: #f6f6f6; }
+.tb_col .view-likes { text-align: center; background: #f6f6f6; }
 .tb_col .tap { text-align: center; }
 .tb_col .title { text-align: left; }
 .tb_col .title a:hover { cursor: pointer; text-decoration: underline; }

@@ -13,4 +13,5 @@ public class LikesDTO {
 	private Long boardId;
 	private String userId;
 	private LocalDateTime IDate;
+	private int likesCnt;
 }
