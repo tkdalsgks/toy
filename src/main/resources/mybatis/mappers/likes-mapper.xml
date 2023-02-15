@@ -40,8 +40,23 @@
 		AND    USER_ID = #{ userId }
 	</update>
 	
+	<update id="updateCountLikes" parameterType="LikesDTO">
+		/* com.project.toy.likes.dto.LikesDTO */
+		
+		UPDATE BOARD B
+		SET    B.LIKES_CNT = ( SELECT COUNT(1)
+		                         FROM   BOARD_LIKES L
+		                         WHERE  1=1
+		                         AND    L.BOARD_ID = #{ boardId } )
+		WHERE  1=1
+		AND    B.DELETE_YN = 0
+		AND    B.ID = #{ boardId }
+	</update>
+	
 	<!-- 오늘 좋아요 누른 횟수 -->
 	<select id="selectTodayLikes" parameterType="LikesDTO" resultType="int">
+		/* com.project.toy.likes.dto.LikesDTO */
+		
 		SELECT COUNT(1)
 		FROM   BOARD_LIKES
 		WHERE  USER_ID = #{ userId }

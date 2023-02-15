@@ -11,6 +11,7 @@
 		, WRITER
 		, VIEW_CNT
 		, COMMENT_CNT
+		, LIKES_CNT
 		, NOTICE_YN
 		, DELETE_YN
 		, I_DATE
@@ -53,7 +54,7 @@
 		/* com.project.toy.board.dto.BoardRequestDTO */
 		
 		INSERT INTO BOARD ( <include refid="boardColumns" /> )
-		VALUES ( #{ id }, #{ title }, #{ content }, #{ writerId }, #{ writer }, 0, 0, #{ noticeYn }, 0, NOW(), NULL ) 
+		VALUES ( #{ id }, #{ title }, #{ content }, #{ writerId }, #{ writer }, 0, 0, 0, #{ noticeYn }, 0, NOW(), NULL ) 
 	</insert>
 	
 	<!-- 상세보기 -->

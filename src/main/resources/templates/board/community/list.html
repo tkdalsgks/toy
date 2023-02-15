@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				layout:decorate="~{layouts/layout}">
+
+<head>
+<meta charset="UTF-8">
+<title>toy, 커뮤니티</title>
+
+<th:block layout:fragment="css">
+	<!-- RESET, DEFAULT -->
+	<link rel="stylesheet" th:href="@{/css/app/reset.css}" />
+	<link rel="stylesheet" th:href="@{/css/lib/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/index.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/default.css}" />
+	<!-- POPUP -->
+	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
+	<!-- BOARD -->
+	<link rel="stylesheet" th:href="@{/css/app/board/community/board.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/button.css}" />
+</th:block>
+
+</head>
+
+<body>
+	
+	<div layout:fragment="content" class="container">
+		<div class="page_tits">
+		    <span class="write-name-a">커뮤니티</span><br>
+		    <span class="list-name-b">다양한 사람을 만나고 생각의 폭을 넓혀보세요.</span>
+		</div>
+		
+		<div class="content">
+			<section>
+			<!-- 검색 -->
+			<div class="search_box">
+				<form id="searchForm" onsubmit="return false;" autocomplete="off">
+					<div class="sch_group fl">
+						<div class="list-search">
+							<img class="list-refresh" src="/img/app/common/refresh.png" onclick="refreshBoard();">
+							<div>
+								<select id="searchType" name="searchType" title="검색 유형 선택">
+									<option value="">전체 검색</option>
+									<option value="title">제목</option>
+									<option value="content">내용</option>
+									<option value="writer">글쓴이</option>
+								</select>
+								<input type="text" id="keyword" name="keyword" onkeyup="enterkey();" placeholder="키워드를 입력해 주세요." title="키워드 입력" />
+								<button type="button" class="search_box_btn community-btn" onclick="movePage(1);"><i class="fas fa-search"></i><span class="skip_info">검색</span></button>
+							</div>
+							<div></div>
+						</div>
+					</div>
+				</form>
+			</div>
+			
+			<!-- 리스트 출력 -->
+			<table class="tb tb_col">
+				<tbody id="list"></tbody>
+			</table>
+			
+			<!-- 페이징 -->
+			<div class="paging"></div>
+			
+			<!-- 버튼 -->
+			<p class="btn_set tr">
+				<a th:href="@{/community/write}" class="btns btn_st3 btn_mid community-btn">글쓰기</a>
+			</p>
+			</section>
+		</div>
+	</div>
+	
+	<th:block layout:fragment="script">
+		<!-- FONT AWESOME -->
+		<script src="https://kit.fontawesome.com/77ad8525ff.js"></script>
+		<!-- Jquery, Bootstrap -->
+		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/app/header.js"></script>
+		<!-- POPUP -->
+		<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+		<script type="text/javascript" src="/js/app/popup.js"></script>
+		<!-- BOARD -->
+		<script type="text/javascript" src="/js/lib/moment.js"></script>
+		<script type="text/javascript" src="/js/app/board/community/board.js"></script>
+		<script th:inline="javascript">
+		/*<![CDATA[*/
+			
+			window.onload = () => {
+				setQueryStringParams();
+				
+				findAllBoard();
+			}
+			
+			function enterkey() {
+				if(event.keyCode == 13) {
+					movePage(1);
+				}
+			};
+			
+			// 쿼리 스트링 파라미터 셋팅
+	        function setQueryStringParams() {
+				if ( !location.search ) {
+					return false;
+				}
+				
+				const form = document.getElementById('searchForm');
+				
+				new URLSearchParams(location.search).forEach((value, key) => {
+					if (form[key]) {
+						form[key].value = value;
+					}
+				})
+			}
+			
+			// 게시글 리스트 조회
+			function findAllBoard() {
+				const notice = [[ ${notice} ]];
+				const list = [[ ${boards.list} ]];
+				const likes = [[ ${likes} ]];
+				
+				if ( !list.length ) {
+					document.getElementById('list').innerHTML = '<td colspan="6"><div className="no_data_msg">검색된 결과가 없습니다.</div></td>';
+					drawPage();
+				}
+				
+				const pagination = [[ ${boards.pagination} ]];
+				const params = [[ ${params} ]];
+				let num = pagination.totalRecordCount - ((params.page - 1) * params.recordSize);
+				
+				drawList(notice, list, likes, num);
+				drawPage(pagination, params);
+			}
+			
+			// 리스트 HTML draw
+			function drawList(notice, list, likes, num) {
+
+			    let html = '';
+			    
+			    notice.forEach(row => {
+			        html += `
+			        	<tr>
+			                <td class="list-important">
+			                	<div>
+			                		<div class="list-img">
+			                			<img src="/img/app/chat/chat.png">
+				                		<span class="list-writer">${row.writer}</span><span>&nbsp;·&nbsp;</span>
+					                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
+				                	</div>
+				                	<div class="list-title">
+				                		<a href="javascript:void(0);" onclick="goViewPage(${row.id});">${row.title}</a>
+				                	</div>
+				                	<div class="list-info">
+					                	<span class="list-notice">${row.noticeYn === false ? '커뮤니티' : '공지사항'}</span>
+					                	<div>
+					                		<svg class="list-view-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+						                	<span class="list-view">${row.viewCnt}</span>
+					                		<svg class="list-comment-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"></path></svg>
+						                	<span class="list-comment">${row.commentCnt}</span>
+						                	<img class="list-likes-img" src="/img/app/board/likes.png">
+						                	<span class="list-likes">${row.likesCnt}</span>
+					                	</div>
+				                	</div>
+			                	</div>
+			                </td>
+			            </tr>
+			        `;
+			    })
+			    
+			    likes.forEach(row => {
+			        html += `
+			        	<tr>
+			                <td class="list-important">
+			                	<div>
+			                		<div class="list-img">
+			                			<img src="/img/app/chat/chat.png">
+				                		<span class="list-writer">${row.writer}</span><span>&nbsp;·&nbsp;</span>
+					                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
+				                	</div>
+				                	<div class="list-title">
+				                		<a href="javascript:void(0);" onclick="goViewPage(${row.id});">${row.title}</a>
+				                	</div>
+				                	<div class="list-info">
+					                	<span class="list-notice">${row.noticeYn === false ? '좋아요' : row.id}</span>
+					                	<div>
+					                		<svg class="list-view-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+						                	<span class="list-view">${row.viewCnt}</span>
+					                		<svg class="list-comment-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"></path></svg>
+						                	<span class="list-comment">${row.commentCnt}</span>
+						                	<img class="list-likes-img" src="/img/app/board/likes.png">
+						                	<span class="list-likes">${row.likesCnt}</span>
+					                	</div>
+				                	</div>
+			                	</div>
+			                </td>
+			            </tr>
+			        `;
+			    })
+			    
+			    list.forEach(row => {
+			        html += `
+			            <tr>
+			                <td class="list-general">
+			                	<div>
+			                		<div class="list-img">
+			                			<img src="/img/app/chat/chat.png">
+				                		<span class="list-writer">${row.writer}</span><span>&nbsp;·&nbsp;</span>
+					                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
+				                	</div>
+				                	<div class="list-title">
+				                		<a href="javascript:void(0);" onclick="goViewPage(${row.id});">${row.title}</a>
+				                	</div>
+				                	<div class="list-info">
+					                	<span class="list-notice">${row.noticeYn === false ? '커뮤니티' : '공지'}</span>
+					                	<div>
+					                		<svg class="list-view-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+						                	<span class="list-view">${row.viewCnt}</span>
+					                		<svg class="list-comment-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"></path></svg>
+						                	<span class="list-comment">${row.commentCnt}</span>
+						                	<img class="list-likes-img" src="/img/app/board/likes.png">
+						                	<span class="list-likes">${row.likesCnt}</span>
+					                	</div>
+				                	</div>
+			                	</div>
+			                </td>
+			            </tr>
+			        `;
+			    })
+
+			    document.getElementById('list').innerHTML = html;
+			}
+			
+			// 페이지 HTML draw
+			function drawPage(pagination, params) {
+				if ( !pagination || !params ) {
+					document.querySelector('.paging').innerHTML = '';
+					throw new Error('Missing required parameters...');
+				}
+				
+				let html = '';
+				
+				// 첫 페이지, 이전 페이지
+				if (pagination.existPrevPage) {
+					html += `
+							<a href="javascript:void(0);" onclick="movePage(1)" class="page_bt first">&lt;&lt;</a>
+							<a href="javascript:void(0);" onclick="movePage(${pagination.startPage - 1})" class="page_bt prev">&lt;</a>
+							`;
+				}
+				
+				// 페이지 번호
+				html += '<p>';
+				for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+					html += (i !== params.page)
+					? `<a href="javascript:void(0);" onclick="movePage(${i});">${i}</a>`
+					: `<span class="on">${i}</span>`
+				}
+				html += '</p>';
+				
+				// 다음 페이지, 마지막 페이지
+				if (pagination.existNextPage) {
+					html += `
+							<a href="javascript:void(0);" onclick="movePage(${pagination.endPage + 1});" class="page_bt next">&gt;</a>
+							<a href="javascript:void(0);" onclick="movePage(${pagination.totalPageCount});" class="page_bt last">&gt;&gt;</a>
+							`;
+				}
+				
+				document.querySelector('.paging').innerHTML = html;
+			}
+			
+			// 페이지 이동
+			function movePage(page) {
+			    const form = document.getElementById('searchForm');
+			    const queryParams = {
+			          page: (page) ? page : 1
+			        , recordSize: 20
+			        , pageSize: 10
+			        , searchType: form.searchType.value
+			        , keyword: form.keyword.value
+			    }
+			    location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
+			}
+			
+			// 게시글 상세 페이지로 이동
+		    function goViewPage(id) {
+		        const queryString = (location.search) ? location.search + `&id=${id}` : `?id=${id}`;
+		        location.href = '/community/detail' + queryString;
+		    }
+			
+			// 게시글 리프레쉬
+			function refreshBoard() {
+				findAllBoard();
+			}
+			
+		/*]]>*/
+		</script>
+	</th:block>
+	
+</body>
+
+</html>

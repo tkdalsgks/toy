@@ -7,18 +7,18 @@ function headerbarToggle() {
 	
 	var currentScrollPos = window.pageYOffset;
 	if(currentScrollPos > 50) {
-		header.style.padding = '0 200px 0 200px';
-		document.body.style.paddingTop = '80px';
+		header.style.padding = '0 180px 0 180px';
+		document.body.style.paddingTop = '70px';
 		header.style.transition = 'all 1s';
 		
-		headerMobile.style.padding = '0 200px 0 200px';
+		headerMobile.style.padding = '0 150px 0 150px';
 		headerMobile.style.transition = 'all 1s';
 	} else if(currentScrollPos < 50) {
-		header.style.padding = '16px 200px 0 200px';
-		document.body.style.paddingTop = '110px';
+		header.style.padding = '10px 180px 10px 180px';
+		document.body.style.paddingTop = '100px';
 		header.style.transition = 'all 1s';
 		
-		headerMobile.style.padding = '16px 200px 0 200px';
+		headerMobile.style.padding = '10px 150px 10px 150px';
 		headerMobile.style.transition = 'all 1s';
 	}
 }

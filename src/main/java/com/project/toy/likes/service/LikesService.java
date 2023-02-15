@@ -46,6 +46,10 @@ public class LikesService {
 		return (queryResult >= 1) ? true : false;
 	}
 	
+	public void updateCountLikes(LikesDTO params) {
+		likesMapper.updateCountLikes(params);
+	}
+	
 	public int selectTodayLikes(LikesDTO params) {
 		return likesMapper.selectTodayLikes(params);
 	}
