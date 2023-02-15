@@ -40,14 +40,16 @@
 		AND    USER_ID = #{ userId }
 	</update>
 	
+	<!-- 좋아요 수 업데이트 -->
 	<update id="updateCountLikes" parameterType="LikesDTO">
 		/* com.project.toy.likes.dto.LikesDTO */
 		
 		UPDATE BOARD B
 		SET    B.LIKES_CNT = ( SELECT COUNT(1)
-		                         FROM   BOARD_LIKES L
-		                         WHERE  1=1
-		                         AND    L.BOARD_ID = #{ boardId } )
+		                       FROM   BOARD_LIKES L
+		                       WHERE  1=1
+		                       AND    L.USE_YN = 'Y'
+		                       AND    L.BOARD_ID = #{ boardId } )
 		WHERE  1=1
 		AND    B.DELETE_YN = 0
 		AND    B.ID = #{ boardId }

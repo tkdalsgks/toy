@@ -19,6 +19,8 @@
 	<!-- BOARD -->
 	<link rel="stylesheet" th:href="@{/css/app/board/community/board.css}" />
 	<link rel="stylesheet" th:href="@{/css/app/button.css}" />
+	
+	<link rel="stylesheet" th:href="@{/css/app/loading.css}" />
 </th:block>
 
 </head>
@@ -73,18 +75,21 @@
 	
 	<th:block layout:fragment="script">
 		<!-- FONT AWESOME -->
-		<script src="https://kit.fontawesome.com/77ad8525ff.js"></script>
+		<script type="text/javascript" src="/js/lib/fontawesome.js"></script>
 		<!-- Jquery, Bootstrap -->
 		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
 		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/js/app/header.js"></script>
 		<!-- POPUP -->
-		<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
+		<script type="text/javascript" src="/js/lib/stomp.min.js"></script>
 		<script type="text/javascript" src="/js/app/popup.js"></script>
 		<!-- BOARD -->
 		<script type="text/javascript" src="/js/lib/moment.js"></script>
 		<script type="text/javascript" src="/js/app/board/community/board.js"></script>
+		<!-- LOADING -->
+		<script type="text/javascript" src="/js/lib/loadingoverlay.min.js"></script>
+		<script type="text/javascript" src="/js/app/loading.js"></script>
 		<script th:inline="javascript">
 		/*<![CDATA[*/
 			
@@ -146,8 +151,11 @@
 			                	<div>
 			                		<div class="list-img">
 			                			<img src="/img/app/chat/chat.png">
-				                		<span class="list-writer">${row.writer}</span><span>&nbsp;·&nbsp;</span>
+				                		<span class="list-writer">${row.writer}</span>
+				                		<span>&nbsp;·&nbsp;</span>
 					                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
+					                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
+					                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
 				                	</div>
 				                	<div class="list-title">
 				                		<a href="javascript:void(0);" onclick="goViewPage(${row.id});">${row.title}</a>
@@ -176,14 +184,17 @@
 			                	<div>
 			                		<div class="list-img">
 			                			<img src="/img/app/chat/chat.png">
-				                		<span class="list-writer">${row.writer}</span><span>&nbsp;·&nbsp;</span>
+				                		<span class="list-writer">${row.writer}</span>
+				                		<span>&nbsp;·&nbsp;</span>
 					                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
+					                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
+					                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
 				                	</div>
 				                	<div class="list-title">
 				                		<a href="javascript:void(0);" onclick="goViewPage(${row.id});">${row.title}</a>
 				                	</div>
 				                	<div class="list-info">
-					                	<span class="list-notice">${row.noticeYn === false ? '좋아요' : row.id}</span>
+					                	<span class="list-notice">${row.noticeYn === false ? '베스트' : row.id}</span>
 					                	<div>
 					                		<svg class="list-view-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
 						                	<span class="list-view">${row.viewCnt}</span>
@@ -206,8 +217,11 @@
 			                	<div>
 			                		<div class="list-img">
 			                			<img src="/img/app/chat/chat.png">
-				                		<span class="list-writer">${row.writer}</span><span>&nbsp;·&nbsp;</span>
+				                		<span class="list-writer">${row.writer}</span>
+				                		<span>&nbsp;·&nbsp;</span>
 					                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
+					                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
+					                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
 				                	</div>
 				                	<div class="list-title">
 				                		<a href="javascript:void(0);" onclick="goViewPage(${row.id});">${row.title}</a>
@@ -228,7 +242,7 @@
 			            </tr>
 			        `;
 			    })
-
+			    
 			    document.getElementById('list').innerHTML = html;
 			}
 			
@@ -273,12 +287,11 @@
 			function movePage(page) {
 			    const form = document.getElementById('searchForm');
 			    const queryParams = {
-			          page: (page) ? page : 1
-			        , recordSize: 20
-			        , pageSize: 10
-			        , searchType: form.searchType.value
-			        , keyword: form.keyword.value
+		    		keyword: form.keyword.value
+		    		, searchType: form.searchType.value
+			        , page: (page) ? page : 1
 			    }
+			    
 			    location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
 			}
 			
@@ -290,7 +303,7 @@
 			
 			// 게시글 리프레쉬
 			function refreshBoard() {
-				findAllBoard();
+				movePage();
 			}
 			
 		/*]]>*/

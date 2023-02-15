@@ -29,7 +29,7 @@ p { margin-bottom: 0; }
 
 /* 테이블 스타일 ------------------------------- */
 .tb { width: 100%; border: none; }
-.tb th, .tb td { border-bottom: 1px solid hsla(220,9%,46%,.3); padding: 10px 10px; box-sizing: border-box; }
+.tb th, .tb td { border-bottom: 1px solid hsla(220,9%,46%,.3); padding: 0.75rem 0.75rem; box-sizing: border-box; }
 .tb_col td { background: white; }
 .bt_search { width: 100px; }
 
@@ -44,7 +44,8 @@ p { margin-bottom: 0; }
 .list-img img { width: 1.5rem; height: 1.5rem; margin-right: 5px; }
 .list-writer { font-size: 12px; font-weight: 400; }
 .list-time { font-size: 12px; font-weight: 400; }
-.list-title { display: flex; margin-top: 0.6rem; }
+.list-udate { font-size: 12px; font-weight: 400; color: #A0A0FF; }
+.list-title { display: flex; margin-top: 0.3rem; }
 .list-title a { font-size: 14px; font-weight: 400; }
 .list-title a:hover { color: #A0A0FF; }
 .list-info { display: flex; justify-content: space-between; margin-top: 0.3rem; align-items: center; }
@@ -89,9 +90,9 @@ p { margin-bottom: 0; }
 
 /* search ------------------------------- */
 .search_box { border-top: 1px solid hsla(220,9%,46%,.3); border-bottom: 1px solid hsla(220,9%,46%,.3); box-shadow: 0 2px 0px rgba(80,80,80,0.05); padding: 10px 20px; overflow: hidden; }
-.search_box input[type="text"], .search_box select, .search_box button { height: 34px; }
+.search_box input[type="text"], .search_box select, .search_box button { height: 34px; border-radius: 0.75rem; }
 .search_box input[type="text"], .search_box select { width: auto; padding: 4px 5px; border:1px solid #ddd; }
-.search_box input[type="text"] { width: 250px; border-radius: 0.7rem; margin-right: 5px; }
+.search_box input[type="text"] { width: 250px; border-radius: 0.75rem; margin-right: 5px; padding-left: 0.75rem; }
 .search_box_btn { width: 70px !important; }
 .sch_group { text-align: center; }
 .sch_group button { background:#586a7d; border:0; padding:0; color:#fff; font-weight:bold; width:42px; line-height:34px; border-radius:3px; vertical-align:top; position:relative; }
