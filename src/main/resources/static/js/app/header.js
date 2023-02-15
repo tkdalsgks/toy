@@ -7,14 +7,14 @@ function headerbarToggle() {
 	
 	var currentScrollPos = window.pageYOffset;
 	if(currentScrollPos > 50) {
-		header.style.padding = '0 180px 0 180px';
+		header.style.padding = '0 345px 0 345px';
 		document.body.style.paddingTop = '70px';
 		header.style.transition = 'all 1s';
 		
 		headerMobile.style.padding = '0 150px 0 150px';
 		headerMobile.style.transition = 'all 1s';
 	} else if(currentScrollPos < 50) {
-		header.style.padding = '10px 180px 10px 180px';
+		header.style.padding = '10px 345px 10px 345px';
 		document.body.style.paddingTop = '100px';
 		header.style.transition = 'all 1s';
 		
