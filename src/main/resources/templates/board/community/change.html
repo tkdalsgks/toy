@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>toy, 게시판</title>
+<title>toy, 커뮤니티 게시글 수정</title>
 
 <th:block layout:fragment="css">
 	<!-- RESET, DEFAULT -->
@@ -17,7 +17,7 @@
 	<!-- POPUP -->
 	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
 	<!-- BOARD -->
-	<link rel="stylesheet" th:href="@{/css/app/board.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/board/community/board.css}" />
 	<link rel="stylesheet" th:href="@{/css/app/button.css}" />
 </th:block>
 
@@ -27,57 +27,47 @@
 	
 	<div layout:fragment="content" class="container">
 		<div class="page_tits">
-			<h3>작성/수정</h3>
-			<p class="path"><strong>현재 위치 :</strong> <span>게시판 리스트</span> <span>상세보기</span> <span><b>작성/수정</b></span></p>
+			<span class="write-name-a">함께 할 때 더 즐거운 순간</span><br>
+			<span class="write-name-b">[[ ${user} ]]<span class="write-name-c">님 지식공유 플랫폼 TOY에서 다양한 사람을 만나고 생각의 폭을 넓혀보세요.</span></span>
 		</div>
 		
-		<div class="content">
+		<div class="content write-contents">
 			<section>
 				<form id="saveForm" method="post" autocomplete="off">
-					<!--/* 게시글 수정인 경우, 서버로 전달할 게시글 번호 (PK) */-->
+					<!-- 서버로 전달할 게시글 번호 (PK) -->
 					<input type="hidden" id="id" name="id" th:if="${board != null}" th:value="${board.id}" />
-					
-					<!--/* 서버로 전달할 공지글 여부 */-->
+					<!-- 서버로 전달할 공지글 여부 -->
 					<input type="hidden" id="noticeYn" name="noticeYn" />
-					<table class="tb tb_row">
-						<colgroup>
-							<col style="width:15%;" /><col style="width:35%;" /><col style="width:15%;" /><col style="width:35%;" />
-						</colgroup>
-						<tbody>
-							<tr>
-								<th scope="row">공지글</th>
-								<td sec:authorize="hasAnyRole('ROLE_ADMIN')"><span class="chkbox"><input type="checkbox" id="isNotice" name="isNotice" class="chk" /><i></i><label for="isNotice"></label></span></td>
-								<td sec:authorize="hasAnyRole('ROLE_USER')"><span class="chkbox"><input type="checkbox" id="isNotice" name="isNotice" class="chk" disabled="disabled" /><i></i><label for="isNotice"></label></span></td>
-								
-								<th scope="row">등록일</th>
-								<td colspan="3"><input type="text" id="IDate" name="IDate" readonly /></td>
-							</tr>
-							
-							<tr>
-								<th>작성자 <span class="es">필수 입력</span></th>
-								<td colspan="3"><input type="text" id="writer" name="writer" maxlength="10" th:value="${user}" readonly /></td>
-							</tr>
-							
-							<tr>
-								<th>제목 <span class="es">필수 입력</span></th>
-								<td colspan="3"><input type="text" id="title" name="title" maxlength="50" placeholder="제목을 입력해 주세요." /></td>
-							</tr>
-							
-							<tr>
-								<th>내용 <span class="es">필수 입력</span></th>
-								<td colspan="3"><textarea id="content" name="content" cols="150" rows="15" placeholder="내용을 입력해 주세요."></textarea></td>
-							</tr>
-						</tbody>
-					</table>
+					<input type="hidden" id="writer" name="writer" class="write-writer" maxlength="10" th:value="${user}" />
+					<input type="hidden" id="IDate" name="IDate" class="write-date" />
+					<div>
+						<div sec:authorize="hasAnyRole('ROLE_ADMIN')" class="write-notice">
+							<span>공지글</span>
+							<div sec:authorize="hasAnyRole('ROLE_ADMIN')">
+								<span class="chkbox"><input type="checkbox" id="isNotice" name="isNotice" class="chk" /><i></i><label for="isNotice"></label></span>
+							</div>
+						</div>
+						<div>
+							<span class="write-title">제목</span>
+							<div class="write-title-input">
+								<input id="title" name="title" class="write-title" maxlength="50" placeholder="제목을 입력해 주세요." th:value="${board.title}" />
+							</div>
+						</div>
+						<div>
+							<span class="write-content">내용</span>
+							<div class="wirte-title-input" style="display: flex; flex-direction: column;">
+								<textarea id="content" name="content" th:utext="${board.content}"></textarea>
+							</div>
+						</div>
+					</div>
 				</form>
 				
 				<p class="btn_set">
-					<button id="saveBtn" class="btns btn_st3 btn_mid" onclick="saveBoard();">저장</button>
-					<a href="javascript:history.go(-1)" class="btns btn_bdr3 btn_mid">뒤로</a>
+					<button id="saveBtn" class="btns btn_st3 btn_mid community-btn" onclick="saveBoard();">저장</button>
+					<a href="javascript:history.go(-1)" class="btns btn_bdr3 btn_mid community-btn">뒤로</a>
 				</p>
 			</section>
 		</div>
-		<!--/* .content */-->
 	</div>
 	
 	<th:block layout:fragment="script">
@@ -92,10 +82,23 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 		<script type="text/javascript" src="/js/app/popup.js"></script>
 		<!-- BOARD -->
+		<script type="text/javascript" src="/js/lib/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/lib/moment.js"></script>
-		<script type="text/javascript" src="/js/app/board.js"></script>
+		<script type="text/javascript" src="/js/app/board/community/board.js"></script>
 		<script th:inline="javascript">
 		/*<![CDATA[*/
+			
+			ClassicEditor
+	            .create( document.querySelector( '#content' ), {
+	                language: { ui: 'ko', content: 'ko' }
+	            })
+	            .then( editor => {
+	            	window.ckeditor = editor;
+	            })
+	            .catch( error => {
+	                console.error( error );
+	            } );
+
 			
 	    	window.onload = () => {
 	    		renderBoardInfo();
@@ -127,18 +130,26 @@
 	    	
 	    	// 게시글 저장(수정)
 	    	function saveBoard() {
+	    		
 	    		const form = document.getElementById('saveForm');
-	    		const fields = [form.title, form.writer, form.content];
-	    		const fieldNames = ['제목', '이름', '내용'];
+	    		const content = document.getElementsByClassName('ck-content');
+	    		
+	    		const fields = [form.title, form.writer];
+	    		const fieldNames = ['제목', '이름'];
 	    		
 	    		for (let i = 0, len = fields.length; i < len; i++) {
 	    			isValid(fields[i], fieldNames[i]);
 	    		}
 	    		
-	    		document.getElementById('saveBtn').disabled = true;
-	    		form.noticeYn.value = form.isNotice.checked;
-	    		form.action = [[ ${board == null} ]] ? '/board/save' : '/board/update';
-	    		form.submit();
+	    		if(ckeditor.getData() == '' || ckeditor.getData() == 0) {
+	    			alert("내용을 확인해 주세요.");
+	    			return false;
+	    		} else {
+		    		document.getElementById('saveBtn').disabled = true;
+		    		form.noticeYn.value = form.isNotice.checked;
+		    		form.action = [[ ${board == null} ]] ? '/community/save' : '/community/update';
+		    		form.submit();
+	    		}
 	    	}
 	    	
 	    /*]]>*/

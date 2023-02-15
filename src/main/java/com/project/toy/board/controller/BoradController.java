@@ -37,7 +37,7 @@ import com.project.toy.user.dto.SessionUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "board", description = "게시글 API")
+@Tag(name = "community", description = "게시글 API")
 @Controller
 public class BoradController {
 	
@@ -66,9 +66,9 @@ public class BoradController {
 	 * @return
 	 */
 	@Operation(summary = "리스트 조회", description = "게시글 리스트 조회")
-	@GetMapping("/board")
+	@GetMapping("/community")
 	public String list(@ModelAttribute("params") final SearchDTO params, Authentication auth, Model model) {
-		log.info("***** Board Page Call *****");
+		log.info("***** Community Page Call *****");
 		
 		SessionUser user = (SessionUser) session.getAttribute("user");
 		if(auth != null) {
@@ -82,7 +82,10 @@ public class BoradController {
 		List<BoardResponseDTO> notice = boardService.findNotice(params);
 		model.addAttribute("notice", notice);
 		
-		return "board/list";
+		List<LikesDTO> likes = boardService.findLikesBest(params);
+		model.addAttribute("likes", likes);
+		
+		return "board/community/list";
 	}
 	
 	/**
@@ -94,9 +97,9 @@ public class BoradController {
 	 */
 	@Operation(summary = "상세페이지 조회", description = "게시글 상세페이지 조회")
 	@Transactional
-	@GetMapping("/board/detail")
+	@GetMapping("/community/detail")
 	public String detail(@RequestParam Long id, HttpServletRequest request, HttpServletResponse response, Authentication auth, Model model) {
-		log.info("# Board Page Detail?id = " + id);
+		log.info("# Community Page Detail?id = " + id);
 		
 		Cookie oldCookie = null;
 		Cookie[] cookies = request.getCookies();
@@ -162,24 +165,24 @@ public class BoradController {
 				model.addAttribute("likes", 1);
 			}
 		} else {
-			MessageDTO message = new MessageDTO("존재하지 않거나 이미 삭제된 게시글입니다.", "/board", RequestMethod.POST, null);
+			MessageDTO message = new MessageDTO("존재하지 않거나 이미 삭제된 게시글입니다.", "/community", RequestMethod.POST, null);
 			return showMessageAndRedirect(message, model);
 		}
 		
-		return "board/detail";
+		return "board/community/detail";
 	}
 	
 	/**
-	 * 게시글 작성/수정 페이지
+	 * 게시글 작성 페이지
 	 * @param id
 	 * @param auth
 	 * @param model
 	 * @return
 	 */
-	@Operation(summary = "작성/수정 페이지 조회", description = "게시글 작성/수정 페이지 조회")
-	@GetMapping("/board/write")
+	@Operation(summary = "작성 페이지 조회", description = "게시글 작성 페이지 조회")
+	@GetMapping("/community/write")
 	public String write(@RequestParam(value = "id", required = false) final Long id, Authentication auth, Model model) {
-		log.info("# Board Page Write?id = " + id);
+		log.info("# Community Page Write?id = " + id);
 		
 		SessionUser user = (SessionUser) session.getAttribute("user");
 		if(auth != null) {
@@ -192,7 +195,33 @@ public class BoradController {
 			model.addAttribute("board", board);
 		}
 		
-		return "board/write";
+		return "board/community/write";
+	}
+	
+	/**
+	 * 게시글 수정 페이지
+	 * @param id
+	 * @param auth
+	 * @param model
+	 * @return
+	 */
+	@Operation(summary = "수정 페이지 조회", description = "게시글 수정 페이지 조회")
+	@GetMapping("/community/change")
+	public String change(@RequestParam(value = "id", required = false) final Long id, Authentication auth, Model model) {
+		log.info("# Community Page Write?id = " + id);
+		
+		SessionUser user = (SessionUser) session.getAttribute("user");
+		if(auth != null) {
+			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("list", chatRoomService.findAllRooms());
+		}
+		
+		if(id != null) {
+			BoardResponseDTO board = boardService.findByBoardId(id);
+			model.addAttribute("board", board);
+		}
+		
+		return "board/community/change";
 	}
 	
 	/**
@@ -202,14 +231,14 @@ public class BoradController {
 	 * @return
 	 */
 	@Operation(summary = "신규 게시글 생성", description = "신규 게시글 생성 메서드")
-	@PostMapping("/board/save")
+	@PostMapping("/community/save")
 	public String save(final BoardRequestDTO params, Model model) {
 		SessionUser user = (SessionUser) session.getAttribute("user");
 		params.setWriterId(user.getUserId());
 		
-		params.setContent(params.getContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+		//params.setContent(params.getContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
 		boardService.saveBoard(params);
-		MessageDTO message = new MessageDTO("게시글 생성이 완료되었습니다.", "/board", RequestMethod.POST, null);
+		MessageDTO message = new MessageDTO("게시글 생성이 완료되었습니다.", "/community", RequestMethod.POST, null);
 		
 		return showMessageAndRedirect(message, model);
 	}
@@ -221,10 +250,10 @@ public class BoradController {
 	 * @return
 	 */
 	@Operation(summary = "기존 게시글 수정", description = "기존 게시글 수정 메서드")
-	@PostMapping("board/update")
+	@PostMapping("/community/update")
 	public String update(final BoardRequestDTO params, Model model) {
 		boardService.updateBoard(params);
-		MessageDTO message = new MessageDTO("게시글 수정이 완료되었습니다.", "/board", RequestMethod.POST, null);
+		MessageDTO message = new MessageDTO("게시글 수정이 완료되었습니다.", "/community", RequestMethod.POST, null);
 		
 		return showMessageAndRedirect(message, model);
 	}
@@ -237,10 +266,10 @@ public class BoradController {
 	 * @return
 	 */
 	@Operation(summary = "게시글 삭제", description = "게시글 삭제 메서드")
-	@PostMapping("/board/delete")
+	@PostMapping("/community/delete")
 	public String delete(@RequestParam final Long id, final SearchDTO queryParams, Model model) {
 		boardService.deleteBoard(id);
-		MessageDTO message = new MessageDTO("게시글 삭제가 완료되었습니다.", "/board", RequestMethod.GET, queryParamsToMap(queryParams));
+		MessageDTO message = new MessageDTO("게시글 삭제가 완료되었습니다.", "/community", RequestMethod.GET, queryParamsToMap(queryParams));
 		
 		return showMessageAndRedirect(message, model);
 	}

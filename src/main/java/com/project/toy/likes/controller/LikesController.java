@@ -1,5 +1,7 @@
 package com.project.toy.likes.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +25,7 @@ public class LikesController {
 	 * @param params
 	 * @return
 	 */
-	@PostMapping({"/board/likes", "/board/likes/{boardId}"})
+	@PostMapping({"/community/likes", "/community/likes/{boardId}"})
 	public JsonObject saveLikes(@PathVariable(value = "boardId", required = false) Long boardId, @RequestBody final LikesDTO params) {
 		JsonObject jsonObj = new JsonObject();
 		
@@ -34,6 +36,7 @@ public class LikesController {
 				jsonObj.addProperty("message", "좋아요는 하루 5개의 게시글만 가능합니다.");
 			} else {
 				boolean save = likesService.saveOrDeleteLikes(params);
+				likesService.updateCountLikes(params);
 				jsonObj.addProperty("result", save);				
 			}
 		} catch(DataAccessException e) {

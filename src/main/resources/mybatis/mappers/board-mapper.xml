@@ -11,6 +11,7 @@
 		, WRITER
 		, VIEW_CNT
 		, COMMENT_CNT
+		, LIKES_CNT
 		, NOTICE_YN
 		, DELETE_YN
 		, I_DATE
@@ -53,7 +54,7 @@
 		/* com.project.toy.board.dto.BoardRequestDTO */
 		
 		INSERT INTO BOARD ( <include refid="boardColumns" /> )
-		VALUES ( #{ id }, #{ title }, #{ content }, #{ writerId }, #{ writer }, 0, 0, #{ noticeYn }, 0, NOW(), NULL ) 
+		VALUES ( #{ id }, #{ title }, #{ content }, #{ writerId }, #{ writer }, 0, 0, 0, #{ noticeYn }, 0, NOW(), NULL ) 
 	</insert>
 	
 	<!-- 상세보기 -->
@@ -113,6 +114,19 @@
 		AND    DELETE_YN = 0
 		ORDER BY ID DESC
 		LIMIT  2
+	</select>
+	
+	<!-- 오늘 최다 좋아요 리스트 -->
+	<select id="findLikesBest" resultType="BoardResponseDTO">
+		SELECT B.ID, B.TITLE, B.COMMENT_CNT, B.VIEW_CNT, COUNT(BOARD_ID) AS LIKES_CNT, B.NOTICE_YN, B.WRITER, B.I_DATE, A.I_DATE
+		FROM   BOARD_LIKES A
+		LEFT OUTER JOIN BOARD B ON A.BOARD_ID = B.ID
+		WHERE  1=1
+		AND    USE_YN = 'Y'
+		AND    A.I_DATE BETWEEN (SELECT DATE_FORMAT(NOW(), '%Y-%m-%d') FROM DUAL) AND NOW()
+		GROUP BY BOARD_ID 
+		ORDER BY LIKES_CNT DESC
+		LIMIT 2
 	</select>
 	
 	<!-- 게시글 수 카운팅 -->

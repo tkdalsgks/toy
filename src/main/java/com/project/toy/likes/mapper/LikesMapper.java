@@ -11,5 +11,6 @@ public interface LikesMapper {
 	public int findLikes(LikesDTO params);
 	public int saveLikes(LikesDTO params);
 	public int deleteLikes(LikesDTO params);
+	public Object updateCountLikes(LikesDTO params);
 	public int selectTodayLikes(LikesDTO params);
 }

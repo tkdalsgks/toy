@@ -30,6 +30,9 @@ public class BoardResponseDTO {
 	@Schema(description = "댓글 수")
 	private int commentCnt;
 	
+	@Schema(description = "좋아요 수")
+	private int likesCnt;
+	
 	@Schema(description = "공지글 여부")
 	private Boolean noticeYn;
 	

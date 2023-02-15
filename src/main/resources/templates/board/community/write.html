@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				layout:decorate="~{layouts/layout}">
+
+<head>
+<meta charset="UTF-8">
+<title>toy, 커뮤니티 게시글 작성</title>
+
+<th:block layout:fragment="css">
+	<!-- RESET, DEFAULT -->
+	<link rel="stylesheet" th:href="@{/css/app/reset.css}" />
+	<link rel="stylesheet" th:href="@{/css/lib/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/index.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/default.css}" />
+	<!-- POPUP -->
+	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
+	<!-- BOARD -->
+	<link rel="stylesheet" th:href="@{/css/app/board/community/board.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/button.css}" />
+</th:block>
+
+</head>
+
+<body>
+	
+	<div layout:fragment="content" class="container">
+		<div class="page_tits">
+			<span class="write-name-a">함께 할 때 더 즐거운 순간</span><br>
+			<span class="write-name-b">[[ ${user} ]]<span class="write-name-c">님 지식공유 플랫폼 TOY에서 다양한 사람을 만나고 생각의 폭을 넓혀보세요.</span></span>
+		</div>
+		
+		<div class="content write-contents">
+			<section>
+				<form id="saveForm" method="post" autocomplete="off">
+					<!-- 서버로 전달할 공지글 여부 -->
+					<input type="hidden" id="noticeYn" name="noticeYn" />
+					<input type="hidden" id="writer" name="writer" class="write-writer" maxlength="10" th:value="${user}" />
+					<input type="hidden" id="IDate" name="IDate" class="write-date" />
+					<div>
+						<div sec:authorize="hasAnyRole('ROLE_ADMIN')" class="write-notice">
+							<span>공지글</span>
+							<div sec:authorize="hasAnyRole('ROLE_ADMIN')">
+								<span class="chkbox"><input type="checkbox" id="isNotice" name="isNotice" class="chk" /><i></i><label for="isNotice"></label></span>
+							</div>
+						</div>
+						<div>
+							<span class="write-title">제목</span>
+							<div class="write-title-input">
+								<input id="title" name="title" class="write-title" maxlength="50" placeholder="제목을 입력해 주세요." />
+							</div>
+						</div>
+						<div>
+							<span class="write-content">내용</span>
+							<div class="wirte-title-input" style="display: flex; flex-direction: column;">
+								<textarea id="content" name="content"></textarea>
+							</div>
+						</div>
+					</div>
+				</form>
+				
+				<p class="btn_set">
+					<button id="saveBtn" class="btns btn_st3 btn_mid community-btn" onclick="saveBoard();">저장</button>
+					<a href="javascript:history.go(-1)" class="btns btn_bdr3 btn_mid community-btn">뒤로</a>
+				</p>
+			</section>
+		</div>
+	</div>
+	
+	<th:block layout:fragment="script">
+		<!-- FONT AWESOME -->
+		<script src="https://kit.fontawesome.com/77ad8525ff.js"></script>
+		<!-- Jquery, Bootstrap -->
+		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/app/header.js"></script>
+		<!-- POPUP -->
+		<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+		<script type="text/javascript" src="/js/app/popup.js"></script>
+		<!-- BOARD -->
+		<script type="text/javascript" src="/js/lib/ckeditor.js"></script>
+		<script type="text/javascript" src="/js/lib/moment.js"></script>
+		<script type="text/javascript" src="/js/app/board/community/board.js"></script>
+		<script th:inline="javascript">
+		/*<![CDATA[*/
+			
+			ClassicEditor
+	            .create( document.querySelector( '#content' ), {
+	                language: { ui: 'ko', content: 'ko' }
+	            })
+	            .then( editor => {
+	            	window.ckeditor = editor;
+	            })
+	            .catch( error => {
+	                console.error( error );
+	            } );
+
+			
+	    	window.onload = () => {
+	    		renderBoardInfo();
+	    	}
+	    	
+	    	// 등록일 초기화
+	    	function initIDate() {
+	    		document.getElementById('IDate').value = moment().format('YYYY/MM/DD');
+	    	}
+	    	
+	    	// 게시글 상세정보 렌더링
+	    	function renderBoardInfo() {
+	    		const board = [[ ${board} ]];
+	    		
+	    		if ( !board ) {
+	    			initIDate();
+	    			return false;
+	    		}
+	    		
+	    		const form = document.getElementById('saveForm');
+	    		const fields = ['id', 'title', 'content', 'writer', 'noticeYn'];
+	    		form.isNotice.checked = board.noticeYn;
+	    		form.IDate.value = moment(board.IDate).format('YYYY/MM/DD HH:mm');
+	    		
+	    		fields.forEach(field => {
+	    			form[field].value = board[field];
+	    		});
+	    	}
+	    	
+	    	// 게시글 저장(수정)
+	    	function saveBoard() {
+	    		
+	    		const form = document.getElementById('saveForm');
+	    		
+	    		const fields = [form.title, form.writer];
+	    		const fieldNames = ['제목', '이름'];
+	    		
+	    		for (let i = 0, len = fields.length; i < len; i++) {
+	    			isValid(fields[i], fieldNames[i]);
+	    		}
+	    		
+	    		if(ckeditor.getData() == '' || ckeditor.getData() == 0) {
+	    			alert("내용을 확인해 주세요.");
+	    			return false;
+	    		} else {
+		    		document.getElementById('saveBtn').disabled = true;
+		    		form.noticeYn.value = form.isNotice.checked;
+		    		form.action = [[ ${board == null} ]] ? '/community/save' : '/community/update';
+		    		form.submit();
+	    		}
+	    	}
+	    	
+	    /*]]>*/
+		</script>
+	</th:block>
+	
+</body>
+
+</html>
