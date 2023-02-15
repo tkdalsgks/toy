@@ -1,4 +1,4 @@
-<a href="http://ec2-3-39-65-139.ap-northeast-2.compute.amazonaws.com/" target="_blank">프로젝트 바로가기(v23.02.13)</a>
+<a href="http://ec2-3-39-65-139.ap-northeast-2.compute.amazonaws.com/" target="_blank">프로젝트 바로가기(v23.02.15)</a>
 <br><br>
 <div align='center'>
 <strong>:mag_right:&nbsp;&nbsp;Project Skils&nbsp;</strong>
