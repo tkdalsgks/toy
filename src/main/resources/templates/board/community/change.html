@@ -96,7 +96,9 @@
 			
 			ClassicEditor
 	            .create( document.querySelector( '#content' ), {
-	                language: { ui: 'ko', content: 'ko' }
+	                extraPlugins: [uploadAdapterPlugin],
+	                language: 'ko',
+	                ckfinder: { uploadUrl: '/upload' }
 	            })
 	            .then( editor => {
 	            	window.ckeditor = editor;
@@ -104,7 +106,12 @@
 	            .catch( error => {
 	                console.error( error );
 	            } );
-
+		
+			function uploadAdapterPlugin(editor) {
+				editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+					return uploadAdapter(loader);
+				}
+			}
 			
 	    	window.onload = () => {
 	    		renderBoardInfo();

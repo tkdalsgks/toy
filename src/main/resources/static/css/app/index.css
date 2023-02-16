@@ -53,10 +53,10 @@ body { padding-top: 90px; }
 
 
 /* HEADER */
-.header { position: fixed; z-index: 1; top: 0; left: 0; right: 0; padding: 10px 345px 10px 345px; transition: background 350ms ease 5s; background: var(--color-background);
+.header { position: fixed; z-index: 1; top: 0; left: 0; right: 0; transition: background 350ms ease 5s; background: var(--color-background);
 			opacity: 0.85; backdrop-filter: blur(10px); font-weight: 800; }
 .header a { text-decoration: none; color: black; }
-.navbar-brand { margin-right: 5rem; font-size: 30px; }
+.navbar-brand { margin-right: 17.225rem; font-size: 30px; }
 .navbar-brand img { width: 70px; height: 40px; }
 .nav-item { margin-right: 2rem; font-size: 0.875rem; font-weight: 500; }
 .nav-item a { font-size: 0.875rem; font-weight: 500; color: #000000; }
