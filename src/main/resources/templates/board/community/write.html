@@ -84,8 +84,10 @@
 		<script type="text/javascript" src="/js/app/popup.js"></script>
 		<!-- BOARD -->
 		<script type="text/javascript" src="/js/lib/ckeditor.js"></script>
+		<script type="text/javascript" src="/js/lib/ko.js"></script>
 		<script type="text/javascript" src="/js/lib/moment.js"></script>
 		<script type="text/javascript" src="/js/app/board/community/board.js"></script>
+		<script type="text/javascript" src="/js/app/board/uploadAdapter.js"></script>
 		<!-- LOADING -->
 		<script type="text/javascript" src="/js/lib/loadingoverlay.min.js"></script>
 		<script type="text/javascript" src="/js/app/loading.js"></script>
@@ -94,7 +96,9 @@
 			
 			ClassicEditor
 	            .create( document.querySelector( '#content' ), {
-	                language: { ui: 'ko', content: 'ko' }
+	                extraPlugins: [uploadAdapterPlugin],
+	                language: 'ko',
+	                ckfinder: { uploadUrl: '/upload' }
 	            })
 	            .then( editor => {
 	            	window.ckeditor = editor;
@@ -102,7 +106,12 @@
 	            .catch( error => {
 	                console.error( error );
 	            } );
-
+		
+			function uploadAdapterPlugin(editor) {
+				editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+					return uploadAdapter(loader);
+				}
+			}
 			
 	    	window.onload = () => {
 	    		renderBoardInfo();
@@ -146,6 +155,7 @@
 	    		
 	    		if(ckeditor.getData() == '' || ckeditor.getData() == 0) {
 	    			alert("내용을 확인해 주세요.");
+	    			ckeditor.editing.view.focus();
 	    			return false;
 	    		} else {
 		    		document.getElementById('saveBtn').disabled = true;

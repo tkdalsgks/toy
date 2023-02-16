@@ -9,7 +9,7 @@ server:
 spring:
   profiles: 
     active: local
-    include: profile, oauth, email
+    include: profile, oauth, email, awss3
     
   mvc:
     converters:

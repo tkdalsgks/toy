@@ -37,7 +37,7 @@ public class SecurityConfig {
 				.csrf().disable()
 				.authorizeRequests()
 					.antMatchers("/swagger-ui/**", "/", "/join", "/check/**", "/find/**").permitAll()
-					.antMatchers("/chat/**", "/board/**", "/comments/**", "/location/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+					.antMatchers("/chat/**", "/board/**", "/comments/**", "/upload/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
 					.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 					.anyRequest().authenticated()
 			.and()
