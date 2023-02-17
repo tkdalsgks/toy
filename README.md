@@ -1,12 +1,14 @@
-<a href="https://gola.team" target="_blank">프로젝트 바로가기(v23.02.15)</a>
+<a href="https://oyez.kr" target="_blank">프로젝트 바로가기(v23.02.17)</a>
 <br><br>
 <div align='center'>
 <strong>:mag_right:&nbsp;&nbsp;Project Skils&nbsp;</strong>
 <br><br>
 <img src="https://img.shields.io/badge/AWS EC2-FF9900?style=flat&logo=amazonec2&logoColor=white"/>&nbsp;<img src="https://img.shields.io/badge/AWS RDS-527FFF?style=flat&logo=amazonrds&logoColor=white"/>&nbsp;<img src="https://img.shields.io/badge/MariaDB-003545?style=flat&logo=mariadb&logoColor=white"/>&nbsp;<img src="https://img.shields.io/badge/AWS S3-569A31?style=flat&logo=amazons3&logoColor=white"/><br>
-<img src="https://img.shields.io/badge/AWS ROUTE 53-232F3E?style=flat&logo=amazonec2&logoColor=white"/>&nbsp;<img src="https://img.shields.io/badge/AWS Certficate Manager-232F3E?style=flat&logo=amazonec2&logoColor=white"/><br>
 <img src="https://img.shields.io/badge/JAVA-007396?style=flat&logo=java&logoColor=white">&nbsp;<img src="https://img.shields.io/badge/SRPINGBOOT-6DB33F?style=flat&logo=springboot&logoColor=white"/><br>
-<img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=flat&logo=thymeleaf&logoColor=white">&nbsp;<img src="https://img.shields.io/badge/Javascript-F7DF1E?style=flat&logo=javascript&logoColor=white"/>
+<img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=flat&logo=thymeleaf&logoColor=white">&nbsp;<img src="https://img.shields.io/badge/Javascript-F7DF1E?style=flat&logo=javascript&logoColor=white"/><br><br>
+
+<img src="https://img.shields.io/badge/AWS ROUTE 53-232F3E?style=flat&logo=&logoColor=white"/>&nbsp;<img src="https://img.shields.io/badge/AWS Certficate Manager-232F3E?style=flat&logo=&logoColor=white"/><br>
+<img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=springsecurity&logoColor=white">&nbsp;<img src="https://img.shields.io/badge/Stomp-010101?style=flat&logo=socket.io&logoColor=white">&nbsp;<img src="https://img.shields.io/badge/Swagger-85EA2D?style=flat&logo=swagger&logoColor=black&fontColor=black">
 
 <br><br>
 

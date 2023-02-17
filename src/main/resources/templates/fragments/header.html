@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<div th:fragment="header">
+<header th:fragment="header">
 	<div sec:authorize="isAuthenticated()" id="header" class="header">
-		<nav class="navbar navbar-expand-lg bg-body-tertiary">
-			<div class="container-fluid" style="margin-left: 50px;">
+		<nav class="navbar navbar-expand-lg bg-body-tertiary header-nav">
+			<div class="container-fluid">
 				<div class="collapse navbar-collapse" id="navbarText">
-					<a class="navbar-brand" th:href="@{/}"><img src="/img/app/common/logo.png"></a>
+					<a class="navbar-brand" th:href="@{/}"><img src="/img/app/common/logo.png" alt="OYEZ Logo"></a>
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item">
 							<a class="nav-link" th:href="@{/community}">커뮤니티</a>
@@ -20,7 +20,7 @@
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-								<span id="user" th:text="${user}"></span>
+								<img src="" class="nav-myinfo">
 							</a>
 							<ul class="dropdown-menu">
 								<li sec:authorize="hasRole('ROLE_ADMIN')"><a class="dropdown-item" th:href="@{/admin}">관리자</a></li>
@@ -36,13 +36,13 @@
 	</div>
 	
 	<div sec:authorize="isAuthenticated()" id="header-mobile" class="header-mobile">
-		<nav class="navbar navbar-expand-lg bg-body-tertiary">
+		<nav class="navbar navbar-expand-lg bg-body-tertiary header-mobile-nav">
 				<div class="navbar-collapse" id="navbarText">
 					<a class="navbar-brand-mobile" th:href="@{/}" style="float: left;"><img src="/img/app/common/logo.png"></a>
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0" style="float: right;">
 						<li class="nav-item-mobile dropdown">
 							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-								<span id="user" th:text="${user}"></span>
+								<img src="" class="nav-myinfo-mobile">
 							</a>
 							<ul class="dropdown-menu">
 								<li><a class="dropdown-item" th:href="@{/}">메인</a></li>
@@ -56,4 +56,4 @@
 				</div>
 		</nav>
 	</div>
-</div>
+</header>
