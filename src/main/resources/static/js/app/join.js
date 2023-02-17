@@ -191,6 +191,7 @@ $(function() {
 				}
 				$('#check-email-number').prop('disabled', false);
 				$('#check-email-verify').prop('disabled', false);
+				$('#check-email').prop('disabled', true);
 				code = data;
 				alert('입력한 이메일로 인증번호가 전송되었습니다.');
 			},
@@ -216,6 +217,7 @@ $(function() {
 				clearInterval(timer);
 				$('#check-email-number').prop('disabled', true);
 				$('#check-email-verify').prop('disabled', true);
+				$('#check-email').prop('disabled', false);
 				isRunning = false;
 			}
 		}, 1000);

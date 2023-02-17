@@ -83,18 +83,18 @@ main { height: 100%; text-align: center; }
 .btn-check-email { width: 90px; height: 35px; font-size: .75rem; }
 .btn-check-email-verify { width: 90px; height: 35px; font-size: .75rem; }
 
-#imgCheckId { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -995%); -ms-transform: translate(420%, -995%); transform: translate(420%, -995%); width: 16px; height: 16px; }
-#imgCancelId { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -995%); -ms-transform: translate(420%, -995%); transform: translate(420%, -995%); width: 16px; height: 16px; }
-#imgCheckPwd { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -530%); -ms-transform: translate(420%, -530%); transform: translate(420%, -530%); width: 16px; height: 16px; }
-#imgCancelPwd { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -530%); -ms-transform: translate(420%, -530%); transform: translate(420%, -530%); width: 16px; height: 16px; }
-#imgCheckConfirm { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -70%); -ms-transform: translate(420%, -70%); transform: translate(420%, -70%); width: 16px; height: 16px; }
-#imgCancelConfirm { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -70%); -ms-transform: translate(420%, -70%); transform: translate(420%, -70%); width: 16px; height: 16px; }
+#imgCheckId { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -1045%); -ms-transform: translate(420%, -1045%); transform: translate(420%, -1045%); width: 16px; height: 16px; }
+#imgCancelId { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -1045%); -ms-transform: translate(420%, -1045%); transform: translate(420%, -1045%); width: 16px; height: 16px; }
+#imgCheckPwd { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -565%); -ms-transform: translate(420%, -565%); transform: translate(420%, -565%); width: 16px; height: 16px; }
+#imgCancelPwd { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -565%); -ms-transform: translate(420%, -565%); transform: translate(420%, -565%); width: 16px; height: 16px; }
+#imgCheckConfirm { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -80%); -ms-transform: translate(420%, -80%); transform: translate(420%, -80%); width: 16px; height: 16px; }
+#imgCancelConfirm { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -80%); -ms-transform: translate(420%, -80%); transform: translate(420%, -80%); width: 16px; height: 16px; }
 #imgCheckName { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, 395%); -ms-transform: translate(420%, 395%); transform: translate(420%, 395%); width: 16px; height: 16px; }
 #imgCancelName { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, 395%); -ms-transform: translate(420%, 395%); transform: translate(420%, 395%); width: 16px; height: 16px; }
-#imgCheckEmail { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, 860%); -ms-transform: translate(420%, 860%); transform: translate(420%, 860%); width: 16px; height: 16px; }
-#imgCancelEmail { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, 860%); -ms-transform: translate(420%, 860%); transform: translate(420%, 860%); width: 16px; height: 16px; }
+#imgCheckEmail { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, 875%); -ms-transform: translate(420%, 875%); transform: translate(420%, 875%); width: 16px; height: 16px; }
+#imgCancelEmail { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, 875%); -ms-transform: translate(420%, 875%); transform: translate(420%, 875%); width: 16px; height: 16px; }
 
-#check-email-time { position: absolute; top: 50%; left: 50%; -webkit-transform: translate(150%, 1095%); -ms-transform: translate(150%, 1095%); transform: translate(150%, 1095%); color: rgba(0, 0, 0, 0.6); font-size: 0.85rem; font-weight: 400; }
+#check-email-time { position: absolute; top: 50%; left: 50%; -webkit-transform: translate(150%, 1050%); -ms-transform: translate(150%, 1050%); transform: translate(150%, 1050%); color: rgba(0, 0, 0, 0.6); font-size: 0.85rem; font-weight: 400; }
 
 #checkUserId { font-size: .75rem; font-weight: 300; color: #808080; }
 #checkUserPwd { font-size: .75rem; font-weight: 300; color: #808080; }
