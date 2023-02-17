@@ -71,33 +71,36 @@ main { height: 100%; text-align: center; }
 .footer-by { font-weight: 400; text-decoration: underline; opacity: 0.9; }
 
 /* JOIN */
-.form-join { width: 100%; position: relative; top: 0; left: 0; right: 0; bottom: 0; min-height: 100%; text-algin: center; margin-bottom: 100px; }
-.form-group-join { font-weight: 400; }
-.form-group-signed { font-weight: 400; margin-top: 2rem; }
-.form-group-join > input { width: 200px; height: 35px; margin: 0 auto; }
-.form-label { font-size: .85rem; font-weight: 400; }
-.btn-duplicate-id { position: absolute; top: 50%; left: 50%; font-size: .75rem; -webkit-transform: translate(135%, -825%); -ms-transform: translate(135%, -825%); transform: translate(135%, -825%); width: 80px; height: 35px; }
-.btn-check-email { position: absolute; top: 50%; left: 50%; font-size: .75rem; -webkit-transform: translate(135%, 330%); -ms-transform: translate(135%, 330%); transform: translate(135%, 330%); width: 80px; height: 35px; }
-.btn-check-email-verify { position: absolute; top: 50%; left: 50%; font-size: .75rem; -webkit-transform: translate(135%, 620%); -ms-transform: translate(135%, 620%); transform: translate(135%, 620%); width: 80px; height: 35px; }
+.join-brand { text-align: center; margin-bottom: 1.5rem; }
+.join-brand img { width: 60px; height: 30px; }
+.form-join { margin: 0 auto; margin-bottom: 3rem; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
+.form-join tr, .form-join th, .form-join td { padding: 0.275rem; }
+.form-group-join { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; font-weight: 400; }
+.form-group-signed button { font-size: 0.75rem; font-weight: 400; }
+.form-group-join > input { font-size: 0.85rem; width: 200px; height: 35px; }
+.form-label { font-size: .775rem; font-weight: 400; margin-bottom: 0 !important; }
+.btn-duplicate-id { width: 90px; height: 35px; font-size: .75rem; }
+.btn-check-email { width: 90px; height: 35px; font-size: .75rem; }
+.btn-check-email-verify { width: 90px; height: 35px; font-size: .75rem; }
 
-#imgCheckId { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(480%, -1615%); -ms-transform: translate(480%, -1615%); transform: translate(480%, -1750%); width: 16px; height: 16px; }
-#imgCancelId { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(480%, -1615%); -ms-transform: translate(480%, -1615%); transform: translate(480%, -1750%); width: 16px; height: 16px; }
-#imgCheckPwd { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(480%, -1010%); -ms-transform: translate(480%, -1010%); transform: translate(480%, -1120%); width: 16px; height: 16px; }
-#imgCancelPwd { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(480%, -1010%); -ms-transform: translate(480%, -1010%); transform: translate(480%, -1120%); width: 16px; height: 16px; }
-#imgCheckConfirm { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(480%, -405%); -ms-transform: translate(480%, -405%); transform: translate(480%, -480%); width: 16px; height: 16px; }
-#imgCancelConfirm { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(480%, -405%); -ms-transform: translate(480%, -405%); transform: translate(480%, -480%); width: 16px; height: 16px; }
-#imgCheckName { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(480%, 200%); -ms-transform: translate(480%, 200%); transform: translate(480%, 150%); width: 16px; height: 16px; }
-#imgCancelName { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(480%, 200%); -ms-transform: translate(480%, 200%); transform: translate(480%, 150%); width: 16px; height: 16px; }
-#imgCheckEmail { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(480%, 805%); -ms-transform: translate(480%, 805%); transform: translate(480%, 785%); width: 16px; height: 16px; }
-#imgCancelEmail { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(480%, 805%); -ms-transform: translate(480%, 805%); transform: translate(480%, 785%); width: 16px; height: 16px; }
+#imgCheckId { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -995%); -ms-transform: translate(420%, -995%); transform: translate(420%, -995%); width: 16px; height: 16px; }
+#imgCancelId { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -995%); -ms-transform: translate(420%, -995%); transform: translate(420%, -995%); width: 16px; height: 16px; }
+#imgCheckPwd { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -530%); -ms-transform: translate(420%, -530%); transform: translate(420%, -530%); width: 16px; height: 16px; }
+#imgCancelPwd { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -530%); -ms-transform: translate(420%, -530%); transform: translate(420%, -530%); width: 16px; height: 16px; }
+#imgCheckConfirm { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -70%); -ms-transform: translate(420%, -70%); transform: translate(420%, -70%); width: 16px; height: 16px; }
+#imgCancelConfirm { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, -70%); -ms-transform: translate(420%, -70%); transform: translate(420%, -70%); width: 16px; height: 16px; }
+#imgCheckName { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, 395%); -ms-transform: translate(420%, 395%); transform: translate(420%, 395%); width: 16px; height: 16px; }
+#imgCancelName { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, 395%); -ms-transform: translate(420%, 395%); transform: translate(420%, 395%); width: 16px; height: 16px; }
+#imgCheckEmail { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, 860%); -ms-transform: translate(420%, 860%); transform: translate(420%, 860%); width: 16px; height: 16px; }
+#imgCancelEmail { display: none; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(420%, 860%); -ms-transform: translate(420%, 860%); transform: translate(420%, 860%); width: 16px; height: 16px; }
 
-#check-email-time { position: absolute; top: 50%; left: 50%; -webkit-transform: translate(210%, 960%); -ms-transform: translate(210%, 960%); transform: translate(210%, 960%); color: rgba(0, 0, 0, 0.4); }
+#check-email-time { position: absolute; top: 50%; left: 50%; -webkit-transform: translate(150%, 1095%); -ms-transform: translate(150%, 1095%); transform: translate(150%, 1095%); color: rgba(0, 0, 0, 0.6); font-size: 0.85rem; font-weight: 400; }
 
-#checkUserId { font-size: 0.75rem; font-weight: 300; color: #808080; }
-#checkUserPwd { font-size: 0.75rem; font-weight: 300; color: #808080; }
-#checkUserPwdConfirm  { font-size: 0.75rem; font-weight: 300; color: white; }
-#checkUserNickname { font-size: 0.75rem; font-weight: 300; color: #808080; }
-#checkUserEmail { font-size: 0.75rem; font-weight: 300; color: white; }
+#checkUserId { font-size: .75rem; font-weight: 300; color: #808080; }
+#checkUserPwd { font-size: .75rem; font-weight: 300; color: #808080; }
+#checkUserPwdConfirm  { font-size: .75rem; font-weight: 300; color: white; }
+#checkUserNickname { font-size: .75rem; font-weight: 300; color: #808080; }
+#checkUserEmail { font-size: .75rem; font-weight: 300; color: white; }
 
 /* MEDIA */
 @media (max-width: 1023px) {
