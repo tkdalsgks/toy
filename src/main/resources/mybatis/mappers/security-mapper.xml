@@ -29,7 +29,7 @@
 		/* com.project.toy.user.dto.UserDTO */
 		
 		INSERT INTO toy.T_PERSON ( <include refid="userColumns" /> )
-		VALUES ( nextval(toy.T_PERSON_SEQ.nextval), LOWER(#{ userId }), #{ userPwd }, LOWER(#{ userEmail }), #{ userNickname }, #{ provider }, #{ role } )
+		VALUES ( nextval(toy.T_PERSON_SEQ), LOWER(#{ userId }), #{ userPwd }, LOWER(#{ userEmail }), #{ userNickname }, #{ provider }, #{ role } )
 	</insert>
 	
 	<select id="findByUserId" resultType="UserDTO">
