@@ -8,7 +8,7 @@ a.btns, button {cursor:pointer;}
 button span {position:relative;}
 
 /* 버튼 그룹 */
-.btn_set {text-align:center; margin:20px 0; overflow:hidden;}
+.btn_set {text-align:center; margin-top: 20px; margin-bottom: 100px; overflow:hidden;}
 .btn_set > button, .btn_set > a {border-radius:0;}
 
 .btns.primary {background:#fff; border:1px solid #b4b4b4; color:#666;}

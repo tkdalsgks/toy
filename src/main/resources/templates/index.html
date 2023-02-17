@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>toy</title>
+<title>OYEZ - All That Community</title>
 
 <th:block layout:fragment="css">
 	<!-- RESET, DEFAULT -->
@@ -25,7 +25,7 @@
 <body>
 	
 	<!-- CONTENT -->
-	<div layout:fragment="content" class="form-index">
+	<main layout:fragment="content" class="form-index">
 	
 		<div class="index-brand">
 			<a th:href="@{/}"><img src="/img/app/common/logo.png"></a>
@@ -45,9 +45,9 @@
 			<div class="form-group">
 				<input type="password" id="userPwd" name="userPwd" class="form-control required" placeholder="비밀번호">
 			</div>
-			<label class="custom-control custom-checkbox m-0">
+			<div class="form-forgot">
 				<button type="button" id="find-show" class="find-user" onclick="findOpenPopup();">아이디/비밀번호 찾기</button>
-			</label>
+			</div>
 			<div>
 			</div>
 			<div class="form-login-general">
@@ -56,7 +56,7 @@
 			</div>
 		</div>
 		
-	</div>
+	</main>
 	
 	<th:block layout:fragment="script">
 		<!-- FONT AWESOME -->

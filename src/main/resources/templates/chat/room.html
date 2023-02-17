@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>toy, 채팅방 [[${room.name}]]</title>
+<title>OYEZ - 채팅방 [[${room.name}]]</title>
 
 <th:block layout:fragment="css">
 	<!-- RESET, DEFAULT -->
@@ -24,7 +24,7 @@
 
 <body>
 
-	<div layout:fragment="content" class="container">
+	<main layout:fragment="content" class="container">
         <div class="col-6">
             <span>[[${room.name}]]</span>
         </div>
@@ -38,7 +38,7 @@
                 </div>
             </div>
         <div class="col-6"></div>
-    </div>
+    </main>
 
 
 	<th:block layout:fragment="script">
