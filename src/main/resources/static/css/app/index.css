@@ -10,7 +10,7 @@ body { display: -webkit-box; display: -ms-flexbox; display: flex; position: rela
 .index-brand img { width: 100px; height: 50px; }
 
 /* MAIN */
-main { height: 100%; text-align: center; }
+.main { height: 100%; text-align: center; }
 
 .form-main { position: absolute; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%); width: 700px; text-align: center; }
 .form-group { text-align: center; margin: 20px 0 0 0; }
@@ -60,6 +60,8 @@ main { height: 100%; text-align: center; }
 .nav-item-mobile a { font-size: 0.875rem; font-weight: 500; color: #000000; }
 .nav-item-mobile span { font-size: 0.875rem; font-weight: 500; color: #000000; }
 .nav-myinfo-mobile { width: 2.25rem; height: 2.25rem; border: 1px solid black; border-radius: 50%; }
+
+.nav-link { text-align: right; }
 
 .dropdown-logout { border-top: 1.5px solid #DEDEDE; margin: 0 auto; }
 .dropdown-logout-mobile { border-top: 1.5px solid #DEDEDE; margin: 0 auto; }
