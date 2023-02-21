@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,16 +29,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CustomUserService implements UserDetailsService {
 
-	@Autowired
-	private SecurityMapper securityMapper;
+	private final SecurityMapper securityMapper;
+	private final UserService userService;
 	
-	@Autowired
-	private UserService userService;
+	private final HttpSession session;
 	
-	@Autowired
-	private HttpSession session;
-	
-	private Logger log = LoggerFactory.getLogger(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {

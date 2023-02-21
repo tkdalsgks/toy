@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,24 +24,20 @@ import com.project.toy.user.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 
 @Tag(name = "index", description = "로그인 및 회원가입 API")
 @Controller
+@RequiredArgsConstructor
 public class SecurityController {
 	
-	@Autowired
-	private SecurityMapper securityMapper;
+	private final SecurityMapper securityMapper;
+	private final UserService userService;
+	private final ChatRoomService chatRoomService;
 	
-	@Autowired
-	private UserService userService;
+	private final HttpSession session;
 	
-	@Autowired
-	private ChatRoomService chatRoomService;
-	
-	@Autowired
-	private HttpSession session;
-	
-	private Logger log = LoggerFactory.getLogger(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@Operation(summary = "메인 홈", description = "메인 홈 조회")
 	@GetMapping({"", "/"})

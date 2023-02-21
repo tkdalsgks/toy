@@ -2,7 +2,6 @@ package com.project.toy.user.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +17,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
 
-	@Autowired
-	private UserMapper userMapper;
+	private final UserMapper userMapper;
+	private final SecurityMapper securityMapper;
 	
-	@Autowired
-	private SecurityMapper securityMapper;
-	
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	private Logger log = LoggerFactory.getLogger(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public UserDTO saveUser(UserDTO userDTO) {
         if(securityMapper.findByUserId(userDTO.getUserId()) != null){

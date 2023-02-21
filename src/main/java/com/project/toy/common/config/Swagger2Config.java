@@ -21,8 +21,8 @@ public class Swagger2Config {
 	@Bean
 	public OpenAPI springShopOpenApi() {
 		return new OpenAPI()
-				.info(new Info().title("toy API")
-					.description("toy API 명세서입니다.")
+				.info(new Info().title("OYEZ API")
+					.description("OYEZ API 명세서입니다.")
 					.version("v0.0.1"));
 	}
 }

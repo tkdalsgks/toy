@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,25 +35,18 @@ import com.project.toy.user.dto.SessionUser;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 
 @Tag(name = "community", description = "게시글 API")
 @Controller
+@RequiredArgsConstructor
 public class BoradController {
 	
-	@Autowired
-	private BoardService boardService;
-	
-	@Autowired
-	private CommentService commentService;
-	
-	@Autowired
-	private ChatRoomService chatRoomService;
-	
-	@Autowired
-	private LikesService likesService;
-	
-	@Autowired
-	private HttpSession session;
+	private final BoardService boardService;
+	private final CommentService commentService;
+	private final ChatRoomService chatRoomService;
+	private final LikesService likesService;
+	private final HttpSession session;
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	

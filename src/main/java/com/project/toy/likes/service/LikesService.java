@@ -1,17 +1,18 @@
 package com.project.toy.likes.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.toy.likes.dto.LikesDTO;
 import com.project.toy.likes.mapper.LikesMapper;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class LikesService {
 	
-	@Autowired
-	private LikesMapper likesMapper;
+	private final LikesMapper likesMapper;
 	
 	public int selectLikes(LikesDTO params) {
 		return likesMapper.selectLikes(params);

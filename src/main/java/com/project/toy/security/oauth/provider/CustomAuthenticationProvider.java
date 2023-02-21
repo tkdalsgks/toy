@@ -1,6 +1,5 @@
 package com.project.toy.security.oauth.provider;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,17 +15,15 @@ import com.project.toy.user.dto.LockUserDTO;
 import com.project.toy.user.dto.UserDTO;
 import com.project.toy.user.service.UserService;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 		
-	@Autowired
-	private CustomUserService customUserService;
-	
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final CustomUserService customUserService;
+	private final UserService userService;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
