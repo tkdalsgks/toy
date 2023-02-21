@@ -3,7 +3,6 @@ package com.project.toy.board.service;
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.toy.board.dto.BoardRequestDTO;
@@ -14,11 +13,13 @@ import com.project.toy.likes.dto.LikesDTO;
 import com.project.toy.paging.Pagination;
 import com.project.toy.paging.PagingResponse;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class BoardService {
 
-	@Autowired
-	private BoardMapper boardMapper;
+	private final BoardMapper boardMapper;
 	
 	public PagingResponse<BoardResponseDTO> findAll(final SearchDTO params) {
 		int count = boardMapper.countBoard(params);

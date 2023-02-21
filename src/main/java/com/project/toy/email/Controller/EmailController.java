@@ -2,7 +2,6 @@ package com.project.toy.email.Controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,15 +10,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.project.toy.email.service.EmailService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 
 @Tag(name = "email", description = "이메일 인증 API")
 @Controller
+@RequiredArgsConstructor
 public class EmailController {
 
-	@Autowired
-	private EmailService mailService;
+	private final EmailService mailService;
 	
-	private Logger log = LoggerFactory.getLogger(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@ResponseBody
 	@PostMapping("/check/mail")

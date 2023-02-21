@@ -1,6 +1,5 @@
 package com.project.toy.likes.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,11 +10,13 @@ import com.google.gson.JsonObject;
 import com.project.toy.likes.dto.LikesDTO;
 import com.project.toy.likes.service.LikesService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 public class LikesController {
 
-	@Autowired
-	private LikesService likesService;
+	private final LikesService likesService;
 	
 	/**
 	 * 게시글 좋아요, 취소

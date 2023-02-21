@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
@@ -30,16 +29,16 @@ import com.project.toy.user.dto.SessionUser;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 
 @Tag(name = "comments", description = "댓글 API")
 @RestController
+@RequiredArgsConstructor
 public class CommentController {
 
-	@Autowired
-	private CommentService commentService;
+	private final CommentService commentService;
 	
-	@Autowired
-	private HttpSession session;
+	private final HttpSession session;
 	
 	/**
 	 * 댓글 리스트 조회

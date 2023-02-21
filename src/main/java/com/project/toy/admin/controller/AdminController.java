@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,16 +16,16 @@ import com.project.toy.admin.service.AdminService;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UserDTO;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class AdminController {
 	
-	@Autowired
-	private AdminService adminService;
+	private final AdminService adminService;
+	private final HttpSession session;
 	
-	@Autowired
-	private HttpSession session;
-	
-	private Logger log = LoggerFactory.getLogger(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@GetMapping("/admin")
 	public String admin(Authentication auth, Model model) {
