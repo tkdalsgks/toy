@@ -1,14 +1,22 @@
 package com.project.toy.file.service;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.services.s3.AmazonS3;
@@ -16,6 +24,9 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import com.amazonaws.services.s3.transfer.Upload;
+import com.google.gson.JsonObject;
+import com.nimbusds.oauth2.sdk.util.StringUtils;
+import com.project.toy.user.dto.SessionUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,28 +38,58 @@ public class FileService {
     public String bucket;
 
     private final AmazonS3 amazonS3;
-
-    public String upload(MultipartFile uploadFile) throws IOException {
-    	String origName = uploadFile.getOriginalFilename();
-    	String url;
-    	
-		try {
-			final String ext = origName.substring(origName.lastIndexOf('.'));
-			
-	        final String fileName = getUuid() + ext;
-	    	File file = new File(System.getProperty("user.dir") + "/" + fileName);
-	    	
-	    	uploadFile.transferTo(file);
-	    	uploadOnS3(fileName, file);
-	    	
-	    	url = bucket + "/image/" + file;
-	    	
-	    	file.delete();
-		} catch (StringIndexOutOfBoundsException  e) {
-			url = null;
+    private final HttpSession session;
+    
+    public String upload(HttpServletRequest request, HttpServletResponse response, MultipartHttpServletRequest upload) throws Exception {
+    	JsonObject jsonObj = new JsonObject();
+		PrintWriter printWriter = null;
+		OutputStream out = null;
+		MultipartFile file = upload.getFile("upload");
+		if(file != null) {
+			if(file.getSize() > 0 && StringUtils.isNotBlank(file.getName())) {
+				if(file.getContentType().toLowerCase().startsWith("image/")) {
+					try {
+						String fileName = file.getName();
+						byte[] bytes = file.getBytes();
+						String uploadPath = request.getServletContext().getRealPath("/img");
+						File uploadFile = new File(uploadPath);
+						if(!uploadFile.exists()) {
+							uploadFile.mkdirs();
+						}
+						fileName = getUuid();
+						uploadPath = uploadPath + "/" + fileName;
+						out = new FileOutputStream(new File(uploadPath));
+						
+						out.write(bytes);
+						
+						File files = new File(System.getProperty("user.dir") + "/" + fileName);
+						file.transferTo(files);
+				    	uploadOnS3(fileName, files);
+						
+						printWriter = response.getWriter();
+						response.setContentType("text/html");
+						String fileUrl = "https://toy-webservice.s3.ap-northeast-2.amazonaws.com/images/" + getUserId() + "/" + fileName;
+						
+						jsonObj.addProperty("uploaded", 1);
+						jsonObj.addProperty("fileName", fileName);
+						jsonObj.addProperty("url", fileUrl);
+						
+						printWriter.print(jsonObj);
+						files.delete();
+					} catch(IOException e) {
+						e.printStackTrace();
+					} finally {
+						if(out != null) {
+							out.close();
+						}
+						if(printWriter != null) {
+							printWriter.close();
+						}
+					}
+				}
+			}
 		}
-		
-		return url;
+		return null;
     }
     
     private static String getUuid() {
@@ -76,7 +117,7 @@ public class FileService {
         final TransferManager transferManager = TransferManagerBuilder.standard()
                                                 .withS3Client(this.amazonS3).build();
         // 요청 객체 생성
-        final PutObjectRequest request = new PutObjectRequest(bucket + "/image", "pickone_" + findName, file);
+        final PutObjectRequest request = new PutObjectRequest(bucket + "/images/" + getUserId(), findName, file);
         
         // 업로드 시도
         final Upload upload =  transferManager.upload(request);
@@ -86,5 +127,12 @@ public class FileService {
         } catch (AmazonClientException | InterruptedException amazonClientException) {
             amazonClientException.printStackTrace();
         }
+    }
+    
+    public String getUserId() {
+    	SessionUser user = (SessionUser) session.getAttribute("user");
+    	String result = user.getUserId();
+    	
+    	return result;
     }
 }

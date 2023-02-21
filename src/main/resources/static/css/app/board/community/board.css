@@ -21,7 +21,8 @@ section { margin-top: 1.5rem; }
 .board-info { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; border-radius: 10px; background-color: #E0F2F1; line-height: 30px; padding: 5px 22px 5px 22px; }
 .board-writer { margin-right: 10px; font-weight: 400; }
 .board-view { margin-right: 10px; font-weight: 400; }
-.board-contents { padding: 10px 20px 0 20px; min-height: 200px; margin-bottom: 1.25rem; border-bottom: 1px solid #e5e7eb; }
+.board-contents { padding: 0.75rem 1.25rem 1.25rem 1.25rem; min-height: 200px; margin-bottom: 1.25rem; border-bottom: 1px solid #e5e7eb; }
+.board-contents img { max-width: 100%; }
 .board-content { width: 100%; min-height: 200px; color: #374151; background: white !important; border: none; }
 
 .ck-editor p { margin-bottom: 0; }

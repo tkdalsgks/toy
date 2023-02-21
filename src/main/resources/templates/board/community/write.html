@@ -106,7 +106,7 @@
 	            .catch( error => {
 	                console.error( error );
 	            } );
-		
+			
 			function uploadAdapterPlugin(editor) {
 				editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
 					return uploadAdapter(loader);
