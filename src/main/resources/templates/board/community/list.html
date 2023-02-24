@@ -72,7 +72,7 @@
 			
 			<!-- 버튼 -->
 			<p class="btn_set tr">
-				<a th:href="@{/community/write}" class="btns btn_st3 btn_mid community-btn">글쓰기</a>
+				<a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" th:href="@{/community/write}" class="btns btn_st3 btn_mid community-btn">글쓰기</a>
 			</p>
 			</section>
 		</div>

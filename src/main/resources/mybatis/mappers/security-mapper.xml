@@ -17,7 +17,8 @@
 		USER_EMAIL,
 		USER_NICKNAME,
 		PROVIDER,
-		ROLE
+		ROLE,
+		PWD_U_DATE
 	</sql>
 	
 	<insert id="insertLoginLog" parameterType="LoginLogDTO">
@@ -29,7 +30,7 @@
 		/* com.project.toy.user.dto.UserDTO */
 		
 		INSERT INTO toy.T_PERSON ( <include refid="userColumns" /> )
-		VALUES ( nextval(toy.T_PERSON_SEQ), LOWER(#{ userId }), #{ userPwd }, LOWER(#{ userEmail }), #{ userNickname }, #{ provider }, #{ role } )
+		VALUES ( nextval(toy.T_PERSON_SEQ), LOWER(#{ userId }), #{ userPwd }, LOWER(#{ userEmail }), #{ userNickname }, #{ provider }, #{ role }, NOW() )
 	</insert>
 	
 	<select id="findByUserId" resultType="UserDTO">

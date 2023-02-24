@@ -1,6 +1,7 @@
 package com.project.toy.email.service;
 
 import java.util.Random;
+import java.util.UUID;
 
 import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
@@ -12,17 +13,23 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.project.toy.user.dto.CertifiedUserDTO;
+import com.project.toy.user.dto.UserDTO;
+import com.project.toy.user.mapper.UserMapper;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class EmailService {
 	
+	private final UserMapper userMapper;
 	private final JavaMailSender emailSender;
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public static final String ePw = createKey();
+	public static final String ePwRand = UUID.randomUUID().toString();
 	
 	private MimeMessage createMessage(String to) throws Exception {
 		log.info("보내는 대상 : " + to);
@@ -30,11 +37,11 @@ public class EmailService {
 		MimeMessage message = emailSender.createMimeMessage();
 		
 		message.addRecipients(RecipientType.TO, to);
-		message.setSubject("toy, 회원가입 인증 메일입니다.");
+		message.setSubject("OYEZ - 회원가입 인증 메일입니다.");
 		
 		String msg = "";
 		msg += "<div align='center' style='margin: 20px;'>";
-		msg += "<h3>TOY</h3>";
+		msg += "<h3>OYEZ</h3>";
 		msg += "<br>";
 		msg += "<p>아래 CODE를 입력해주세요.<p>";
 		msg += "<br>";
@@ -43,9 +50,41 @@ public class EmailService {
 		msg += "<h3>CODE : <strong>";
 		msg += ePw + "</strong></h3></div></div></div>";
 		message.setText(msg, "UTF-8", "html");
-		message.setFrom(new InternetAddress("alstkdgks@gmail.com", "TOY"));
+		message.setFrom(new InternetAddress("alstkdgks@gmail.com", "OYEZ"));
 		
 		return message;
+	}
+	
+	public void certifiedEmail(UserDTO params, String to) throws Exception {
+		log.info("보내는 대상 : " + to);
+		log.info("생성된 인증번호 : " + ePwRand);
+		
+		CertifiedUserDTO certified = new CertifiedUserDTO();
+		certified.setUserId(params.getUserId());
+		certified.setCertifiedCode(ePwRand);
+		userMapper.certifiedEmail(certified);
+		
+		MimeMessage message = emailSender.createMimeMessage();
+		
+		message.addRecipients(RecipientType.TO, to);
+		message.setSubject("OYEZ - 이메일 인증 메일입니다.");
+		
+		String msg = "";
+		msg += "<div align='center' style='margin: 20px;'>";
+		msg += "<h3>OYEZ</h3>";
+		msg += "<br>";
+		msg += "<p>아래 [이메일 인증 확인] 버튼을 눌러주세요.<p>";
+		msg += "<a href='http://localhost:8081/certified?email=" + params.getUserEmail() + "&ePw=" + ePwRand;
+		msg += "' target='_blank'>이메일 인증 확인</a>";
+		message.setText(msg, "UTF-8", "html");
+		message.setFrom(new InternetAddress("alstkdgks@gmail.com", "OYEZ"));
+		
+		try {
+			emailSender.send(message);
+		} catch(MailException e) {
+			e.printStackTrace();
+			throw new IllegalArgumentException();
+		}
 	}
 	
 	public static String createKey() {
@@ -86,5 +125,17 @@ public class EmailService {
 		}
 		
 		return ePw;
+	}
+
+	public CertifiedUserDTO selectCertifiedEmail(CertifiedUserDTO params) {
+		return userMapper.selectCertifiedEmail(params);
+	}
+	
+	public void successCertifiedEmail(CertifiedUserDTO params) {
+		userMapper.successCertifiedEmail(params);
+	}
+
+	public void successCertifiedRole(UserDTO userDTO) {
+		userMapper.successCertifiedRole(userDTO);
 	}
 }

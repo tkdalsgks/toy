@@ -4,7 +4,7 @@
 				layout:decorate="~{layouts/layout}">
 <head>
 <meta charset="UTF-8">
-<title>OYEZ - 회원가입</title>
+<title>OYEZ - All That Community</title>
 
 <th:block layout:fragment="css">
 	<!-- RESET, DEFAULT -->
@@ -26,33 +26,50 @@
 			<aside>
 				<span class="aside-title">내 계정</span>
 				<nav class="aside-subtitle">
-					<a th:href="@{/settings/profile}" class="aside-subtitle1" style="background: hsla(220,9%,46%,.25); border-radius: .5rem;">
+					<a th:onclick="goProfile([[ ${userId} ]]);" class="aside-subtitle1">
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="text-gray-600 dark:text-gray-400 -ml-1 mr-3 h-6 w-6 shrink-0 group-hover:text-gray-800 dark:group-hover:text-gray-200"><path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
 						<span>회원정보</span>
 					</a>
-					<a th:href="@{/settings/account}" class="aside-subtitle2">
+					<a th:onclick="goAccount([[ ${userId} ]]);" class="aside-subtitle2">
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class=" text-gray-400 dark:text-gray-600 -ml-1 mr-3 h-6 w-6 shrink-0 group-hover:text-gray-800 dark:group-hover:text-gray-200"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 5.785l-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864l-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495"></path></svg>
 						<span>계정</span>
 					</a>
 				</nav>
 			</aside>
-			<div class="settings">
-				<div class="settings-input">
-					<span class="aside-title">회원정보</span>
-					<div class="settings-contents">
-						<div class="settings-contents1">
-							<label class="contents1-nickname">닉네임</label>
+			
+			<!-- profile -->
+			<div id="settings-profile" class="profile">
+				<div class="profile-input">
+					<span class="aside-title">
+						회원정보<span style="color: blue; font-size: .825rem; font-weight: 400;">&nbsp;&nbsp;&nbsp;&nbsp;* 회원정보를 변경하려면 이메일 인증이 필요합니다.</span>
+					</span>
+					<div class="profile-contents">
+						<div class="profile-contents1">
+							<input type="hidden" id="userId" name="userId" th:value="${userId}">
+							<input type="hidden" id="provider" name="provider" th:value="${provider}">
+							<label class="profile-nickname">닉네임</label>
 							<div>
-								<input id="userNickname" name="userNickname" th:value="${nickname}">
+								<input id="userNickname" name="userNickname" th:value="${userNickname}">
+							</div>
+							<label class="profile-email">이메일</label>
+							<div style="display: flex;">
+								<input id="userEmail" name="userEmail" th:value="${userEmail}" th:if="${provider == 'general'}">
+								<input id="userEmail" name="userEmail" th:value="${userEmail}" th:if="${provider != 'general'}" disabled="disabled">
+								<button type="button" id="check-email" class="btn btn-primary profile-check-email">이메일 인증</button>
+							</div>
+							<div id="profile-verify" class="profile-verify">
+								<input type="text" id="check-email-number" class="form-control required" placeholder="인증번호를 입력해주세요." disabled="disabled">
+								<button type="button" id="check-email-verify" class="btn btn-primary profile-check-verify" disabled="disabled">인증확인</button>
+								<div id="check-email-time" class="check-email-time"></div>
 							</div>
 						</div>
-						<div class="settings-contents2">
+						<div class="profile-contents2">
 							<img src="">
 						</div>
 					</div>
 				</div>
-				<div class="settings-line"></div>
-				<div class="settings-info">
+				<div class="profile-line"></div>
+				<div class="profile-info">
 					<div>
 						<span class="aside-title">이메일 수신동의</span>
 						<div>
@@ -67,9 +84,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="settings-line"></div>
-				<div class="settings-save">
-					<button class="btn btn-primary">저장</button>
+				<div class="profile-line"></div>
+				<div class="profile-save">
+					<button id="saveProfile" class="btn btn-primary" th:onclick="updateProfile([[ ${userId} ]]);" disabled="disabled">저장</button>
 				</div>
 			</div>
 		</div>
@@ -82,10 +99,255 @@
 		<!-- LOADING -->
 		<script type="text/javascript" src="/js/lib/loadingoverlay.min.js"></script>
 		<script type="text/javascript" src="/js/app/loading.js"></script>
-		<script type="text/javascript">
-			function goHome() {
-				window.location.href="/";
+		<!-- SETTINGS -->
+		<script th:inline="javascript">
+		/*<![CDATA[*/
+			
+			function updateProfile(userId) {
+				const nickname = document.getElementById('userNickname').value;
+				const checkUserNickname = document.getElementById('checkUserNickname');
+				const exp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
+				
+				if(!nickname.match(exp)){
+			    	alert('닉네임은 2~10자 사이의 한글, 영문, 숫자로 이루어져야 합니다.');
+			    } else if(nickname.match(exp)) {
+					$.ajax({
+						url : "/check/nickname",
+						type : "POST",
+						dataType : "json",
+						data : { "userNickname" : $("#userNickname").val() },
+						success : function(data) {
+							
+							if($("#userNickname").val() == [[ ${userNickname} ]]) {
+								if(confirm('하루에 1번만 변경 가능합니다.\n회원정보를 변경할까요?')) {
+									var userNickname = document.getElementById("userNickname");
+									var userEmail = document.getElementById("userEmail");
+									
+									var uri = [[ @{/} + ${userId} + @{/profile} ]];
+									var params = { "userNickname": userNickname.value, "userEmail": userEmail.value };
+									
+									$.ajax({
+										url: uri,
+										type: "PUT",
+										dataType: "json",
+										data: params,
+										success: function(response) {
+											if(response.result == false) {
+												alert("정보 변경에 실패하였습니다.");
+												return false;
+											} else if(response.result == 'exceedCount') {
+												alert(response.message);
+												return false;
+											}
+											alert("정보 변경이 완료되었습니다.");
+										},
+										error: function(response) {
+											alert("잠시후 재시도 해주세요.");
+											return false;
+										}
+									});
+								} else {
+									return false;
+								}
+							} else {
+								if($("#userNickname").val() == data.userNickname) {
+									alert('이미 사용중인 닉네임입니다.');
+								} else {
+									if(confirm('하루에 1번만 변경 가능합니다.\n회원정보를 변경할까요?')) {
+										var userNickname = document.getElementById("userNickname");
+										var userEmail = document.getElementById("userEmail");
+										
+										var uri = [[ @{/} + ${userId} + @{/profile} ]];
+										var params = { "userNickname": userNickname.value, "userEmail": userEmail.value };
+										
+										$.ajax({
+											url: uri,
+											type: "PUT",
+											dataType: "json",
+											data: params,
+											success: function(response) {
+												if(response.result == false) {
+													alert("정보 변경에 실패하였습니다.");
+													return false;
+												} else if(response.result == 'exceedCount') {
+													alert(response.message);
+													return false;
+												}
+												alert("정보 변경이 완료되었습니다.");
+											},
+											error: function(response) {
+												alert("잠시후 재시도 해주세요.");
+												return false;
+											}
+										});
+									} else {
+										return false;
+									}
+								}
+							}
+							
+					    },
+						error: function(data) {
+							alert("잠시후 재시도 바랍니다.");
+						}
+					});
+				}
 			}
+			
+			const verify = document.getElementById('profile-verify');
+			verify.style.display = 'none';
+			
+			// 내 계정 이메일 검증
+			$(function() {
+				var display = $("#check-email-time");
+				var isCertification = false;
+				var key = "";
+				var timer = null;
+				var isRunning = false;
+				
+				// 이메일 인증 버튼
+				$('#check-email').click(function() {
+					const email = document.getElementById('userEmail').value;
+					const checkUserEmail = document.getElementById('checkUserEmail');
+					const exp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+					
+					if(!email.match(exp)) {
+				    	alert('올바르지 않은 이메일 형식입니다.');
+				    	$('#check-email').prop('disabled', false);
+				    } else if(email.match(exp)) {
+				    	$.ajax({
+							url : "/check/email",
+							type : "POST",
+							dataType : "json",
+							data : { "userEmail" : $("#userEmail").val() },
+							success : function(data) {
+								if($("#userEmail").val() == [[ ${userEmail} ]]) {
+									verify.style.display = 'flex';
+						        	
+						        	$.ajax({
+										type : 'post',
+										url : '/check/mail',
+										data : { "userEmail" : $("#userEmail").val() },
+										success : function(data) {
+											isCertification = true;
+											var leftSec = 180;
+											if(isRunning) {
+												clearInterval(timer);
+												display.html("");
+												startTimer(leftSec, display);
+											} else {
+												startTimer(leftSec, display);
+											}
+											$('#check-email-number').prop('disabled', false);
+											$('#check-email-verify').prop('disabled', false);
+											$('#check-email').prop('disabled', true);
+											code = data;
+											alert('입력한 이메일로 인증번호가 전송되었습니다.');
+										},
+										error: function(data) {
+											alert("잠시후 재시도 바랍니다.");
+										}
+									});
+								} else {
+									if($("#userEmail").val() == data.userEmail) {
+										alert('이미 사용중인 이메일입니다.');
+									} else {
+										verify.style.display = 'flex';
+							        	
+							        	$.ajax({
+											type : 'post',
+											url : '/check/mail',
+											data : { "userEmail" : $("#userEmail").val() },
+											success : function(data) {
+												isCertification = true;
+												var leftSec = 180;
+												if(isRunning) {
+													clearInterval(timer);
+													display.html("");
+													startTimer(leftSec, display);
+												} else {
+													startTimer(leftSec, display);
+												}
+												$('#check-email-number').prop('disabled', false);
+												$('#check-email-verify').prop('disabled', false);
+												$('#check-email').prop('disabled', true);
+												code = data;
+												alert('입력한 이메일로 인증번호가 전송되었습니다.');
+											},
+											error: function(data) {
+												alert("잠시후 재시도 바랍니다.");
+											}
+										});
+									}
+								}
+						    },
+							error: function(data) {
+								alert("잠시후 재시도 바랍니다.");
+							}
+						});
+				    }
+				});
+				
+				function startTimer(count, display) {
+					var minutes, seconds;
+					timer = setInterval(function() {
+						minutes = parseInt(count / 60, 10);
+						seconds = parseInt(count % 60, 10);
+						
+						minutes = minutes < 10 ? "0" + minutes : minutes;
+						seconds = seconds < 10 ? "0" + seconds : seconds;
+						
+						display.html(minutes + ":" + seconds);
+						
+						// 타이머 끝
+						if(--count < 0) {
+							clearInterval(timer);
+							$('#check-email-number').prop('disabled', true);
+							$('#check-email-verify').prop('disabled', true);
+							$('#check-email').prop('disabled', false);
+							isRunning = false;
+						}
+					}, 1000);
+					isRunning = true;
+				}
+				
+				// 인증 확인 버튼
+				$('#check-email-verify').click(function() {
+					$.ajax({
+						type : 'post',
+						url : '/check/verifyCode',
+						data : { "code" : $("#check-email-number").val() },
+						success : function(result) {
+							if(result == 1) {
+								isCertification = true;
+								clearInterval(timer);
+								$('#userEmail').prop('disabled', true);
+								$('#check-email').prop('disabled', true);
+								$('#saveProfile').prop('disabled', false);
+								$('#check-email-number').prop('disabled', true);
+								$('#check-email-verify').prop('disabled', true);
+								alert("인증되었습니다.");
+							} else {
+								isCertification = false;
+								alert("인증번호를 정확하게 입력해주세요.");
+							}
+						},
+						error: function(result) {
+							alert("잠시후 재시도 바랍니다.");
+						}
+					});
+				});
+			});
+			
+			function goProfile(userId) {
+				location.href = '/' + `${userId}` + '/profile';
+			}
+			
+			function goAccount(userId) {
+				location.href = '/' + `${userId}` + '/account';
+			}
+			
+		/*]]>*/
 		</script>
 	</th:block>
 	

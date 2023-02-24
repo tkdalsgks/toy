@@ -276,7 +276,7 @@ $('#joinSubmit').click(function() {
 					"userNickname" : $("#userNickname").val(),
 					"userEmail" : $("#userEmail").val() },
 			success : function(data) {
-				alert("회원가입이 완료되었습니다.");
+				alert("회원가입이 완료되었습니다.\n마이페이지에서 추가 인증으로 OYEZ의 모든 콘텐츠를 이용해보세요.");
 				location.href = "/";
 			},
 			error: function(data) {

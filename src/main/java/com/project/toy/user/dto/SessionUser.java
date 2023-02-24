@@ -27,6 +27,8 @@ public class SessionUser implements Serializable {
 	
 	@Schema(description = "가입일자", defaultValue = "NOW()")
 	private LocalDateTime IDate;
+	
+	private String provider;
 	private Role role;
 	
 	public SessionUser(UserDTO userDTO) {
@@ -35,6 +37,7 @@ public class SessionUser implements Serializable {
 		this.userEmail = userDTO.getUserEmail();
 		this.userNickname = userDTO.getUserNickname();
 		this.IDate = userDTO.getIDate();
+		this.provider = userDTO.getProvider();
 		this.role = userDTO.getRole();
 	}
 }
