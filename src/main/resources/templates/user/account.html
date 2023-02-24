@@ -42,7 +42,7 @@
 			<div id="settings-account" class="account">
 				<div class="account-input">
 					<span class="aside-title">
-						이메일 정보<span class="aside-title1">* OYEZ의 모든 콘텐츠를 이용하시려면 이메일 인증이 필요합니다.</span>
+						계정 권한 인증<span class="aside-title1">* OYEZ의 모든 콘텐츠를 이용하시려면 이메일 인증이 필요합니다.</span>
 					</span>
 					<div class="account-contents">
 						<div class="account-contents1">
@@ -62,9 +62,9 @@
 				</div>
 				<div class="account-line"></div>
 				<div class="account-withdraw">
-					<span class="aside-title">계정삭제</span>
+					<span class="aside-title">계정 삭제</span>
 					<div class="account-withdraw-btn">
-						<button class="btn btn-primary" style="cursor: pointer;">회원탈퇴</button>
+						<button class="btn btn-primary">회원탈퇴</button>
 					</div>
 				</div>
 			</div>
@@ -110,7 +110,12 @@
 					dataType: "json",
 					data: params,
 					success: function(response) {
-						alert('계정에 등록된 이메일로 인증 링크를 보냈습니다.');
+						swal.fire({
+							text: '등록된 이메일로 인증 링크를 보냈습니다.',
+							icon: 'success',
+							confirmButtonColor: '#3085d6',
+							confirmButtonText: '확인',
+						});
 					},
 					error: function(response) {
 						swal.fire({

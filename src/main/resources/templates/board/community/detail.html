@@ -144,32 +144,46 @@
 			// 게시글 삭제
 	        function deleteBoard() {
 	            const id = [[ ${board.id} ]];
-	            if ( !confirm("게시글을 삭제할까요?") ) {
-	                return false;
-	            }
 	            
 	            const writer = document.getElementById('writer').value;
 	        	const userId = document.getElementById('userId').value;
 	        	
-	        	if(writer != userId) {
-	        		alert("권한이 없는 게시글입니다.");
-	        	} else {
-	        		let inputHtml = '';
-		            new URLSearchParams(location.search).forEach((value, key) => {
-		                inputHtml += `<input type="hidden" name="${key}" value="${value}" />`;
-		            })
-		            
-		            const formHtml = `
-		                <form id="deleteForm" action="/community/delete" method="post">
-		                    ${inputHtml}
-		                </form>
-		            `;
-		            
-		            const doc = new DOMParser().parseFromString(formHtml, 'text/html');
-		            const form = doc.body.firstChild;
-		            document.body.append(form);
-		            document.getElementById('deleteForm').submit();
-	        	}
+	        	swal.fire({
+    				title: '게시글을 삭제할까요?',
+    				icon: 'warning',
+    				showCancelButton: true,
+    				confirmButtonColor: '#3085d6',
+    				confirmButtonText: '확인',
+    				cancelButtonColor: '#d33',
+    				cancelButtonText: '취소'
+    			}).then((result) => {
+    				if(result.isConfirmed) {
+    					if(writer != userId) {
+    		        		swal.fire({
+    		    				title: '권한이 없는 게시글입니다.',
+    		    				icon: 'warning',
+    		    				confirmButtonColor: '#3085d6',
+    		    				confirmButtonText: '확인'
+    		    			});
+    		        	} else {
+    		        		let inputHtml = '';
+    			            new URLSearchParams(location.search).forEach((value, key) => {
+    			                inputHtml += `<input type="hidden" name="${key}" value="${value}" />`;
+    			            })
+    			            
+    			            const formHtml = `
+    			                <form id="deleteForm" action="/community/delete" method="post">
+    			                    ${inputHtml}
+    			                </form>
+    			            `;
+    			            
+    			            const doc = new DOMParser().parseFromString(formHtml, 'text/html');
+    			            const form = doc.body.firstChild;
+    			            document.body.append(form);
+    			            document.getElementById('deleteForm').submit();
+    		        	}
+    				}
+    			});
 	        }
 		
 			// 게시글 리스트 페이지로 이동
@@ -185,7 +199,12 @@
 	        	const userId = document.getElementById('userId').value;
 	        	
 	        	if(writer != userId) {
-	        		alert("권한이 없는 게시글입니다.");
+	        		swal.fire({
+	    				title: '권한이 없는 게시글입니다.',
+	    				icon: 'warning',
+	    				confirmButtonColor: '#3085d6',
+	    				confirmButtonText: '확인'
+	    			});
 	        	} else {
 			        location.href = '/community/change' + location.search;
 	        	}
@@ -229,7 +248,12 @@
 					data: JSON.stringify(params),
 					success: function(response) {
 						if(response.result == false) {
-							alert("댓글 등록에 실패하였습니다.");
+							swal.fire({
+			    				title: '댓글 등록에 실패했습니다.',
+			    				icon: 'warning',
+			    				confirmButtonColor: '#3085d6',
+			    				confirmButtonText: '확인'
+			    			});
 							return false;
 						}
 						
@@ -242,7 +266,7 @@
 							footer: '서버와의 통신 에러입니다.',
 							icon: 'error',
 							confirmButtonColor: '#3085d6',
-							confirmButtonText: '확인',
+							confirmButtonText: '확인'
 						});
 						return false;
 					}
@@ -275,10 +299,20 @@
 					data: JSON.stringify(params),
 					success: function(response) {
 						if (response.result == false) {
-							alert("댓글 수정에 실패하였습니다.");
+							swal.fire({
+			    				title: '댓글 수정에 실패했습니다.',
+			    				icon: 'warning',
+			    				confirmButtonColor: '#3085d6',
+			    				confirmButtonText: '확인'
+			    			});
 							return false;
 						} else if(response.result == "isUnauthorized") {
-							alert(response.message);
+							swal.fire({
+			    				text: response.message,
+			    				icon: 'warning',
+			    				confirmButtonColor: '#3085d6',
+			    				confirmButtonText: '확인'
+			    			});
 						}
 						printCommentList();
 						$("#commentModal").modal("hide");
@@ -289,7 +323,7 @@
 							footer: '서버와의 통신 에러입니다.',
 							icon: 'error',
 							confirmButtonColor: '#3085d6',
-							confirmButtonText: '확인',
+							confirmButtonText: '확인'
 						});
 						return false;
 					}
@@ -299,35 +333,64 @@
 			// 댓글 삭제
 			function deleteComment(id) {
 				
-				if (!confirm('댓글을 삭제할까요?')) {
-					return false;
-				}
-				
-				var uri = [[ @{/comments/} ]] + id;
-				var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "DELETE"};
-				
-				$.ajax({
-					url: uri,
-					type: "DELETE",
-					headers: headers,
-					dataType: "json",
-					success: function(response) {
-						if (response.result == false) {
-							alert("댓글 삭제에 실패하였습니다.");
-							return false;
-						} else if(response.result == "isUnauthorized") {
-							alert(response.message);
-						} else {
-							alert(response.message);
-						}
-						printCommentList();
-						$("#commentModal").modal("hide");							
-					},
-					error: function(xhr, status, error) {
-						alert("에러가 발생하였습니다.");
-						return false;
-					}
-				});
+				swal.fire({
+    				title: '댓글을 삭제할까요?',
+    				icon: 'warning',
+    				showCancelButton: true,
+    				confirmButtonColor: '#3085d6',
+    				confirmButtonText: '확인',
+    				cancelButtonColor: '#d33',
+    				cancelButtonText: '취소'
+    			}).then((result) => {
+    				if(result.isConfirmed) {
+    					var uri = [[ @{/comments/} ]] + id;
+    					var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "DELETE"};
+
+    					$.ajax({
+    						url: uri,
+    						type: "DELETE",
+    						headers: headers,
+    						dataType: "json",
+    						success: function(response) {
+    							if (response.result == false) {
+    								swal.fire({
+    				    				title: '댓글 삭제에 실패했습니다.',
+    				    				icon: 'warning',
+    				    				confirmButtonColor: '#3085d6',
+    				    				confirmButtonText: '확인'
+    				    			});
+    								return false;
+    							} else if(response.result == "isUnauthorized") {
+    								swal.fire({
+    				    				text: response.message,
+    				    				icon: 'warning',
+    				    				confirmButtonColor: '#3085d6',
+    				    				confirmButtonText: '확인'
+    				    			});
+    							} else {
+    								swal.fire({
+    				    				text: response.message,
+    				    				icon: 'warning',
+    				    				confirmButtonColor: '#3085d6',
+    				    				confirmButtonText: '확인'
+    				    			});
+    							}
+    							printCommentList();
+    							$("#commentModal").modal("hide");							
+    						},
+    						error: function(xhr, status, error) {
+    							swal.fire({
+    								title: '잠시 후 재시도 바랍니다.',
+    								footer: '서버와의 통신 에러입니다.',
+    								icon: 'error',
+    								confirmButtonColor: '#3085d6',
+    								confirmButtonText: '확인'
+    							});
+    							return false;
+    						}
+    					});
+    				}
+    			});
 			}
 			
 			// 댓글 리스트 출력
@@ -383,10 +446,20 @@
 					data: JSON.stringify(params),
 					success: function(response) {
 						if(response.todayLikes >= 5) {
-							alert(response.message);
+							swal.fire({
+								text: response.message,
+								icon: 'warning',
+								confirmButtonColor: '#3085d6',
+								confirmButtonText: '확인'
+							});
 							return false;
 						} else if(response.result == false) {
-							alert("게시글 좋아요에 실패하였습니다.");
+							swal.fire({
+								title: '게시글 좋아요에 실패했습니다.',
+								icon: 'warning',
+								confirmButtonColor: '#3085d6',
+								confirmButtonText: '확인'
+							});
 							return false;
 						} else {
 							window.location.reload(true);						
@@ -398,7 +471,7 @@
 							footer: '서버와의 통신 에러입니다.',
 							icon: 'error',
 							confirmButtonColor: '#3085d6',
-							confirmButtonText: '확인',
+							confirmButtonText: '확인'
 						});
 						return false;
 					}

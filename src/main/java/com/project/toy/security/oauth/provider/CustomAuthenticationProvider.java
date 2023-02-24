@@ -54,7 +54,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 				lockUserDTO.setLockYn(failCount >= 5 ? "Y" : "N");
 				userService.updateFailLogin(lockUserDTO);
 				
-				throw new BadCredentialsException("비밀번호를 " + failCount + "회 틀렸습니다." + "\n5회 이상 틀릴 경우 계정이 잠깁니다.\n");
+				throw new BadCredentialsException("비밀번호를 " + failCount + "회 틀렸습니다." + "\n5회 이상 틀릴 시 계정이 잠깁니다.\n");
 			} else {
 				lockUserDTO.setFailCnt(0);
 				userService.updateFailLogin(lockUserDTO);

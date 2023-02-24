@@ -44,9 +44,20 @@ $('#findUserId').on('click' ,function() {
 		dataType: "json",
 		success: function(data) {
 			if(data.result == "false") {
-				alert("error: ");
+				swal.fire({
+					title: '에러',
+					icon: 'error',
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: '확인'
+				});
 			} else if(data.result == "true") {
-				alert("success: " + data.findId);
+				swal.fire({
+					title: '아이디를 찾았습니다.',
+					text: data.findId,
+					icon: 'success',
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: '확인'
+				});
 			}
 		},
 		error: function(data) {
@@ -55,7 +66,7 @@ $('#findUserId').on('click' ,function() {
 				footer: '서버와의 통신 에러입니다.',
 				icon: 'error',
 				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인',
+				confirmButtonText: '확인'
 			});
 		}
 	});
@@ -66,10 +77,20 @@ $('#findUserPwd').on('click' ,function() {
 	const findPwdEmail = document.getElementById('findPwdEmail').value;
 	
 	if( findPwdId == null || findPwdId == '' ) {
-		alert("아이디를 입력하세요.");
+		swal.fire({
+			title: '아이디를 입력하세요.',
+			icon: 'warning',
+			confirmButtonColor: '#3085d6',
+			confirmButtonText: '확인'
+		});
 		$("#findPwdId").focus();
 	} else if( findPwdEmail == null || findPwdEmail == '' ) {
-		alert("이메일을 입력하세요.");
+		swal.fire({
+			title: '이메일을 입력하세요.',
+			icon: 'warning',
+			confirmButtonColor: '#3085d6',
+			confirmButtonText: '확인'
+		});
 		$("#findPwdEmail").focus();
 	} else {
 		$.ajax({
@@ -80,9 +101,20 @@ $('#findUserPwd').on('click' ,function() {
 			dataType: "json",
 			success: function(data) {
 				if(data.result == "false") {
-					alert("등록된 아이디나 이메일이 아니거나 입력한 정보가 일치하지 않습니다.");
+					swal.fire({
+						text: '등록된 아이디나 이메일이 아니거나 입력한 정보가 일치하지 않습니다.',
+						icon: 'warning',
+						confirmButtonColor: '#3085d6',
+						confirmButtonText: '확인'
+					});
 				} else if(data.result == "true") {
-					alert("success: " + data.findPwd);
+					swal.fire({
+						title: '비밀번호를 찾았습니다.',
+						text: data.findPwd,
+						icon: 'success',
+						confirmButtonColor: '#3085d6',
+						confirmButtonText: '확인'
+					});
 				}
 			},
 			error: function(data) {
@@ -91,7 +123,7 @@ $('#findUserPwd').on('click' ,function() {
 					footer: '서버와의 통신 에러입니다.',
 					icon: 'error',
 					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인',
+					confirmButtonText: '확인'
 				});
 			}
 		});
