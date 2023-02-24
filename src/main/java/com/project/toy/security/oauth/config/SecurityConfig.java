@@ -1,6 +1,5 @@
 package com.project.toy.security.oauth.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,14 +19,9 @@ import lombok.AllArgsConstructor;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Autowired
-	private CustomOAuth2UserService customOAuth2UserService;
-	
-	@Autowired
-	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
-	
-	@Autowired
-	private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+	private final CustomOAuth2UserService customOAuth2UserService;
+	private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+	private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -35,6 +29,8 @@ public class SecurityConfig {
 				.headers().frameOptions().sameOrigin()
 			.and()
 				.csrf().disable()
+				.formLogin().disable()
+				.httpBasic().disable()
 				.authorizeRequests()
 					.antMatchers("/swagger-ui/**", "/", "/join", "/check/**", "/find/**", "/certified/**").permitAll()
 					.antMatchers("/board/**", "/comments/**", "/upload/**").hasAnyAuthority("ROLE_GUEST", "ROLE_USER", "ROLE_ADMIN")

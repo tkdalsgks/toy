@@ -37,7 +37,7 @@ public class EmailService {
 		MimeMessage message = emailSender.createMimeMessage();
 		
 		message.addRecipients(RecipientType.TO, to);
-		message.setSubject("OYEZ - 회원가입 인증 메일입니다.");
+		message.setSubject("OYEZ - 이메일 인증 메일입니다.");
 		
 		String msg = "";
 		msg += "<div align='center' style='margin: 20px;'>";
@@ -67,14 +67,15 @@ public class EmailService {
 		MimeMessage message = emailSender.createMimeMessage();
 		
 		message.addRecipients(RecipientType.TO, to);
-		message.setSubject("OYEZ - 이메일 인증 메일입니다.");
+		message.setSubject("OYEZ - 계정권한 인증 메일입니다.");
 		
 		String msg = "";
 		msg += "<div align='center' style='margin: 20px;'>";
 		msg += "<h3>OYEZ</h3>";
 		msg += "<br>";
 		msg += "<p>아래 [이메일 인증 확인] 버튼을 눌러주세요.<p>";
-		msg += "<a href='http://localhost:8081/certified?email=" + params.getUserEmail() + "&ePw=" + ePwRand;
+		msg += "<p></p>";
+		msg += "<a href='https://oyez.kr/certified?email=" + params.getUserEmail() + "&ePw=" + ePwRand;
 		msg += "' target='_blank'>이메일 인증 확인</a>";
 		message.setText(msg, "UTF-8", "html");
 		message.setFrom(new InternetAddress("alstkdgks@gmail.com", "OYEZ"));
