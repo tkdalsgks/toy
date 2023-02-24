@@ -45,9 +45,6 @@ public class UserController {
 	public String profile(@PathVariable(value = "userId", required = false) String userId, Authentication auth, Model model) {
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
-		System.out.println("111111111 " + auth.getAuthorities());
-		System.out.println("111111111 " + auth.getDetails());
-		System.out.println("111111111 " + auth.getPrincipal());
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("userNickname", user.getUserNickname());
