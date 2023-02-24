@@ -41,22 +41,26 @@ public class CustomUserService implements UserDetailsService {
 		UserDTO userDTO = securityMapper.findByUserId(userId);
 		
 		if(userDTO != null) {
-			LockUserDTO lockUserDTO = userService.selectLockUser(userDTO);
-			if(lockUserDTO.getLockYn().equals("N")) {
-				log.info("-----");
-				log.info("General: 이미 가입된 유저입니다.");
-	            log.info("General: " + userDTO.getUserId());
-	            log.info("-----");
-	            session.setAttribute("user", new SessionUser(userDTO));
-	            
-	            LoginLogDTO loginLogDTO = new LoginLogDTO();
-	            loginLogDTO.setLoginId(userDTO.getUserId());
-	            loginLogDTO.setAccessIp(getLocalIpAddress());
-	            securityMapper.insertLoginLog(loginLogDTO);
-	            
-	            return new CustomUserDetails(userDTO);
-			} else {			
-				throw new LockedException("해당 계정이 잠겼습니다.\n비밀번호 찾기를 진행하여 새로운 비밀번호로 변경하세요.");
+			if(userDTO.getUseYn().equals("Y")) {
+				LockUserDTO lockUserDTO = userService.selectLockUser(userDTO);
+				if(lockUserDTO.getLockYn().equals("N")) {
+					log.info("-----");
+					log.info("General: 이미 가입된 유저입니다.");
+					log.info("General: " + userDTO.getUserId());
+					log.info("-----");
+					session.setAttribute("user", new SessionUser(userDTO));
+					
+					LoginLogDTO loginLogDTO = new LoginLogDTO();
+					loginLogDTO.setLoginId(userDTO.getUserId());
+					loginLogDTO.setAccessIp(getLocalIpAddress());
+					securityMapper.insertLoginLog(loginLogDTO);
+					
+					return new CustomUserDetails(userDTO);
+				} else {			
+					throw new LockedException("해당 계정이 잠겼습니다.\n비밀번호 찾기를 진행하여 새로운 비밀번호로 변경하세요.");
+				}
+			} else {
+				throw new UsernameNotFoundException("직접 탈퇴했거나 관리자가 추방한 계정입니다.");
 			}
 		} else {
 			throw new UsernameNotFoundException("존재하지 않는 아이디입니다.");

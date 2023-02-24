@@ -34,6 +34,9 @@ public class UserDTO {
 	@Schema(description = "가입 구분")
 	private String provider;
 	
+	@Schema(description = "사용 구분")
+	private String useYn;
+	
 	@Schema(description = "가입 일자", defaultValue = "NOW()")
 	private LocalDateTime IDate;
 	
