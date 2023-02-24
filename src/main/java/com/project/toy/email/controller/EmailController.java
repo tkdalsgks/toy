@@ -2,11 +2,18 @@ package com.project.toy.email.controller;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.project.toy.common.dto.MessageDTO;
 import com.project.toy.email.service.EmailService;
 import com.project.toy.user.dto.CertifiedUserDTO;
+import com.project.toy.user.dto.Role;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UserDTO;
 
@@ -79,7 +87,22 @@ public class EmailController {
 		long minutes = ChronoUnit.MINUTES.between(IDate, now);
 		
 		if(certified.getCertifiedCode().equals(EmailService.ePwRand)) {
-			if(minutes < 10) {
+			if(minutes < 1) {
+				// 현재 가지고 있는 Authentication 정보 호출
+				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+				
+				// 기존 정보 삭제 후 새로운 권한 추가
+				Collection<GrantedAuthority> updatedAuthorities = new ArrayList<>(authentication.getAuthorities());
+				updatedAuthorities.clear();
+				updatedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+				
+				// 새로운 권한을 Security에 저장
+				Authentication newAuth = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(), updatedAuthorities);
+				SecurityContextHolder.getContext().setAuthentication(newAuth);
+				
+				// 세션에 저장된 권한을 GUEST -> USER 로 변경
+				user.setRole(Role.USER);
+				
 				emailService.successCertifiedEmail(params);
 				emailService.successCertifiedRole(userDTO);
 				message = new MessageDTO("이메일 인증이 완료되었습니다.\n이제부터 OYEZ의 모든 콘텐츠를 즐기실 수 있습니다.", "/", RequestMethod.GET, null);

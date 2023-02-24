@@ -62,7 +62,7 @@ $('#findUserId').on('click' ,function() {
 		},
 		error: function(data) {
 			swal.fire({
-				title: '잠시 후 재시도 바랍니다.',
+				text: '잠시 후 재시도 바랍니다.',
 				footer: '서버와의 통신 에러입니다.',
 				icon: 'error',
 				confirmButtonColor: '#3085d6',
@@ -78,7 +78,7 @@ $('#findUserPwd').on('click' ,function() {
 	
 	if( findPwdId == null || findPwdId == '' ) {
 		swal.fire({
-			title: '아이디를 입력하세요.',
+			text: '아이디를 입력하세요.',
 			icon: 'warning',
 			confirmButtonColor: '#3085d6',
 			confirmButtonText: '확인'
@@ -86,7 +86,7 @@ $('#findUserPwd').on('click' ,function() {
 		$("#findPwdId").focus();
 	} else if( findPwdEmail == null || findPwdEmail == '' ) {
 		swal.fire({
-			title: '이메일을 입력하세요.',
+			text: '이메일을 입력하세요.',
 			icon: 'warning',
 			confirmButtonColor: '#3085d6',
 			confirmButtonText: '확인'
@@ -119,7 +119,7 @@ $('#findUserPwd').on('click' ,function() {
 			},
 			error: function(data) {
 				swal.fire({
-					title: '잠시 후 재시도 바랍니다.',
+					text: '잠시 후 재시도 바랍니다.',
 					footer: '서버와의 통신 에러입니다.',
 					icon: 'error',
 					confirmButtonColor: '#3085d6',

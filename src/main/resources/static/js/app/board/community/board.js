@@ -65,7 +65,7 @@ function isValid(field, fieldName, focusField) {
 
 	if (isEmpty(field.value) == true) {
 		/* 종성으로 조사(을 또는 를) 구분 */
-		var message = (charToUnicode(fieldName) > 0) ? fieldName + "을 확인해 주세요." : fieldName + "를 확인해 주세요.";
+		var message = (charToUnicode(fieldName) > 0) ? fieldName + "을 입력하세요." : fieldName + "를 입력하세요.";
 		swal.fire({
 			text: message,
 			icon: 'warning',

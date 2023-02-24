@@ -48,7 +48,7 @@ $(document).ready(function() {
 
         if(name == "") {
 			swal.fire({
-				title: '채팅방 이름을 입력하세요.',
+				text: '채팅방 이름을 입력하세요.',
 				icon: 'warning',
 				confirmButtonColor: '#3085d6',
 				confirmButtonText: '확인'
@@ -70,11 +70,11 @@ $("#createChatRoom").on("click", function() {
 		},
 		error: function() {
 			swal.fire({
-				title: '잠시 후 재시도 바랍니다.',
+				text: '잠시 후 재시도 바랍니다.',
 				footer: '서버와의 통신 에러입니다.',
 				icon: 'error',
 				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인',
+				confirmButtonText: '확인'
 			});
 		}
 	});

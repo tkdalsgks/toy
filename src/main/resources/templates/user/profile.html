@@ -156,7 +156,7 @@
 											success: function(response) {
 												if(response.result == false) {
 													swal.fire({
-														title: '내 정보 변경에 실패했습니다.',
+														text: '내 정보 변경에 실패했습니다.',
 														icon: 'warning',
 														confirmButtonColor: '#3085d6',
 														confirmButtonText: '확인'
@@ -172,7 +172,7 @@
 													return false;
 												}
 												swal.fire({
-													title: '내 정보 변경을 완료했습니다.',
+													text: '내 정보 변경을 완료했습니다.',
 													icon: 'success',
 													confirmButtonColor: '#3085d6',
 													confirmButtonText: '확인'
@@ -180,7 +180,7 @@
 											},
 											error: function(response) {
 												swal.fire({
-													title: '잠시 후 재시도 바랍니다.',
+													text: '잠시 후 재시도 바랍니다.',
 													footer: '서버와의 통신 에러입니다.',
 													icon: 'error',
 													confirmButtonColor: '#3085d6',
@@ -194,7 +194,7 @@
 							} else {
 								if($("#userNickname").val() == data.userNickname) {
 									swal.fire({
-										title: '이미 사용중인 닉네임입니다.',
+										text: '이미 사용중인 닉네임입니다.',
 										icon: 'warning',
 										confirmButtonColor: '#3085d6',
 										confirmButtonText: '확인'
@@ -224,10 +224,10 @@
 											success: function(response) {
 												if(response.result == false) {
 													swal.fire({
-														title: '내 정보 변경에 실패했습니다.',
+														text: '내 정보 변경에 실패했습니다.',
 														icon: 'warning',
 														confirmButtonColor: '#3085d6',
-														confirmButtonText: '확인',
+														confirmButtonText: '확인'
 													});
 													return false;
 												} else if(response.result == 'exceedCount') {
@@ -235,12 +235,12 @@
 														text: response.message,
 														icon: 'warning',
 														confirmButtonColor: '#3085d6',
-														confirmButtonText: '확인',
+														confirmButtonText: '확인'
 													});
 													return false;
 												}
 												swal.fire({
-													title: '내 정보 변경을 완료했습니다.',
+													text: '내 정보 변경을 완료했습니다.',
 													icon: 'success',
 													confirmButtonColor: '#3085d6',
 													confirmButtonText: '확인'
@@ -248,11 +248,11 @@
 											},
 											error: function(response) {
 												swal.fire({
-													title: '잠시 후 재시도 바랍니다.',
+													text: '잠시 후 재시도 바랍니다.',
 													footer: '서버와의 통신 에러입니다.',
 													icon: 'error',
 													confirmButtonColor: '#3085d6',
-													confirmButtonText: '확인',
+													confirmButtonText: '확인'
 												});
 												return false;
 											}
@@ -263,11 +263,11 @@
 					    },
 						error: function(data) {
 							swal.fire({
-								title: '잠시 후 재시도 바랍니다.',
+								text: '잠시 후 재시도 바랍니다.',
 								footer: '서버와의 통신 에러입니다.',
 								icon: 'error',
 								confirmButtonColor: '#3085d6',
-								confirmButtonText: '확인',
+								confirmButtonText: '확인'
 							});
 						}
 					});
@@ -293,7 +293,7 @@
 					
 					if(!email.match(exp)) {
 						swal.fire({
-							title: '올바르지 않은 이메일 형식입니다.',
+							text: '올바르지 않은 이메일 형식입니다.',
 							icon: 'warning',
 							confirmButtonColor: '#3085d6',
 							confirmButtonText: '확인'
@@ -328,7 +328,7 @@
 											$('#check-email').prop('disabled', true);
 											code = data;
 											swal.fire({
-												title: '인증번호가 전송되었습니다.',
+												text: '인증번호가 전송되었습니다.',
 												icon: 'success',
 												confirmButtonColor: '#3085d6',
 												confirmButtonText: '확인'
@@ -336,18 +336,18 @@
 										},
 										error: function(data) {
 											swal.fire({
-												title: '잠시 후 재시도 바랍니다.',
+												text: '잠시 후 재시도 바랍니다.',
 												footer: '서버와의 통신 에러입니다.',
 												icon: 'error',
 												confirmButtonColor: '#3085d6',
-												confirmButtonText: '확인',
+												confirmButtonText: '확인'
 											});
 										}
 									});
 								} else {
 									if($("#userEmail").val() == data.userEmail) {
 										swal.fire({
-											title: '이미 사용중인 이메일입니다.',
+											text: '이미 사용중인 이메일입니다.',
 											icon: 'warning',
 											confirmButtonColor: '#3085d6',
 											confirmButtonText: '확인'
@@ -374,7 +374,7 @@
 												$('#check-email').prop('disabled', true);
 												code = data;
 												swal.fire({
-													title: '인증번호가 전송되었습니다.',
+													text: '인증번호가 전송되었습니다.',
 													icon: 'success',
 													confirmButtonColor: '#3085d6',
 													confirmButtonText: '확인'
@@ -382,11 +382,11 @@
 											},
 											error: function(data) {
 												swal.fire({
-													title: '잠시 후 재시도 바랍니다.',
+													text: '잠시 후 재시도 바랍니다.',
 													footer: '서버와의 통신 에러입니다.',
 													icon: 'error',
 													confirmButtonColor: '#3085d6',
-													confirmButtonText: '확인',
+													confirmButtonText: '확인'
 												});
 											}
 										});
@@ -395,11 +395,11 @@
 						    },
 							error: function(data) {
 								swal.fire({
-									title: '잠시 후 재시도 바랍니다.',
+									text: '잠시 후 재시도 바랍니다.',
 									footer: '서버와의 통신 에러입니다.',
 									icon: 'error',
 									confirmButtonColor: '#3085d6',
-									confirmButtonText: '확인',
+									confirmButtonText: '확인'
 								});
 							}
 						});
@@ -445,7 +445,7 @@
 								$('#check-email-number').prop('disabled', true);
 								$('#check-email-verify').prop('disabled', true);
 								swal.fire({
-									title: '정상 인증되었습니다.',
+									text: '정상 인증되었습니다.',
 									icon: 'success',
 									confirmButtonColor: '#3085d6',
 									confirmButtonText: '확인'
@@ -453,7 +453,7 @@
 							} else {
 								isCertification = false;
 								swal.fire({
-									title: '인증번호를 정확하게 입력하세요.',
+									text: '인증번호를 정확하게 입력하세요.',
 									icon: 'warning',
 									confirmButtonColor: '#3085d6',
 									confirmButtonText: '확인'
@@ -462,11 +462,11 @@
 						},
 						error: function(result) {
 							swal.fire({
-								title: '잠시 후 재시도 바랍니다.',
+								text: '잠시 후 재시도 바랍니다.',
 								footer: '서버와의 통신 에러입니다.',
 								icon: 'error',
 								confirmButtonColor: '#3085d6',
-								confirmButtonText: '확인',
+								confirmButtonText: '확인'
 							});
 						}
 					});
