@@ -46,10 +46,16 @@ $(document).ready(function() {
 
         var name = $("input[name='name']").val();
 
-        if(name == "")
-            alert("채팅방 이름을 입력해주세요.");
-        else
-            $("form").submit();
+        if(name == "") {
+			swal.fire({
+				title: '채팅방 이름을 입력하세요.',
+				icon: 'warning',
+				confirmButtonColor: '#3085d6',
+				confirmButtonText: '확인'
+			});
+		} else {
+            $("form").submit();			
+		}
     });
 });
 
@@ -63,7 +69,13 @@ $("#createChatRoom").on("click", function() {
 			location.replace("");
 		},
 		error: function() {
-			alert("잠시후 재시도 바랍니다.");
+			swal.fire({
+				title: '잠시 후 재시도 바랍니다.',
+				footer: '서버와의 통신 에러입니다.',
+				icon: 'error',
+				confirmButtonColor: '#3085d6',
+				confirmButtonText: '확인',
+			});
 		}
 	});
 });

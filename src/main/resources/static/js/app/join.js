@@ -36,7 +36,13 @@ $('#duplicateUserId').on('click' ,function() {
 		        }
 		    },
 		    error: function(data){
-		    	alert("잠시후 재시도 바랍니다.");
+		    	swal.fire({
+					title: '잠시 후 재시도 바랍니다.',
+					footer: '서버와의 통신 에러입니다.',
+					icon: 'error',
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: '확인',
+				});
 		    }
 		});
 	}
@@ -117,7 +123,13 @@ $('#userNickname').on('keyup' ,function() {
 		        }
 		    },
 			error: function(data) {
-				alert("잠시후 재시도 바랍니다.");
+				swal.fire({
+					title: '잠시 후 재시도 바랍니다.',
+					footer: '서버와의 통신 에러입니다.',
+					icon: 'error',
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: '확인',
+				});
 			}
 		});
 	}
@@ -159,7 +171,13 @@ $('#userEmail').on('keyup' ,function() {
 		        }
 		    },
 			error: function(data) {
-				alert("잠시후 재시도 바랍니다.");
+				swal.fire({
+					title: '잠시 후 재시도 바랍니다.',
+					footer: '서버와의 통신 에러입니다.',
+					icon: 'error',
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: '확인',
+				});
 			}
 		});
 	}
@@ -193,10 +211,21 @@ $(function() {
 				$('#check-email-verify').prop('disabled', false);
 				$('#check-email').prop('disabled', true);
 				code = data;
-				alert('입력한 이메일로 인증번호가 전송되었습니다.');
+				swal.fire({
+					title: '이메일로 인증번호가 전송되었습니다.',
+					icon: 'success',
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: '확인'
+				});
 			},
 			error: function(data) {
-				alert("잠시후 재시도 바랍니다.");
+				swal.fire({
+					title: '잠시 후 재시도 바랍니다.',
+					footer: '서버와의 통신 에러입니다.',
+					icon: 'error',
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: '확인',
+				});
 			}
 		});
 	});
@@ -240,15 +269,31 @@ $(function() {
 					$('#check-email-number').prop('disabled', true);
 					$('#check-email-verify').prop('disabled', true);
 					$("#check-email-verify").attr("value", "Y");
-					alert("인증되었습니다.");
+					swal.fire({
+						title: '인증되었습니다.',
+						icon: 'success',
+						confirmButtonColor: '#3085d6',
+						confirmButtonText: '확인'
+					});
 				} else {
 					isCertification = false;
 					$("#check-email-verify").attr("value", "");
-					alert("인증번호를 정확하게 입력해주세요.");
+					swal.fire({
+						title: '인증번호를 정확하게 입력해주세요.',
+						icon: 'warning',
+						confirmButtonColor: '#3085d6',
+						confirmButtonText: '확인'
+					});
 				}
 			},
 			error: function(result) {
-				alert("잠시후 재시도 바랍니다.");
+				swal.fire({
+					title: '잠시 후 재시도 바랍니다.',
+					footer: '서버와의 통신 에러입니다.',
+					icon: 'error',
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: '확인',
+				});
 			}
 		});
 	});
@@ -263,9 +308,19 @@ $('#joinSubmit').click(function() {
 	const verify = document.getElementById('check-email-verify').value;
 	
 	if(duplicate != 'Y') {
-		alert("아이디 중복확인이 필요합니다.");
+		swal.fire({
+			title: '아이디 중복확인이 필요합니다.',
+			icon: 'warning',
+			confirmButtonColor: '#3085d6',
+			confirmButtonText: '확인'
+		});
 	} else if(verify != 'Y') {
-		alert("이메일 인증이 필요합니다.");
+		swal.fire({
+			title: '이메일 인증이 필요합니다.',
+			icon: 'warning',
+			confirmButtonColor: '#3085d6',
+			confirmButtonText: '확인'
+		});
 	} else {
 		$.ajax({
 			type : 'post',
@@ -276,11 +331,26 @@ $('#joinSubmit').click(function() {
 					"userNickname" : $("#userNickname").val(),
 					"userEmail" : $("#userEmail").val() },
 			success : function(data) {
-				alert("회원가입이 완료되었습니다.\n마이페이지에서 추가 인증으로 OYEZ의 모든 콘텐츠를 이용해보세요.");
-				location.href = "/";
+				swal.fire({
+					title: '회원가입이 완료되었습니다.',
+					text: '추가 인증으로 OYEZ의 모든 콘텐츠를 이용해보세요.',
+					icon: 'success',
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: '확인'
+				}).then((result) => {
+					if(result.isConfirmed) {
+						location.href = "/";
+					}
+				});
 			},
 			error: function(data) {
-				alert("잠시후 재시도 바랍니다.");
+				swal.fire({
+					title: '잠시 후 재시도 바랍니다.',
+					footer: '서버와의 통신 에러입니다.',
+					icon: 'error',
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: '확인',
+				});
 			}
 		});
 	}

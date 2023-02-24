@@ -36,10 +36,31 @@
 		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
 		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/js/app/header.js"></script>
+		<!-- SWEETALERT2 -->
+		<script type="text/javascript" src="/js/lib/sweetalert2.js"></script>
 		<!-- POPUP -->
 		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
 		<script type="text/javascript" src="/js/lib/stomp.min.js"></script>
 		<script type="text/javascript" src="/js/app/popup.js"></script>
+		<script th:inline="javascript">
+			if([[ ${role} ]] == 'GUEST') {
+				swal.fire({
+					title: '인증이 필요한 계정입니다.',
+					text: '계정 인증 페이지로 이동할까요?',
+					footer: '인증 후 OYEZ의 모든 콘텐츠 이용이 가능합니다.',
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '이동',
+					cancelButtonText: '취소'
+				}).then((result) => {
+					if(result.isConfirmed) {
+						location.href = '/' + [[ ${userId} ]] + '/account';
+					}
+				});
+			}
+		</script>
 	</th:block>
 	
 </body>

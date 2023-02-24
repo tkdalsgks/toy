@@ -47,6 +47,7 @@ public class SecurityController {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("list", chatRoomService.findAllRooms());
+			model.addAttribute("role", user.getRole());
 			return "main";
 		} else {
 			return "index";

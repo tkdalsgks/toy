@@ -27,11 +27,21 @@ var index = {
     },
     login: function() {
     	if( ($("#userId").val() == "") || ( $("#userId").val() == null ) ) {
-	        alert("아이디를 입력해주세요.");
+			swal.fire({
+				title: '아이디를 입력하세요.',
+				icon: 'warning',
+				confirmButtonColor: '#3085d6',
+				confirmButtonText: '확인'
+			});
 	        $("#userId").focus();
 	        return false;
 	    } else if( ($("#userPwd").val() == "") || ($("#userPwd").val() == null) ) {
-	        alert("비밀번호를 입력해주세요.");
+	        swal.fire({
+				title: '비밀번호를 입력하세요.',
+				icon: 'warning',
+				confirmButtonColor: '#3085d6',
+				confirmButtonText: '확인'
+			});
 	        $("#userPwd").focus();
 	        return false;
 	    }
@@ -48,11 +58,22 @@ var index = {
            		if(res.code === '200') {
 	            	window.location = "/";
             	} else {
-            		alert(res.message);
+					swal.fire({
+						text: res.message,
+						icon: 'warning',
+						confirmButtonColor: '#3085d6',
+						confirmButtonText: '확인'
+					});
             	}
            },
            error: function(res) {
-           		alert("잠시후 재시도 바랍니다.");
+           		swal.fire({
+					title: '잠시 후 재시도 바랍니다.',
+					footer: '서버와의 통신 에러입니다.',
+					icon: 'error',
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: '확인',
+				});
            }
         });
 	}
