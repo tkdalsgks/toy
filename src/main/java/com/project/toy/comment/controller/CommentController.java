@@ -26,6 +26,8 @@ import com.project.toy.comment.dto.CommentRequestDTO;
 import com.project.toy.comment.dto.CommentResponseDTO;
 import com.project.toy.comment.service.CommentService;
 import com.project.toy.user.dto.SessionUser;
+import com.project.toy.user.dto.UserDTO;
+import com.project.toy.user.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,6 +38,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommentController {
 
+	private final UserService userService;
 	private final CommentService commentService;
 	
 	private final HttpSession session;
@@ -98,7 +101,8 @@ public class CommentController {
 		JsonObject jsonObj = new JsonObject();
 		
 		try {
-			SessionUser user = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 			CommentResponseDTO comment = commentService.findByCommentId(id);
 			
 			if(user.getUserId().equals(comment.getWriterId())) {
@@ -128,7 +132,8 @@ public class CommentController {
 		JsonObject jsonObj = new JsonObject();
 		
 		try {
-			SessionUser user = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 			CommentResponseDTO comment = commentService.findByCommentId(id);
 			
 			if(user.getUserId().equals(comment.getWriterId())) {

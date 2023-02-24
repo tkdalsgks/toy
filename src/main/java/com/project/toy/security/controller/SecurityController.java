@@ -31,8 +31,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityController {
 	
-	private final SecurityMapper securityMapper;
 	private final UserService userService;
+	private final SecurityMapper securityMapper;
 	private final ChatRoomService chatRoomService;
 	
 	private final HttpSession session;
@@ -44,6 +44,7 @@ public class SecurityController {
 	public String index(Authentication auth, Model model) {
 		SessionUser user = (SessionUser) session.getAttribute("user");
 		if(auth != null) {
+			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("list", chatRoomService.findAllRooms());
 			return "main";
@@ -77,7 +78,7 @@ public class SecurityController {
 			message = new MessageDTO("회원가입 오류 !\n회원가입을 처음부터 다시 진행해주세요.", "/join", RequestMethod.POST, null);
 		} else {
 			userService.saveUser(userDTO);
-			message = new MessageDTO("회원가입이 완료되었습니다.", "/", RequestMethod.POST, null);
+			message = new MessageDTO("회원가입이 완료되었습니다.\n마이페이지에서 추가 인증하면 OYEZ의 모든 콘텐츠를 이용하실 수 있습니다.", "/", RequestMethod.POST, null);
 		}
 		return showMessageAndRedirect(message, model);
 	}
@@ -107,6 +108,7 @@ public class SecurityController {
 			map.put("result", "true");
 		} else {
 			map.put("result", "false");
+			map.put("userNickname", userNickname);
 		}
 		
 		return map;
@@ -122,6 +124,7 @@ public class SecurityController {
 			map.put("result", "true");
 		} else {
 			map.put("result", "false");
+			map.put("userEmail", userEmail);
 		}
 		
 		return map;
@@ -138,7 +141,6 @@ public class SecurityController {
 			map.put("result", "false");
 		} else {
 			String userId = userDTO.getUserId();
-			System.out.println("123123 " + userId);
 			map.put("findId", userId);
 			map.put("result", "true");
 		}
@@ -157,7 +159,6 @@ public class SecurityController {
 			map.put("result", "false");
 		} else {
 			String userPwd = userDTO.getUserPwd();
-			System.out.println("123123 " + userPwd);
 			map.put("findPwd", userPwd);
 			map.put("result", "true");
 		}

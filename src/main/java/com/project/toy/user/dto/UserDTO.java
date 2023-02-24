@@ -34,8 +34,14 @@ public class UserDTO {
 	@Schema(description = "가입 구분")
 	private String provider;
 	
-	@Schema(description = "가입일자", defaultValue = "NOW()")
+	@Schema(description = "가입 일자", defaultValue = "NOW()")
 	private LocalDateTime IDate;
+	
+	@Schema(description = "정보변경 일자", defaultValue = "NOW()")
+	private LocalDateTime UDate;
+	
+	@Schema(description = "패스워드 변경 일자", defaultValue = "NOW()")
+	private LocalDateTime pwdUDate;
 	
 	@Schema(description = "권한", nullable = false, defaultValue = "ROLE_USER")
 	private Role role;

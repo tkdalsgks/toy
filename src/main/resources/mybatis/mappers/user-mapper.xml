@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.project.toy.user.mapper.UserMapper">
+
+	<sql id="certifiedColumns">
+		ID,
+		USER_ID,
+		CERTIFIED_CODE,
+		CERTIFIED_YN,
+		I_DATE,
+		U_DATE
+	</sql>
 	
 	<select id="findByLockUser" parameterType="UserDTO" resultType="LockUserDTO">
 		/* com.project.toy.user.dto.LockUserDTO */
@@ -36,7 +45,48 @@
 	<select id="findByUserPwd" resultType="UserDTO">
 		/* com.project.toy.user.dto.UserDTO */
 		
-		SELECT * FROM toy.T_PERSON WHERE USE_YN = 'Y' ANd USER_ID = LOWER(#{ userId }) AND USER_EMAIL = LOWER(#{ userEmail })
+		SELECT * FROM toy.T_PERSON WHERE USE_YN = 'Y' AND USER_ID = LOWER(#{ userId }) AND USER_EMAIL = LOWER(#{ userEmail })
 	</select>
+	
+	<update id="updateProfile" parameterType="UpdateUserDTO">
+		/* com.project.toy.user.dto.UpdateUserDTO */
+		
+		UPDATE T_PERSON
+		SET    USER_NICKNAME = #{ userNickname }
+		     , USER_EMAIL = #{ userEmail }
+		     , PWD_U_DATE = NOW()
+		WHERE  1=1
+		AND    USER_ID = #{ userId }
+		AND    USE_YN = 'Y'
+	</update>
+	
+	<select id="selectCertifiedEmail" resultType="CertifiedUserDTO">
+		SELECT *
+		FROM   T_PERSON_CERTIFIED
+		WHERE  1=1
+		AND    USER_ID = #{ userId }
+	</select>
+	
+	<insert id="certifiedEmail" parameterType="CertifiedUserDTO">
+		INSERT INTO toy.T_PERSON_CERTIFIED ( ID, USER_ID, CERTIFIED_CODE, I_DATE )
+		VALUES ( nextval(toy.T_PERSON_CERTIFIED_SEQ), #{ userId }, #{ certifiedCode }, NOW() )
+		ON DUPLICATE KEY UPDATE CERTIFIED_CODE = #{ certifiedCode }, I_DATE = NOW()
+	</insert>
+	
+	<update id="successCertifiedEmail" parameterType="CertifiedUserDTO">
+		UPDATE T_PERSON_CERTIFIED
+		SET    CERTIFIED_YN = 'Y'
+		     , U_DATE = NOW()
+		WHERE  1=1
+		AND    USER_ID = #{ userId }
+	</update>
+	
+	<update id="successCertifiedRole" parameterType="UserDTO">
+		UPDATE T_PERSON
+		SET    ROLE = 'USER'
+		     , U_DATE = NOW()
+		WHERE  1=1
+		AND    USER_ID = #{ userId }
+	</update>
 	
 </mapper>
