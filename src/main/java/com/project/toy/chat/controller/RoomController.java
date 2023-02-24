@@ -16,6 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.toy.chat.service.ChatRoomService;
 import com.project.toy.user.dto.SessionUser;
+import com.project.toy.user.dto.UserDTO;
+import com.project.toy.user.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/chat")
 public class RoomController {
 
+	private final UserService userService;
 	private final ChatRoomService chatRoomService;
 	
 	private final HttpSession session;
@@ -44,8 +47,10 @@ public class RoomController {
 	public void getRoom(String roomId, Authentication auth, Model model) {
 		log.info("# get Chat Room, roomId : " + roomId);
 		
-		SessionUser user = (SessionUser) session.getAttribute("user");
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		if(auth != null) {
+			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
 		}
 		

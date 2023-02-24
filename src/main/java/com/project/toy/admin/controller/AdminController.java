@@ -15,6 +15,7 @@ import com.project.toy.admin.dto.AdminDTO;
 import com.project.toy.admin.service.AdminService;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UserDTO;
+import com.project.toy.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdminController {
 	
+	private final UserService userService;
 	private final AdminService adminService;
 	private final HttpSession session;
 	
@@ -31,7 +33,9 @@ public class AdminController {
 	public String admin(Authentication auth, Model model) {
 		log.info("***** Admin Page Call *****");
 		
-		SessionUser user = (SessionUser) session.getAttribute("user");
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
+		
 		if(auth != null) {
 			List<UserDTO> selectListUser = adminService.selectListUser();
 			List<AdminDTO> selectAuthModel = adminService.selectAuthModel();

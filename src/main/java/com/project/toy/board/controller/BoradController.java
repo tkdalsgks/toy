@@ -32,6 +32,8 @@ import com.project.toy.likes.dto.LikesDTO;
 import com.project.toy.likes.service.LikesService;
 import com.project.toy.paging.PagingResponse;
 import com.project.toy.user.dto.SessionUser;
+import com.project.toy.user.dto.UserDTO;
+import com.project.toy.user.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,6 +44,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoradController {
 	
+	private final UserService userService;
 	private final BoardService boardService;
 	private final CommentService commentService;
 	private final ChatRoomService chatRoomService;
@@ -62,8 +65,10 @@ public class BoradController {
 	public String list(@ModelAttribute("params") final SearchDTO params, Authentication auth, Model model) {
 		log.info("***** Community Page Call *****");
 		
-		SessionUser user = (SessionUser) session.getAttribute("user");
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		if(auth != null) {
+			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
@@ -119,7 +124,8 @@ public class BoradController {
 			response.addCookie(newCookie);
 		}
 		
-		SessionUser user = (SessionUser) session.getAttribute("user");
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		if(auth != null) {
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("userId", user.getUserId());
@@ -176,8 +182,10 @@ public class BoradController {
 	public String write(@RequestParam(value = "id", required = false) final Long id, Authentication auth, Model model) {
 		log.info("# Community Page Write?id = " + id);
 		
-		SessionUser user = (SessionUser) session.getAttribute("user");
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		if(auth != null) {
+			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
@@ -202,8 +210,10 @@ public class BoradController {
 	public String change(@RequestParam(value = "id", required = false) final Long id, Authentication auth, Model model) {
 		log.info("# Community Page Write?id = " + id);
 		
-		SessionUser user = (SessionUser) session.getAttribute("user");
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		if(auth != null) {
+			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
@@ -225,7 +235,8 @@ public class BoradController {
 	@Operation(summary = "신규 게시글 생성", description = "신규 게시글 생성 메서드")
 	@PostMapping("/community/save")
 	public String save(final BoardRequestDTO params, Model model) {
-		SessionUser user = (SessionUser) session.getAttribute("user");
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		params.setWriterId(user.getUserId());
 		
 		//params.setContent(params.getContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));

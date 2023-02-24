@@ -2,7 +2,6 @@ package com.project.toy.comment.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommentService {
 
-	@Autowired
-	private CommentMapper commentMapper;
+	private final CommentMapper commentMapper;
 	
 	public CommentResponseDTO findByCommentId(final Long id) {
 		return commentMapper.findByCommentId(id);
