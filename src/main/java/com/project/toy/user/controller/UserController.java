@@ -2,17 +2,11 @@ package com.project.toy.user.controller;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -105,18 +99,6 @@ public class UserController {
 		JsonObject jsonObj = new JsonObject();
 		
 		try {
-			// 현재 가지고 있는 Authentication 정보 호출
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			
-			// 기존 정보 삭제 후 새로운 권한 추가
-			Collection<GrantedAuthority> updatedAuthorities = new ArrayList<>(authentication.getAuthorities());
-			updatedAuthorities.clear();
-			updatedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-			
-			// 새로운 권한을 Security에 저장
-			Authentication newAuth = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(), updatedAuthorities);
-			SecurityContextHolder.getContext().setAuthentication(newAuth);
-			
 			emailService.certifiedEmail(params, userEmail);
 		} catch(DataAccessException e) {
 			jsonObj.addProperty("message", "데이터베이스 처리 과정에 문제가 발생하였습니다.");

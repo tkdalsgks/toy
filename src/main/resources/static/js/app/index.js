@@ -28,7 +28,7 @@ var index = {
     login: function() {
     	if( ($("#userId").val() == "") || ( $("#userId").val() == null ) ) {
 			swal.fire({
-				title: '아이디를 입력하세요.',
+				text: '아이디를 입력하세요.',
 				icon: 'warning',
 				confirmButtonColor: '#3085d6',
 				confirmButtonText: '확인'
@@ -37,7 +37,7 @@ var index = {
 	        return false;
 	    } else if( ($("#userPwd").val() == "") || ($("#userPwd").val() == null) ) {
 	        swal.fire({
-				title: '비밀번호를 입력하세요.',
+				text: '비밀번호를 입력하세요.',
 				icon: 'warning',
 				confirmButtonColor: '#3085d6',
 				confirmButtonText: '확인'
@@ -68,7 +68,7 @@ var index = {
            },
            error: function(res) {
            		swal.fire({
-					title: '잠시 후 재시도 바랍니다.',
+					text: '잠시 후 재시도 바랍니다.',
 					footer: '서버와의 통신 에러입니다.',
 					icon: 'error',
 					confirmButtonColor: '#3085d6',
