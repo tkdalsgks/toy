@@ -63,7 +63,13 @@ $("#createChatRoom").on("click", function() {
 			location.replace("");
 		},
 		error: function() {
-			alert("잠시후 재시도 바랍니다.");
+			swal.fire({
+				title: '잠시 후 재시도 바랍니다.',
+				footer: '서버와의 통신 에러입니다.',
+				icon: 'error',
+				confirmButtonColor: '#3085d6',
+				confirmButtonText: '확인',
+			});
 		}
 	});
 });

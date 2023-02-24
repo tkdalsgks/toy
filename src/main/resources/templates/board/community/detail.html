@@ -126,6 +126,8 @@
 		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
 		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/js/app/header.js"></script>
+		<!-- SWEETALERT2 -->
+		<script type="text/javascript" src="/js/lib/sweetalert2.js"></script>
 		<!-- POPUP -->
 		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
 		<script type="text/javascript" src="/js/lib/stomp.min.js"></script>
@@ -235,7 +237,13 @@
 						content.value = "";
 					},
 					error: function(xhr, status, error) {
-						alert("잠시후 재시도 해주세요.");
+						swal.fire({
+							title: '잠시 후 재시도 바랍니다.',
+							footer: '서버와의 통신 에러입니다.',
+							icon: 'error',
+							confirmButtonColor: '#3085d6',
+							confirmButtonText: '확인',
+						});
 						return false;
 					}
 				});
@@ -276,7 +284,13 @@
 						$("#commentModal").modal("hide");
 					},
 					error: function(response) {
-						alert("잠시후 재시도 해주세요.");
+						swal.fire({
+							title: '잠시 후 재시도 바랍니다.',
+							footer: '서버와의 통신 에러입니다.',
+							icon: 'error',
+							confirmButtonColor: '#3085d6',
+							confirmButtonText: '확인',
+						});
 						return false;
 					}
 				});
@@ -379,7 +393,13 @@
 						}
 					},
 					error: function(xhr, status, error) {
-						alert("잠시후 재시도 해주세요.");
+						swal.fire({
+							title: '잠시 후 재시도 바랍니다.',
+							footer: '서버와의 통신 에러입니다.',
+							icon: 'error',
+							confirmButtonColor: '#3085d6',
+							confirmButtonText: '확인',
+						});
 						return false;
 					}
 				});
