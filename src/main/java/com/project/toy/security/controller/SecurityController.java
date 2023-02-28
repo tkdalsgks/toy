@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.toy.chat.service.ChatRoomService;
 import com.project.toy.common.dto.MessageDTO;
+import com.project.toy.email.service.EmailService;
 import com.project.toy.security.mapper.SecurityMapper;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UserDTO;
@@ -34,6 +35,7 @@ public class SecurityController {
 	private final UserService userService;
 	private final SecurityMapper securityMapper;
 	private final ChatRoomService chatRoomService;
+	private final EmailService emailService;
 	
 	private final HttpSession session;
 	
@@ -152,15 +154,14 @@ public class SecurityController {
 	@Operation(summary = "비밀번호 찾기", description = "비밀번호 찾기 메서드")
 	@ResponseBody
 	@PostMapping("/find/password")
-	public Map<String, String> findPassword(String userId, String userEmail) {
+	public Map<String, String> findPassword(String userId, String userEmail) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
 		
 		UserDTO userDTO = userService.findByUserPwd(userId, userEmail);
 		if(userDTO == null) {
 			map.put("result", "false");
 		} else {
-			String userPwd = userDTO.getUserPwd();
-			map.put("findPwd", userPwd);
+			emailService.updateUserPwd(userDTO, userEmail);
 			map.put("result", "true");
 		}
 		
