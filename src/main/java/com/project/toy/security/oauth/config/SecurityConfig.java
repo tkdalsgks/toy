@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -37,6 +39,13 @@ public class SecurityConfig {
 					.antMatchers("/chat/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
 					.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 					.anyRequest().authenticated()
+			.and()
+				.sessionManagement()
+					.maximumSessions(1)
+					.maxSessionsPreventsLogin(false)
+					.expiredUrl("/")
+					.sessionRegistry(sessionRegistry())
+			.and()
 			.and()
 				.logout()
 					.logoutSuccessUrl("/")
@@ -72,6 +81,11 @@ public class SecurityConfig {
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	public SessionRegistry sessionRegistry() {
+		return new SessionRegistryImpl();
 	}
 	
 	/**
