@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.toy.user.dto.CertifiedUserDTO;
@@ -27,7 +28,8 @@ public class EmailService {
 	private final JavaMailSender emailSender;
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
-
+	
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	public static final String ePw = createKey();
 	public static final String ePwRand = UUID.randomUUID().toString();
 	
@@ -77,6 +79,43 @@ public class EmailService {
 		msg += "<p></p>";
 		msg += "<a href='https://oyez.kr/certified?email=" + params.getUserEmail() + "&ePw=" + ePwRand;
 		msg += "' target='_blank'>이메일 인증 확인</a>";
+		message.setText(msg, "UTF-8", "html");
+		message.setFrom(new InternetAddress("alstkdgks@gmail.com", "OYEZ"));
+		
+		try {
+			emailSender.send(message);
+		} catch(MailException e) {
+			e.printStackTrace();
+			throw new IllegalArgumentException();
+		}
+	}
+	
+	public void updateUserPwd(UserDTO params, String to) throws Exception {
+		log.info("보내는 대상 : " + to);
+		log.info("생성된 비밀번호 : " + ePw);
+		
+		String newPwd = ePw;
+		String encPwd = bCryptPasswordEncoder.encode(newPwd);
+		
+		params.setUserPwd(encPwd);
+		
+		userMapper.updateUserPwd(params);
+		
+		MimeMessage message = emailSender.createMimeMessage();
+		
+		message.addRecipients(RecipientType.TO, to);
+		message.setSubject("OYEZ - 임시 비밀번호 발급 메일입니다.");
+		
+		String msg = "";
+		msg += "<div align='center' style='margin: 20px;'>";
+		msg += "<h3>OYEZ</h3>";
+		msg += "<br>";
+		msg += "<p>아래 발급된 임시 비밀번호를 이용하여 로그인 하세요.<p>";
+		msg += "<br>";
+		msg += "<div style='border: 1px solid black; font-family: 'Gowun Dodum', sans-serif;'>";
+		msg += "<div style='font-size: 130%;'>";
+		msg += "<h3><strong>";
+		msg += ePw + "</strong></h3></div></div></div>";
 		message.setText(msg, "UTF-8", "html");
 		message.setFrom(new InternetAddress("alstkdgks@gmail.com", "OYEZ"));
 		

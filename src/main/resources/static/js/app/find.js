@@ -109,8 +109,7 @@ $('#findUserPwd').on('click' ,function() {
 					});
 				} else if(data.result == "true") {
 					swal.fire({
-						title: '비밀번호를 찾았습니다.',
-						text: data.findPwd,
+						text: '계정 이메일로 임시 비밀번호가 전송 되었습니다.',
 						icon: 'success',
 						confirmButtonColor: '#3085d6',
 						confirmButtonText: '확인'

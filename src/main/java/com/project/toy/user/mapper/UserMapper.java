@@ -15,6 +15,7 @@ public interface UserMapper {
 	public UserDTO findByUserId(String userEmail);
 	public UserDTO findByUserPwd(String userId, String userEmail);
 	public int updateProfile(UpdateUserDTO params);
+	public void updateUserPwd(UserDTO params);
 	
 	
 	public void certifiedEmail(CertifiedUserDTO params);
