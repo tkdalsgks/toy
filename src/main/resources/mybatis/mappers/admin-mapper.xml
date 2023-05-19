@@ -3,13 +3,23 @@
 
 <mapper namespace="com.project.toy.admin.mapper.AdminMapper">
 
+	<sql id="userColumns">
+		USER_NO
+		, USER_ID
+		, USER_EMAIL
+		, USER_NICKNAME
+		, PROVIDER
+		, ROLE
+		, I_DATE
+	</sql>
+
 	<select id="selectAuthModel" resultType="AdminDTO">
 		/* com.project.toy.admin.dto.AdminDTO */
 		
 		SELECT MODEL_NAME FROM TOY_AUTH_MODEL WHERE USE_YN = 'Y'
 	</select>
 	
-	<select id="selectListUser" resultType="UserDTO">
+	<select id="selectListUser" resultType="AdminDTO">
 		/* com.project.toy.user.dto.UserDTO */
 		
 		SELECT USER_NO 			AS userNo
@@ -20,6 +30,40 @@
 		     , ROLE				AS role
 		     , I_DATE			AS IDate
 		FROM   toy.T_PERSON
+		WHERE  1=1
+		AND    USE_YN = 'Y'
+		ORDER BY USER_NO DESC
+	</select>
+	
+	<!-- 상세보기 -->
+	<select id="findByUserId" resultType="AdminDTO">
+		/* com.project.toy.admin.dto.AdminDTO */
+		
+		SELECT <include refid="userColumns" />
+		FROM   T_PERSON
+		WHERE  1=1
+		AND    USER_NO = #{ value }
+	</select>
+	
+	<select id="findByBoardId" resultType="BoardResponseDTO">
+		SELECT B.ID
+		     , B.TITLE
+		     , B.DELETE_YN
+		     , B.I_DATE
+		FROM   BOARD B
+		     , T_PERSON T
+		WHERE  1=1
+		AND    B.WRITER_ID = T.USER_ID
+		AND    DELETE_YN = '0'
+		AND    T.USER_NO = #{ id }
+	</select>
+	
+	<!-- 유저 수 카운팅 -->
+	<select id="countUser" parameterType="SearchDTO" resultType="int">
+		/* com.project.toy.common.dto.SearchDTO */
+		
+		SELECT COUNT(1)
+		FROM   T_PERSON
 		WHERE  1=1
 		AND    USE_YN = 'Y'
 	</select>

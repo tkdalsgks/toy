@@ -16,6 +16,8 @@
 	<link rel="stylesheet" th:href="@{/css/app/default.css}" />
 	<!-- POPUP -->
 	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
+	<!-- ADMIN -->
+	<link rel="stylesheet" th:href="@{/css/app/admin.css}" />
 </th:block>
 
 </head>
@@ -23,28 +25,45 @@
 
 	<main layout:fragment="content" class="form-join">
 		<div class="form-join-left">
-			<table id="selectListUser" style="width: 900px;">
-			<thead>
-				<tr>
-					<td style="width: 50px;">번호</td>
-					<td style="width: 100px;">아이디</td>
-					<td style="width: 200px;">이메일</td>
-					<td style="width: 150px;">닉네임</td>
-					<td style="width: 100px;">가입경로</td>
-					<td style="width: 100px;">권한</td>
-					<td style="width: 200px;">가입일</td>
-			</thead>
-			<tbody>
-				<tr th:each="list : ${selectListUser}" style="border-bottom: 1px solid black; height: 30px;">
-					<td th:text="${list.userNo}"></td>
-					<td th:text="${list.userId}"></td>
-					<td th:text="${list.userEmail}"></td>
-					<td th:text="${list.userNickname}"></td>
-					<td th:text="${list.provider}"></td>
-					<td th:text="${list.role}"></td>
-					<td th:text="${#temporals.format(list.IDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-			</tbody>
-		</table>
+			<!-- <table id="selectListUser" style="width: 900px;">
+				<thead>
+					<tr>
+						<td style="width: 50px;">번호</td>
+						<td style="width: 100px;">아이디</td>
+						<td style="width: 200px;">이메일</td>
+						<td style="width: 150px;">닉네임</td>
+						<td style="width: 100px;">가입경로</td>
+						<td style="width: 100px;">권한</td>
+						<td style="width: 200px;">가입일</td>
+				</thead>
+				<tbody>
+					<tr th:each="list : ${selectListUser}" style="border-bottom: 1px solid black; height: 30px;">
+						<td th:text="${list.userNo}"></td>
+						<td th:text="${list.userId}"></td>
+						<td th:text="${list.userEmail}"></td>
+						<td th:text="${list.userNickname}"></td>
+						<td th:text="${list.provider}"></td>
+						<td th:text="${list.role}"></td>
+						<td th:text="${#temporals.format(list.IDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+				</tbody>
+			</table> -->
+			
+			<!-- 리스트 출력 -->
+			<table class="tb tb_col user-list">
+				<thead>
+					<tr>
+		        		<td>번호</td>
+		        		<td>아이디</td>
+		        		<td>권한</td>
+		        		<td>상세보기</td>
+		        	</tr>
+	        	</thead>
+				<tbody id="list"></tbody>
+			</table>
+			
+			<!-- 페이징 -->
+			<div class="paging"></div>
+			
 		</div>
 		<div class="form-join-right">
 		</div>
@@ -66,6 +85,99 @@
 		<!-- LOADING -->
 		<script type="text/javascript" src="/js/lib/loadingoverlay.min.js"></script>
 		<script type="text/javascript" src="/js/app/loading.js"></script>
+		<!-- ADMIN -->
+		<script type="text/javascript" src="/js/lib/moment.js"></script>
+		<script th:inline="javascript">
+			window.onload = () => {
+				findAllUser();
+			}
+			
+			function findAllUser() {
+				const list = [[ ${userList.list} ]];
+				
+				if ( !list.length ) {
+					document.getElementById('list').innerHTML = '<td colspan="6"><div className="no_data_msg">검색된 결과가 없습니다.</div></td>';
+					drawPage();
+				}
+				
+				const pagination = [[ ${userList.pagination} ]];
+				const params = [[ ${params} ]];
+				let num = pagination.totalRecordCount - ((params.page - 1) * params.recordSize);
+				
+				drawList(list, num);
+				drawPage(pagination, params);
+			}
+			
+			// 리스트 HTML draw
+			function drawList(list, num) {
+				let html = '';
+				
+				list.forEach(row => {
+			        html += `
+			        	
+			        	<tr>
+			                <td class="list-important">
+			                	<span>${row.userNo}</span>
+		                	</td>
+		                	<td>
+		                		<span>${row.userId}</span>
+		                	</td>
+		                	<td>
+		                		<span>${row.role}</span>
+		                	</td>
+		                	<td>
+		                		<a href="javascript:void(0);" onclick="goViewPage(${row.userNo});"><button>상세보기</button></a>
+		                	</td>
+			            </tr>
+			        `;
+				})
+				
+				document.getElementById('list').innerHTML = html;
+			}
+			
+			// 페이지 HTML draw
+			function drawPage(pagination, params) {
+				if ( !pagination || !params ) {
+					document.querySelector('.paging').innerHTML = '';
+					throw new Error('Missing required parameters...');
+				}
+				
+				let html = '';
+				
+				// 첫 페이지, 이전 페이지
+				if (pagination.existPrevPage) {
+					html += `
+							<a href="javascript:void(0);" onclick="movePage(1)" class="page_bt first">&lt;&lt;</a>
+							<a href="javascript:void(0);" onclick="movePage(${pagination.startPage - 1})" class="page_bt prev">&lt;</a>
+							`;
+				}
+				
+				// 페이지 번호
+				html += '<p>';
+				for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+					html += (i !== params.page)
+					? `<a href="javascript:void(0);" onclick="movePage(${i});">${i}</a>`
+					: `<span class="on">${i}</span>`
+				}
+				html += '</p>';
+				
+				// 다음 페이지, 마지막 페이지
+				if (pagination.existNextPage) {
+					html += `
+							<a href="javascript:void(0);" onclick="movePage(${pagination.endPage + 1});" class="page_bt next">&gt;</a>
+							<a href="javascript:void(0);" onclick="movePage(${pagination.totalPageCount});" class="page_bt last">&gt;&gt;</a>
+							`;
+				}
+				
+				document.querySelector('.paging').innerHTML = html;
+			}
+			
+			// 상세 페이지로 이동
+		    function goViewPage(userNo) {
+		        const queryString = (location.search) ? location.search + `&id=${userNo}` : `?id=${userNo}`;
+		        location.href = '/admin/detail' + queryString;
+		    }
+		</script>
 	</th:block>
 
 </body>
