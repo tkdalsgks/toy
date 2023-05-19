@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				layout:decorate="~{layouts/layout}">
+
+<head>
+<meta charset="UTF-8">
+<title>OYEZ - 관리자 페이지</title>
+
+<th:block layout:fragment="css">
+	<!-- RESET, DEFAULT -->
+	<link rel="stylesheet" th:href="@{/css/app/reset.css}" />
+	<link rel="stylesheet" th:href="@{/css/lib/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/index.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/default.css}" />
+	<!-- POPUP -->
+	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
+	<!-- ADMIN -->
+	<link rel="stylesheet" th:href="@{/css/app/admin.css}" />
+	<!-- GOOGLE ICON -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</th:block>
+
+</head>
+
+<body>
+	
+	<main layout:fragment="content" class="form-admin">
+		<div class="admin-detail">
+			<table>
+				<tr>
+					<td class="admin-head">아이디</td>
+					<td class="admin-content">[[ ${admin.userId} ]]</td>
+				</tr>
+				<tr>
+					<td class="admin-head">이메일</td>
+					<td class="admin-content">[[ ${admin.userEmail} ]]</td>
+				</tr>
+				<tr>
+					<td class="admin-head">닉네임</td>
+					<td class="admin-content">[[ ${admin.userNickname} ]]</td>	
+				</tr>
+				<tr>
+					<td class="admin-head">가입일자</td>
+					<td class="admin-content">[[ ${#temporals.format(admin.IDate, 'yyyy-MM-dd HH:mm:ss')} ]]</td>
+				</tr>
+			</table>
+			
+			<div class="admin-expulsion">
+				<button onclick="openModal()">회원추방</button>
+			</div>
+		</div>
+		
+		<div class="admin-user-board">
+			<table>
+				<thead>
+					<tr>
+						<td style="text-align: center; font-weight: 600; padding-right: 1rem;">번호</td>
+						<td style="text-align: center; font-weight: 600;">제목</td>
+						<td style="text-align: center; font-weight: 600;">작성일자</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="list : ${board}">
+						<td style="text-align: center; font-weight: 600; padding-right: 1rem;" th:text="${list.id}"></td>
+						<td style="padding-right: 1rem;"><a href="javascript:void(0);" onclick="goViewPage(${list.id});"><span th:text="${list.title}"></span></a></td>
+						<td th:text="${#temporals.format(list.IDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<!-- 내용 수정 모달 -->
+		<div id="userInfoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel" aria-hidden="true" style="z-index: 1001;">
+		    <div class="modal-dialog modal-dialog-centered" role="document">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		            </div>
+		            <div class="modal-body">
+		                <form>
+		                    <div class="form-group">
+		                        <label for="modalWriter" class="col-form-label">아이디</label>
+		                        <input type="text" id="modalWriter" class="form-control" readonly />
+		                    </div>
+		                    <div class="form-group">
+		                        <label for="modalNickname" class="col-form-label">닉네임</label>
+		                        <input type="text" id="modalNickname" class="form-control" readonly />
+		                    </div>
+		                    <div class="form-group">
+		                        <label for="modalContent" class="col-form-label">추방 사유</label>
+		                        <textarea id="modalContent" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
+		                    </div>
+		                </form>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" id="btnUserUpdate" class="btn btn-primary waves-effect waves-light community-btn" onclick="updateUser();">추방</button>
+		                <button type="button" class="btn btn-danger waves-effect waves-light community-btn" data-bs-dismiss="modal" aria-label="Close">취소</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</main>
+	
+	<th:block layout:fragment="script">
+		<!-- FONT AWESOME -->
+		<script type="text/javascript" src="/js/lib/fontawesome.js"></script>
+		<!-- Jquery, Bootstrap -->
+		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/app/header.js"></script>
+		<!-- SWEETALERT2 -->
+		<script type="text/javascript" src="/js/lib/sweetalert2.js"></script>
+		<!-- POPUP -->
+		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
+		<script type="text/javascript" src="/js/lib/stomp.min.js"></script>
+		<script type="text/javascript" src="/js/app/popup.js"></script>
+		<!-- LOADING -->
+		<script type="text/javascript" src="/js/lib/loadingoverlay.min.js"></script>
+		<script type="text/javascript" src="/js/app/loading.js"></script>
+		<!-- ADMIN -->
+		<script type="text/javascript" src="/js/app/admin.js"></script>
+		<script th:inline="javascript">
+			// 상세 페이지로 이동
+		    function goViewPage(id) {
+		        const queryString = (location.search) ? location.search + `&id=${id}` : `?id=${id}`;
+		        location.href = '/community/detail';
+		    }
+			
+			function openModal() {
+				
+				$("#userInfoModal").modal("toggle");
+				
+				document.getElementById("modalWriter").value = [[ ${admin.userId} ]];
+				document.getElementById("modalNickname").value = [[ ${admin.userNickname} ]];
+				
+				document.getElementById("btnUserUpdate").setAttribute("onclick", "updateUser("+ userId +")");
+			}
+			
+			const userId = [[ ${admin.userId} ]];
+			
+			function updateUser() {
+				alert(userId);
+			}
+		</script>
+	</th:block>
+	
+	
+</body>
+
+</html>
