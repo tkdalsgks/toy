@@ -73,7 +73,7 @@
 	                <a href="javascript:history.go(-1)" class="btn btn-light board-btn-a community-btn" onclick="goListPage();">뒤로</a>
 	            </p>
 	            <div class="board-title">
-		            <span class="board-title1">[[ ${board.title} ]]<span class="board-udate">[[ ${board.UDate != null ? '수정됨' : ''} ]]</span></span>
+		            <span class="board-title1" id="board-title">[[ ${board.title} ]]<span class="board-udate">[[ ${board.UDate != null ? '수정됨' : ''} ]]</span></span>
 		            <button id="board-likes" class="btns btn_mid board-likes">
 		            	<img th:src="${likes != 0 ? '/img/app/board/likes.png' : '/img/app/board/unlikes.png'}" th:onclick="insertLikes([[ ${board.id} ]]);" class="board-likes">
 		            	<span>[[ ${likesAll} ]]</span>
@@ -85,7 +85,7 @@
 		            <span class="board-viewCnt1"><span class="board-view">조회수</span>[[ ${board.viewCnt} ]]</span>	            
 	            </div>
 	            <div class="board-contents">
-		            <p class="board-content" th:utext="${board.content}" style="display: none;"></p>            	
+		            <p class="board-content" th:utext="${board.content}" style="display: none;"></p>
 	            </div>
 	        </section>
 	    </div>

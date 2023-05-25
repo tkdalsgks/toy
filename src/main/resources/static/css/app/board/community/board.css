@@ -48,7 +48,7 @@ p { margin-bottom: 0; }
 .list-time { font-size: .875rem; font-weight: 400; --tw-text-opacity: 1; color: rgb(55 65 81/var(--tw-text-opacity)) }
 .list-udate { font-size: .875rem; font-weight: 400; color: #A0A0FF; }
 .list-title { display: -webkit-box; display: -ms-flexbox; display: flex; margin-top: 0.3rem; }
-.list-title a { font-size: 1rem; font-weight: 400; color: #111827; }
+.list-title span { font-size: 1rem; font-weight: 400; color: #111827; }
 .list-title a:hover { color: #A0A0FF; }
 .list-info { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; margin-top: 0.3rem; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
 .list-notice { border-radius: 0.25rem; background: #E0F2F1; padding: 0.125rem 0.625rem 0.125rem 0.625rem; font-size: .75rem; font-weight: 600; color: #A0A0FF; }
@@ -197,7 +197,6 @@ input[readonly], select[readonly], textarea[readonly], .readonly, input[disabled
 }
 
 @media (max-width: 640px) {
-	.tb_col { font-size: 11px; }
 	.page_tits { text-align: left; margin-right: 50px; }
 	.write-name-a { font-size: 18px; font-weight: 400; }
 	.write-name-b { font-size: 10px; font-weight: 400; }
@@ -205,14 +204,6 @@ input[readonly], select[readonly], textarea[readonly], .readonly, input[disabled
 	.path { display: none; }
 	.search_box input[type="text"] { width: 180px; }
 	.commentCnt { font-size: 9px; }
-	.list-title a { font-size: .875rem; }
-	.list-writer { font-size: .75rem; }
-	.list-time { font-size: .75rem; }
-	.list-udate { font-size: .75rem; }
-	.list-notice { font-size: .75rem; }
-	.list-view { font-size: .75rem; }
-	.list-comment { font-size: .75rem; }
-	.list-likes { font-size: .75rem; }
 }
 
 @media (max-width: 500px) {
