@@ -67,7 +67,7 @@ input:focus { outline: 2.5px solid #00F5FF !important; -webkit-transition: borde
 .header-mobile a { text-decoration: none; color: black; }
 .header-mobile-nav { max-width: 40rem; margin: 0 auto; }
 .navbar-brand-mobile { margin-right: 5rem; font-size: 30px; }
-.navbar-brand-mobile img { width: 4rem; height: 1.85rem; }
+.navbar-brand-mobile img { width: 4rem; height: 1.85rem; margin-left: 1.5rem; }
 .navbar-nav { float: right; }
 .nav-item-mobile { margin-right: 2rem; font-size: 0.875rem; font-weight: 500; }
 .nav-item-mobile a { font-size: 0.875rem; font-weight: 500; color: #111827; }
