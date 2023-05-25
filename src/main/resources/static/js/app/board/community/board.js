@@ -122,7 +122,7 @@ window.onresize = function() {
 	
 	if(width <= 640) {
 		$("#board-title").each(function() {
-			const length = 20;
+			const length = 16;
 			$(this).each(function() {
 				if ($(this).text().length >= length) {
 					$(this).text($(this).text().substr(0, length) + "...")
