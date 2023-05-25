@@ -116,3 +116,27 @@ function timeForToday(value) {
 	
 	return value;
 }
+	
+window.onresize = function() {
+	const width = window.innerWidth;
+	
+	if(width <= 640) {
+		$("#board-title").each(function() {
+			const length = 20;
+			$(this).each(function() {
+				if ($(this).text().length >= length) {
+					$(this).text($(this).text().substr(0, length) + "...")
+				}
+			});
+		});
+	} else {
+		$("#board-title").each(function() {
+			const length = 35;
+			$(this).each(function() {
+				if ($(this).text().length >= length) {
+					$(this).text($(this).text().substr(0, length) + "...")
+				}
+			});
+		});
+	}
+}
