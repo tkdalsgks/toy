@@ -44,7 +44,7 @@
 		                    </div>
 		                    <div class="form-group">
 		                        <label for="modalContent" class="col-form-label">내용</label>
-		                        <textarea id="modalContent" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
+		                        <textarea id="modalContent" class="form-control textarea" placeholder="내용을 입력해 주세요."></textarea>
 		                    </div>
 		                </form>
 		            </div>
@@ -74,10 +74,7 @@
 	            </p>
 	            <div class="board-title">
 		            <span class="board-title1" id="board-title">[[ ${review.title} ]]<span class="board-udate">[[ ${review.UDate != null ? '수정됨' : ''} ]]</span></span>
-		            <button id="board-likes" class="btns btn_mid board-likes">
-		            	<img th:src="${likes != 0 ? '/img/app/board/likes.png' : '/img/app/board/unlikes.png'}" th:onclick="insertLikes([[ ${review.id} ]]);" class="board-likes">
-		            	<span>[[ ${likesAll} ]]</span>
-		            </button>
+		            <span class="rating-star">★<span id="rating_star"> 0</span></span>
 	            </div>
 	            <div class="board-info">
 		            <span><span class="board-writer">글쓴이</span>[[ ${review.writer} ]]</span>
@@ -101,8 +98,8 @@
 					<div class="comment-write">
 						<div class="comment-input-group">
 							<input sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" type="text" id="content" class="form-control comment-input" placeholder="댓글을 작성 시 바르고 고운말을 사용합시다." onkeyup="enterkey();"/><br>
-							<input sec:authorize="hasRole('ROLE_GUEST')" type="text" id="content" class="form-control comment-input" disabled="disabled"/><br>
-							<button sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" class="btn btn-primary community-btn" th:onclick="insertComment([[ ${review.id} ]]);">댓글 쓰기</button>
+							<input sec:authorize="hasRole('ROLE_GUEST')" type="text" id="content" class="form-control comment-input" disabled="disabled"/\<br>
+							<button sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" class="btn btn-primary community-btn" th:onclick="insertComment([[ ${review.id} ]]);">댓글작성</button>
 							<span sec:authorize="hasRole('ROLE_GUEST')" style="display: inline-flex; align-items: center; transform: translate(10%, -310%);">
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 w-5 shrink-0 text-gray-400 group-hover:text-gray-500"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"></path></svg>
 								<span style="margin-left: .25rem;">
@@ -408,7 +405,7 @@
 									<div class="comment-img">
 										<img src="/img/app/chat/chat.png">
 										<div class="comment-name">
-											<span class="name">${comment.writer}</span>
+											<span class="name">${comment.writer}<span> · </span><span class="rating-star">★<span id="rating_star"> 0</span></span></span>
 											<div class="comment-edit" style="display: flex;">
 												<span class="time comment-time">${timeForToday(moment(comment.IDate).format('YYYY/MM/DD HH:mm'))}
 													<span>${comment.UDate != null ? '·' : ''}</span>
