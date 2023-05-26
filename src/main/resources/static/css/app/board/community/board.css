@@ -147,6 +147,7 @@ p { margin-bottom: 0; }
 .comment-input-group button { float: right; width: 5.5rem; height: 2rem; font-size: 14px; }
 
 .textarea { resize: none; }
+.ck-editor__editable { min-height: 70px !important; }
 
 /* input 정의 */
 input[type="text"], input[type="password"], input[type="button"], input[type="image"], input[type="submit"], input[type="search"], input[type="email"], input[type="url"], input[type="number"], input[type="tel"], input[type="date"], select {width:100%; height:38px; padding:0 10px; margin-bottom:2px;}
