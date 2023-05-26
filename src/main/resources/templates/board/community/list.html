@@ -41,6 +41,7 @@
 					<div class="list-search">
 						<img class="list-refresh" src="/img/app/common/refresh.png" onclick="refreshBoard();">
 						<div>
+							<button type="button" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" class="search_box_btn write_box community-btn" onclick="writeBoard();"><i class="fas fa-pen"></i><span class="skip_info">작성하기</span></button>
 							<button type="button" class="search_box_btn community-btn" onclick="searchBox();"><i class="fas fa-search"></i><span class="skip_info">검색</span></button>
 						</div>
 					</div>
@@ -69,11 +70,6 @@
 			
 			<!-- 페이징 -->
 			<div class="paging"></div>
-			
-			<!-- 버튼 -->
-			<p class="btn_set tr">
-				<a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" th:href="@{/community/write}" class="btns btn_st3 btn_mid community-btn">글쓰기</a>
-			</p>
 			</section>
 		</div>
 	</main>
@@ -317,6 +313,11 @@
 			// 게시글 리프레쉬
 			function refreshBoard() {
 				movePage(1);
+			}
+			
+			// 게시글 작성하기
+			function writeBoard() {
+				location.href = '/community/write';
 			}
 			
 			// 검색 박스 생성
