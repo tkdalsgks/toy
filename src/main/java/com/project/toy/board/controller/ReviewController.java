@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.project.toy.board.dto.BoardRequestDTO;
-import com.project.toy.board.dto.BoardResponseDTO;
-import com.project.toy.board.service.BoardService;
+import com.project.toy.board.dto.ReviewRequestDTO;
+import com.project.toy.board.dto.ReviewResponseDTO;
+import com.project.toy.board.service.ReviewService;
 import com.project.toy.chat.service.ChatRoomService;
 import com.project.toy.comment.service.CommentService;
 import com.project.toy.common.dto.MessageDTO;
@@ -39,13 +39,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "community", description = "게시글 API")
+@Tag(name = "review", description = "리뷰 게시글 API")
 @Controller
 @RequiredArgsConstructor
-public class BoradController {
+public class ReviewController {
 	
 	private final UserService userService;
-	private final BoardService boardService;
+	private final ReviewService reviewService;
 	private final CommentService commentService;
 	private final ChatRoomService chatRoomService;
 	private final LikesService likesService;
@@ -61,9 +61,9 @@ public class BoradController {
 	 * @return
 	 */
 	@Operation(summary = "리스트 조회", description = "게시글 리스트 조회")
-	@GetMapping("/community")
+	@GetMapping("/review")
 	public String list(@ModelAttribute("params") final SearchDTO params, Authentication auth, Model model) {
-		log.info("***** Community Page Call *****");
+		log.info("***** Review Page Call *****");
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
@@ -73,16 +73,18 @@ public class BoradController {
 			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
 		
-		PagingResponse<BoardResponseDTO> boards = boardService.findAll(params);
-		model.addAttribute("boards", boards);
+		PagingResponse<ReviewResponseDTO> reviews = reviewService.findAll(params);
+		model.addAttribute("reviews", reviews);
 		
-		List<BoardResponseDTO> notice = boardService.findNotice(params);
+		
+		List<ReviewResponseDTO> notice = reviewService.findNotice(params);
 		model.addAttribute("notice", notice);
+		 
 		
-		List<LikesDTO> likes = boardService.findLikesBestCommu(params);
+		List<LikesDTO> likes = reviewService.findLikesBestReview(params);
 		model.addAttribute("likes", likes);
 		
-		return "board/community/list";
+		return "board/review/list";
 	}
 	
 	/**
@@ -94,15 +96,15 @@ public class BoradController {
 	 */
 	@Operation(summary = "상세페이지 조회", description = "게시글 상세페이지 조회")
 	@Transactional
-	@GetMapping("/community/detail")
+	@GetMapping("/review/detail")
 	public String detail(@RequestParam Long id, HttpServletRequest request, HttpServletResponse response, Authentication auth, Model model) {
-		log.info("# Community Page Detail?id = " + id);
+		log.info("# Review Page Detail?id = " + id);
 		
 		Cookie oldCookie = null;
 		Cookie[] cookies = request.getCookies();
 		if(cookies != null) {
 			for(Cookie cookie : cookies) {
-				if(cookie.getName().equals("boardView")) {
+				if(cookie.getName().equals("reviewView")) {
 					oldCookie = cookie;
 				}
 			}
@@ -110,15 +112,15 @@ public class BoradController {
 		
 		if(oldCookie != null) {
 			if(!oldCookie.getValue().contains("[" + id.toString() + "]")) {
-				boardService.countHits(id);
+				reviewService.countHits(id);
 				oldCookie.setValue(oldCookie.getValue() + "[" + id + "]");
 				oldCookie.setPath("/");
 				oldCookie.setMaxAge(60 * 60 * 24);
 				response.addCookie(oldCookie);
 			}
 		} else {
-			boardService.countHits(id);
-			Cookie newCookie = new Cookie("boardView", "[" + id + "]");
+			reviewService.countHits(id);
+			Cookie newCookie = new Cookie("reviewView", "[" + id + "]");
 			newCookie.setPath("/");
 			newCookie.setMaxAge(60 * 60 * 24);
 			response.addCookie(newCookie);
@@ -133,13 +135,13 @@ public class BoradController {
 			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
 		
-		BoardResponseDTO board = boardService.findByBoardId(id);
+		ReviewResponseDTO review = reviewService.findByReviewId(id);
 		LikesDTO likesDTO = new LikesDTO();
 		
-		if(board != null) {
-			model.addAttribute("board", board);
+		if(review != null) {
+			model.addAttribute("review", review);
 			
-			likesDTO.setBoardId(board.getId());
+			likesDTO.setBoardId(review.getId());
 			likesDTO.setUserId(user.getUserId());
 			
 			int comment = commentService.countComment(id);
@@ -163,11 +165,11 @@ public class BoradController {
 				model.addAttribute("likes", 1);
 			}
 		} else {
-			MessageDTO message = new MessageDTO("존재하지 않거나 이미 삭제된 게시글입니다.", "/community", RequestMethod.POST, null);
+			MessageDTO message = new MessageDTO("존재하지 않거나 이미 삭제된 게시글입니다.", "/review", RequestMethod.POST, null);
 			return showMessageAndRedirect(message, model);
 		}
 		
-		return "board/community/detail";
+		return "board/review/detail";
 	}
 	
 	/**
@@ -178,9 +180,9 @@ public class BoradController {
 	 * @return
 	 */
 	@Operation(summary = "작성 페이지 조회", description = "게시글 작성 페이지 조회")
-	@GetMapping("/community/write")
+	@GetMapping("/review/write")
 	public String write(@RequestParam(value = "id", required = false) final Long id, Authentication auth, Model model) {
-		log.info("# Community Page Write?id = " + id);
+		log.info("# Review Page Write?id = " + id);
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
@@ -191,11 +193,11 @@ public class BoradController {
 		}
 		
 		if(id != null) {
-			BoardResponseDTO board = boardService.findByBoardId(id);
-			model.addAttribute("board", board);
+			ReviewResponseDTO review = reviewService.findByReviewId(id);
+			model.addAttribute("review", review);
 		}
 		
-		return "board/community/write";
+		return "board/review/write";
 	}
 	
 	/**
@@ -206,9 +208,9 @@ public class BoradController {
 	 * @return
 	 */
 	@Operation(summary = "수정 페이지 조회", description = "게시글 수정 페이지 조회")
-	@GetMapping("/community/change")
+	@GetMapping("/review/change")
 	public String change(@RequestParam(value = "id", required = false) final Long id, Authentication auth, Model model) {
-		log.info("# Community Page Write?id = " + id);
+		log.info("# Review Page Write?id = " + id);
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
@@ -219,11 +221,11 @@ public class BoradController {
 		}
 		
 		if(id != null) {
-			BoardResponseDTO board = boardService.findByBoardId(id);
-			model.addAttribute("board", board);
+			ReviewResponseDTO review = reviewService.findByReviewId(id);
+			model.addAttribute("review", review);
 		}
 		
-		return "board/community/change";
+		return "board/review/change";
 	}
 	
 	/**
@@ -233,15 +235,15 @@ public class BoradController {
 	 * @return
 	 */
 	@Operation(summary = "신규 게시글 생성", description = "신규 게시글 생성 메서드")
-	@PostMapping("/community/save")
-	public String save(final BoardRequestDTO params, Model model) {
+	@PostMapping("/review/save")
+	public String save(final ReviewRequestDTO params, Model model) {
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		params.setWriterId(user.getUserId());
 		
 		//params.setContent(params.getContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
-		boardService.saveBoard(params);
-		MessageDTO message = new MessageDTO("게시글 생성이 완료되었습니다.", "/community", RequestMethod.POST, null);
+		reviewService.saveReview(params);
+		MessageDTO message = new MessageDTO("게시글 생성이 완료되었습니다.", "/review", RequestMethod.POST, null);
 		
 		return showMessageAndRedirect(message, model);
 	}
@@ -253,10 +255,10 @@ public class BoradController {
 	 * @return
 	 */
 	@Operation(summary = "기존 게시글 수정", description = "기존 게시글 수정 메서드")
-	@PostMapping("/community/update")
-	public String update(final BoardRequestDTO params, Model model) {
-		boardService.updateBoard(params);
-		MessageDTO message = new MessageDTO("게시글 수정이 완료되었습니다.", "/community", RequestMethod.POST, null);
+	@PostMapping("/review/update")
+	public String update(final ReviewRequestDTO params, Model model) {
+		reviewService.updateReview(params);
+		MessageDTO message = new MessageDTO("게시글 수정이 완료되었습니다.", "/review", RequestMethod.POST, null);
 		
 		return showMessageAndRedirect(message, model);
 	}
@@ -269,10 +271,10 @@ public class BoradController {
 	 * @return
 	 */
 	@Operation(summary = "게시글 삭제", description = "게시글 삭제 메서드")
-	@PostMapping("/community/delete")
+	@PostMapping("/review/delete")
 	public String delete(@RequestParam final Long id, final SearchDTO queryParams, Model model) {
-		boardService.deleteBoard(id);
-		MessageDTO message = new MessageDTO("게시글 삭제가 완료되었습니다.", "/community", RequestMethod.GET, queryParamsToMap(queryParams));
+		reviewService.deleteReview(id);
+		MessageDTO message = new MessageDTO("게시글 삭제가 완료되었습니다.", "/review", RequestMethod.GET, queryParamsToMap(queryParams));
 		
 		return showMessageAndRedirect(message, model);
 	}

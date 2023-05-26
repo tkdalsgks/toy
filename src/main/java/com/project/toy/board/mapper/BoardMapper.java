@@ -14,7 +14,7 @@ public interface BoardMapper {
 
 	public List<BoardResponseDTO> findAll(SearchDTO params);
 	public List<BoardResponseDTO> findNotice(SearchDTO params);
-	public List<LikesDTO> findLikesBest(SearchDTO params);
+	public List<LikesDTO> findLikesBestCommu(SearchDTO params);
 	public BoardResponseDTO findByBoardId(Long id);
 	public void saveBoard(BoardRequestDTO params);
 	public void updateBoard(BoardRequestDTO params);

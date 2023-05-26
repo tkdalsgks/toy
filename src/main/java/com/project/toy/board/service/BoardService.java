@@ -39,8 +39,8 @@ public class BoardService {
 		return boardMapper.findNotice(params);
 	}
 	
-	public List<LikesDTO> findLikesBest(SearchDTO params) {
-		return boardMapper.findLikesBest(params);
+	public List<LikesDTO> findLikesBestCommu(SearchDTO params) {
+		return boardMapper.findLikesBestCommu(params);
 	}
 	
 	public BoardResponseDTO findByBoardId(Long id) {

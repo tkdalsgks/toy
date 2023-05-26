@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>OYEZ - 커뮤니티 게시글 작성</title>
+<title>OYEZ - 리뷰 게시글 작성</title>
 
 <th:block layout:fragment="css">
 	<!-- RESET, DEFAULT -->
@@ -169,7 +169,7 @@
 	    		} else {
 		    		document.getElementById('saveBtn').disabled = true;
 		    		form.noticeYn.value = form.isNotice.checked;
-		    		form.action = [[ ${board == null} ]] ? '/community/save' : '/community/update';
+		    		form.action = [[ ${board == null} ]] ? '/review/save' : '/review/update';
 		    		form.submit();
 	    		}
 	    	}

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.project.toy.board.mapper.BoardMapper">
+<mapper namespace="com.project.toy.board.mapper.ReviewMapper">
 	
-	<sql id="boardColumns">
+	<sql id="reviewColumns">
 		ID
 		, BOARD_SEQ
 		, TITLE
@@ -51,26 +51,26 @@
 	</sql>
 	
 	<!-- 작성 -->
-	<insert id="saveBoard" parameterType="BoardRequestDTO">
-		/* com.project.toy.board.dto.BoardRequestDTO */
+	<insert id="saveReview" parameterType="ReviewRequestDTO">
+		/* com.project.toy.board.dto.ReviewRequestDTO */
 		
-		INSERT INTO BOARD ( <include refid="boardColumns" /> )
-		VALUES ( #{ id }, 1, #{ title }, #{ content }, #{ writerId }, #{ writer }, 0, 0, 0, #{ noticeYn }, 0, NOW(), NULL ) 
+		INSERT INTO BOARD ( <include refid="reviewColumns" /> )
+		VALUES ( #{ id }, 2, #{ title }, #{ content }, #{ writerId }, #{ writer }, 0, 0, 0, #{ noticeYn }, 0, NOW(), NULL ) 
 	</insert>
 	
 	<!-- 상세보기 -->
-	<select id="findByBoardId" resultType="BoardResponseDTO">
-		/* com.project.toy.board.dto.BoardResponseTO */
+	<select id="findByReviewId" resultType="ReviewResponseDTO">
+		/* com.project.toy.board.dto.ReviewResponseDTO */
 		
-		SELECT <include refid="boardColumns" />
+		SELECT <include refid="reviewColumns" />
 		FROM   BOARD
 		WHERE  1=1
 		AND    ID = #{ value }
 	</select>
 	
 	<!-- 수정 -->
-	<update id="updateBoard" parameterType="BoardRequestDTO">
-		/* com.project.toy.board.dto.BoardRequestDTO */
+	<update id="updateReview" parameterType="ReviewRequestDTO">
+		/* com.project.toy.board.dto.ReviewRequestDTO */
 		
 		UPDATE BOARD
 		SET    U_DATE = NOW()
@@ -83,7 +83,7 @@
 	</update>
 	
 	<!-- 삭제 -->
-	<delete id="deleteByBoardId" parameterType="long">
+	<delete id="deleteByReviewId" parameterType="long">
 		UPDATE BOARD
 		SET    DELETE_YN = 1
 		WHERE  1=1
@@ -91,13 +91,13 @@
 	</delete>
 	
 	<!-- 일반 리스트 -->
-	<select id="findAll" parameterType="SearchDTO" resultType="BoardResponseDTO">
-		/* com.project.toy.board.dto.BoardResponseDTO */
+	<select id="findAll" parameterType="SearchDTO" resultType="ReviewResponseDTO">
+		/* com.project.toy.board.dto.ReviewResponseDTO */
 		
-		SELECT <include refid="boardColumns" />
+		SELECT <include refid="reviewColumns" />
 		FROM   BOARD
 		WHERE  1=1
-		AND    BOARD_SEQ = 1
+		AND    BOARD_SEQ = 2
 		AND    NOTICE_YN = 0
 		AND    DELETE_YN = 0
 		<include refid="search" />
@@ -106,10 +106,10 @@
 	</select>
 	
 	<!-- 공지 리스트 -->
-	<select id="findNotice" resultType="BoardResponseDTO">
-		/* com.project.toy.board.dto.BoardResponseDTO */
+	<select id="findNotice" resultType="ReviewResponseDTO">
+		/* com.project.toy.board.dto.ReviewResponseDTO */
 		
-		SELECT <include refid="boardColumns" />
+		SELECT <include refid="reviewColumns" />
 		FROM   BOARD
 		WHERE  1=1
 		AND    NOTICE_YN = 1
@@ -119,12 +119,12 @@
 	</select>
 	
 	<!-- 오늘 최다 좋아요 리스트 -->
-	<select id="findLikesBestCommu" resultType="BoardResponseDTO">
+	<select id="findLikesBestReview" resultType="ReviewResponseDTO">
 		SELECT B.ID, B.TITLE, B.COMMENT_CNT, B.VIEW_CNT, COUNT(BOARD_ID) AS LIKES_CNT, B.NOTICE_YN, B.WRITER, B.I_DATE, A.I_DATE
 		FROM   BOARD_LIKES A
 		LEFT OUTER JOIN BOARD B ON A.BOARD_ID = B.ID
 		WHERE  1=1
-		AND    BOARD_SEQ = 1
+		AND    BOARD_SEQ = 2
 		AND    NOTICE_YN = 0
 		AND    USE_YN = 'Y'
 		AND    A.I_DATE BETWEEN (SELECT DATE_FORMAT(NOW(), '%Y-%m-%d') FROM DUAL) AND NOW()
@@ -134,13 +134,13 @@
 	</select>
 	
 	<!-- 게시글 수 카운팅 -->
-	<select id="countBoard" parameterType="SearchDTO" resultType="int">
+	<select id="countReview" parameterType="SearchDTO" resultType="int">
 		/* com.project.toy.common.dto.SearchDTO */
 		
 		SELECT COUNT(1)
 		FROM   BOARD
 		WHERE  1=1
-		AND    BOARD_SEQ = 1
+		AND    BOARD_SEQ = 2
 		AND    DELETE_YN = 0
 		<include refid="search" />
 	</select>
