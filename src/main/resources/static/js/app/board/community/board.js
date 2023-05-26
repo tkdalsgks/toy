@@ -142,6 +142,13 @@ window.onresize = function() {
 }
 
 /**
+ * 리뷰 별점 시스템
+ **/
+const drawStar = (target) => {
+	document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
+}
+
+/**
  * textarea 자동 높이 조절
  **/
 const DEFAULT_HEIGHT = 20;
@@ -154,15 +161,5 @@ $textarea.oninput = (event) => {
 	$target.style.height = DEFAULT_HEIGHT + $target.scrollHeight + 'px';
 };
 
-/**
- * 리뷰 별점 시스템
- **/
-const drawStar = (target) => {
-	document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
-	
-	const star = document.querySelector(`.star span`).style.width;
-	const result = star.split('%');
-	
-	console.log(result[0]);
-}
+
 
