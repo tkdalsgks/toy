@@ -16,7 +16,7 @@ section { margin-top: 1.5rem; }
 
 /* 본문 내용 ------------------------------- */
 .board-title { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; padding: 0 20px 10px 20px; font-size: 25px; }
-.board-title1 { font-weight: 400; }
+.board-title1 { font-weight: 600; }
 .board-udate { margin-left: 10px; font-size: 15px; font-weight: 400; color: #A0A0FF; }
 .board-info { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; border-radius: 10px; background-color: #E0F2F1; line-height: 30px; padding: 5px 22px 5px 22px; }
 .board-writer { margin-right: 10px; font-weight: 400; }
@@ -130,14 +130,14 @@ p { margin-bottom: 0; }
 /* 댓글 */
 .box-content { margin-bottom: 70px; }
 .comment-main { margin-bottom: 10px; -webkit-box-align: center; -ms-flex-align: center; align-items: center; padding: 5px 15px 5px 15px; font-size: 16px; }
-.comment-main-name { font-size: 25px; font-weight: 400; }
+.comment-main-name { font-size: 1.275rem; font-weight: 400; }
 .comment-main-mane span { font-weight: 400; }
 .comment-list { margin: 0 auto; margin-bottom: 100px; width: 95%; list-style: none; padding-left: 0; border-radius: 10px; }
 .comment-li { border-bottom: 1px solid #DEDEDE; padding-top: 1.5rem; padding-bottom: 1.5rem; line-height: 30px; }
-.comment-img { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; line-height: 1.25rem; }
-.comment-img img { width: 3rem; height: 3rem; margin-right: 5px; }
-.comment-name { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; }
-.comment-name .name { font-size: .85rem; font-weight: 500; color: #374151; margin-right: 15px; }
+.comment-img { display: -webkit-box; display: -ms-flexbox; display: flex; justify-content: space-between; -webkit-box-align: center; -ms-flex-align: center; align-items: center; line-height: 1.15rem; }
+.comment-img img { width: 3.25rem; height: 3.25rem; margin-right: 5px; }
+.comment-name { display: -webkit-box; display: -ms-flexbox; display: flex; flex-grow: 1; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; }
+.comment-name .name { font-size: .9rem; font-weight: 500; color: #374151; margin-right: 15px; }
 .comment-edit { margin-top: 0; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
 .comment-edit .comment-time { font-size: .75rem; font-weight: 400; color: #888888; margin-right: 5px; }
 .comment-edit .comment-udate { font-size: .75rem; font-weight: 400; color: #A0A0FF; }

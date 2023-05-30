@@ -26,72 +26,74 @@
 </head>
 
 <body>
-	
+
 	<main layout:fragment="content" class="container">
-		
-		<!-- 내용 수정 모달 -->
+
+		<!-- 내용 수정 모달, 20230530 삭제
 		<div id="commentModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true" style="z-index: 1001;">
-		    <div class="modal-dialog modal-dialog-centered" role="document">
-		        <div class="modal-content">
-		            <div class="modal-header">
-		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		            </div>
-		            <div class="modal-body">
-		                <form>
-		                    <div class="form-group">
-		                        <label for="modalWriter" class="col-form-label">글쓴이</label>
-		                        <input type="text" id="modalWriter" class="form-control" readonly />
-		                    </div>
-		                    <div class="form-group">
-		                        <label for="modalContent" class="col-form-label">내용</label>
-		                        <textarea id="modalContent" class="form-control textarea" placeholder="내용을 입력해 주세요."></textarea>
-		                    </div>
-		                </form>
-		            </div>
-		            <div class="modal-footer">
-		                <button type="button" id="btnCommentUpdate" class="btn btn-primary waves-effect waves-light community-btn" onclick="updateComment();">수정</button>
-		                <button type="button" id="btnCommentDelete" class="btn btn-danger waves-effect waves-light community-btn">삭제</button>
-		            </div>
-		        </div>
-		    </div>
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label for="modalWriter" class="col-form-label">글쓴이</label>
+								<input type="text" id="modalWriter" class="form-control" readonly />
+							</div>
+							<div class="form-group">
+								<label for="modalContent" class="col-form-label">내용</label>
+								<textarea id="modalContent" class="form-control textarea"></textarea>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="btnCommentUpdate" class="btn btn-primary waves-effect waves-light community-btn" onclick="updateComment();">수정</button>
+					</div>
+				</div>
+			</div>
 		</div>
-		
+		-->
+
 		<!-- 현재 경로 -->
-		<div class="page_tits">
-		    
-		</div>
-		
+		<div class="page_tits"></div>
+
 		<!-- 본문 내용 -->
 		<div class="content">
 			<input type="hidden" id="writer" name="writer" th:value="${review.writerId}">
+			<input type="hidden" id="writerName" name="writerName" th:value="${review.writer}">
 			<input type="hidden" id="userId" name="userId" th:value="${userId}">
-			
-	        <section>
-	        	<p class="board-btn">
-	                <a class="btn btn-primary board-btn-a community-btn" onclick="goChangePage();">수정</a>
-	                <button class="btn btn-danger board-btn-a community-btn" onclick="deleteBoard();">삭제</button>
-	                <a href="javascript:history.go(-1)" class="btn btn-light board-btn-a community-btn" onclick="goListPage();">뒤로</a>
-	            </p>
-	            <div class="board-title">
-		            <span class="board-title1" id="board-title">[[ ${review.title} ]]<span class="board-udate">[[ ${review.UDate != null ? '수정됨' : ''} ]]</span></span>
-		            <span class="rating-star">★<span id="rating_star"> 0</span></span>
-	            </div>
-	            <div class="board-info">
-		            <span><span class="board-writer">글쓴이</span>[[ ${review.writer} ]]</span>
-		            <span th:text="${#temporals.format( review.IDate, 'YYYY/MM/dd HH:mm' )}"></span>
-		            <span class="board-viewCnt1"><span class="board-view">조회수</span>[[ ${review.viewCnt} ]]</span>	            
-	            </div>
-	            <div class="board-contents">
-		            <p class="board-content" th:utext="${review.content}" style="display: none;"></p>
-	            </div>
-	        </section>
-	    </div>
-	    
-	    <!-- 댓글 리스트 -->
+
+			<section>
+				<p class="board-btn">
+					<a class="btn btn-primary board-btn-a community-btn" onclick="goChangePage();">수정</a>
+					<button class="btn btn-danger board-btn-a community-btn" onclick="deleteBoard();">삭제</button>
+					<a href="javascript:history.go(-1)" class="btn btn-light board-btn-a community-btn" onclick="goListPage();">뒤로</a>
+				</p>
+				<div class="board-title">
+					<span class="board-title1" id="board-title">[[ ${review.title} ]]
+						<span class="board-udate">[[${review.UDate != null ? '수정됨' : ''} ]]</span>
+					</span>
+					<span class="rating-star">★<span id="rating_star"> 0</span></span>
+				</div>
+				<div class="board-info">
+					<span><span class="board-writer">글쓴이</span>[[${review.writer} ]]</span>
+						<span th:text="${#temporals.format( review.IDate, 'YYYY/MM/dd HH:mm' )}"></span>
+					<span class="board-viewCnt1"><span class="board-view">조회수</span>[[ ${review.viewCnt} ]]</span>
+				</div>
+				<div class="board-contents">
+					<p class="board-content" th:utext="${review.content}" style="display: none;"></p>
+				</div>
+			</section>
+		</div>
+
+		<!-- 댓글 리스트 -->
 		<div class="box-content">
 			<div class="card-content">
 				<div class="clearfix comment-main">
-					<span class="box-title pull-left comment-main-name"><span th:text="${comment}"></span>개의 댓글</span>
+					<span class="box-title pull-left comment-main-name"><span
+						th:text="${comment}"></span>개의 댓글</span>
 				</div>
 
 				<form class="form-horizontal form-view" onsubmit="return false;">
@@ -101,21 +103,19 @@
 							<textarea sec:authorize="hasRole('ROLE_GUEST')" id="content" class="form-control comment-input" disabled="disabled"></textarea><br>
 							<button sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" class="btn btn-primary community-btn" th:onclick="insertComment([[ ${review.id} ]]);">댓글작성</button>
 							<span sec:authorize="hasRole('ROLE_GUEST')" style="display: inline-flex; align-items: center; transform: translate(10%, -310%);">
-								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 w-5 shrink-0 text-gray-400 group-hover:text-gray-500"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"></path></svg>
-								<span style="margin-left: .25rem;">
-									댓글을 쓰려면 <a th:onclick="goSettings([[ ${userId} ]]);" style="color: blue; text-decoration: underline; cursor: pointer;">이메일 인증</a>이 필요합니다.
-								</span>
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 w-5 shrink-0 text-gray-400 group-hover:text-gray-500">
+									<path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"></path></svg>
+								<span style="margin-left: .25rem;"> 댓글을 쓰려면 <a th:onclick="goSettings([[ ${userId} ]]);" style="color: blue; text-decoration: underline; cursor: pointer;">이메일 인증</a>이 필요합니다.</span>
 							</span>
 						</div>
-						<div class="comment-input-btn">
-						</div>
+						<div class="comment-input-btn"></div>
 					</div>
 					<ul class="notice-list comment-list"></ul>
 				</form>
 			</div>
 		</div>
 	</main>
-	
+
 	<th:block layout:fragment="script">
 		<!-- FONT AWESOME -->
 		<script type="text/javascript" src="/js/lib/fontawesome.js"></script>
@@ -304,12 +304,13 @@
 			
 			// 댓글 수정
 			function updateComment(id) {
-				var writer = document.getElementById("modalWriter");
-				var content = document.getElementById("modalContent");
+				//var writer = document.getElementById("modalWriter");
+				//var content = document.getElementById("modalContent");
+				var content = window.ckeditor.getData();
 				
 				var uri = [[ @{/comments/} ]] + id;
 				var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "PATCH" };
-				var params = { "id": id, "writer": writer.value, "content": content.value };
+				var params = { "id": id, "writer": writerName.value, "content": content };
 				
 				$.ajax({
 					url: uri,
@@ -412,6 +413,51 @@
     				}
     			});
 			}
+		
+			function replyUpdate(id) {
+				
+				const reply = document.getElementById('reply' + id);
+				const replyForm = document.getElementById('replyForm' + id);
+				const replyUpdate = document.getElementById('replyUpdate' + id);
+				const replyCancel = document.getElementById('replyCancel' + id);
+				const replySave = document.getElementById('replySave' + id);
+				
+				reply.style.display = 'none';
+				replyUpdate.style.display = 'none';
+				replyCancel.style.display = '';
+				replySave.style.display = '';
+				
+				ClassicEditor
+		            .create( document.querySelector( '#replyEditor' + id ), {
+		                extraPlugins: [uploadAdapterPlugin],
+		                language: 'ko',
+		                ckfinder: { uploadUrl: '/upload' }
+		            })
+		            .then( editor => {
+		            	window.ckeditor = editor;
+		            })
+		            .catch( error => {
+		                console.error( error );
+		            } );
+			}
+			
+			function replyCancel(id) {
+				
+				const reply = document.getElementById('reply' + id);
+				const replyForm = document.getElementById('replyForm' + id);
+				const replyUpdate = document.getElementById('replyUpdate' + id);
+				const replyCancel = document.getElementById('replyCancel' + id);
+				const replySave = document.getElementById('replySave' + id);
+				
+				reply.style.display = '';
+				replyForm.innerHTML = '';
+				replyUpdate.style.display = '';
+				replyCancel.style.display = 'none';
+				replySave.style.display = 'none';
+				
+				replyForm.innerHTML = "<textarea id= 'replyEditor" + id + "' style='display: none;'></textarea>";
+			}
+			
 			
 			// 댓글 리스트 출력
 			function printCommentList() {
@@ -428,21 +474,39 @@
 									<div class="comment-img">
 										<img src="/img/app/chat/chat.png">
 										<div class="comment-name">
-											<span class="name">${comment.writer}<span> · </span><span class="rating-star">★<span id="rating_star"> 0</span></span></span>
+											<span class="name">${comment.writer}</span>
 											<div class="comment-edit" style="display: flex;">
 												<span class="time comment-time">${timeForToday(moment(comment.IDate).format('YYYY/MM/DD HH:mm'))}
 													<span>${comment.UDate != null ? '·' : ''}</span>
 													<span class="comment-udate">${comment.UDate != null ? '수정됨' : ''}</span>
-													<span>${comment.deleteYn != 'Y' ? '·' : ''}</span>
 												</span>
-												<span onclick="openModal(${comment.id}, '${comment.writer}', '${comment.content}' )" class="material-symbols-outlined comment-edit" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? 'edit' : ''}</span> 
 												<!-- 
+												<span onclick="openModal(${comment.id}, '${comment.writer}', '${comment.content}' )" class="material-symbols-outlined comment-edit" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? 'edit' : ''}</span> 
 												-->
+											</div>
+										</div>
+										<div style="display: flex; flex-direction: column;">
+											<!--
+											<div style="text-align: center;">
+												<span class="rating-star">★★★★★</span>
+											</div>
+											-->
+											<div style="text-align: center;">
+												<!--
+												<span onclick="openModal( '${comment.id}', '${comment.writer}' )" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '수정 ' : ''}</span>
+												-->
+												<span onclick="replyUpdate(${comment.id})" id="replyUpdate${comment.id}" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '수정' : ''}</span>
+												<span onclick="replyCancel(${comment.id})" id="replyCancel${comment.id}" style="display: none; align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '취소' : ''}</span>
+												<span onclick="updateComment('${comment.id}', '${comment.writer}')" id="replySave${comment.id}" style="display: none; align-items: center; font-size: 13px; cursor: pointer; background-color: skyblue;">${comment.deleteYn != 'Y' ? '저장' : ''}</span>
+												<span onclick="deleteComment(${comment.id})" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '삭제' : ''}</span>
 											</div>
 										</div>
 									</div>
 									<div>
-										<span class="desc comment-content">${comment.content}</span>
+										<span id="reply${comment.id}" class="desc comment-content">${comment.content}</span>
+										<div id="replyForm${comment.id}">
+											<textarea id="replyEditor${comment.id}" style="display: none;">${comment.content}</textarea>
+										</div>
 									</div>
 								</li>
 							`;
@@ -507,8 +571,8 @@
 		/*]]>*/
 		</script>
 	</th:block>
-	
-	
+
+
 </body>
 
 </html>
