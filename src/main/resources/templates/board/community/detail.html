@@ -72,10 +72,11 @@
 					<a href="javascript:history.go(-1)" class="btn btn-light board-btn-a community-btn" onclick="goListPage();">뒤로</a>
 				</p>
 				<div class="board-title">
-					<span class="board-title1" id="board-title">[[ ${board.title} ]]
-						<span class="board-udate">[[${board.UDate != null ? '수정됨' : ''} ]]</span>
-					</span>
+					<span class="board-title1" id="board-title">[[ ${board.title} ]]</span>
+					<span class="board-udate">[[${board.UDate != null ? '수정됨' : ''} ]]</span>
+					<!-- 
 					<span class="rating-star">★<span id="rating_star"> 0</span></span>
+					-->
 				</div>
 				<div class="board-info">
 					<span><span class="board-writer">글쓴이</span>[[${board.writer} ]]</span>

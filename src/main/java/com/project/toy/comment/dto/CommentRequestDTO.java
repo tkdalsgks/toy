@@ -13,4 +13,5 @@ public class CommentRequestDTO {
 	private String content;
 	private String writer;
 	private String writerId;
+	private int rating;
 }

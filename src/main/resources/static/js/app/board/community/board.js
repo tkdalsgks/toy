@@ -116,7 +116,8 @@ function timeForToday(value) {
 	
 	return value;
 }
-	
+
+/*
 window.onresize = function() {
 	const width = window.innerWidth;
 	
@@ -140,12 +141,20 @@ window.onresize = function() {
 		});
 	}
 }
+*/
 
 /**
  * 리뷰 별점 시스템
  **/
 const drawStar = (target) => {
 	document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
+}
+
+/**
+ * 리뷰 별점 수정 시스템
+ **/
+const replyDrawStar = (target) => {
+	document.querySelector(`.reply-star span`).style.width = `${target.value * 10}%`;
 }
 
 /**

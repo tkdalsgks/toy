@@ -17,6 +17,8 @@ public class CommentResponseDTO {
 	
 	private String writerId;
 	
+	private int rating;
+	
 	private String deleteYn;
 	
 	private LocalDateTime IDate;
