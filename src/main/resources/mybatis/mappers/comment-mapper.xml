@@ -9,6 +9,7 @@
 		, CONTENT
 		, WRITER_ID
 		, WRITER
+		, RATING
 		, DELETE_YN
 		, I_DATE
 		, U_DATE
@@ -28,7 +29,7 @@
 		/* com.project.toy.comment.dto.CommentRequestDTO */
 		
 		INSERT INTO COMMENT ( <include refid="commentColumns" /> )
-		VALUES ( #{ id }, #{ boardId }, #{ content }, #{ writerId }, #{ writer }, 'N', NOW(), NULL )
+		VALUES ( #{ id }, #{ boardId }, #{ content }, #{ writerId }, #{ writer }, #{ rating }, 'N', NOW(), NULL )
 	</insert>
 	
 	<!-- 댓글 수 업데이트 -->
