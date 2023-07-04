@@ -28,20 +28,22 @@ public class LikesController {
 	public JsonObject saveLikes(@PathVariable(value = "boardId", required = false) Long boardId, @RequestBody final LikesDTO params) {
 		JsonObject jsonObj = new JsonObject();
 		
-		try {
-			int todayLikes = likesService.selectTodayLikes(params);
-			if(todayLikes >= 5) {
-				jsonObj.addProperty("todayLikes", todayLikes);
-				jsonObj.addProperty("message", "좋아요는 하루 5개의 게시글만 가능합니다.");
-			} else {
-				boolean save = likesService.saveOrDeleteLikes(params);
-				likesService.updateCountLikes(params);
-				jsonObj.addProperty("result", save);				
+		synchronized(this) {
+			try {
+				int todayLikes = likesService.selectTodayLikes(params);
+				if(todayLikes >= 5) {
+					jsonObj.addProperty("todayLikes", todayLikes);
+					jsonObj.addProperty("message", "좋아요는 하루 5개의 게시글만 가능합니다.");
+				} else {
+					boolean save = likesService.saveOrDeleteLikes(params);
+					likesService.updateCountLikes(params);
+					jsonObj.addProperty("result", save);				
+				}
+			} catch(DataAccessException e) {
+				jsonObj.addProperty("message", "데이터베이스 처리 과정에 문제가 발생하였습니다.");
+			} catch(Exception e) {
+				jsonObj.addProperty("message", "시스템에 문제가 발생하였습니다.");
 			}
-		} catch(DataAccessException e) {
-			jsonObj.addProperty("message", "데이터베이스 처리 과정에 문제가 발생하였습니다.");
-		} catch(Exception e) {
-			jsonObj.addProperty("message", "시스템에 문제가 발생하였습니다.");
 		}
 		
 		return jsonObj;
