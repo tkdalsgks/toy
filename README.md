@@ -1,4 +1,4 @@
-<a href="https://oyez.kr" target="_blank">프로젝트 바로가기(v23.02.24)</a>
+<a href="https://oyez.kr" target="_blank">프로젝트 바로가기</a>
 <br><br>
 <div align='center'>
 <strong>:mag_right:&nbsp;&nbsp;Project Skils&nbsp;</strong>

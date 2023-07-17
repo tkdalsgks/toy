@@ -1,10 +1,10 @@
-
+/*
 @media (min-width: 501px) {
-	/* COMMON */
+	/* COMMON 
 	.info-title { font-size: .875rem; font-weight: 400; }
 	.info-contents { font-size: .875rem; font-weight: 400; }
 	
-	/* ASIDE */
+	/* ASIDE 
 	.aside { display: -webkit-box; display: -ms-flexbox; display: flex; min-height: 100%; padding-top: 1.5rem; }
 	.aside-title { font-size: 1.125rem; font-weight: 500; }
 	.aside-title1 { padding-left: 1rem; color: blue; font-size: .825rem; font-weight: 400; }
@@ -17,7 +17,7 @@
 	.aside-subtitle2 { display: -webkit-inline-box; display: -ms-inline-flexbox; display: inline-flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; margin-top: .5rem; font-size: 1rem; }
 	.aside-subtitle2 span { margin-left: .25rem; font-weight: 400; }
 	
-	/* PROFILE */
+	/* PROFILE 
 	.profile { width: 70%; }
 	.profile-contents { display: -webkit-box; display: -ms-flexbox; display: flex; padding-top: 2rem; padding-bottom: 2rem; }
 	.profile-contents1 { width: 60%; padding-right: 2rem; }
@@ -39,7 +39,7 @@
 	.profile-save { padding-top: 2rem; text-align: right; }
 	.profile-save button { width: 8rem; height: 2.75rem; cursor: pointer; font-size: .875rem; }
 	
-	/* ACCOUNT */
+	/* ACCOUNT 
 	.account { width: 70%; }
 	.account-contents { display: -webkit-box; display: -ms-flexbox; display: flex; padding-top: 2rem; padding-bottom: 2rem; }
 	.account-contents1 { width: 100%; }
@@ -62,6 +62,7 @@
 }
 
 @media (max-width: 500px) {
+*/
 	/* COMMON */
 	.info-title { font-size: .875rem; font-weight: 400; }
 	.info-contents { font-size: .875rem; font-weight: 400; }
@@ -72,26 +73,26 @@
 	.aside-title1 { color: blue; font-size: .75rem; font-weight: 400; }
 	.aside-subtitle { display: -ms-grid; display: grid; padding-top: 1rem; padding-bottom: 1rem; }
 	.aside-subtitle a { padding: .5rem; }
-	.aside-subtitle1 { display: -webkit-inline-box; display: -ms-inline-flexbox; display: inline-flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; font-size: 1rem; }
+	.aside-subtitle1 { display: -webkit-inline-box; display: -ms-inline-flexbox; display: inline-flex; margin-bottom: .25rem; -webkit-box-align: center; -ms-flex-align: center; align-items: center; font-size: 1rem; }
 	.aside-subtitle1 span { margin-left: .25rem; font-weight: 400; }
-	.aside-subtitle1:hover, .aside-subtitle2:hover { background: hsla(220,9%,46%,.25); border-radius: .5rem; }
+	.aside-subtitle1:hover, .aside-subtitle2:hover { background: hsla(220, 9%, 46%, .25); border-radius: .5rem; }
 	.aside-subtitle2 { display: -webkit-inline-box; display: -ms-inline-flexbox; display: inline-flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; font-size: 1rem; }
 	.aside-subtitle2 span { margin-left: .25rem; font-weight: 400; }
 	
 	/* PROFILE */
 	.profile-contents { padding-top: 2rem; padding-bottom: 2rem; }
 	.profile-contents1 label { font-weight: 300; }
-	.profile-contents1 input { width: 100%; height: 2.75rem; font-weight: 300; border: 1px solid hsla(220,9%,46%,.3); border-radius: .5rem; padding: .5rem;}
+	.profile-contents1 input { width: 100%; height: 2.75rem; font-weight: 300; border: 1px solid hsla(220, 9%, 46%, .3); border-radius: .5rem; padding: .5rem;}
 	.profile-contents2 { padding-top: 2rem; text-align: center; }
-	.profile-contents2 img { width: 5rem; height: 5rem; border: 1px solid hsla(220,9%,46%,.3); border-radius: 50%; }
+	.profile-contents2 img { width: 5rem; height: 5rem; border: 1px solid hsla(220, 9%, 46%, .3); border-radius: 50%; }
 	
 	.profile-email { margin-top: 1rem; }
 	.profile-check-email, .profile-check-verify { margin-left: .5rem; width: 8rem; height: 2.75rem; font-size: .75rem; }
 	.profile-verify { display: -webkit-box; display: -ms-flexbox; display: flex; margin-top: .5rem; }
 	.check-email-time { font-size: 1rem !important; -webkit-transform: translate(100%, 155%) !important; -ms-transform: translate(100%, 155%) !important; transform: translate(100%, 155%) !important; }
 	
-	.profile-input { border-top: 1px solid hsla(220,9%,46%,.3); padding-top: 2rem; }
-	.profile-line { border-top: 1px solid hsla(220,9%,46%,.3); }
+	.profile-input { border-top: 1px solid hsla(220, 9%, 46%, .3); padding-top: 2rem; }
+	.profile-line { border-top: 1px solid hsla(220, 9%, 46%, .3); }
 	
 	.profile-info { padding-top: 2rem; padding-bottom: 2rem; }
 	
@@ -117,4 +118,6 @@
 	
 	.account-withdraw-btn { padding-top: 2rem; text-align: right; }
 	.account-withdraw-btn button { width: 8rem; height: 2.75rem; cursor: pointer; font-size: .75rem; }
+/*
 }
+*/

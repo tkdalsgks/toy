@@ -67,7 +67,7 @@ function isValid(field, fieldName, focusField) {
 		/* 종성으로 조사(을 또는 를) 구분 */
 		var message = (charToUnicode(fieldName) > 0) ? fieldName + "을 입력하세요." : fieldName + "를 입력하세요.";
 		swal.fire({
-			text: message,
+			title: message,
 			icon: 'warning',
 			confirmButtonColor: '#3085d6',
 			confirmButtonText: '확인'
@@ -154,7 +154,7 @@ const drawStar = (target) => {
  * 리뷰 별점 수정 시스템
  **/
 const replyDrawStar = (target) => {
-	document.querySelector(`.reply-star span`).style.width = `${target.value * 10}%`;
+	document.querySelector(`.reply-star-u span`).style.width = `${target.value * 10}%`;
 }
 
 /**

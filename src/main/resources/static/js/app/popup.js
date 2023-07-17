@@ -1,9 +1,12 @@
 document.querySelector("#show").addEventListener("click", show);
 document.querySelector("#close").addEventListener("click", close);
 
+/*
 document.getElementById("menuChat").style.display = "none";
 document.getElementById("chatSecond").style.display = "none";
 document.getElementById("chatThird").style.display = "none";
+*/
+
 
 function openPopup() {
 	$(".openPopup").hide();

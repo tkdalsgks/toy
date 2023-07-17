@@ -2,6 +2,8 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <header th:fragment="header">
+
+	<!--
 	<div sec:authorize="isAuthenticated()" id="header" class="header">
 		<nav class="navbar navbar-expand-lg bg-body-tertiary header-nav">
 			<div class="container-fluid">
@@ -13,6 +15,9 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" th:href="@{/review}">리뷰</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/gpt/chat}">CHAT GPT</a>
 						</li>
 					</ul>
 				</div>
@@ -34,26 +39,19 @@
 			</div>
 		</nav>
 	</div>
+	-->
 	
 	<div sec:authorize="isAuthenticated()" id="header-mobile" class="header-mobile">
 		<nav class="navbar navbar-expand-lg bg-body-tertiary header-mobile-nav">
 			<div class="navbar-collapse" id="navbarText">
-				<a class="navbar-brand-mobile" th:href="@{/}" style="float: left;"><img src="/img/app/common/logo.png"></a>
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item-mobile dropdown">
-						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-							<img src="" class="nav-myinfo-mobile">
-						</a>
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" th:href="@{/}">메인</a></li>
-							<li><a class="dropdown-item" th:href="@{/community}">커뮤니티</a>
-							<li><a class="dropdown-item" th:href="@{/review}">리뷰</a>
-							<li class="dropdown-logout-mobile"><a class="dropdown-item" th:onclick="goProfile([[ ${userId} ]]);">마이페이지</a></li>
-							<li><a class="dropdown-item" th:href="@{/logout}">로그아웃</a></li>
-							<li sec:authorize="hasRole('ROLE_ADMIN')"><a class="dropdown-item" th:href="@{/admin}">관리자</a></li>
-						</ul>
-					</li>
-				</ul>
+				<a class="navbar-brand-logo" th:href="@{/}"><img src="/img/app/common/logo.png"></a>
+				
+				<div id="show" class="menu-trigger" onclick="openPopup();">
+					<div class="line1"></div>
+					<div class="line2"></div>
+					<div class="line3"></div>
+				</div>
+				
 			</div>
 		</nav>
 	</div>

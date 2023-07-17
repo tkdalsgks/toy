@@ -5,6 +5,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -33,6 +34,7 @@ public class CustomUserService implements UserDetailsService {
 	private final UserService userService;
 	
 	private final HttpSession session;
+	private final HttpServletRequest request;
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -52,7 +54,7 @@ public class CustomUserService implements UserDetailsService {
 					
 					LoginLogDTO loginLogDTO = new LoginLogDTO();
 					loginLogDTO.setLoginId(userDTO.getUserId());
-					loginLogDTO.setAccessIp(getLocalIpAddress());
+					loginLogDTO.setAccessIp(request.getRemoteAddr());
 					securityMapper.insertLoginLog(loginLogDTO);
 					
 					return new CustomUserDetails(userDTO);

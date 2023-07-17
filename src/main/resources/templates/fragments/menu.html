@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:fragment="menu">
+	<div id="popup__background" class="background">
+		<div class="window">
+	   		
+			<div class="popup">
+				<div class="close">
+					<a class="" th:href="@{/}"><img src="/img/app/common/logo.png"></a>
+					<button id="close" class="btn-close" onclick="close();"></button>
+				</div>
+	   			
+	   			<!-- USER Content -->
+	   			<div>
+					<a class="popup-content__item" th:href="@{/community}">커뮤니티</a>
+					<a class="popup-content__item" th:href="@{/review}">리뷰</a>
+					<a sec:authorize="hasRole('ROLE_ADMIN')" class="popup-content__item" th:href="@{/gpt/chat}">CHAT GPT</a>
+					<a sec:authorize="isAuthenticated()" class="popup-content__item" th:onclick="goProfile([[ ${userId} ]]);">마이페이지</a>
+				</div>
+				<div class="popup__line"></div>
+				
+				<!-- Login Content -->
+				<div sec:authorize="isAuthenticated()">
+					<a class="popup-content__item" th:href="@{/logout}">로그아웃</a>
+				</div>
+			    
+			    <div sec:authorize="hasRole('ROLE_ADMIN')" class="popup__admin">
+					<a class="popup-content__item" th:href="@{/admin}">관리자</a>
+				</div>
+					
+	   		</div>
+	   		
+	    	<div><div></div></div>
+		</div>
+	</div>
+</div>

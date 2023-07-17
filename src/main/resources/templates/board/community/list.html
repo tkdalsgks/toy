@@ -29,47 +29,48 @@
 	
 	<main layout:fragment="content" class="container">
 		<div class="page_tits">
+			<div style="background-image: url('img/app/board/pattern.svg');"></div>
 		    <span class="write-name-a">커뮤니티</span><br>
-		    <span class="list-name-b">다양한 사람을 만나고 생각의 폭을 넓혀보세요.</span>
+		    <span class="write-name-b">다양한 사람을 만나고 생각의 폭을 넓혀보세요.</span>
 		</div>
 		
 		<div class="content">
 			<section>
-			<!-- 검색 -->
-			<div class="refresh_box">
-				<div class="sch_group fl">
-					<div class="list-search">
-						<img class="list-refresh" src="/img/app/common/refresh.png" onclick="refreshBoard();">
-						<div>
-							<button type="button" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" class="search_box_btn write_box community-btn" onclick="writeBoard();"><i class="fas fa-pen"></i><span class="skip_info">작성</span></button>
-							<button type="button" class="search_box_btn community-btn" onclick="searchBox();"><i class="fas fa-search"></i><span class="skip_info">검색</span></button>
+				<!-- 검색 -->
+				<div class="refresh_box">
+					<div class="sch_group fl">
+						<div class="list-search">
+							<img class="list-refresh" src="/img/app/common/refresh.png" onclick="refreshBoard();">
+							<div>
+								<button type="button" class="search_box_btn community-btn" onclick="searchBox();"><i class="fas fa-search"></i><span class="skip_info">&nbsp;검색</span></button>
+								<button type="button" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" class="search_box_btn write_box community-btn" onclick="writeBoard();"><i class="fas fa-pen"></i><span class="skip_info">&nbsp;작성</span></button>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div id="searchBox" class="search_box">
-				<form id="searchForm" onsubmit="return false;" autocomplete="off">
-					<div class="sch_group fl">
-						<div>
-							<select id="searchType" name="searchType" title="검색 유형 선택">
-								<option value="">전체 검색</option>
-								<option value="title">제목</option>
-								<option value="content">내용</option>
-								<option value="writer">글쓴이</option>
-							</select>
-							<input type="text" id="keyword" name="keyword" onkeyup="enterkey();" placeholder="키워드를 입력해 주세요." title="키워드 입력" />
+				<div id="searchBox" class="search_box">
+					<form id="searchForm" onsubmit="return false;" autocomplete="off">
+						<div class="sch_group fl">
+							<div>
+								<select id="searchType" name="searchType" title="검색 유형 선택">
+									<option value="">전체 검색</option>
+									<option value="title">제목</option>
+									<option value="content">내용</option>
+									<option value="writer">작성자</option>
+								</select>
+								<input type="text" id="keyword" name="keyword" onkeyup="enterkey();" placeholder="키워드를 입력해 주세요." title="키워드 입력" />
+							</div>
 						</div>
-					</div>
-				</form>
-			</div>
-			
-			<!-- 리스트 출력 -->
-			<table class="tb tb_col">
-				<tbody id="list"></tbody>
-			</table>
-			
-			<!-- 페이징 -->
-			<div class="paging"></div>
+					</form>
+				</div>
+				
+				<!-- 리스트 출력 -->
+				<table class="tb tb_col">
+					<tbody id="list"></tbody>
+				</table>
+				
+				<!-- 페이징 -->
+				<div class="paging"></div>
 			</section>
 		</div>
 	</main>
