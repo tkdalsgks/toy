@@ -432,11 +432,13 @@
 				const replyUpdate = document.getElementById('replyUpdate' + id);
 				const replyCancel = document.getElementById('replyCancel' + id);
 				const replySave = document.getElementById('replySave' + id);
+				const replyStar = document.getElementById('replyStar' + id);
 				
 				reply.style.display = 'none';
 				replyUpdate.style.display = 'none';
 				replyCancel.style.display = '';
 				replySave.style.display = '';
+				replyStar.style.display = '';
 				
 				ClassicEditor
 		            .create( document.querySelector( '#replyEditor' + id ), {
@@ -536,7 +538,17 @@
 									<div>
 										<span id="reply${comment.id}" class="desc comment-content">${comment.content}</span>
 										<div id="replyForm${comment.id}">
-											<textarea id="replyEditor${comment.id}" style="display: none;">${comment.content}</textarea>
+											<div>
+												<textarea id="replyEditor${comment.id}" style="display: none;">${comment.content}</textarea>
+											</div>
+											<div id="replyStar${comment.id}" style="display: none; margin-top: .5rem;">
+												<span class="star-name-u">별점 수정</span>
+												<span id="reply-star-u${comment.id}" class="reply-star-u">
+													★★★★★
+													<span style="width: ${comment.rating}0%">★★★★★</span>
+													<input id="replyRating" type="range" oninput="replyDrawStar(this)" value="1" step="1" min="0" max="10">
+												</span>
+											</div>
 										</div>
 									</div>
 								</li>
