@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>OYEZ - 관리자</title>
+<title>OYEZ - 사용자</title>
 
 <th:block layout:fragment="css">
 	<!-- RESET, DEFAULT -->
@@ -41,33 +41,10 @@
 					<td class="admin-head">닉네임</td>
 					<td class="admin-content">[[ ${admin.userNickname} ]]</td>	
 				</tr>
-				<tr>
-					<td class="admin-head">권한</td>
-					<td class="admin-content">[[ ${admin.role} ]]</td>	
-				</tr>
-				<tr>
-					<td class="admin-head">가입일자</td>
-					<td class="admin-content">[[ ${#temporals.format(admin.IDate, 'yyyy-MM-dd HH:mm:ss')} ]]</td>
-				</tr>
-				<tr>
-					<td></td><td></td>
-				</tr>
-				<tr>
-					<td class="admin-head">권한변경</td>
-					<td class="admin-content">
-						<select th:field="*{authList}" id="userModel">
-							<option th:each="authList : ${authList}" th:text="${authList.modelName}" th:value="${authList.modelName}" ></option>
-						</select>									
-					</td>
-				</tr>
 			</table>
 			
-			<div>
-			</div>
-			
 			<div class="admin-expulsion">
-				<button onclick="openModal();">회원추방</button>
-				<button onclick="saveUser();">저장</button>
+				
 			</div>
 		</div>
 		

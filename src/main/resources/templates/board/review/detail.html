@@ -77,7 +77,7 @@
 					<span class="rating-star">★<span id="rating_star"> 0</span></span>
 				</div>
 				<div class="board-info">
-					<span><span class="board-writer">글쓴이</span>[[${review.writer} ]]</span>
+					<span><span class="board-writer">글쓴이</span><a th:href="@{/member/detail?id=} + ${review.writerNo}">[[${review.writer} ]]</a></span>
 						<span th:text="${#temporals.format( review.IDate, 'YYYY/MM/dd HH:mm' )}"></span>
 					<span class="board-viewCnt1"><span class="board-view">조회수</span>[[ ${review.viewCnt} ]]</span>
 				</div>
