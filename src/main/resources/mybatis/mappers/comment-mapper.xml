@@ -74,7 +74,7 @@
 		FROM   COMMENT
 		WHERE  1=1
 		AND    BOARD_ID = #{ value }
-		ORDER BY ID DESC
+		ORDER BY ID ASC
 	</select>
 	
 	<!-- 댓글 갯수 카운트 -->

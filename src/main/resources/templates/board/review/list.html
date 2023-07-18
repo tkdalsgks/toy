@@ -151,19 +151,22 @@
 			        html += `
 			        	<tr>
 			                <td class="list-important">
-			        			<a href="javascript:void(0);" onclick="goViewPage(${row.id});">
 				                	<div>
-				                		<div class="list-img">
-				                			<img src="/img/app/chat/chat.png">
-					                		<span class="list-writer">${row.writer}</span>
-					                		<span>&nbsp;·&nbsp;</span>
-						                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
-						                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
-						                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
-					                	</div>
-					                	<div class="list-title">
-					                		<span>${row.title}</span>
-					                	</div>
+				                		<a href="javascript:void(0);" onclick="goUserPage(${row.writerNo});">
+					                		<div class="list-img">
+					                			<img src="/img/app/chat/chat.png">
+						                		<span class="list-writer">${row.writer}</span>
+						                		<span>&nbsp;·&nbsp;</span>
+							                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
+							                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
+							                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
+						                	</div>
+						                </a>
+					        			<a href="javascript:void(0);" onclick="goViewPage(${row.id});">
+						                	<div class="list-title">
+						                		<span>${row.title}</span>
+						                	</div>
+						                </a>
 					                	<div class="list-info">
 						                	<span class="list-notice">${row.noticeYn === false ? '리뷰' : '공지사항'}</span>
 						                	<div>
@@ -176,7 +179,6 @@
 						                	</div>
 					                	</div>
 				                	</div>
-				                </a>
 			                </td>
 			            </tr>
 			        `;
@@ -186,19 +188,22 @@
 			        html += `
 			        	<tr>
 			                <td class="list-important">
-			                	<a href="javascript:void(0);" onclick="goViewPage(${row.id});">
 				                	<div>
-				                		<div class="list-img">
-				                			<img src="/img/app/chat/chat.png">
-					                		<span class="list-writer">${row.writer}</span>
-					                		<span>&nbsp;·&nbsp;</span>
-						                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
-						                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
-						                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
-					                	</div>
-					                	<div class="list-title">
-					                		<span>${row.title}</span>
-					                	</div>
+				                		<a href="javascript:void(0);" onclick="goUserPage(${row.writerNo});">
+					                		<div class="list-img">
+					                			<img src="/img/app/chat/chat.png">
+						                		<span class="list-writer">${row.writer}</span>
+						                		<span>&nbsp;·&nbsp;</span>
+							                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
+							                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
+							                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
+						                	</div>
+						                </a>
+					                	<a href="javascript:void(0);" onclick="goViewPage(${row.id});">
+						                	<div class="list-title">
+						                		<span>${row.title}</span>
+						                	</div>
+						                </a>
 					                	<div class="list-info">
 						                	<span class="list-notice">${row.likesCnt >= 1 ? '좋아요' : row.id}</span>
 						                	<div>
@@ -211,7 +216,6 @@
 						                	</div>
 					                	</div>
 				                	</div>
-				                </a>
 			                </td>
 			            </tr>
 			        `;
@@ -221,19 +225,22 @@
 			        html += `
 			            <tr>
 			                <td class="list-general">
-			                	<a href="javascript:void(0);" onclick="goViewPage(${row.id});">
 				                	<div>
-				                		<div class="list-img">
-				                			<img src="/img/app/chat/chat.png">
-					                		<span class="list-writer">${row.writer}</span>
-					                		<span>&nbsp;·&nbsp;</span>
-						                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
-						                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
-						                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
-					                	</div>
-					                	<div class="list-title">
-					                		<span>${row.title}</span>
-					                	</div>
+				                		<a href="javascript:void(0);" onclick="goUserPage(${row.writerNo});">
+					                		<div class="list-img">
+					                			<img src="/img/app/chat/chat.png">
+						                		<span class="list-writer">${row.writer}</span>
+						                		<span>&nbsp;·&nbsp;</span>
+							                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
+							                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
+							                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
+						                	</div>
+						                </a>
+					                	<a href="javascript:void(0);" onclick="goViewPage(${row.id});">
+						                	<div class="list-title">
+						                		<span>${row.title}</span>
+						                	</div>
+						                </a>
 					                	<div class="list-info">
 						                	<span class="list-notice">${row.noticeYn === false ? '리뷰' : '공지'}</span>
 						                	<div>
@@ -246,7 +253,6 @@
 						                	</div>
 					                	</div>
 				                	</div>
-				                </a>
 			                </td>
 			            </tr>
 			        `;
@@ -308,6 +314,12 @@
 		    function goViewPage(id) {
 		        const queryString = (location.search) ? location.search + `&id=${id}` : `?id=${id}`;
 		        location.href = '/review/detail' + queryString;
+		    }
+			
+			// 사용자 상세 페이지로 이동
+		    function goUserPage(id) {
+		        const queryString = (location.search) ? location.search + `&id=${id}` : `?id=${id}`;
+		        location.href = '/member/detail' + queryString;
 		    }
 			
 			// 게시글 리프레쉬

@@ -237,6 +237,7 @@ public class BoradController {
 	public String save(final BoardRequestDTO params, Model model) {
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
+		params.setWriterNo(user.getUserNo());
 		params.setWriterId(user.getUserId());
 		
 		//params.setContent(params.getContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));

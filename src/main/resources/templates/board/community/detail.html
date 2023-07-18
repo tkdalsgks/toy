@@ -80,7 +80,7 @@
 		            </button>
 				</div>
 				<div class="board-info">
-					<span><span class="board-writer">글쓴이</span>[[${board.writer} ]]</span>
+					<span><span class="board-writer">글쓴이</span><a th:href="@{/member/detail?id=} + ${board.writerNo}">[[${board.writer} ]]</a></span>
 						<span th:text="${#temporals.format( board.IDate, 'YYYY/MM/dd HH:mm' )}"></span>
 					<span class="board-viewCnt1"><span class="board-view">조회수</span>[[ ${board.viewCnt} ]]</span>
 				</div>
@@ -232,6 +232,12 @@
 	        	}
 	        	/* th:href="@{/community/write( id=${board.id} )}"  */
 	        }
+			
+	     	// 사용자 상세 페이지로 이동
+		    function goUserPage(id) {
+		        const queryString = (location.search) ? location.search + `&id=${id}` : `?id=${id}`;
+		        location.href = '/member/detail' + queryString;
+		    }
 			
 	        $(function() {
 				printCommentList();

@@ -2,12 +2,18 @@ package com.project.toy.user.controller;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonObject;
+import com.project.toy.admin.dto.AdminDTO;
+import com.project.toy.admin.service.AdminService;
+import com.project.toy.board.dto.BoardResponseDTO;
 import com.project.toy.email.service.EmailService;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UpdateUserDTO;
@@ -32,8 +41,11 @@ public class UserController {
 	
 	private final UserService userService;
 	private final EmailService emailService;
+	private final AdminService adminService;
 	
 	private final HttpSession session;
+	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@GetMapping("{userId}/profile")
 	public String profile(@PathVariable(value = "userId", required = false) String userId, Authentication auth, Model model) {
@@ -106,5 +118,30 @@ public class UserController {
 			jsonObj.addProperty("message", "시스템에 문제가 발생하였습니다.");
 		}
 		return jsonObj;
+	}
+	
+	@Transactional
+	@GetMapping("/member/detail")
+	public String detail(@RequestParam Long id, AdminDTO params, 
+			HttpServletRequest request, HttpServletResponse response, Authentication auth, Model model) {
+		log.info("# Admin User Page Detail?id = " + id);
+		
+		// 게시글 리스트
+		AdminDTO admin = adminService.findByUserId(id);
+		List<BoardResponseDTO> boardCommunity = adminService.findByBoardIdAndCommunity(id);
+		List<BoardResponseDTO> boardReview = adminService.findByBoardIdAndReview(id);
+		model.addAttribute("admin", admin);
+		model.addAttribute("boardCommunity", boardCommunity);
+		model.addAttribute("boardReview", boardReview);
+		
+		// 댓글 리스트
+		
+		// 권한 모델
+		AdminDTO userModel = adminService.selectAuthUser(id);
+		List<AdminDTO> authList = adminService.selectAuthModel();
+		model.addAttribute("userModel", userModel.getModelName());
+		model.addAttribute("authList", authList);
+		
+		return "user/detail";
 	}
 }

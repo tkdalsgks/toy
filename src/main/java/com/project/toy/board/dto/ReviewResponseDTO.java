@@ -18,6 +18,8 @@ public class ReviewResponseDTO {
 	@Schema(description = "내용", nullable = false)
 	private String content;
 	
+	private String writerNo;
+	
 	@Schema(description = "작성자 아이디")
 	private String writerId;
 	
