@@ -1,9 +1,9 @@
 
 /* COMMON ------------------------------- */
-.form-admin { margin: 0 auto; margin-bottom: 3rem; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
+.form__admin { width: 550px; margin: 0 auto; margin-bottom: 3rem; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
 
 /* 본문 내용 ------------------------------- */
-.user-list { width: 600px; }
+.user-list { width: 550px; }
 .user-list thead td { text-align: center; font-weight: 600; }
 .user-list tbody td { text-align: center; }
 
@@ -26,8 +26,16 @@
 /* detail ------------------------------- */
 .admin-head { font-weight: 600; padding-right: 1rem; }
 .admin-expulsion { text-align: center; margin-top: 2rem; margin-bottom: 2rem; }
-.admin-user-board { margin-top: 1rem; margin-bottom: 2rem; }
+.admin__detail table { max-width: 550px; margin: 0 auto; }
 
-@media (max-width: 600px) {
-	.user-list { width: 100%; }
-}
+
+/* detail __TAB ------------------------------- */
+ul.tabs { margin: 0px; padding: 0px; list-style: none; }
+ul.tabs li { background: none; color: #222; display: inline-block; padding: 10px 15px; cursor: pointer; }
+ul.tabs li.current { background: #ededed; color: #222; }
+.tab-content { display: none; background: #ededed; padding: 15px; }
+.tab-content.current { display: inherit; }
+
+.admin__table { margin-top: 1rem; margin-bottom: 2rem; }
+.admin__table table { width: 100%; }
+

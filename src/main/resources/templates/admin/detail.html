@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>OYEZ - 관리자 페이지</title>
+<title>OYEZ - 관리자</title>
 
 <th:block layout:fragment="css">
 	<!-- RESET, DEFAULT -->
@@ -26,8 +26,8 @@
 
 <body>
 	
-	<main layout:fragment="content" class="form-admin">
-		<div class="admin-detail">
+	<main layout:fragment="content" class="form__admin">
+		<div class="admin__detail">
 			<table>
 				<tr>
 					<td class="admin-head">아이디</td>
@@ -42,33 +42,100 @@
 					<td class="admin-content">[[ ${admin.userNickname} ]]</td>	
 				</tr>
 				<tr>
+					<td class="admin-head">권한</td>
+					<td class="admin-content">[[ ${admin.role} ]]</td>	
+				</tr>
+				<tr>
 					<td class="admin-head">가입일자</td>
 					<td class="admin-content">[[ ${#temporals.format(admin.IDate, 'yyyy-MM-dd HH:mm:ss')} ]]</td>
 				</tr>
+				<tr>
+					<td></td><td></td>
+				</tr>
+				<tr>
+					<td class="admin-head">권한변경</td>
+					<td class="admin-content">
+						<select th:field="*{authList}" id="userModel">
+							<option th:each="authList : ${authList}" th:text="${authList.modelName}" th:value="${authList.modelName}" ></option>
+						</select>									
+					</td>
+				</tr>
 			</table>
 			
+			<div>
+			</div>
+			
 			<div class="admin-expulsion">
-				<button onclick="openModal()">회원추방</button>
+				<button onclick="openModal();">회원추방</button>
+				<button onclick="saveUser();">저장</button>
 			</div>
 		</div>
 		
-		<div class="admin-user-board">
-			<table>
-				<thead>
-					<tr>
-						<td style="text-align: center; font-weight: 600; padding-right: 1rem;">번호</td>
-						<td style="text-align: center; font-weight: 600;">제목</td>
-						<td style="text-align: center; font-weight: 600;">작성일자</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="list : ${board}">
-						<td style="text-align: center; font-weight: 600; padding-right: 1rem;" th:text="${list.id}"></td>
-						<td style="padding-right: 1rem;"><a href="javascript:void(0);" onclick="goViewPage(${list.id});"><span th:text="${list.title}"></span></a></td>
-						<td th:text="${#temporals.format(list.IDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-					</tr>
-				</tbody>
-			</table>
+		
+		
+		<div class="admin__content">
+
+			<ul class="tabs">
+				<li class="tab-link current" data-tab="tab-1">커뮤니티</li>
+				<li class="tab-link" data-tab="tab-2">리뷰</li>
+				<li class="tab-link" data-tab="tab-3">작성 댓글</li>
+			</ul>
+			
+			<!-- TAB 1 - 커뮤니티 -->
+			<div id="tab-1" class="tab-content current">
+				<div class="admin__table" th:if="${boardCommunity.size != 0}">
+					<table>
+						<thead>
+							<tr>
+								<td style="text-align: center; font-weight: 600; width: 15%;">번호</td>
+								<td style="text-align: center; font-weight: 600; width: 55%;">제목</td>
+								<td style="text-align: center; font-weight: 600; width: 30%;">작성일자</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="community : ${boardCommunity}">
+								<td style="text-align: center; font-weight: 600;" th:text="${community.id}"></td>
+								<td><a href="javascript:void(0);" onclick="goViewPage(${community.id});"><span th:text="${community.title}"></span></a></td>
+								<td style="text-align: center" th:text="${#temporals.format(community.IDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="admin__table" th:unless="${boardCommunity.size != 0}">
+					<span style="display: block; text-align: center;">작성한 커뮤니티 글이 없습니다.</span>
+				</div>
+			</div>
+			
+			<!-- TAB 2 - 리뷰 -->
+			<div id="tab-2" class="tab-content">
+				<div class="admin__table" th:if="${boardReview.size != 0}">
+					<table>
+						<thead>
+							<tr>
+								<td style="text-align: center; font-weight: 600; width: 15%;">번호</td>
+								<td style="text-align: center; font-weight: 600; width: 55%;">제목</td>
+								<td style="text-align: center; font-weight: 600; width: 30%;">작성일자</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="review : ${boardReview}">
+								<td style="text-align: center; font-weight: 600;" th:text="${review.id}"></td>
+								<td><a href="javascript:void(0);" onclick="goViewPage(${review.id});"><span th:text="${review.title}"></span></a></td>
+								<td style="text-align: center" th:text="${#temporals.format(review.IDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="admin__table" th:unless="${boardReview.size != 0}">
+					<span style="display: block; text-align: center;">작성한 리뷰 글이 없습니다.</span>
+				</div>
+			</div>
+			
+			<!-- TAB 3 - 작성 댓글 -->
+			<div id="tab-3" class="tab-content">
+				<div style="text-align: center;">-</div>
+			</div>
+		
 		</div>
 		
 		<!-- 내용 수정 모달 -->
@@ -128,6 +195,7 @@
 		        location.href = '/community/detail';
 		    }
 			
+			// 회원 추방
 			function openModal() {
 				
 				$("#userInfoModal").modal("toggle");
@@ -143,6 +211,32 @@
 			function updateUser() {
 				alert(userId);
 			}
+			
+			// 저장
+			function saveUser() {
+				var userModel = [[ ${userModel} ]];
+				var authList = [[ ${authList} ]];
+				var selectBox = $("#userModel option:selected").val();
+				
+				console.log("계정권한 : " + userModel);
+				console.log("선택값 : " + selectBox);
+				console.log(userModel == selectBox);
+			}
+			
+			// 탭
+			$(document).ready(function(){
+				
+				$('ul.tabs li').click(function(){
+					var tab_id = $(this).attr('data-tab');
+
+					$('ul.tabs li').removeClass('current');
+					$('.tab-content').removeClass('current');
+
+					$(this).addClass('current');
+					$("#"+tab_id).addClass('current');
+				})
+
+			})
 		</script>
 	</th:block>
 	

@@ -13,8 +13,10 @@ import com.project.toy.user.dto.UserDTO;
 public interface AdminMapper {
 
 	public List<AdminDTO> selectAuthModel();
+	public AdminDTO selectAuthUser(Long id);
 	public List<UserDTO> selectListUser();
 	public AdminDTO findByUserId(Long id);
-	public List<BoardResponseDTO> findByBoardId(Long id);
+	public List<BoardResponseDTO> findByBoardIdAndCommunity(Long id);
+	public List<BoardResponseDTO> findByBoardIdAndReview(Long id);
 	public int countUser(SearchDTO params);
 }

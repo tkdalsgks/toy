@@ -21,6 +21,14 @@ public class AdminService {
 	
 	private final AdminMapper adminMapper;
 	
+	public List<AdminDTO> selectAuthModel() {
+		return adminMapper.selectAuthModel();
+	}
+	
+	public AdminDTO selectAuthUser(Long id) {
+		return adminMapper.selectAuthUser(id);
+	}
+	
 	public PagingResponse<UserDTO> selectListUser(final SearchDTO params) {
 		int count = adminMapper.countUser(params);
 		if(count < 1) {
@@ -39,12 +47,12 @@ public class AdminService {
 		return adminMapper.findByUserId(id);
 	}
 	
-	public List<BoardResponseDTO> findByBoardId(Long id) {
-		return adminMapper.findByBoardId(id);
+	public List<BoardResponseDTO> findByBoardIdAndCommunity(Long id) {
+		return adminMapper.findByBoardIdAndCommunity(id);
 	}
 	
-	public List<AdminDTO> selectAuthModel() {
-		return adminMapper.selectAuthModel();
+	public List<BoardResponseDTO> findByBoardIdAndReview(Long id) {
+		return adminMapper.findByBoardIdAndReview(id);
 	}
 
 }
