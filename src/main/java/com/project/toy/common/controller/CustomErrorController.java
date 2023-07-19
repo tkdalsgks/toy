@@ -35,9 +35,6 @@ public class CustomErrorController implements ErrorController {
 			if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
 				return PATH + "500";
 			}
-			if(statusCode == HttpStatus.BAD_GATEWAY.value()) {
-				return PATH + "502";
-			}
 			if(statusCode == HttpStatus.SERVICE_UNAVAILABLE.value()) {
 				return PATH + "503";
 			}
