@@ -13,7 +13,7 @@
 	</sql>
 	
 	<select id="findByLockUser" parameterType="UserDTO" resultType="LockUserDTO">
-		/* com.project.toy.user.dto.LockUserDTO */
+		/* com.project.toy.user.mapper.UserMapper, 해당 사용자 계정 잠금 여부 확인 */
 		
 		SELECT USER_ID, FAIL_CNT, LOCK_YN, LOCK_DATE
 		FROM   T_PERSON
@@ -23,7 +23,7 @@
 	</select>
 	
 	<update id="updateFailLogin" parameterType="LockUserDTO">
-		/* com.project.toy.user.dto.LockUserDTO */
+		/* com.project.toy.user.mapper.UserMapper, 로그인 실패 횟수 카운팅 */
 		
 		UPDATE T_PERSON
 		SET    FAIL_CNT = #{ failCnt }
@@ -37,19 +37,19 @@
    </update>
    
    <select id="findByUserId" resultType="UserDTO">
-		/* com.project.toy.user.dto.UserDTO */
+		/* com.project.toy.user.mapper.UserMapper, 해당 사용자가 존재하는지 확인 */
 		
 		SELECT * FROM toy.T_PERSON WHERE USE_YN = 'Y' AND USER_EMAIL = LOWER(#{ userEmail })
 	</select>
 	
 	<select id="findByUserPwd" resultType="UserDTO">
-		/* com.project.toy.user.dto.UserDTO */
+		/* com.project.toy.user.mapper.UserMapper, 사용자 비밀번호 찾기 */
 		
 		SELECT * FROM toy.T_PERSON WHERE USE_YN = 'Y' AND USER_ID = LOWER(#{ userId }) AND USER_EMAIL = LOWER(#{ userEmail })
 	</select>
 	
 	<update id="updateUserPwd" parameterType="UserDTO">
-		/* com.project.toy.user.dto.UserDTO */
+		/* com.project.toy.user.mapper.UserMapper, 사용자 비밀번호 업데이트 */
 		
 		UPDATE T_PERSON
 		SET    USER_PWD = #{ userPwd }
@@ -60,7 +60,7 @@
 	</update>
 	
 	<update id="updateProfile" parameterType="UpdateUserDTO">
-		/* com.project.toy.user.dto.UpdateUserDTO */
+		/* com.project.toy.user.mapper.UserMapper, 사용자 계정 정보 업데이트 */
 		
 		UPDATE T_PERSON
 		SET    USER_NICKNAME = #{ userNickname }
@@ -72,6 +72,8 @@
 	</update>
 	
 	<select id="selectCertifiedEmail" resultType="CertifiedUserDTO">
+		/* com.project.toy.user.mapper.UserMapper, 사용자 계정 인증 확인 */
+		
 		SELECT *
 		FROM   T_PERSON_CERTIFIED
 		WHERE  1=1
@@ -79,7 +81,7 @@
 	</select>
 	
 	<insert id="certifiedEmail" parameterType="CertifiedUserDTO">
-		/* com.project.toy.user.dto.CertifiedUserDTO */
+		/* com.project.toy.user.mapper.UserMapper, 사용자 계정 인증 */
 		
 		INSERT INTO toy.T_PERSON_CERTIFIED ( ID, USER_ID, CERTIFIED_CODE, I_DATE )
 		VALUES ( nextval(toy.T_PERSON_CERTIFIED_SEQ), #{ userId }, #{ certifiedCode }, NOW() )
@@ -87,7 +89,7 @@
 	</insert>
 	
 	<update id="successCertifiedEmail" parameterType="CertifiedUserDTO">
-		/* com.project.toy.user.dto.CertifiedUserDTO */
+		/* com.project.toy.user.mapper.UserMapper, 사용자 계정 활성화 */
 		
 		UPDATE T_PERSON_CERTIFIED
 		SET    CERTIFIED_YN = 'Y'
@@ -97,7 +99,7 @@
 	</update>
 	
 	<update id="successCertifiedRole" parameterType="UserDTO">
-		/* com.project.toy.user.dto.UserDTO */
+		/* com.project.toy.user.mapper.UserMapper, 사용자 계정 권한 업데이트 'GUEST -> USER' */
 		
 		UPDATE T_PERSON
 		SET    ROLE = 'USER'

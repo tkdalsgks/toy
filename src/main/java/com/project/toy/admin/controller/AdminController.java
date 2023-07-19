@@ -14,15 +14,20 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.JsonObject;
 import com.project.toy.admin.dto.AdminDTO;
 import com.project.toy.admin.service.AdminService;
 import com.project.toy.board.dto.BoardResponseDTO;
 import com.project.toy.common.dto.SearchDTO;
 import com.project.toy.paging.PagingResponse;
 import com.project.toy.user.dto.SessionUser;
+import com.project.toy.user.dto.UpdateUserDTO;
 import com.project.toy.user.dto.UserDTO;
 import com.project.toy.user.service.UserService;
 
@@ -82,5 +87,14 @@ public class AdminController {
 		model.addAttribute("authList", authList);
 		
 		return "admin/detail";
+	}
+	
+	@PostMapping("/detail")
+	public @ResponseBody JsonObject detailsave(@RequestBody UpdateUserDTO updateUserDTO, Model model) {
+		JsonObject jsonObj = new JsonObject();
+		
+		adminService.updateAuthUser(updateUserDTO);
+		
+		return jsonObj;
 	}
 }

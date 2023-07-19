@@ -64,7 +64,7 @@
 			<input type="hidden" id="writer" name="writer" th:value="${board.writerId}">
 			<input type="hidden" id="writerName" name="writerName" th:value="${board.writer}">
 			<input type="hidden" id="userId" name="userId" th:value="${userId}">
-
+<!-- 
 			<section>
 				<p class="board-btn">
 					<a class="btn btn-primary board-btn-a community-btn" onclick="goChangePage();">수정</a>
@@ -80,9 +80,49 @@
 		            </button>
 				</div>
 				<div class="board-info">
-					<span><span class="board-writer">글쓴이</span><a th:href="@{/member/detail?id=} + ${board.writerNo}">[[${board.writer} ]]</a></span>
+					<span><span class="board-writer">작성자</span><a th:href="@{/member/detail?id=} + ${board.writerNo}">[[${board.writer} ]]</a></span>
 						<span th:text="${#temporals.format( board.IDate, 'YYYY/MM/dd HH:mm' )}"></span>
 					<span class="board-viewCnt1"><span class="board-view">조회수</span>[[ ${board.viewCnt} ]]</span>
+				</div>
+				<div class="board-contents">
+					<p class="board-content" th:utext="${board.content}" style="display: none;"></p>
+				</div>
+			</section>
+			 -->
+			<section>
+				<div class="board-title">
+					<span class="board-title1" id="board-title">[[ ${board.title} ]]</span>
+					<span class="board-udate">[[${board.UDate != null ? '수정됨' : ''} ]]</span>
+				</div>
+				
+				<div class="board-info">
+					<img src="" class="board-info__img">
+					<div style="flex-direction: column; flex-grow: 1;">
+						<div style="display: flex; justify-content: space-between; align-items: baseline;">
+							<a th:href="@{/member/detail?id=} + ${board.writerNo}"><span class="board-writer">[[ ${board.writer} ]]</span></a>
+							<span th:if="${userId == board.writerId}">
+								<a onclick="goChangePage();">수정</a>
+								<a onclick="deleteBoard();">삭제</a>
+							<!-- <span th:if="${userId == review.writerId}" class="board-btn"> -->
+								<!-- <a class="btn btn-primary board-btn-a community-btn" onclick="goChangePage();">수정</a> -->
+								<!-- <button class="btn btn-danger board-btn-a community-btn" onclick="deleteBoard();">삭제</button> -->
+								<!-- <a href="javascript:history.go(-1)" class="btn btn-light board-btn-a community-btn" onclick="goListPage();">뒤로</a> -->
+							</span>
+						</div>
+						<div style="display: flex; justify-content: space-between; align-items: baseline;">
+							<span class="board-viewCnt1">
+								<span class="board-view">
+									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-4 w-4 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+								</span>
+								[[ ${board.viewCnt} ]]
+							</span>
+							<span th:text="${#temporals.format( board.IDate, 'YYYY/MM/dd HH:mm' )}"></span>
+							<button id="board-likes" class="btns btn_mid board-likes">
+				            	<img th:src="${likes != 0 ? '/img/app/board/likes.png' : '/img/app/board/unlikes.png'}" th:onclick="insertLikes([[ ${board.id} ]]);" class="board-likes">
+				            	<span>[[ ${likesAll} ]]</span>
+				            </button>
+						</div>
+					</div>
 				</div>
 				<div class="board-contents">
 					<p class="board-content" th:utext="${board.content}" style="display: none;"></p>
@@ -235,8 +275,7 @@
 			
 	     	// 사용자 상세 페이지로 이동
 		    function goUserPage(id) {
-		        const queryString = (location.search) ? location.search + `&id=${id}` : `?id=${id}`;
-		        location.href = '/member/detail' + queryString;
+		        location.href = '/member/detail' + `?id=${id}`;
 		    }
 			
 	        $(function() {
@@ -482,7 +521,7 @@
 									<div class="comment-img">
 										<img src="/img/app/chat/chat.png">
 										<div class="comment-name">
-											<span class="name">${comment.writer}</span>
+											<span class="name"><a href="javascript:void(0);" onclick="goUserPage(${comment.writerNo});">${comment.writer}</a></span>
 											<div class="comment-edit" style="display: flex;">
 												<span class="time comment-time">${timeForToday(moment(comment.IDate).format('YYYY/MM/DD HH:mm'))}
 													<span>${comment.UDate != null ? '·' : ''}</span>

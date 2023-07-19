@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				layout:decorate="~{layouts/layout}">
+
+<head>
+<meta charset="UTF-8">
+<title>OYEZ - CHAT GPT</title>
+
+<th:block layout:fragment="css">
+	<!-- RESET, DEFAULT -->
+	<link rel="stylesheet" th:href="@{/css/app/reset.css}" />
+	<link rel="stylesheet" th:href="@{/css/lib/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/index.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/default.css}" />
+	<!-- POPUP -->
+	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
+	<!-- BOARD -->
+	<link rel="stylesheet" th:href="@{/css/app/board/community/board.css}" />
+	<link rel="stylesheet" th:href="@{/css/app/button.css}" />
+	
+	<link rel="stylesheet" th:href="@{/css/app/loading.css}" />
+</th:block>
+
+</head>
+
+<body>
+	
+	<main layout:fragment="content" class="container">
+		<form th:action="@{/gpt/question}" method="post">
+			<label for="question">질문 : </label>
+			<input type="text" id="question" name="question" required>
+			<button type="submit">전송</button>
+		</form>
+		
+		<div th:if="${response}">
+			<label>응답 : </label>
+			<p th:text="${response}"></p>
+		</div>
+	</main>
+	
+	<th:block layout:fragment="script">
+		<!-- FONT AWESOME -->
+		<script type="text/javascript" src="/js/lib/fontawesome.js"></script>
+		<!-- Jquery, Bootstrap -->
+		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/app/header.js"></script>
+		<!-- SWEETALERT2 -->
+		<script type="text/javascript" src="/js/lib/sweetalert2.js"></script>
+		<!-- POPUP -->
+		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
+		<script type="text/javascript" src="/js/lib/stomp.min.js"></script>
+		<script type="text/javascript" src="/js/app/popup.js"></script>
+		<!-- BOARD -->
+		<script type="text/javascript" src="/js/lib/moment.js"></script>
+		<script type="text/javascript" src="/js/app/board/community/board.js"></script>
+		<!-- LOADING -->
+		<script type="text/javascript" src="/js/lib/loadingoverlay.min.js"></script>
+		<script type="text/javascript" src="/js/app/loading.js"></script>
+		<script th:inline="javascript">
+		
+		</script>
+	</th:block>
+	
+</body>
+
+</html>

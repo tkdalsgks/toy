@@ -13,6 +13,8 @@ public class CommentResponseDTO {
 	
 	private String content;
 	
+	private String writerNo;
+	
 	private String writer;
 	
 	private String writerId;

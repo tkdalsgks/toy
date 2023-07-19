@@ -11,19 +11,21 @@
 	</sql>
 	
 	<select id="selectLikes" parameterType="LikesDTO" resultType="int">
+		/* com.project.toy.likes.mapper.LikesMapper, 해당 게시글 좋아요 갯수 카운팅 */
+		
 		SELECT COUNT(1) FROM BOARD_LIKES WHERE BOARD_ID = #{ boardId } AND USE_YN = 'Y'
 	</select>
 	
 	<!-- 좋아요한 게시글 카운트 -->
 	<select id="findLikes" resultType="int">
-		/* com.project.toy.likes.dto.LikesDTO */
+		/* com.project.toy.likes.mapper.LikesMapper, 사용자 게시글 좋아요 갯수 카운팅 */
 		
 		SELECT COUNT(1) FROM BOARD_LIKES WHERE BOARD_ID = #{ boardId } AND USER_ID = #{ userId } AND USE_YN = 'Y'
 	</select>
 	
 	<!-- 좋아요 -->
 	<insert id="saveLikes" parameterType="LikesDTO">
-		/* com.project.toy.likes.dto.LikesDTO */
+		/* com.project.toy.likes.mapper.LikesMapper, 게시글 좋아요 */
 		
 		INSERT INTO toy.BOARD_LIKES ( <include refid="likesColumns" /> )
 		VALUES ( nextval(BOARD_LIKES_SEQ), #{ boardId }, #{ userId }, NOW() )
@@ -31,7 +33,7 @@
 	
 	<!-- 취소 -->
 	<update id="deleteLikes" parameterType="LikesDTO">
-		/* com.project.toy.likes.dto.LikesDTO */
+		/* com.project.toy.likes.mapper.LikesMapper, 게시글 좋아요 취소 */
 		
 		UPDATE toy.BOARD_LIKES
 		SET    USE_YN = 'N'
@@ -42,7 +44,7 @@
 	
 	<!-- 좋아요 수 업데이트 -->
 	<update id="updateCountLikes" parameterType="LikesDTO">
-		/* com.project.toy.likes.dto.LikesDTO */
+		/* com.project.toy.likes.mapper.LikesMapper, 게시글 좋아요 갯수 업데이트 */
 		
 		UPDATE BOARD B
 		SET    B.LIKES_CNT = ( SELECT COUNT(1)
@@ -57,7 +59,7 @@
 	
 	<!-- 오늘 좋아요 누른 횟수 -->
 	<select id="selectTodayLikes" parameterType="LikesDTO" resultType="int">
-		/* com.project.toy.likes.dto.LikesDTO */
+		/* com.project.toy.likes.mapper.LikesMapper, 사용자별 오늘 좋아요 누른 횟수 */
 		
 		SELECT COUNT(1)
 		FROM   BOARD_LIKES

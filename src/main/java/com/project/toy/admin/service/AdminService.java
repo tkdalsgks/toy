@@ -11,6 +11,7 @@ import com.project.toy.board.dto.BoardResponseDTO;
 import com.project.toy.common.dto.SearchDTO;
 import com.project.toy.paging.Pagination;
 import com.project.toy.paging.PagingResponse;
+import com.project.toy.user.dto.UpdateUserDTO;
 import com.project.toy.user.dto.UserDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -53,6 +54,10 @@ public class AdminService {
 	
 	public List<BoardResponseDTO> findByBoardIdAndReview(Long id) {
 		return adminMapper.findByBoardIdAndReview(id);
+	}
+
+	public void updateAuthUser(UpdateUserDTO updateUserDTO) {
+		adminMapper.updateAuthUser(updateUserDTO);
 	}
 
 }

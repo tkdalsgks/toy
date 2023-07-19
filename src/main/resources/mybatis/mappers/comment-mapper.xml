@@ -16,17 +16,17 @@
 	</sql>
 	
 	<select id="findByCommentId" parameterType="long" resultType="CommentResponseDTO">
-		/* com.project.toy.comment.dto.CommentResponseDTO */
+		/* com.project.toy.comment.mapper.CommentMapper, 해당 댓글 출력 */
 		
 		SELECT <include refid="commentColumns" />
-		FROM COMMENT
+		FROM  COMMENT
 		WHERE DELETE_YN = 'N'
 		AND   ID = #{ id }
 	</select>
 	
 	<!-- 저장 -->
 	<insert id="saveComment" parameterType="CommentRequestDTO" useGeneratedKeys="true" keyProperty="id">
-		/* com.project.toy.comment.dto.CommentRequestDTO */
+		/* com.project.toy.comment.mapper.CommentMapper, 댓글 저장 */
 		
 		INSERT INTO COMMENT ( <include refid="commentColumns" /> )
 		VALUES ( #{ id }, #{ boardId }, #{ content }, #{ writerId }, #{ writer }, #{ rating }, 'N', NOW(), NULL )
@@ -34,6 +34,8 @@
 	
 	<!-- 댓글 수 업데이트 -->
 	<update id="updateCountComment" parameterType="CommentRequestDTO">
+		/* com.project.toy.comment.mapper.CommentMapper, 댓글 수 업데이트 */
+		
 		UPDATE BOARD B
 		SET    B.COMMENT_CNT = ( SELECT COUNT(1)
 		                         FROM   COMMENT C
@@ -46,7 +48,7 @@
 	
 	<!-- 수정 -->
 	<update id="updateComment" parameterType="CommentRequestDTO">
-		/* com.project.toy.comment.dto.CommentRequestDTO */
+		/* com.project.toy.comment.mapper.CommentMapper, 댓글 수정 */
 		
 		UPDATE COMMENT
 		SET    U_DATE = NOW()
@@ -58,6 +60,8 @@
 	
 	<!-- 삭제 -->
 	<update id="deleteComment" parameterType="long">
+		/* com.project.toy.comment.mapper.CommentMapper, 댓글 삭제 */
+		
 		UPDATE COMMENT
 		SET    CONTENT = '[삭제된 댓글입니다.]'
 		     , DELETE_YN = 'Y'
@@ -68,17 +72,29 @@
 	
 	<!-- 리스트 조회 -->
 	<select id="findAll" parameterType="long" resultType="CommentResponseDTO">
-		/* com.project.toy.comment.dto.CommentResponseDTO */
+		/* com.project.toy.comment.mapper.CommentMapper, 해당 게시글 댓글 전체 조회 */
 		
-		SELECT <include refid="commentColumns" />
-		FROM   COMMENT
+		SELECT A.ID, 
+		       A.BOARD_ID, 
+		       A.CONTENT, 
+		       B.USER_NO AS WRITER_NO, 
+		       A.WRITER_ID, 
+		       A.WRITER, 
+		       A.RATING, 
+		       A.DELETE_YN, 
+		       A.I_DATE, 
+		       A.U_DATE
+		FROM   COMMENT A
+		LEFT OUTER JOIN T_PERSON B ON A.WRITER_ID = B.USER_ID
 		WHERE  1=1
-		AND    BOARD_ID = #{ value }
-		ORDER BY ID ASC
+		AND    A.BOARD_ID = #{ value }
+		ORDER BY A.ID ASC
 	</select>
 	
 	<!-- 댓글 갯수 카운트 -->
 	<select id="countComment" parameterType="long" resultType="int">
+		/* com.project.toy.comment.mapper.CommentMapper, 댓글 갯수 카운팅 */
+		
 		SELECT COUNT(1)
 		FROM   COMMENT
 		WHERE  1=1

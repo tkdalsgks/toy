@@ -28,10 +28,12 @@
 	
 	<main layout:fragment="content" class="form__admin">
 		<div class="admin__detail">
+			<input type="hidden" id="userNo" name="userNo" th:value="${admin.userNo}">
+			<input type="hidden" id="userId" name="userId" th:value="${admin.userId}">
 			<table>
 				<tr>
 					<td class="admin-head">아이디</td>
-					<td class="admin-content">[[ ${admin.userId} ]]</td>
+					<td id="userId" class="admin-content">[[ ${admin.userId} ]]</td>
 				</tr>
 				<tr>
 					<td class="admin-head">이메일</td>
@@ -43,19 +45,17 @@
 				</tr>
 				<tr>
 					<td class="admin-head">권한</td>
-					<td class="admin-content">[[ ${admin.role} ]]</td>	
+					<td id="admin__role" class="admin-content">[[ ${admin.role} ]]</td>	
 				</tr>
 				<tr>
 					<td class="admin-head">가입일자</td>
 					<td class="admin-content">[[ ${#temporals.format(admin.IDate, 'yyyy-MM-dd HH:mm:ss')} ]]</td>
 				</tr>
 				<tr>
-					<td></td><td></td>
-				</tr>
-				<tr>
 					<td class="admin-head">권한변경</td>
 					<td class="admin-content">
 						<select th:field="*{authList}" id="userModel">
+							<option value="NONE">선택</option>
 							<option th:each="authList : ${authList}" th:text="${authList.modelName}" th:value="${authList.modelName}" ></option>
 						</select>									
 					</td>
@@ -95,8 +95,8 @@
 						<tbody>
 							<tr th:each="community : ${boardCommunity}">
 								<td style="text-align: center; font-weight: 600;" th:text="${community.id}"></td>
-								<td><a href="javascript:void(0);" onclick="goViewPage(${community.id});"><span th:text="${community.title}"></span></a></td>
-								<td style="text-align: center" th:text="${#temporals.format(community.IDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+								<td><a th:href="@{/community/detail?id=} + ${community.id}"><span th:text="${community.title}"></span></a></td>
+								<td style="text-align: center; font-size: .9rem;" th:text="${#temporals.format(community.IDate, 'yyyy-MM-dd HH:mm')}"></td>
 							</tr>
 						</tbody>
 					</table>
@@ -120,8 +120,8 @@
 						<tbody>
 							<tr th:each="review : ${boardReview}">
 								<td style="text-align: center; font-weight: 600;" th:text="${review.id}"></td>
-								<td><a href="javascript:void(0);" onclick="goViewPage(${review.id});"><span th:text="${review.title}"></span></a></td>
-								<td style="text-align: center" th:text="${#temporals.format(review.IDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+								<td><a th:href="@{/review/detail?id=} + ${review.id}"><span th:text="${review.title}"></span></a></td>
+								<td style="text-align: center; font-size: .9rem;" th:text="${#temporals.format(review.IDate, 'yyyy-MM-dd HH:mm')}"></td>
 							</tr>
 						</tbody>
 					</table>
@@ -218,11 +218,45 @@
 			function saveUser() {
 				var userModel = [[ ${userModel} ]];
 				var authList = [[ ${authList} ]];
+				
+				var userId = document.getElementById("userId").value;
 				var selectBox = $("#userModel option:selected").val();
 				
-				console.log("계정권한 : " + userModel);
-				console.log("선택값 : " + selectBox);
-				console.log(userModel == selectBox);
+				//console.log("아이디 : " + userId);
+				//console.log("계정권한 : " + userModel);
+				//console.log("선택값 : " + selectBox);
+				
+				if(selectBox != 'NONE') {
+					swal.fire({
+	    				text: '회원정보를 저장할까요?',
+	    				icon: 'warning',
+	    				showCancelButton: true,
+	    				confirmButtonColor: '#3085d6',
+	    				confirmButtonText: '확인',
+	    				cancelButtonColor: '#d33',
+	    				cancelButtonText: '취소'
+	    			}).then((result) => {
+	    				if(result.isConfirmed) {
+	    					var uri = [[ @{/admin/detail} ]];
+	    					var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
+	    					var params = { "userId": userId, "role": selectBox };
+	    					
+	    					$.ajax({
+	    						url: uri,
+	    						type: "POST",
+	    						headers: headers,
+	    						dataType: "json",
+	    						data: JSON.stringify(params),
+	    						success: function(data) {
+	    							$("#admin__role").html('<td id="admin__role" class="admin-content">' + selectBox + '</td>');
+	    						},
+	    						error: function(data) {
+	    							console.log("fail");
+	    						}
+	    					});
+	    				}
+	    			});
+				}
 			}
 			
 			// 탭
