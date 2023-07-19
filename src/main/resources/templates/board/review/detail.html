@@ -239,6 +239,11 @@
 	        	/* th:href="@{/community/write( id=${board.id} )}"  */
 	        }
 			
+	     	// 사용자 상세 페이지로 이동
+		    function goUserPage(id) {
+		        location.href = '/member/detail' + `?id=${id}`;
+		    }
+			
 	        $(function() {
 				printCommentList();
 			});
@@ -497,7 +502,7 @@
 									<div class="comment-img">
 										<img src="/img/app/chat/chat.png">
 										<div class="comment-name">
-											<span class="name">${comment.writer}</span>
+											<span class="name"><a href="javascript:void(0);" onclick="goUserPage(${comment.writerNo});">${comment.writer}</a></span>
 											<div class="comment-edit" style="display: flex;">
 												<span class="time comment-time">${timeForToday(moment(comment.IDate).format('YYYY/MM/DD HH:mm'))}
 													<span>${comment.UDate != null ? '·' : ''}</span>

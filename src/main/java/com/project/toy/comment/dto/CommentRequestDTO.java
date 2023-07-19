@@ -9,9 +9,16 @@ import lombok.NoArgsConstructor;
 public class CommentRequestDTO {
 
 	private Long id;
+	
 	private String boardId;
+	
 	private String content;
+	
+	private String writerNo;
+	
 	private String writer;
+	
 	private String writerId;
+	
 	private int rating;
 }
