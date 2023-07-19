@@ -53,15 +53,15 @@
 	
 	<!-- 작성 -->
 	<insert id="saveReview" parameterType="ReviewRequestDTO">
-		/* com.project.toy.board.dto.ReviewRequestDTO */
+		/* com.project.toy.board.mapper.ReviewMapper, 리뷰 게시글 작성 */
 		
 		INSERT INTO BOARD ( <include refid="reviewColumns" /> )
-		VALUES ( #{ id }, 2, #{ title }, #{ content }, #{ writerNo}, #{ writerId }, #{ writer }, 0, 0, 0, #{ noticeYn }, 0, NOW(), NULL ) 
+		VALUES ( #{ id }, 2, #{ title }, #{ content }, #{ writerNo }, #{ writerId }, #{ writer }, 0, 0, 0, #{ noticeYn }, 0, NOW(), NULL ) 
 	</insert>
 	
 	<!-- 상세보기 -->
 	<select id="findByReviewId" resultType="ReviewResponseDTO">
-		/* com.project.toy.board.dto.ReviewResponseDTO */
+		/* com.project.toy.board.mapper.ReviewMapper, 리뷰 게시글 상세보기 */
 		
 		SELECT <include refid="reviewColumns" />
 		FROM   BOARD
@@ -71,7 +71,7 @@
 	
 	<!-- 수정 -->
 	<update id="updateReview" parameterType="ReviewRequestDTO">
-		/* com.project.toy.board.dto.ReviewRequestDTO */
+		/* com.project.toy.board.mapper.ReviewMapper, 리뷰 게시글 수정 */
 		
 		UPDATE BOARD
 		SET    U_DATE = NOW()
@@ -85,6 +85,8 @@
 	
 	<!-- 삭제 -->
 	<delete id="deleteByReviewId" parameterType="long">
+		/* com.project.toy.board.mapper.ReviewMapper, 리뷰 게시글 삭제 */
+		
 		UPDATE BOARD
 		SET    DELETE_YN = 1
 		WHERE  1=1
@@ -93,7 +95,7 @@
 	
 	<!-- 일반 리스트 -->
 	<select id="findAll" parameterType="SearchDTO" resultType="ReviewResponseDTO">
-		/* com.project.toy.board.dto.ReviewResponseDTO */
+		/* com.project.toy.board.mapper.ReviewMapper, 리뷰 일반 게시글 조회 */
 		
 		SELECT <include refid="reviewColumns" />
 		FROM   BOARD
@@ -108,35 +110,61 @@
 	
 	<!-- 공지 리스트 -->
 	<select id="findNotice" resultType="ReviewResponseDTO">
-		/* com.project.toy.board.dto.ReviewResponseDTO */
+		/* com.project.toy.board.mapper.ReviewMapper, 리뷰 공지사항 리스트 조회 */
 		
-		SELECT <include refid="reviewColumns" />
-		FROM   BOARD
+		SELECT A.ID, 
+		       A.BOARD_SEQ, 
+		       A.TITLE, 
+		       A.CONTENT, 
+		       B.USER_NO AS WRITER_NO, 
+		       A.WRITER_ID, 
+		       A.WRITER, 
+		       A.VIEW_CNT, 
+		       A.COMMENT_CNT, 
+		       A.LIKES_CNT, 
+		       A.NOTICE_YN, 
+		       A.DELETE_YN, 
+		       A.I_DATE, 
+		       A.U_DATE
+		FROM   BOARD A
+		LEFT OUTER JOIN T_PERSON B ON A.WRITER_ID = B.USER_ID
 		WHERE  1=1
-		AND    NOTICE_YN = 1
-		AND    DELETE_YN = 0
-		ORDER BY ID DESC
+		AND    A.NOTICE_YN = 1
+		AND    A.DELETE_YN = 0
+		ORDER BY A.ID DESC
 		LIMIT  2
 	</select>
 	
 	<!-- 오늘 최다 좋아요 리스트 -->
 	<select id="findLikesBestReview" resultType="ReviewResponseDTO">
-		SELECT B.ID, B.TITLE, B.COMMENT_CNT, B.VIEW_CNT, COUNT(BOARD_ID) AS LIKES_CNT, B.NOTICE_YN, B.WRITER_NO, B.WRITER, B.I_DATE, A.I_DATE
+		/* com.project.toy.board.mapper.ReviewMapper, 리뷰 최다 좋아요 게시글 조회 */
+		
+		SELECT B.ID, 
+		       B.TITLE, 
+		       B.COMMENT_CNT, 
+		       B.VIEW_CNT, 
+		       COUNT(A.BOARD_ID) AS LIKES_CNT, 
+		       B.NOTICE_YN, 
+		       C.USER_NO AS WRITER_NO, 
+		       B.WRITER, 
+		       B.I_DATE, 
+		       A.I_DATE
 		FROM   BOARD_LIKES A
 		LEFT OUTER JOIN BOARD B ON A.BOARD_ID = B.ID
+		LEFT OUTER JOIN T_PERSON C ON B.WRITER_ID = C.USER_ID
 		WHERE  1=1
-		AND    BOARD_SEQ = 2
-		AND    NOTICE_YN = 0
-		AND    USE_YN = 'Y'
+		AND    B.BOARD_SEQ = 2
+		AND    B.NOTICE_YN = 0
+		AND    A.USE_YN = 'Y'
 		AND    A.I_DATE BETWEEN (SELECT DATE_FORMAT(NOW(), '%Y-%m-%d') FROM DUAL) AND NOW()
-		GROUP BY BOARD_ID 
-		ORDER BY LIKES_CNT DESC
+		GROUP BY A.BOARD_ID 
+		ORDER BY B.LIKES_CNT DESC
 		LIMIT 2
 	</select>
 	
 	<!-- 게시글 수 카운팅 -->
 	<select id="countReview" parameterType="SearchDTO" resultType="int">
-		/* com.project.toy.common.dto.SearchDTO */
+		/* com.project.toy.board.mapper.ReviewMapper, 리뷰 게시글 수 카운팅 */
 		
 		SELECT COUNT(1)
 		FROM   BOARD
@@ -147,6 +175,8 @@
 	</select>
 	
 	<update id="countHits" parameterType="long">
+		/* com.project.toy.board.mapper.ReviewMapper, 리뷰 조회수 카운팅 */
+		
 		UPDATE BOARD
 		SET    VIEW_CNT = VIEW_CNT + 1
 		WHERE  ID = #{ id }

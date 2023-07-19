@@ -22,31 +22,33 @@
 	</sql>
 	
 	<insert id="insertLoginLog" parameterType="LoginLogDTO">
+		/* com.project.toy.security.mapper.SecurityMapper, 로그인 로그 */
+		
 		INSERT INTO toy.LOGIN_LOG ( <include refid="loginLogColumns" /> )
 		VALUES ( nextval(toy.LOGIN_LOG_SEQ), #{ loginId }, #{ accessIp }, NOW() )
 	</insert>
 	
 	<insert id="saveUser" parameterType="UserDTO">
-		/* com.project.toy.user.dto.UserDTO */
+		/* com.project.toy.security.mapper.SecurityMapper, 신규 회원가입 */
 		
 		INSERT INTO toy.T_PERSON ( <include refid="userColumns" /> )
 		VALUES ( nextval(toy.T_PERSON_SEQ), LOWER(#{ userId }), #{ userPwd }, LOWER(#{ userEmail }), #{ userNickname }, #{ provider }, #{ role }, NOW() )
 	</insert>
 	
 	<select id="findByUserId" resultType="UserDTO">
-		/* com.project.toy.user.dto.UserDTO */
+		/* com.project.toy.security.mapper.SecurityMapper, 아이디 중복확인 */
 		
 		SELECT * FROM toy.T_PERSON WHERE USER_ID = #{ userId }
 	</select>
 	
 	<select id="findByUserEmail" resultType="UserDTO">
-		/* com.project.toy.user.dto.UserDTO */
+		/* com.project.toy.security.mapper.SecurityMapper, 이메일 중복확인 */
 		
 		SELECT * FROM toy.T_PERSON WHERE USE_YN = 'Y' AND USER_EMAIL = #{ userEmail }
 	</select>
 	
 	<select id="findByUserNickname" resultType="UserDTO">
-		/* com.project.toy.user.dto.UserDTO */
+		/* com.project.toy.security.mapper.SecurityMapper, 닉네임 중복확인 */
 		
 		SELECT * FROM toy.T_PERSON WHERE USE_YN = 'Y' AND USER_NICKNAME = #{ userNickname }
 	</select>
