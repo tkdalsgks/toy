@@ -10,4 +10,5 @@ public class UpdateUserDTO {
 	private String userId;
 	private String userNickname;
 	private String userEmail;
+	private String role;
 }
