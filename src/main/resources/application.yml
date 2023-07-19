@@ -6,6 +6,10 @@ server:
     session: 
       timeout: 1800
       
+  error:
+    include-exception: true       # 오류 응답에 exception 내용을 포함할지 여부
+    include-stacktrace: always    # 오류 응답에 stacktrace 내용을 포함할지 여부
+      
 spring:
   profiles: 
     active: local
@@ -14,6 +18,11 @@ spring:
   mvc:
     converters:
       preferred-json-mapper: gson
+  
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
     
 mybatis: 
   config-location: classpath:mybatis/mybatis-config.xml
