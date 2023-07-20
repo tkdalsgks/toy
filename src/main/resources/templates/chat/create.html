@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>OYEZ - CHAT GPT</title>
+<title>OYEZ - 채팅방</title>
 
 <th:block layout:fragment="css">
 	<!-- RESET, DEFAULT -->
@@ -16,28 +16,30 @@
 	<link rel="stylesheet" th:href="@{/css/app/default.css}" />
 	<!-- POPUP -->
 	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
-	<!-- BOARD -->
-	<link rel="stylesheet" th:href="@{/css/app/board/community/board.css}" />
-	<link rel="stylesheet" th:href="@{/css/app/button.css}" />
-	
-	<link rel="stylesheet" th:href="@{/css/app/loading.css}" />
 </th:block>
 
 </head>
 
 <body>
 	
+	<!-- CONTENT -->
 	<main layout:fragment="content" class="container">
-		<form th:action="@{/chat/gpt}" method="post">
-			<label for="question">질문 : </label>
-			<input type="text" id="question" name="question" required>
-			<button type="submit">전송</button>
-		</form>
-		
-		<div th:if="${response}">
-			<label>응답 : </label>
-			<p th:text="${response}"></p>
-		</div>
+		<!-- MENU : Chat -->
+   		<div id="menuChat" class="menuChat">
+	   		<!-- Chat Room Create -->
+			<div id="chatSecond">
+			        <input type="text" id="roomName" name="name" class="form-control">
+			        <button class="btn btn-secondary active" id="createChatRoom">개설하기</button>
+		    </div>
+		    
+		    <!-- Chat Room List -->
+			<div id="chatThird">
+            	<span th:if="${roomList == null}">채팅방이 없어요 !</span>
+	            <ul th:unless="${roomList == null}" th:each="roomList : ${roomList}">
+	                <li><a th:href="@{/chat/room(roomId=${roomList.roomId})}">[[${roomList.name}]]</a></li>
+	            </ul>
+		    </div>
+	    </div>
 	</main>
 	
 	<th:block layout:fragment="script">
@@ -53,14 +55,8 @@
 		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
 		<script type="text/javascript" src="/js/lib/stomp.min.js"></script>
 		<script type="text/javascript" src="/js/app/popup.js"></script>
-		<!-- BOARD -->
-		<script type="text/javascript" src="/js/lib/moment.js"></script>
-		<script type="text/javascript" src="/js/app/board/community/board.js"></script>
-		<!-- LOADING -->
-		<script type="text/javascript" src="/js/lib/loadingoverlay.min.js"></script>
-		<script type="text/javascript" src="/js/app/loading.js"></script>
 		<script th:inline="javascript">
-		
+			
 		</script>
 	</th:block>
 	
