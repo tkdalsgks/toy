@@ -14,9 +14,13 @@
 	</sql>
 
 	<select id="selectAuthModel" resultType="AdminDTO">
-		/* com.project.toy.admin.mapper.AdminMapper, 전체 권한 모델 리스트 */
+		/* com.project.toy.admin.mapper.AdminMapper, 전체 권한 모델 리스트 (UN_USER 제외) */
 		
-		SELECT MODEL_NAME FROM T_AUTH_MODEL WHERE USE_YN = 'Y'
+		SELECT MODEL_NAME 
+		FROM   T_AUTH_MODEL 
+		WHERE  1=1
+		AND    USE_YN = 'Y'
+		AND    MODEL_NAME != "UN_USER"
 	</select>
 	
 	<select id="selectAuthUser" resultType="AdminDTO">
