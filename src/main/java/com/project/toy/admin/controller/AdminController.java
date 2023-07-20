@@ -24,6 +24,7 @@ import com.google.gson.JsonObject;
 import com.project.toy.admin.dto.AdminDTO;
 import com.project.toy.admin.service.AdminService;
 import com.project.toy.board.dto.BoardResponseDTO;
+import com.project.toy.comment.dto.CommentResponseDTO;
 import com.project.toy.common.dto.SearchDTO;
 import com.project.toy.paging.PagingResponse;
 import com.project.toy.user.dto.SessionUser;
@@ -79,6 +80,8 @@ public class AdminController {
 		model.addAttribute("boardReview", boardReview);
 		
 		// 댓글 리스트
+		List<CommentResponseDTO> boardComment = adminService.findByComment(id);
+		model.addAttribute("boardComment", boardComment);
 		
 		// 권한 모델
 		AdminDTO userModel = adminService.selectAuthUser(id);

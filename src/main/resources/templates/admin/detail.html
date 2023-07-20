@@ -133,7 +133,27 @@
 			
 			<!-- TAB 3 - 작성 댓글 -->
 			<div id="tab-3" class="tab-content">
-				<div style="text-align: center;">-</div>
+				<div class="admin__table" th:if="${boardComment.size != 0}">
+					<table>
+						<thead>
+							<tr>
+								<td style="text-align: center; font-weight: 600; width: 15%;">번호</td>
+								<td style="text-align: center; font-weight: 600; width: 55%;">제목</td>
+								<td style="text-align: center; font-weight: 600; width: 30%;">작성일자</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="comment : ${boardComment}">
+								<td style="text-align: center; font-weight: 600;" th:text="${comment.id}"></td>
+								<td><a th:href="@{/community/detail?id=} + ${comment.boardId}"><span th:text="${comment.content}"></span></a></td>
+								<td style="text-align: center; font-size: .9rem;" th:text="${#temporals.format(comment.IDate, 'yyyy-MM-dd HH:mm')}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="admin__table" th:unless="${boardComment.size != 0}">
+					<span style="display: block; text-align: center;">작성한 리뷰 글이 없습니다.</span>
+				</div>
 			</div>
 		
 		</div>

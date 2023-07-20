@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.project.toy.admin.dto.AdminDTO;
 import com.project.toy.admin.mapper.AdminMapper;
 import com.project.toy.board.dto.BoardResponseDTO;
+import com.project.toy.comment.dto.CommentResponseDTO;
 import com.project.toy.common.dto.SearchDTO;
 import com.project.toy.paging.Pagination;
 import com.project.toy.paging.PagingResponse;
@@ -54,6 +55,10 @@ public class AdminService {
 	
 	public List<BoardResponseDTO> findByBoardIdAndReview(Long id) {
 		return adminMapper.findByBoardIdAndReview(id);
+	}
+	
+	public List<CommentResponseDTO> findByComment(Long id) {
+		return adminMapper.findByComment(id);
 	}
 
 	public void updateAuthUser(UpdateUserDTO updateUserDTO) {

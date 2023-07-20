@@ -7,8 +7,11 @@ server:
       timeout: 1800
       
   error:
+    path: /error
     include-exception: true       # 오류 응답에 exception 내용을 포함할지 여부
     include-stacktrace: always    # 오류 응답에 stacktrace 내용을 포함할지 여부
+    whitelabel:
+      enabled: false
       
 spring:
   profiles: 
@@ -33,5 +36,5 @@ springdoc:
     path: /swagger-ui.html
     use-root-path: true
 
-
+apiKey: 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
     
