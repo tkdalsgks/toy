@@ -64,7 +64,7 @@ $(document).ready(function() {
 
 $("#createChatRoom").on("click", function() {
 	$.ajax({
-		url: "chat/room",
+		url: "/chat/room",
 		type: "post",
 		dataType: "json",
 		data: { "name": $("#roomName").val() },

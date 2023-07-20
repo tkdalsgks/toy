@@ -1,5 +1,7 @@
 package com.project.toy.chat.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.project.toy.chat.dto.ChatRoomDTO;
 import com.project.toy.chat.service.ChatRoomService;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UserDTO;
@@ -35,6 +38,14 @@ public class RoomController {
 	private final HttpSession session;
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
+	@GetMapping
+	public String createRoom(Model model) {
+		List<ChatRoomDTO> roomList = chatRoomService.findAllRooms();
+		model.addAttribute("roomList", roomList);
+		
+		return "chat/create";
+	}
 	
 	/**
 	 * 채팅방 조회

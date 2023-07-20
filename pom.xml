@@ -192,6 +192,13 @@
 		    <version>2.2.6.RELEASE</version>
 		</dependency>
 		
+		<!-- CHAT GPT 3 -->
+		<dependency>
+		    <groupId>com.theokanning.openai-gpt3-java</groupId>
+		    <artifactId>api</artifactId>
+		    <version>0.14.0</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

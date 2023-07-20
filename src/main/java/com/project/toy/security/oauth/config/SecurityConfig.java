@@ -36,7 +36,7 @@ public class SecurityConfig {
 				.authorizeRequests()
 					.antMatchers("/swagger-ui/**", "/", "/join", "/check/**", "/find/**", "/certified/**").permitAll()
 					.antMatchers("/community/**", "/review/**", "/comments/**", "/upload/**").hasAnyAuthority("ROLE_GUEST", "ROLE_USER", "ROLE_ADMIN")
-					.antMatchers("/admin/**", "/gpt/**").hasAuthority("ROLE_ADMIN")
+					.antMatchers("/admin/**", "/chat/**").hasAuthority("ROLE_ADMIN")
 					.anyRequest().authenticated()
 			.and()
 				.sessionManagement()

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.project.toy.gpt.dto.GptClient;
 
 @Controller
-@RequestMapping("/gpt")
+@RequestMapping("/chat")
 public class GptController {
     private final GptClient gptClient;
 
@@ -19,12 +19,12 @@ public class GptController {
         this.gptClient = gptClient;
     }
     
-    @GetMapping("/chat")
+    @GetMapping("/gpt")
     public String gpt() {
     	return "gpt/chatgpt";
     }
 
-    @PostMapping("/question")
+    @PostMapping("/gpt")
     public String generateText(@RequestParam("prompt") String prompt,
                                @RequestParam("maxTokens") int maxTokens) throws IOException {
         // GPT-3 API를 사용하여 텍스트 생성

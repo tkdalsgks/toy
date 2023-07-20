@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.project.toy.admin.dto.AdminDTO;
 import com.project.toy.board.dto.BoardResponseDTO;
+import com.project.toy.comment.dto.CommentResponseDTO;
 import com.project.toy.common.dto.SearchDTO;
 import com.project.toy.user.dto.UpdateUserDTO;
 import com.project.toy.user.dto.UserDTO;
@@ -19,6 +20,7 @@ public interface AdminMapper {
 	public AdminDTO findByUserId(Long id);
 	public List<BoardResponseDTO> findByBoardIdAndCommunity(Long id);
 	public List<BoardResponseDTO> findByBoardIdAndReview(Long id);
+	public List<CommentResponseDTO> findByComment(Long id);
 	public int countUser(SearchDTO params);
 	public void updateAuthUser(UpdateUserDTO updateUserDTO);
 }

@@ -82,23 +82,40 @@
 	<select id="findByBoardIdAndReview" resultType="BoardResponseDTO">
 		/* com.project.toy.admin.mapper.AdminMapper, 리뷰 작성한 게시글 출력 */
 		
-		SELECT B.ID
-		     , B.BOARD_SEQ
-		     , B.TITLE
-		     , B.DELETE_YN
-		     , B.I_DATE
-		FROM   BOARD B
-		     , T_PERSON A
+		SELECT A.ID
+		     , A.BOARD_SEQ
+		     , A.TITLE
+		     , A.DELETE_YN
+		     , A.I_DATE
+		FROM   BOARD A
+		     , T_PERSON B
 		WHERE  1=1
-		AND    B.WRITER_ID = A.USER_ID
-		AND    B.BOARD_SEQ = '2'
-		AND    B.DELETE_YN = '0'
-		AND    A.USER_NO = #{ id }
-		ORDER BY B.ID DESC
+		AND    A.WRITER_ID = B.USER_ID
+		AND    A.BOARD_SEQ = '2'
+		AND    A.DELETE_YN = '0'
+		AND    B.USER_NO = #{ id }
+		ORDER BY A.ID DESC
 	</select>
 	
 	<!-- 전체 댓글 리스트 -->
-	
+	<select id="findByComment" resultType="CommentResponseDTO">
+		/* com.project.toy.admin.mapper.AdminMapper, 전체 작성한 댓글 출력 */
+		
+		SELECT A.ID,
+		       A.BOARD_ID,
+		       B.BOARD_SEQ,
+		       A.CONTENT,
+		       C.USER_ID AS WRITER_ID,
+		       C.USER_NICKNAME AS WRITER,
+		       A.I_DATE 
+		FROM   COMMENT A
+		LEFT OUTER JOIN BOARD B ON A.BOARD_ID = B.ID
+		LEFT OUTER JOIN T_PERSON C ON A.WRITER_ID = C.USER_ID
+		WHERE  1=1
+		AND    A.DELETE_YN = 'N'
+		AND    C.USER_NO = #{ id }
+		ORDER BY A.ID DESC
+	</select>
 	
 	<!-- 사용자 수 카운팅 -->
 	<select id="countUser" parameterType="SearchDTO" resultType="int">
