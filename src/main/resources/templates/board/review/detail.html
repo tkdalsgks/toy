@@ -74,7 +74,7 @@
 				<div class="board-info">
 					<img src="" style="width: 55px; height: 55px; margin-right: .5rem;">
 					<div style="flex-direction: column; flex-grow: 1;">
-						<div style="display: flex; justify-content: space-between; align-items: baseline;">
+						<div style="display: flex; justify-content: space-between; align-items: center;">
 							<a th:href="@{/member/detail?id=} + ${review.writerNo}"><span class="board-writer">[[ ${review.writer} ]]</span></a>
 							<span th:if="${userId == review.writerId}">
 								<a onclick="goChangePage();">수정</a>
@@ -85,7 +85,7 @@
 								<!-- <a href="javascript:history.go(-1)" class="btn btn-light board-btn-a community-btn" onclick="goListPage();">뒤로</a> -->
 							</span>
 						</div>
-						<div style="display: flex; justify-content: space-between; align-items: baseline;">
+						<div style="display: flex; justify-content: space-between; align-items: center;">
 							<!-- <span class="rating-star">★<span id="rating_star"> 0</span></span> -->
 							<span class="board-viewCnt1">
 								<span class="board-view">
@@ -153,7 +153,7 @@
 		<!-- POPUP -->
 		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
 		<script type="text/javascript" src="/js/lib/stomp.min.js"></script>
-		<script type="text/javascript" src="/js/app/popup.js"></script>
+		<!-- <script type="text/javascript" src="/js/app/popup.js"></script> -->
 		<!-- BOARD -->
 		<script type="text/javascript" src="/js/lib/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/lib/config.js"></script>

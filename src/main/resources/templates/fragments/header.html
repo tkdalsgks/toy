@@ -46,17 +46,22 @@
 			<div class="navbar-collapse" id="navbarText">
 				<a class="navbar-brand-logo" th:href="@{/}"><img src="/img/app/common/logo.png"></a>
 				
-				<div id="show" class="menu-trigger" onclick="openPopup();">
-					<div class="line1"></div>
-					<div class="line2"></div>
-					<div class="line3"></div>
+				<div style="display: flex; flex-direction: inherit;">
+					<div id="show__chat" class="menu-trigger" onclick="openPopupChat();">
+						<img src="/img/app/chat/chat-icon.svg" style="width: 1.5rem;">
+					</div>
+					<div id="show__menu" class="menu-trigger" onclick="openPopupMenu();">
+						<div class="line1"></div>
+						<div class="line2"></div>
+						<div class="line3"></div>
+					</div>
 				</div>
 				
 			</div>
 		</nav>
 	</div>
 	
-	<script type="text/javascript">
+	<script th:inline="javascript">
 		function goProfile(userId) {
 			location.href = '/' + `${userId}` + '/profile';
 		}

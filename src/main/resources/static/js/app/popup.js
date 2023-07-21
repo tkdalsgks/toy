@@ -1,48 +1,40 @@
-document.querySelector("#show").addEventListener("click", show);
-document.querySelector("#close").addEventListener("click", close);
+/* MENU */
+document.querySelector("#show__menu").addEventListener("click", show__menu);
+document.querySelector("#close__menu").addEventListener("click", close__menu);
 
-/*
-document.getElementById("menuChat").style.display = "none";
-document.getElementById("chatSecond").style.display = "none";
-document.getElementById("chatThird").style.display = "none";
-*/
-
-
-function openPopup() {
-	$(".openPopup").hide();
+function openPopupMenu() {
+	$(".openPopupMenu").hide();
 }
 
-function show() {
-	document.querySelector(".background").className = "background show";
+function show__menu() {
+	document.querySelector(".background__menu").className = "background__menu show__menu";
 }
 
-function close() {
-	document.querySelector(".background").className = "background";
-	$("#menu").show();
-	$("#menuChat").hide();
-	$("#chatFirst").show();
-	$("#chatSecond").hide();
-	$("#chatThird").hide();
-	$(".openPopup").show();
+function close__menu() {
+	document.querySelector(".background__menu").className = "background__menu";
+	$(".openPopupMenu").show();
 }
 
-function menuChat() {
-	$("#menu").hide();
-	$("#menuChat").show();
+/* CHAT */
+document.querySelector("#show__chat").addEventListener("click", show__chat);
+document.querySelector("#close__chat").addEventListener("click", close__chat);
+
+function openPopupChat() {
+	$(".openPopupChat").hide();
+	
+	/* loadChatRoom(); */
 }
 
-function chatCreate() {
-	$("#chatFirst").hide();
-	$("#chatSecond").show();
-	$("#chatThrid").hide();
+function show__chat() {
+	document.querySelector(".background__chat").className = "background__chat show__chat";
 }
 
-function chatList() {
-	$("#chatFirst").hide();
-	$("#chatSecond").hide();
-	$("#chatThird").show();
+function close__chat() {
+	document.querySelector(".background__chat").className = "background__chat";
+	$(".openPopupChat").show();
 }
 
+/* CHAT - ROOM */
 $(document).ready(function() {
     $("#btn-create").on("click", function (e){
         e.preventDefault();
@@ -62,6 +54,7 @@ $(document).ready(function() {
     });
 });
 
+/*
 $("#createChatRoom").on("click", function() {
 	$.ajax({
 		url: "/chat/room",
@@ -69,7 +62,11 @@ $("#createChatRoom").on("click", function() {
 		dataType: "json",
 		data: { "name": $("#roomName").val() },
 		success: function() {
-			location.replace("");
+			$("#chat__list-chatrooms").html(
+                `<div id="chat__list-chatrooms">` +
+                `<a>create Room!!</a>` +
+                `</div>`
+            );
 		},
 		error: function() {
 			swal.fire({
@@ -82,3 +79,34 @@ $("#createChatRoom").on("click", function() {
 		}
 	});
 });
+*/
+
+/*
+function loadChatRoom() {
+	$("#chat__list-chatrooms").html("");
+	
+	
+	console.log("room : " + room);
+	
+	$.ajax({
+        url: "/chat/room",
+        type: "GET",
+        data: {
+            room: room,
+        },
+        dataType: "JSON",
+        success: function(result) {
+        	console.log("success : " + room);
+            // 채팅방 목록 갱신
+            $("#chat__list-chatrooms").html(
+                `<div id="chat__list-chatrooms">` +
+                `<a>123123</a>` +
+                `</div>`
+            );
+        },
+        error: function() {
+        	console.log("fail");
+        }
+	});
+}
+*/

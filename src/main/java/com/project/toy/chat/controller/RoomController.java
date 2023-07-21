@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.JsonObject;
 import com.project.toy.chat.dto.ChatRoomDTO;
 import com.project.toy.chat.service.ChatRoomService;
 import com.project.toy.user.dto.SessionUser;
@@ -39,6 +40,7 @@ public class RoomController {
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
+	/*
 	@GetMapping
 	public String createRoom(Model model) {
 		List<ChatRoomDTO> roomList = chatRoomService.findAllRooms();
@@ -46,6 +48,7 @@ public class RoomController {
 		
 		return "chat/create";
 	}
+	*/
 	
 	/**
 	 * 채팅방 조회
@@ -53,7 +56,36 @@ public class RoomController {
 	 * @param auth
 	 * @param model
 	 */
+	/*
 	@Operation(summary = "채팅방 조회", description = "채팅방 조회")
+	@GetMapping("/room")
+	public List<ChatRoomDTO> createRoom(String roomId, Authentication auth, Model model) {
+		log.info("# get Chat Room, roomId : " + roomId);
+		
+		//JsonObject jsonObj = new sonObject();
+		//JsonArray jsonArray = new JsonArray();
+		
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
+		if(auth != null) {
+			model.addAttribute("userId", user.getUserId());
+			model.addAttribute("user", user.getUserNickname());
+			
+			
+			List<ChatRoomDTO> roomList = chatRoomService.findAllRooms();
+			ChatRoomDTO room = chatRoomService.findRoomById(roomId);
+			
+			
+			System.out.println("채팅방 조회 : " + roomList);
+			model.addAttribute("roomList", roomList);
+			model.addAttribute("room", room);
+			return roomList;
+		}
+		
+		return null;
+	}
+	*/
+	
 	@GetMapping("/room")
 	public void getRoom(String roomId, Authentication auth, Model model) {
 		log.info("# get Chat Room, roomId : " + roomId);
@@ -63,8 +95,11 @@ public class RoomController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
+			
+			System.out.println("1111111111111111 auth not null");
 		}
 		
+		System.out.println("1111111111111111 auth null");
 		model.addAttribute("room", chatRoomService.findRoomById(roomId));
 	}
 	
@@ -78,12 +113,17 @@ public class RoomController {
 	@Operation(summary = "채팅방 개설", description = "채팅방 개설 메서드")
 	@ResponseBody
 	@PostMapping("/room")
-	public String create(@RequestParam String name, RedirectAttributes rttr, Model model) {
+	public JsonObject create(@RequestParam String name, RedirectAttributes rttr, Model model) {
 		log.info("# Create Chat Room, name : " + name);
 		
-		rttr.addFlashAttribute("roomName", chatRoomService.createChatRoomDTO(name));
+		JsonObject jsonObj = new JsonObject();
 		
-		return rttr.toString();
+		ChatRoomDTO roomName = chatRoomService.createChatRoomDTO(name);
+		jsonObj.addProperty("roomId", roomName.getRoomId());
+		jsonObj.addProperty("roomName", roomName.getName());
+		System.out.println("roomName : " + roomName.getName() + " roomId : "+ roomName.getRoomId());
+		
+		return jsonObj;
 	}
 	
 }
