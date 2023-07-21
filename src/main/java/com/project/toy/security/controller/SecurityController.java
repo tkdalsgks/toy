@@ -1,6 +1,7 @@
 package com.project.toy.security.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.toy.chat.dto.ChatRoomDTO;
 import com.project.toy.chat.service.ChatRoomService;
 import com.project.toy.common.dto.MessageDTO;
 import com.project.toy.email.service.EmailService;
@@ -43,13 +45,20 @@ public class SecurityController {
 	
 	@Operation(summary = "메인 홈", description = "메인 홈 조회")
 	@GetMapping({"", "/"})
-	public String index(Authentication auth, Model model) {
+	public String index(Authentication auth, Model model, String roomId) {
 		SessionUser user = (SessionUser) session.getAttribute("user");
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
-			model.addAttribute("list", chatRoomService.findAllRooms());
 			model.addAttribute("role", user.getRole());
+			
+			//System.out.println("홈 채팅방 조회 : " + chatRoomService.findAllRooms().toString());
+			// 채팅방 조회
+			List<ChatRoomDTO> roomList = chatRoomService.findAllRooms();
+			ChatRoomDTO room = chatRoomService.findRoomById(roomId);
+			model.addAttribute("roomList", roomList);
+			model.addAttribute("room", room);
+			
 			return "main";
 		} else {
 			return "index";

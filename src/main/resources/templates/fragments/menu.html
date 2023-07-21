@@ -2,13 +2,13 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div th:fragment="menu">
-	<div id="popup__background" class="background">
+	<div id="popup__background" class="background__menu">
 		<div class="window">
 	   		
-			<div class="popup">
-				<div class="close">
+			<div class="popup__menu">
+				<div class="close__menu">
 					<a class="" th:href="@{/}"><img src="/img/app/common/logo.png"></a>
-					<button id="close" class="btn-close" onclick="close();"></button>
+					<button id="close__menu" class="btn-close" onclick="close__menu();"></button>
 				</div>
 	   			
 	   			<!-- USER Content -->

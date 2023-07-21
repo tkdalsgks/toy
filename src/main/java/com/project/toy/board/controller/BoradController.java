@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.project.toy.board.dto.BoardRequestDTO;
 import com.project.toy.board.dto.BoardResponseDTO;
 import com.project.toy.board.service.BoardService;
-import com.project.toy.chat.service.ChatRoomService;
 import com.project.toy.comment.service.CommentService;
 import com.project.toy.common.dto.MessageDTO;
 import com.project.toy.common.dto.SearchDTO;
@@ -47,7 +46,6 @@ public class BoradController {
 	private final UserService userService;
 	private final BoardService boardService;
 	private final CommentService commentService;
-	private final ChatRoomService chatRoomService;
 	private final LikesService likesService;
 	private final HttpSession session;
 	
@@ -70,7 +68,6 @@ public class BoradController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
-			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
 		
 		PagingResponse<BoardResponseDTO> boards = boardService.findAll(params);
@@ -130,7 +127,6 @@ public class BoradController {
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("userName", user.getUserNickname());
-			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
 		
 		BoardResponseDTO board = boardService.findByBoardId(id);
@@ -187,7 +183,6 @@ public class BoradController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
-			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
 		
 		if(id != null) {
@@ -215,7 +210,6 @@ public class BoradController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
-			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
 		
 		if(id != null) {

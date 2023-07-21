@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.project.toy.board.dto.ReviewRequestDTO;
 import com.project.toy.board.dto.ReviewResponseDTO;
 import com.project.toy.board.service.ReviewService;
-import com.project.toy.chat.service.ChatRoomService;
 import com.project.toy.comment.service.CommentService;
 import com.project.toy.common.dto.MessageDTO;
 import com.project.toy.common.dto.SearchDTO;
@@ -47,7 +46,6 @@ public class ReviewController {
 	private final UserService userService;
 	private final ReviewService reviewService;
 	private final CommentService commentService;
-	private final ChatRoomService chatRoomService;
 	private final LikesService likesService;
 	private final HttpSession session;
 	
@@ -70,7 +68,6 @@ public class ReviewController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
-			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
 		
 		PagingResponse<ReviewResponseDTO> reviews = reviewService.findAll(params);
@@ -132,7 +129,6 @@ public class ReviewController {
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("userName", user.getUserNickname());
-			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
 		
 		ReviewResponseDTO review = reviewService.findByReviewId(id);
@@ -189,7 +185,6 @@ public class ReviewController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
-			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
 		
 		if(id != null) {
@@ -217,7 +212,6 @@ public class ReviewController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
-			model.addAttribute("list", chatRoomService.findAllRooms());
 		}
 		
 		if(id != null) {
