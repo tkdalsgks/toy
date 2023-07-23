@@ -35,3 +35,7 @@
 .show__chat .popup__chat { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); }
 .close__chat { display:flex; justify-content: space-between; text-align: right; font-size: 20px; margin: 1rem 1.25rem 1rem 1.25rem; }
 .close__chat img { width: 4rem; }
+
+.chat__list-chatcreate { display: flex; flex-direction: column; }
+.chat__list-chatrooms { margin-top: 2rem; }
+.chat__list-name { padding-top: .5rem; }

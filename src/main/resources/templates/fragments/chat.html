@@ -14,19 +14,13 @@
 				<!-- MENU : Chat -->
 		   		<div id="popup__chat-room" class="popup__chat-room">
 			   		<!-- Chat Room Create -->
-					<div id="chat__create">
-				        <input type="text" id="roomName" name="name" class="form-control">
+					<div id="chat__list-chatcreate" class="chat__list-chatcreate">
+				        <input type="text" id="roomName" name="name" class="chat__list-input form-control">
 				        <button class="btn btn-secondary active" id="createChatRoom">채팅방 개설</button>
-				        <button class="btn btn-secondary active" id="listChatRoom">채팅방 목록</button>
 				    </div>
 				    
 				    <!-- Chat Room List -->
-					<div id="chat__room" class="chat__room">
-		            	<span th:if="${roomList == null}">채팅방이 없어요 !</span>
-			            <ul th:unless="${roomList == null}" th:each="roomList : ${roomList}">
-			                <li><a th:href="@{/chat/room(roomId=${roomList.roomId})}">[[${roomList.name}]]</a></li>
-			            </ul>
-				    </div>
+				    <div id="chat__list-chatrooms" class="chat__list-chatrooms"></div>
 			    </div>
 		    </div>
 		    

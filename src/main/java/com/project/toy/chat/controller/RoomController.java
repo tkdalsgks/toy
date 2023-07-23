@@ -40,67 +40,26 @@ public class RoomController {
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	/*
-	@GetMapping
-	public String createRoom(Model model) {
-		List<ChatRoomDTO> roomList = chatRoomService.findAllRooms();
-		model.addAttribute("roomList", roomList);
-		
-		return "chat/create";
-	}
-	*/
-	
 	/**
-	 * 채팅방 조회
+	 * 채팅방 리스트 조회
 	 * @param roomId
 	 * @param auth
 	 * @param model
 	 */
-	/*
-	@Operation(summary = "채팅방 조회", description = "채팅방 조회")
-	@GetMapping("/room")
+	@Operation(summary = "채팅방 리스트 조회", description = "채팅방 리스트 조회")
+	@ResponseBody
+	@PostMapping("/list")
 	public List<ChatRoomDTO> createRoom(String roomId, Authentication auth, Model model) {
-		log.info("# get Chat Room, roomId : " + roomId);
-		
-		//JsonObject jsonObj = new sonObject();
-		//JsonArray jsonArray = new JsonArray();
-		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
-		if(auth != null) {
-			model.addAttribute("userId", user.getUserId());
-			model.addAttribute("user", user.getUserNickname());
-			
-			
-			List<ChatRoomDTO> roomList = chatRoomService.findAllRooms();
-			ChatRoomDTO room = chatRoomService.findRoomById(roomId);
-			
-			
-			System.out.println("채팅방 조회 : " + roomList);
-			model.addAttribute("roomList", roomList);
-			model.addAttribute("room", room);
-			return roomList;
-		}
 		
-		return null;
-	}
-	*/
-	
-	@GetMapping("/room")
-	public void getRoom(String roomId, Authentication auth, Model model) {
-		log.info("# get Chat Room, roomId : " + roomId);
+		model.addAttribute("userId", user.getUserId());
+		model.addAttribute("user", user.getUserNickname());
 		
-		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
-		if(auth != null) {
-			model.addAttribute("userId", user.getUserId());
-			model.addAttribute("user", user.getUserNickname());
-			
-			System.out.println("1111111111111111 auth not null");
-		}
+		List<ChatRoomDTO> roomList = chatRoomService.findAllRooms();
+		model.addAttribute("roomList", roomList);
 		
-		System.out.println("1111111111111111 auth null");
-		model.addAttribute("room", chatRoomService.findRoomById(roomId));
+		return roomList;
 	}
 	
 	/**
@@ -126,4 +85,17 @@ public class RoomController {
 		return jsonObj;
 	}
 	
+	@GetMapping("/room")
+	public void getRoom(String roomId, Authentication auth, Model model) {
+		log.info("# get Chat Room, roomId : " + roomId);
+		
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
+		if(auth != null) {
+			model.addAttribute("userId", user.getUserId());
+			model.addAttribute("user", user.getUserNickname());
+		}
+		
+		model.addAttribute("room", chatRoomService.findRoomById(roomId));
+	}
 }

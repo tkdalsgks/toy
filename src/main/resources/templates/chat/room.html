@@ -26,17 +26,17 @@
 
 	<main layout:fragment="content" class="container">
         <div class="col-6">
-            <span>[[${room.name}]]</span>
+            <span><b>[[${room.name}]]</b></span>
         </div>
         <div>
             <div id="msgArea" class="col chat-msgArea"></div>
-                <div class="input-group mb-3">
-                    <input type="text" id="msg" class="form-control">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
-                    </div>
+            <div class="chat__msgArea-input input-group mb-3">
+                <input type="text" id="msg" class="form-control">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
                 </div>
             </div>
+        </div>
         <div class="col-6"></div>
     </main>
 
@@ -53,7 +53,7 @@
 		<!-- POPUP -->
 		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-		<!-- <script type="text/javascript" src="/js/app/popup.js"></script> -->
+		<script type="text/javascript" src="/js/app/popup.js"></script>
 		<!-- ROOM -->
 		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
 		<script type="text/javascript" src="/js/lib/stomp.min.js"></script>
@@ -86,7 +86,7 @@
 		               var message = content.message;
 		               var str = '';
 		               
-		               if(message === "[" + writer + "]님이 채팅방에 참여하였습니다.") {
+		               if(message === "[" + writer + "] 님이 채팅방에 참여하였습니다.") {
 		            	   str = "<div class='alert alert-secondary'>";
 		            	   str += "<p class='chat-enter'>" + message + "</p>";
 		            	   str += "</div>";
