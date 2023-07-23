@@ -1,6 +1,7 @@
 
 /* ROOM */
 .chat-msgArea { width: 300px; margin: 0 auto; }
+/*.chat__msgArea-input { width: 100%; position: fixed; left: 0; right: 0; }*/
 .chat-enter { text-align: center; margin-bottom: 0; }
 .chat-me { text-align: right; }
-.chat-others { text-algin: left; }
+.chat-others { text-align: left; }

@@ -125,7 +125,7 @@ input:focus { outline: 2.5px solid #00F5FF !important; -webkit-transition: borde
 
 
 /* FOOTER */
-.footer { width: 100%; position: fixed; left: 0; right: 0; bottom: 0; text-align: center; padding-top: 1.75rem; padding-bottom: 1.25rem; z-index: -999 }
+.footer { width: 100%; position: fixed; left: 0; right: 0; bottom: 0; text-align: center; padding-top: 1.75rem; padding-bottom: 1.25rem; }
 .footer-copyright { font-size: 0.75rem; opacity: 0.75; }
 .footer-develop { font-size: 0.75rem; opacity: 0.75; }
 .footer-by { font-weight: 400; text-decoration: underline; opacity: 0.9; }

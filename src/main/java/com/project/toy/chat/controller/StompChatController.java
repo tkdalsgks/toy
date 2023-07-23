@@ -24,7 +24,13 @@ public class StompChatController {
 	@Operation(summary = "채팅방 입장 메세지 전송", description = "채팅방 입장 메세지 전송 메서드")
 	@MessageMapping("/chat/enter")
 	public void enter(ChatMessageDTO message) {
-		message.setMessage("[" + message.getWriter() + "]님이 채팅방에 참여하였습니다.");
+		message.setMessage("[" + message.getWriter() + "] 님이 채팅방에 참여하였습니다.");
+		smt.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+	}
+	
+	@MessageMapping("/chat/leave")
+	public void leave(ChatMessageDTO message) {
+		message.setMessage("[" + message.getWriter() + "] 님이 채팅방에서 퇴장하였습니다.");
 		smt.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
 	}
 	

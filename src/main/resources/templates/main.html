@@ -62,78 +62,17 @@
 			}
 			
 			/*
-			const chat__create = document.getElementById('chat__create');
-			const chat__room = document.getElementById('chat__room');
+			const chat__create = document.getElementById('chat__list-chatcreate');
+			const chat__room = document.getElementById('chat__list-chatroom');
 			
 			chat__create.style.display = 'initial';
 			chat__room.style.display = 'none';
 			
 			$('#listChatRoom').on('click', function() {
 				chat__create.style.display = 'none';
-				chat__room.style.display = 'initial';
+				chat__room.style.display = '';
 			}
 			*/
-			
-			$("#createChatRoom").on("click", function() {
-				var roomId = [[ ${roomId} ]];
-				var roomName = $("#roomName").val();
-				console.log("roomId : " + roomId);
-				console.log("roomName : " + roomName);
-				
-				
-				$.ajax({
-					url: "/chat/room",
-					type: "POST",
-					dataType: "JSON",
-					data: { "name": roomName },
-					success: function() {
-						$("#chat__list-chatrooms").html(
-			                `<div id="chat__list-chatrooms">` +
-			                `<a>create Room!!</a>` +
-			                `</div>`
-			            );
-						
-						loadChatRoom();
-					},
-					error: function() {
-						swal.fire({
-							text: '잠시 후 재시도 바랍니다.',
-							footer: '서버와의 통신 에러입니다.',
-							icon: 'error',
-							confirmButtonColor: '#3085d6',
-							confirmButtonText: '확인'
-						});
-					}
-				});
-			});
-			
-			function loadChatRoom() {
-				$("#chat__list-chatrooms").html("");
-				
-				var room = "success!!";
-				console.log("room : " + room);
-				
-				$.ajax({
-			        url: "/chat/room",
-			        type: "GET",
-			        data: {
-			            room: room,
-			        },
-			        dataType: "TEXT",
-			        success: function(result) {
-			        	console.log("success : " + room);
-			            // 채팅방 목록 갱신
-			            $("#chat__list-chatrooms").html(
-			                `<div id="chat__list-chatrooms">` +
-			                `<a>` + room + `</a>` +
-			                `</div>`
-			            );
-			        },
-			        error: function() {
-			        	console.log("fail");
-			        }
-				});
-			}
 		</script>
 	</th:block>
 	

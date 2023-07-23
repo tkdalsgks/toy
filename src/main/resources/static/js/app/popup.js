@@ -36,7 +36,7 @@ function close__chat() {
 
 /* CHAT - ROOM */
 $(document).ready(function() {
-    $("#btn-create").on("click", function (e){
+    $("#createChatRoom").on("click", function (e){
         e.preventDefault();
 
         var name = $("input[name='name']").val();
@@ -49,64 +49,60 @@ $(document).ready(function() {
 				confirmButtonText: '확인'
 			});
 		} else {
-            $("form").submit();			
+            var roomName = $("#roomName").val();
+	
+			$.ajax({
+				url: "/chat/room",
+				type: "POST",
+				dataType: "JSON",
+				data: { "name": roomName },
+				success: function() {
+					
+					loadChatRoom();
+				},
+				error: function() {
+					swal.fire({
+						text: '잠시 후 재시도 바랍니다.',
+						footer: '서버와의 통신 에러입니다.',
+						icon: 'error',
+						confirmButtonColor: '#3085d6',
+						confirmButtonText: '확인'
+					});
+				}
+			});
 		}
     });
 });
 
-/*
-$("#createChatRoom").on("click", function() {
+function loadChatRoom() {
+	
 	$.ajax({
-		url: "/chat/room",
-		type: "post",
-		dataType: "json",
-		data: { "name": $("#roomName").val() },
-		success: function() {
-			$("#chat__list-chatrooms").html(
-                `<div id="chat__list-chatrooms">` +
-                `<a>create Room!!</a>` +
-                `</div>`
-            );
-		},
-		error: function() {
-			swal.fire({
+        url: "/chat/list",
+        type: "POST",
+        success: function(data) {
+            // 채팅방 목록 갱신
+            $("#chat__list-chatrooms").html("");
+            		
+            $.each(data, function(index, value) {
+            	//console.log("room : " + index);
+            	//console.log("roomId : " + value.roomId);
+            	//console.log("roomName : " + value.name);
+            	
+            	$("#chat__list-chatrooms").append(
+	                `<div class="chat__list-name">` +
+	                `<a href="/chat/room?roomId=`+ value.roomId + `">` + value.name + `</a>` +
+	                `</div>`
+	            );
+            });
+        },
+        error: function() {
+        	swal.fire({
 				text: '잠시 후 재시도 바랍니다.',
 				footer: '서버와의 통신 에러입니다.',
 				icon: 'error',
 				confirmButtonColor: '#3085d6',
 				confirmButtonText: '확인'
 			});
-		}
-	});
-});
-*/
-
-/*
-function loadChatRoom() {
-	$("#chat__list-chatrooms").html("");
-	
-	
-	console.log("room : " + room);
-	
-	$.ajax({
-        url: "/chat/room",
-        type: "GET",
-        data: {
-            room: room,
-        },
-        dataType: "JSON",
-        success: function(result) {
-        	console.log("success : " + room);
-            // 채팅방 목록 갱신
-            $("#chat__list-chatrooms").html(
-                `<div id="chat__list-chatrooms">` +
-                `<a>123123</a>` +
-                `</div>`
-            );
-        },
-        error: function() {
-        	console.log("fail");
         }
 	});
 }
-*/
