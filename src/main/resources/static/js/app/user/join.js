@@ -356,3 +356,20 @@ $('#joinSubmit').click(function() {
 	}
 });
 
+// 회원가입 취소
+function goHome() {
+	swal.fire({
+		title: '회원가입을 취소할까요?',
+		text: '현재 작성중인 내용은 저장되지 않습니다.',
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: '확인',
+		cancelButtonText: '취소'
+	}).then((result) => {
+		if(result.isConfirmed) {
+			location.href = "javascript:history.go(-1)";
+		}
+	});
+}

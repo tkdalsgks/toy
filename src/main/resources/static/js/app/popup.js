@@ -2,10 +2,6 @@
 document.querySelector("#show__menu").addEventListener("click", show__menu);
 document.querySelector("#close__menu").addEventListener("click", close__menu);
 
-function openPopupMenu() {
-	$(".openPopupMenu").hide();
-}
-
 function show__menu() {
 	document.querySelector(".background__menu").className = "background__menu show__menu";
 }
@@ -19,15 +15,11 @@ function close__menu() {
 document.querySelector("#show__chat").addEventListener("click", show__chat);
 document.querySelector("#close__chat").addEventListener("click", close__chat);
 
-function openPopupChat() {
-	$(".openPopupChat").hide();
-	
-	/* loadChatRoom(); */
-}
-
+/*
 function show__chat() {
 	document.querySelector(".background__chat").className = "background__chat show__chat";
 }
+*/
 
 function close__chat() {
 	document.querySelector(".background__chat").className = "background__chat";
@@ -74,8 +66,36 @@ $(document).ready(function() {
     });
 });
 
-function loadChatRoom() {
+function openChatRoom() {
 	
+	if(role == 'GUEST') {
+		swal.fire({
+			title: '인증이 필요한 계정입니다.',
+			text: '계정 인증 페이지로 이동할까요?',
+			footer: '인증 후 OYEZ의 모든 콘텐츠 이용이 가능합니다.',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: '이동',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			if(result.isConfirmed) {
+				location.href = '/' + userId + '/account';
+			}
+		});
+	} else if(role == 'USER' || role == 'ADMIN') {
+		// 게스트 이외의 인증된 권한
+		// 채팅 팝업 열림
+		document.querySelector(".background__chat").className = "background__chat show__chat";
+		
+		// 채팅방 리스트 조회
+		loadChatRoom();
+	}
+}
+
+function loadChatRoom() {
+
 	$.ajax({
         url: "/chat/list",
         type: "POST",

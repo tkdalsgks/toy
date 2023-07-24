@@ -9,11 +9,6 @@
 <title>OYEZ - 관리자</title>
 
 <th:block layout:fragment="css">
-	<!-- RESET, DEFAULT -->
-	<link rel="stylesheet" th:href="@{/css/app/reset.css}" />
-	<link rel="stylesheet" th:href="@{/css/lib/bootstrap.min.css}" />
-	<link rel="stylesheet" th:href="@{/css/app/index.css}" />
-	<link rel="stylesheet" th:href="@{/css/app/default.css}" />
 	<!-- POPUP -->
 	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
 	<!-- ADMIN -->
@@ -26,6 +21,7 @@
 
 <body>
 	
+	<!-- ADMIN_DETAIL : CONTENT -->
 	<main layout:fragment="content" class="form__admin">
 		<div class="admin__detail">
 			<input type="hidden" id="userNo" name="userNo" th:value="${admin.userNo}">
@@ -152,7 +148,7 @@
 					</table>
 				</div>
 				<div class="admin__table" th:unless="${boardComment.size != 0}">
-					<span style="display: block; text-align: center;">작성한 리뷰 글이 없습니다.</span>
+					<span style="display: block; text-align: center;">작성한 댓글이 없습니다.</span>
 				</div>
 			</div>
 		
@@ -190,110 +186,23 @@
 		</div>
 	</main>
 	
+	<!-- ADMIN_DETAIL : SCRIPT -->
 	<th:block layout:fragment="script">
-		<!-- FONT AWESOME -->
-		<script type="text/javascript" src="/js/lib/fontawesome.js"></script>
-		<!-- Jquery, Bootstrap -->
-		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
-		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
-		<script type="text/javascript" src="/js/app/header.js"></script>
-		<!-- SWEETALERT2 -->
-		<script type="text/javascript" src="/js/lib/sweetalert2.js"></script>
-		<!-- POPUP -->
-		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
-		<script type="text/javascript" src="/js/lib/stomp.min.js"></script>
-		<script type="text/javascript" src="/js/app/popup.js"></script>
+		<!-- SETTINGS -->
+		<script th:inline="javascript">
+			var admin_userId = [[ ${admin.userId} ]];
+		    var admin_userNickname = [[ ${admin.userNickname} ]];
+		    var userModel = [[ ${userModel} ]];
+			var authList = [[ ${authList} ]];
+			var saveUser_uri = [[ @{/admin/detail} ]];
+		</script>
+		<!-- ADMIN -->
+		<script type="text/javascript" src="/js/app/admin/detail.js"></script>
 		<!-- LOADING -->
 		<script type="text/javascript" src="/js/lib/loadingoverlay.min.js"></script>
 		<script type="text/javascript" src="/js/app/loading.js"></script>
 		<!-- ADMIN -->
 		<script type="text/javascript" src="/js/app/admin.js"></script>
-		<script th:inline="javascript">
-			// 상세 페이지로 이동
-		    function goViewPageCommunity(id) {
-		        location.href = '/community/detail' + `?id=${id}`;
-		    }
-		    function goViewPageReview(id) {
-		        location.href = '/review/detail' + `?id=${id}`;
-		    }
-			
-			// 회원 추방
-			function openModal() {
-				
-				$("#userInfoModal").modal("toggle");
-				
-				document.getElementById("modalWriter").value = [[ ${admin.userId} ]];
-				document.getElementById("modalNickname").value = [[ ${admin.userNickname} ]];
-				
-				document.getElementById("btnUserUpdate").setAttribute("onclick", "updateUser("+ userId +")");
-			}
-			
-			const userId = [[ ${admin.userId} ]];
-			
-			function updateUser() {
-				alert(userId);
-			}
-			
-			// 저장
-			function saveUser() {
-				var userModel = [[ ${userModel} ]];
-				var authList = [[ ${authList} ]];
-				
-				var userId = document.getElementById("userId").value;
-				var selectBox = $("#userModel option:selected").val();
-				
-				//console.log("아이디 : " + userId);
-				//console.log("계정권한 : " + userModel);
-				//console.log("선택값 : " + selectBox);
-				
-				if(selectBox != 'NONE') {
-					swal.fire({
-	    				text: '회원정보를 저장할까요?',
-	    				icon: 'warning',
-	    				showCancelButton: true,
-	    				confirmButtonColor: '#3085d6',
-	    				confirmButtonText: '확인',
-	    				cancelButtonColor: '#d33',
-	    				cancelButtonText: '취소'
-	    			}).then((result) => {
-	    				if(result.isConfirmed) {
-	    					var uri = [[ @{/admin/detail} ]];
-	    					var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
-	    					var params = { "userId": userId, "role": selectBox };
-	    					
-	    					$.ajax({
-	    						url: uri,
-	    						type: "POST",
-	    						headers: headers,
-	    						dataType: "json",
-	    						data: JSON.stringify(params),
-	    						success: function(data) {
-	    							$("#admin__role").append('<td id="admin__role" class="admin-content">' + selectBox + '</td>');
-	    						},
-	    						error: function(data) {
-	    							console.log("fail");
-	    						}
-	    					});
-	    				}
-	    			});
-				}
-			}
-			
-			// 탭
-			$(document).ready(function(){
-				
-				$('ul.tabs li').click(function(){
-					var tab_id = $(this).attr('data-tab');
-
-					$('ul.tabs li').removeClass('current');
-					$('.tab-content').removeClass('current');
-
-					$(this).addClass('current');
-					$("#"+tab_id).addClass('current');
-				})
-
-			})
-		</script>
 	</th:block>
 	
 	

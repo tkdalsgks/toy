@@ -9,11 +9,6 @@
 <title>OYEZ - All That Community</title>
 
 <th:block layout:fragment="css">
-	<!-- RESET, DEFAULT -->
-	<link rel="stylesheet" th:href="@{/css/app/reset.css}" />
-	<link rel="stylesheet" th:href="@{/css/lib/bootstrap.min.css}" />
-	<link rel="stylesheet" th:href="@{/css/app/index.css}" />
-	<link rel="stylesheet" th:href="@{/css/app/default.css}" />
 	<!-- POPUP -->
 	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
 	<!-- FIND -->
@@ -24,7 +19,7 @@
 
 <body>
 	
-	<!-- CONTENT -->
+	<!-- INDEX : CONTENT -->
 	<main layout:fragment="content" class="form-index">
 	
 		<div class="index-brand">
@@ -58,22 +53,11 @@
 		
 	</main>
 	
+	<!-- INDEX : SCRIPT -->
 	<th:block layout:fragment="script">
-		<!-- FONT AWESOME -->
-		<script type="text/javascript" src="/js/lib/fontawesome.js"></script>
-		<!-- Jquery, Bootstrap -->
-		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
-		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+		<!-- INDEX -->
 		<script type="text/javascript" src="/js/app/index.js"></script>
-		<script type="text/javascript" src="/js/app/header.js"></script>
-		<!-- SWEETALERT2 -->
-		<script type="text/javascript" src="/js/lib/sweetalert2.js"></script>
-		<!-- POPUP -->
-		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
-		<script type="text/javascript" src="/js/lib/stomp.min.js"></script>
-		<script type="text/javascript" src="/js/app/popup.js"></script>
-		<!-- FIND -->
-		<script type="text/javascript" src="/js/app/find.js"></script>
+		<script type="text/javascript" src="/js/app/user/find.js"></script>
 	</th:block>
 	
 </body>

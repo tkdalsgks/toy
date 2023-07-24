@@ -9,11 +9,6 @@
 <title>OYEZ - CHAT GPT</title>
 
 <th:block layout:fragment="css">
-	<!-- RESET, DEFAULT -->
-	<link rel="stylesheet" th:href="@{/css/app/reset.css}" />
-	<link rel="stylesheet" th:href="@{/css/lib/bootstrap.min.css}" />
-	<link rel="stylesheet" th:href="@{/css/app/index.css}" />
-	<link rel="stylesheet" th:href="@{/css/app/default.css}" />
 	<!-- POPUP -->
 	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
 	<!-- BOARD -->
@@ -27,6 +22,7 @@
 
 <body>
 	
+	<!-- CHAT_GPT : CONTENT -->
 	<main layout:fragment="content" class="container">
 		<form th:action="@{/chat/gpt}" method="post">
 			<label for="question">질문 : </label>
@@ -40,28 +36,14 @@
 		</div>
 	</main>
 	
+	<!-- CHAT_GPT : SCRIPT -->
 	<th:block layout:fragment="script">
-		<!-- FONT AWESOME -->
-		<script type="text/javascript" src="/js/lib/fontawesome.js"></script>
-		<!-- Jquery, Bootstrap -->
-		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
-		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
-		<script type="text/javascript" src="/js/app/header.js"></script>
-		<!-- SWEETALERT2 -->
-		<script type="text/javascript" src="/js/lib/sweetalert2.js"></script>
-		<!-- POPUP -->
-		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
-		<script type="text/javascript" src="/js/lib/stomp.min.js"></script>
-		<script type="text/javascript" src="/js/app/popup.js"></script>
 		<!-- BOARD -->
 		<script type="text/javascript" src="/js/lib/moment.js"></script>
 		<script type="text/javascript" src="/js/app/board/community/board.js"></script>
 		<!-- LOADING -->
 		<script type="text/javascript" src="/js/lib/loadingoverlay.min.js"></script>
 		<script type="text/javascript" src="/js/app/loading.js"></script>
-		<script th:inline="javascript">
-		
-		</script>
 	</th:block>
 	
 </body>

@@ -22,6 +22,7 @@
 </head>
 <body>
 	
+	<!-- USER_ACCOUNT : CONTENT -->
 	<main layout:fragment="content" class="container">
 		<div class="aside">
 			<aside>
@@ -71,67 +72,17 @@
 		</div>
 	</main>
 	
+	<!-- USER_ACCOUNT : SCRIPT -->
 	<th:block layout:fragment="script">
-		<!-- FONT AWESOME -->
-		<script type="text/javascript" src="/js/lib/fontawesome.js"></script>
-		<!-- Jquery, Bootstrap -->
-		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
-		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
-		<!-- SWEETALERT2 -->
-		<script type="text/javascript" src="/js/lib/sweetalert2.js"></script>
+		<!-- SETTINGS -->
+		<script th:inline="javascript">
+			var certifiedEmail_uri = [[ @{/} + ${userId} + @{/account} ]];
+		</script>
+		<!-- USER -->
+		<script type="text/javascript" src="/js/app/user/account.js"></script>
 		<!-- LOADING -->
 		<script type="text/javascript" src="/js/lib/loadingoverlay.min.js"></script>
 		<script type="text/javascript" src="/js/app/loading.js"></script>
-		<!-- POPUP -->
-		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
-		<script type="text/javascript" src="/js/lib/stomp.min.js"></script>
-		<script type="text/javascript" src="/js/app/popup.js"></script>
-		<!-- SETTINGS -->
-		<script th:inline="javascript">
-		/*<![CDATA[*/
-			
-			function goProfile(userId) {
-		        location.href = '/' + `${userId}` + '/profile';
-			}
-			
-			function goAccount(userId) {
-		        location.href = '/' + `${userId}` + '/account';
-			}
-			
-			function certifiedEmail(userId) {
-				var userEmail = document.getElementById("userEmail");
-				
-				var uri = [[ @{/} + ${userId} + @{/account} ]];
-				var params = { "userEmail": userEmail.value };
-				
-				$.ajax({
-					url: uri,
-					type: "POST",
-					dataType: "json",
-					data: params,
-					success: function(response) {
-						swal.fire({
-							text: '등록된 이메일로 인증 링크를 보냈습니다.',
-							icon: 'success',
-							confirmButtonColor: '#3085d6',
-							confirmButtonText: '확인'
-						});
-					},
-					error: function(response) {
-						swal.fire({
-							text: '잠시 후 재시도 바랍니다.',
-							footer: '서버와의 통신 에러입니다.',
-							icon: 'error',
-							confirmButtonColor: '#3085d6',
-							confirmButtonText: '확인'
-						});
-						return false;
-					}
-				});
-			}
-			
-		/*]]>*/
-		</script>
 	</th:block>
 	
 </body>
