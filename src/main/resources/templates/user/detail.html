@@ -26,6 +26,7 @@
 
 <body>
 	
+	<!-- USER_DETAIL : CONTENT -->
 	<main layout:fragment="content" class="form__admin">
 		<div class="admin__detail">
 			<table>
@@ -132,7 +133,7 @@
 					</table>
 				</div>
 				<div class="admin__table" th:unless="${boardComment.size != 0}">
-					<span style="display: block; text-align: center;">작성한 리뷰 글이 없습니다.</span>
+					<span style="display: block; text-align: center;">작성한 댓글이 없습니다.</span>
 				</div>
 			</div>
 		
@@ -170,76 +171,15 @@
 		</div>
 	</main>
 	
+	<!-- USER_DETAIL : SCRIPT -->
 	<th:block layout:fragment="script">
-		<!-- FONT AWESOME -->
-		<script type="text/javascript" src="/js/lib/fontawesome.js"></script>
-		<!-- Jquery, Bootstrap -->
-		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
-		<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
-		<script type="text/javascript" src="/js/app/header.js"></script>
-		<!-- SWEETALERT2 -->
-		<script type="text/javascript" src="/js/lib/sweetalert2.js"></script>
-		<!-- POPUP -->
-		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
-		<script type="text/javascript" src="/js/lib/stomp.min.js"></script>
-		<script type="text/javascript" src="/js/app/popup.js"></script>
+		<!-- USER -->
+		<script type="text/javascript" src="/js/app/user/detail.js"></script>
 		<!-- LOADING -->
 		<script type="text/javascript" src="/js/lib/loadingoverlay.min.js"></script>
 		<script type="text/javascript" src="/js/app/loading.js"></script>
 		<!-- ADMIN -->
 		<script type="text/javascript" src="/js/app/admin.js"></script>
-		<script th:inline="javascript">
-			// 상세 페이지로 이동
-		    function goViewPageCommunity(id) {
-		        location.href = '/community/detail' + `?id=${id}`;
-		    }
-		    function goViewPageReview(id) {
-		        location.href = '/review/detail' + `?id=${id}`;
-		    }
-			
-			// 회원 추방
-			function openModal() {
-				
-				$("#userInfoModal").modal("toggle");
-				
-				document.getElementById("modalWriter").value = [[ ${admin.userId} ]];
-				document.getElementById("modalNickname").value = [[ ${admin.userNickname} ]];
-				
-				document.getElementById("btnUserUpdate").setAttribute("onclick", "updateUser("+ userId +")");
-			}
-			
-			const userId = [[ ${admin.userId} ]];
-			
-			function updateUser() {
-				alert(userId);
-			}
-			
-			// 저장
-			function saveUser() {
-				var userModel = [[ ${userModel} ]];
-				var authList = [[ ${authList} ]];
-				var selectBox = $("#userModel option:selected").val();
-				
-				console.log("계정권한 : " + userModel);
-				console.log("선택값 : " + selectBox);
-				console.log(userModel == selectBox);
-			}
-			
-			// 탭
-			$(document).ready(function(){
-				
-				$('ul.tabs li').click(function(){
-					var tab_id = $(this).attr('data-tab');
-
-					$('ul.tabs li').removeClass('current');
-					$('.tab-content').removeClass('current');
-
-					$(this).addClass('current');
-					$("#"+tab_id).addClass('current');
-				})
-
-			})
-		</script>
 	</th:block>
 	
 	

@@ -1,4 +1,10 @@
 <a href="https://oyez.kr" target="_blank">프로젝트 바로가기</a>
+<div>
+<span>(GUEST)&nbsp;TEST ID:&nbsp;&nbsp;&nbsp;guest01</span><br>
+<span>(GUEST)&nbsp;TEST PW:&nbsp;guest01@#</span><br>
+<span>(USER)&nbsp;&nbsp;&nbsp;TEST ID:&nbsp;&nbsp;&nbsp;user01</span><br>
+<span>(USER)&nbsp;&nbsp;&nbsp;TEST PW:&nbsp;user01@#</span>
+</div>
 <br><br>
 <div align='center'>
 <strong>:mag_right:&nbsp;&nbsp;Project Skils&nbsp;</strong>
