@@ -97,6 +97,7 @@
 	<th:block layout:fragment="script">
 		<!-- SETTINGS -->
 		<script th:inline="javascript">
+			var role = [[ ${role} ]];
 			var userNickname = [[ ${userNickname} ]];
 			var userEmail = [[ ${userEmail} ]];
 			var updateProfile_uri = [[ @{/} + ${userId} + @{/profile} ]];

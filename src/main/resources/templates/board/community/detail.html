@@ -158,6 +158,7 @@
 	<th:block layout:fragment="script">
 		<!-- SETTINGS -->
 		<script th:inline="javascript">
+			var role = [[ ${role} ]];
 			var id = [[ ${board.id} ]];
 			var userId = [[ ${userId} ]];
 			var userName = [[ ${userName} ]];

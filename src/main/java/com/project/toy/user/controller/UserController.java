@@ -79,12 +79,13 @@ public class UserController {
 	
 	@ResponseBody
 	@PutMapping("{userId}/profile")
-	public JsonObject saveProfile(@PathVariable(value = "userId", required = false) String userId, @RequestBody final UpdateUserDTO params) {
+	public JsonObject saveProfile(@PathVariable(value = "userId", required = false) String userId, @RequestBody final UpdateUserDTO params, Model model) {
 		JsonObject jsonObj = new JsonObject();
 		
 		try {
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 			UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
+			model.addAttribute("role", user.getRole());
 			
 			LocalDateTime pwdUDate = user.getPwdUDate();
 			LocalDateTime now = LocalDateTime.now();
@@ -126,6 +127,10 @@ public class UserController {
 	public String detail(@RequestParam Long id, AdminDTO params, 
 			HttpServletRequest request, HttpServletResponse response, Authentication auth, Model model) {
 		log.info("# Admin User Page Detail?id = " + id);
+		
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
+		model.addAttribute("role", user.getRole());
 		
 		// 게시글 리스트
 		AdminDTO admin = adminService.findByUserId(id);

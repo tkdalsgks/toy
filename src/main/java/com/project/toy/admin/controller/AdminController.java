@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -43,6 +44,7 @@ public class AdminController {
 	private final UserService userService;
 	
 	private final HttpSession session;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
@@ -61,6 +63,9 @@ public class AdminController {
 			model.addAttribute("userList", userList);
 			model.addAttribute("authList", authList);
 			
+			String rawPwd = "user01@#";
+        	String encPwd = bCryptPasswordEncoder.encode(rawPwd);
+			log.info("PASSWORD : {}", encPwd);
 		}
 		return "admin/admin";
 	}

@@ -94,6 +94,7 @@ public class RoomController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("role", user.getRole());
 		}
 		
 		model.addAttribute("room", chatRoomService.findRoomById(roomId));
