@@ -38,7 +38,7 @@
 					<input type="hidden" id="IDate" name="IDate" class="write-date" />
 					<div>
 						<div class="write-notice">
-							<div sec:authorize="hasAnyRole('ROLE_ADMIN')">
+							<div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN')">
 								<span>공지글</span>
 								<span class="chkbox"><input type="checkbox" id="isNotice" name="isNotice" class="chk" /><i></i><label for="isNotice"></label></span>
 							</div>

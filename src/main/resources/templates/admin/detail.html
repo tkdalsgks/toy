@@ -41,7 +41,7 @@
 				</tr>
 				<tr>
 					<td class="admin-head">권한</td>
-					<td id="admin__role" class="admin-content">[[ ${admin.role} ]]</td>	
+					<td id="admin__role" class="admin-content">[[ ${admin.modelNameKor} ]]</td>	
 				</tr>
 				<tr>
 					<td class="admin-head">가입일자</td>
@@ -52,7 +52,7 @@
 					<td class="admin-content">
 						<select th:field="*{authList}" id="userModel">
 							<option value="NONE">선택</option>
-							<option th:each="authList : ${authList}" th:text="${authList.modelName}" th:value="${authList.modelName}" ></option>
+							<option th:each="authList : ${authList}" th:text="${authList.modelNameKor}" th:value="${authList.modelName}" ></option>
 						</select>									
 					</td>
 				</tr>
@@ -116,7 +116,7 @@
 						<tbody>
 							<tr th:each="review : ${boardReview}">
 								<td style="text-align: center; font-weight: 600;" th:text="${review.id}"></td>
-								<td><a th:href="@{/review/detail?id=} + ${review.id}"><span th:text="${review.title}"></span></a></td>
+								<td><a th:href="@{/} + ${review.id}"><span th:text="${review.title}"></span></a></td>
 								<td style="text-align: center; font-size: .9rem;" th:text="${#temporals.format(review.IDate, 'yyyy-MM-dd HH:mm')}"></td>
 							</tr>
 						</tbody>
@@ -141,7 +141,7 @@
 						<tbody>
 							<tr th:each="comment : ${boardComment}">
 								<td style="text-align: center; font-weight: 600;" th:text="${comment.id}"></td>
-								<td><a th:href="@{/community/detail?id=} + ${comment.boardId}"><span th:text="${comment.content}"></span></a></td>
+								<td><a th:href="@{/} + ${comment.boardId}"><span th:text="${comment.content}"></span></a></td>
 								<td style="text-align: center; font-size: .9rem;" th:text="${#temporals.format(comment.IDate, 'yyyy-MM-dd HH:mm')}"></td>
 							</tr>
 						</tbody>
@@ -190,11 +190,12 @@
 	<th:block layout:fragment="script">
 		<!-- SETTINGS -->
 		<script th:inline="javascript">
+			var role = [[ ${role} ]];
 			var admin_userId = [[ ${admin.userId} ]];
 		    var admin_userNickname = [[ ${admin.userNickname} ]];
 		    var userModel = [[ ${userModel} ]];
 			var authList = [[ ${authList} ]];
-			var saveUser_uri = [[ @{/admin/detail} ]];
+			var saveUser_uri = [[ @{/admin/save} ]];
 		</script>
 		<!-- ADMIN -->
 		<script type="text/javascript" src="/js/app/admin/detail.js"></script>

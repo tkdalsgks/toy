@@ -84,7 +84,7 @@ function openChatRoom() {
 				location.href = '/' + userId + '/account';
 			}
 		});
-	} else if(role == 'USER' || role == 'ADMIN') {
+	} else if(role == 'USER' || role == 'ADMIN' || role == 'SUPERADMIN') {
 		// 게스트 이외의 인증된 권한
 		// 채팅 팝업 열림
 		document.querySelector(".background__chat").className = "background__chat show__chat";

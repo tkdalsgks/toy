@@ -16,7 +16,7 @@
 	<select id="selectAuthModel" resultType="AdminDTO">
 		/* com.project.toy.admin.mapper.AdminMapper, 전체 권한 모델 리스트 (UN_USER 제외) */
 		
-		SELECT MODEL_NAME 
+		SELECT MODEL_NAME, MODEL_NAME_KOR
 		FROM   T_AUTH_MODEL 
 		WHERE  1=1
 		AND    USE_YN = 'Y'
@@ -26,7 +26,7 @@
 	<select id="selectAuthUser" resultType="AdminDTO">
 		/* com.project.toy.admin.mapper.AdminMapper, 해당 사용자 권한 모델 출력 */
 		
-		SELECT B.USER_ID, A.MODEL_NAME
+		SELECT B.USER_ID, A.MODEL_NAME, A.MODEL_NAME_KOR
 		FROM   T_AUTH_MODEL A
 		LEFT OUTER JOIN T_PERSON B ON A.MODEL_NAME = B.ROLE
 		WHERE  1=1
@@ -37,25 +37,35 @@
 	<select id="selectListUser" resultType="AdminDTO">
 		/* com.project.toy.admin.mapper.AdminMapper, 전체 사용자 리스트 */
 		
-		SELECT USER_NO 			AS userNo
-		     , USER_ID 			AS userId
-		     , USER_EMAIL 		AS userEmail
-		     , USER_NICKNAME 	AS userNickname
-		     , PROVIDER			AS provider
-		     , ROLE				AS role
-		     , I_DATE			AS IDate
-		FROM   toy.T_PERSON
+		SELECT A.USER_NO
+		     , A.USER_ID
+		     , A.USER_EMAIL
+		     , A.USER_NICKNAME
+		     , A.PROVIDER
+		     , A.ROLE
+		     , B.MODEL_NAME_KOR
+		     , A.I_DATE
+		FROM   T_PERSON A
+		LEFT OUTER JOIN T_AUTH_MODEL B ON A.ROLE = B.MODEL_NAME
 		WHERE  1=1
-		AND    USE_YN = 'Y'
-		ORDER BY USER_NO DESC
+		AND    A.USE_YN = 'Y'
+		ORDER BY A.USER_NO DESC
 	</select>
 	
 	<!-- 상세보기 -->
 	<select id="findByUserId" resultType="AdminDTO">
 		/* com.project.toy.admin.mapper.AdminMapper, 해당 사용자 출력 */
 		
-		SELECT <include refid="userColumns" />
-		FROM   T_PERSON
+		SELECT A.USER_NO
+		     , A.USER_ID
+		     , A.USER_EMAIL
+		     , A.USER_NICKNAME
+		     , A.PROVIDER
+		     , A.ROLE
+		     , B.MODEL_NAME_KOR
+		     , A.I_DATE
+		FROM   T_PERSON A
+		LEFT OUTER JOIN T_AUTH_MODEL B ON A.ROLE = B.MODEL_NAME
 		WHERE  1=1
 		AND    USER_ID = #{ value }
 	</select>

@@ -29,7 +29,7 @@ function drawList(list, num) {
             		<span>${row.userId}</span>
             	</td>
             	<td>
-            		<span>${row.role}</span>
+            		<span>${row.modelNameKor}</span>
             	</td>
             	<td>
             		<a href="/admin/${row.userId}/activity"><button>상세보기</button></a>

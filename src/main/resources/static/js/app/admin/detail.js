@@ -26,38 +26,47 @@ function saveUser() {
 	var userId = document.getElementById("userId").value;
 	var selectBox = $("#userModel option:selected").val();
 	
-	//console.log("아이디 : " + userId);
-	//console.log("계정권한 : " + userModel);
-	//console.log("선택값 : " + selectBox);
+	console.log("아이디 : " + userId);
+	console.log("계정권한 : " + userModel);
+	console.log("선택값 : " + selectBox);
 	
-	if(selectBox != 'NONE') {
+	if(role == 'SUPERADMIN') {
+		if(selectBox != 'NONE') {
+			swal.fire({
+				text: '회원정보를 저장할까요?',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				confirmButtonText: '확인',
+				cancelButtonColor: '#d33',
+				cancelButtonText: '취소'
+			}).then((result) => {
+				if(result.isConfirmed) {
+					var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
+					var params = { "userId": userId, "role": selectBox };
+					
+					$.ajax({
+						url: saveUser_uri,
+						type: "POST",
+						headers: headers,
+						dataType: "json",
+						data: JSON.stringify(params),
+						success: function(data) {
+							$("#admin__role").html('<td id="admin__role" class="admin-content">' + selectBox + '</td>');
+						},
+						error: function(data) {
+							console.log("fail");
+						}
+					});
+				}
+			});
+		}
+	} else {
 		swal.fire({
-			text: '회원정보를 저장할까요?',
-			icon: 'warning',
-			showCancelButton: true,
+			text: '최고 관리자만 설정 가능한 기능입니다.',
+			icon: 'error',
 			confirmButtonColor: '#3085d6',
-			confirmButtonText: '확인',
-			cancelButtonColor: '#d33',
-			cancelButtonText: '취소'
-		}).then((result) => {
-			if(result.isConfirmed) {
-				var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
-				var params = { "userId": userId, "role": selectBox };
-				
-				$.ajax({
-					url: saveUser_uri,
-					type: "POST",
-					headers: headers,
-					dataType: "json",
-					data: JSON.stringify(params),
-					success: function(data) {
-						$("#admin__role").html('<td id="admin__role" class="admin-content">' + selectBox + '</td>');
-					},
-					error: function(data) {
-						console.log("fail");
-					}
-				});
-			}
+			confirmButtonText: '확인'
 		});
 	}
 }

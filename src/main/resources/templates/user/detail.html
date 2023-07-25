@@ -101,7 +101,7 @@
 						<tbody>
 							<tr th:each="review : ${boardReview}">
 								<td style="text-align: center; font-weight: 600;" th:text="${review.id}"></td>
-								<td><a th:href="@{/review/detail?id=} + ${review.id}"><span th:text="${review.title}"></span></a></td>
+								<td><a th:href="@{/} + ${review.id}"><span th:text="${review.title}"></span></a></td>
 								<td style="text-align: center; font-size: .9rem;" th:text="${#temporals.format(review.IDate, 'yyyy-MM-dd HH:mm')}"></td>
 							</tr>
 						</tbody>
@@ -126,7 +126,7 @@
 						<tbody>
 							<tr th:each="comment : ${boardComment}">
 								<td style="text-align: center; font-weight: 600;" th:text="${comment.id}"></td>
-								<td><a th:href="@{/community/detail?id=} + ${comment.boardId}"><span th:text="${comment.content}"></span></a></td>
+								<td><a th:href="@{/} + ${comment.boardId}"><span th:text="${comment.content}"></span></a></td>
 								<td style="text-align: center; font-size: .9rem;" th:text="${#temporals.format(comment.IDate, 'yyyy-MM-dd HH:mm')}"></td>
 							</tr>
 						</tbody>
