@@ -32,7 +32,7 @@ function drawList(list, num) {
             		<span>${row.role}</span>
             	</td>
             	<td>
-            		<a href="javascript:void(0);" onclick="goViewPage(${row.userNo});"><button>상세보기</button></a>
+            		<a href="/admin/${row.userId}/activity"><button>상세보기</button></a>
             	</td>
             </tr>
         `;

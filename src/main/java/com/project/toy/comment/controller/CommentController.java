@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
@@ -43,6 +45,8 @@ public class CommentController {
 	
 	private final HttpSession session;
 	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	/**
 	 * 댓글 리스트 조회
 	 * @param boardId
@@ -52,7 +56,10 @@ public class CommentController {
 	 */
 	@Operation(summary = "리스트 조회", description = "댓글 리스트 조회")
 	@GetMapping("/comments/{boardId}")
-	public JsonObject getCommentList(@PathVariable("boardId") Long boardId, @ModelAttribute("params") CommentResponseDTO params, Model model) {
+	public JsonObject getCommentList(@PathVariable("boardId") Long boardId,
+			@ModelAttribute("params") CommentResponseDTO params, Model model) {
+		log.info("##### Comment Page List __ Call #####");
+		
 		JsonObject jsonObj = new JsonObject();
 		List<CommentResponseDTO> commentList = commentService.findAll(boardId);
 		
@@ -74,6 +81,8 @@ public class CommentController {
 	@Operation(summary = "댓글 작성", description = "댓글 작성 메서드")
 	@PostMapping({"/comments", "/comments/{id}"})
 	public JsonObject saveComment(@PathVariable(value = "id", required = false) Long id, @RequestBody final CommentRequestDTO params) {
+		log.info("##### Comment Page Save __ API " + id + " #####");
+		
 		JsonObject jsonObj = new JsonObject();
 		
 		try {
@@ -98,6 +107,8 @@ public class CommentController {
 	@Operation(summary = "댓글 수정", description = "댓글 수정 메서드")
 	@PatchMapping({"/comments", "/comments/{id}"})
 	public JsonObject updateComment(@PathVariable(value = "id", required = false) Long id, @RequestBody final CommentRequestDTO params) {
+		log.info("##### Comment Page Modify __ API " + id + " #####");
+		
 		JsonObject jsonObj = new JsonObject();
 		
 		try {
@@ -129,6 +140,8 @@ public class CommentController {
 	@Operation(summary = "댓글 삭제", description = "댓글 삭제 메서드")
 	@DeleteMapping("/comments/{id}")
 	public JsonObject deleteComment(@PathVariable("id") final Long id) {
+		log.info("##### Comment Page Delete __ API " + id + " #####");
+		
 		JsonObject jsonObj = new JsonObject();
 		
 		try {

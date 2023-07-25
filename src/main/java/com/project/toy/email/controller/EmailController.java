@@ -47,7 +47,8 @@ public class EmailController {
 	@PostMapping("/check/mail")
 	public String checkMail(@RequestParam("userEmail") String userEmail) throws Exception {
 		String code = emailService.sendSimpleMessage(userEmail);
-		log.info("전송된 인증번호 : " + code);
+		log.info("##### Mail Page __ API #####");
+		log.info("##### CODE : " + code + " #####");
 		
 		return code;
 	}
@@ -75,6 +76,8 @@ public class EmailController {
 	 */
 	@GetMapping("/certified")
 	public String certifiedEmail(CertifiedUserDTO params, UserDTO userDTO, Model model) {
+		log.info("##### Certified Page __ Call #####");
+		
 		MessageDTO message;
 		
 		SessionUser user = (SessionUser) session.getAttribute("user");

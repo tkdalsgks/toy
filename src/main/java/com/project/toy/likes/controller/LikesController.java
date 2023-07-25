@@ -1,5 +1,7 @@
 package com.project.toy.likes.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +20,8 @@ public class LikesController {
 
 	private final LikesService likesService;
 	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	/**
 	 * 게시글 좋아요, 취소
 	 * @param boardId
@@ -26,6 +30,8 @@ public class LikesController {
 	 */
 	@PostMapping({"/community/likes", "/community/likes/{boardId}"})
 	public JsonObject saveLikes(@PathVariable(value = "boardId", required = false) Long boardId, @RequestBody final LikesDTO params) {
+		log.info("##### Likes Page Save __ API #####");
+		
 		JsonObject jsonObj = new JsonObject();
 		
 		synchronized(this) {

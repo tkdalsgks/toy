@@ -46,11 +46,14 @@ public class SecurityController {
 	@Operation(summary = "메인 홈", description = "메인 홈 조회")
 	@GetMapping({"", "/"})
 	public String index(Authentication auth, Model model, String roomId) {
+		
 		SessionUser user = (SessionUser) session.getAttribute("user");
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("role", user.getRole());
+			
+			log.info("##### Main Page __ Call {} #####", user.getUserId());
 			
 			//System.out.println("홈 채팅방 조회 : " + chatRoomService.findAllRooms().toString());
 			// 채팅방 조회
@@ -72,7 +75,7 @@ public class SecurityController {
 	@Operation(summary = "회원가입 페이지", description = "회원가입 페이지 조회")
 	@GetMapping("/join")
 	public String join() {
-		log.info("***** Join Page Call *****");
+		log.info("##### Join Page __ Call #####");
 		
 		return "user/join";
 	}
@@ -84,6 +87,8 @@ public class SecurityController {
 	@Operation(summary = "회원가입", description = "일반 사용자 회원가입 메서드")
 	@PostMapping("/join")
 	public String saveUser(UserDTO userDTO, String userId, Model model) {
+		log.info("Join Page __ API #####");
+		
 		MessageDTO message;
 		
 		if(securityMapper.findByUserId(userId) != null) {
@@ -102,8 +107,12 @@ public class SecurityController {
 		Map<String, String> map = new HashMap<String, String>();
 		
 		if(securityMapper.findByUserId(userId) == null) {
+			log.info("##### Join USER_ID {} #####", userId);
+			
 			map.put("result", "true");
 		} else {
+			log.info("##### Duplicate USER_ID {} #####", userId);
+			
 			map.put("result", "false");
 		}
 		
@@ -117,8 +126,12 @@ public class SecurityController {
 		Map<String, String> map = new HashMap<String, String>();
 		
 		if(securityMapper.findByUserNickname(userNickname) == null) {
+			log.info("##### Join USER_ID {} #####", userNickname);
+			
 			map.put("result", "true");
 		} else {
+			log.info("##### Duplicate USER_ID {} #####", userNickname);
+			
 			map.put("result", "false");
 			map.put("userNickname", userNickname);
 		}
@@ -133,8 +146,12 @@ public class SecurityController {
 		Map<String, String> map = new HashMap<String, String>();
 		
 		if(securityMapper.findByUserEmail(userEmail) == null) {
+			log.info("##### Join USER_ID {} #####", userEmail);
+			
 			map.put("result", "true");
 		} else {
+			log.info("##### Duplicate USER_ID {} #####", userEmail);
+			
 			map.put("result", "false");
 			map.put("userEmail", userEmail);
 		}
@@ -150,8 +167,12 @@ public class SecurityController {
 		
 		UserDTO userDTO = userService.findByUserId(userEmail);
 		if(userDTO == null) {
+			log.info("##### Not Found USER_ID {} #####", userDTO.getUserId());
+			
 			map.put("result", "false");
 		} else {
+			log.info("##### Find USER_ID {} #####", userDTO.getUserId());
+			
 			String userId = userDTO.getUserId();
 			map.put("findId", userId);
 			map.put("result", "true");
@@ -168,8 +189,12 @@ public class SecurityController {
 		
 		UserDTO userDTO = userService.findByUserPwd(userId, userEmail);
 		if(userDTO == null) {
+			log.info("##### Not Found USER_ID {} #####", userDTO.getUserId());
+			
 			map.put("result", "false");
 		} else {
+			log.info("##### Find USER_ID {} #####", userDTO.getUserId());
+			
 			emailService.updateUserPwd(userDTO, userEmail);
 			map.put("result", "true");
 		}

@@ -15,10 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonObject;
@@ -50,7 +50,7 @@ public class AdminController {
 	
 	@GetMapping("")
 	public String admin(@ModelAttribute("params") final SearchDTO params, Authentication auth, Model model) {
-		log.info("***** Admin Page Call *****");
+		log.info("##### Admin Page List __ Call #####");
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
@@ -71,25 +71,25 @@ public class AdminController {
 	}
 	
 	@Transactional
-	@GetMapping("/detail")
-	public String detail(@RequestParam Long id, AdminDTO params, 
+	@GetMapping("/{userId}/activity")
+	public String detail(@PathVariable(value = "userId", required = false) String userId, AdminDTO params, 
 			HttpServletRequest request, HttpServletResponse response, Authentication auth, Model model) {
-		log.info("# Admin User Page Detail?id = " + id);
+		log.info("##### Admin Page Activity __ Call" + userId + " #####");
 		
 		// 게시글 리스트
-		AdminDTO admin = adminService.findByUserId(id);
-		List<BoardResponseDTO> boardCommunity = adminService.findByBoardIdAndCommunity(id);
-		List<BoardResponseDTO> boardReview = adminService.findByBoardIdAndReview(id);
+		AdminDTO admin = adminService.findByUserId(userId);
+		List<BoardResponseDTO> boardCommunity = adminService.findByBoardIdAndCommunity(userId);
+		List<BoardResponseDTO> boardReview = adminService.findByBoardIdAndReview(userId);
 		model.addAttribute("admin", admin);
 		model.addAttribute("boardCommunity", boardCommunity);
 		model.addAttribute("boardReview", boardReview);
 		
 		// 댓글 리스트
-		List<CommentResponseDTO> boardComment = adminService.findByComment(id);
+		List<CommentResponseDTO> boardComment = adminService.findByComment(userId);
 		model.addAttribute("boardComment", boardComment);
 		
 		// 권한 모델
-		AdminDTO userModel = adminService.selectAuthUser(id);
+		AdminDTO userModel = adminService.selectAuthUser(userId);
 		List<AdminDTO> authList = adminService.selectAuthModel();
 		model.addAttribute("userModel", userModel.getModelName());
 		model.addAttribute("authList", authList);
@@ -97,8 +97,10 @@ public class AdminController {
 		return "admin/detail";
 	}
 	
-	@PostMapping("/detail")
-	public @ResponseBody JsonObject detailsave(@RequestBody UpdateUserDTO updateUserDTO, Model model) {
+	@PostMapping("/save")
+	public @ResponseBody JsonObject save(@RequestBody UpdateUserDTO updateUserDTO, Model model) {
+		log.info("##### Admin Page Save __ API #####");
+		
 		JsonObject jsonObj = new JsonObject();
 		
 		adminService.updateAuthUser(updateUserDTO);

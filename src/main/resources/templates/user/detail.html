@@ -76,7 +76,7 @@
 						<tbody>
 							<tr th:each="community : ${boardCommunity}">
 								<td style="text-align: center; font-weight: 600;" th:text="${community.id}"></td>
-								<td><a th:href="@{/community/detail?id=} + ${community.id}"><span th:text="${community.title}"></span></a></td>
+								<td><a th:href="@{/} + ${community.id}"><span th:text="${community.title}"></span></a></td>
 								<td style="text-align: center; font-size: .9rem;" th:text="${#temporals.format(community.IDate, 'yyyy-MM-dd HH:mm')}"></td>
 							</tr>
 						</tbody>

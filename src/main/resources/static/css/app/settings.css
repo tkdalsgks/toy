@@ -71,7 +71,7 @@
 	.aside { min-height: 100%; padding-top: 1.5rem; }
 	.aside-title { display: -ms-grid; display: grid; font-size: 1.25rem; font-weight: 500; }
 	.aside-title1 { color: blue; font-size: .75rem; font-weight: 400; }
-	.aside-subtitle { display: -ms-grid; display: grid; padding-top: 1rem; padding-bottom: 1rem; }
+	.aside-subtitle { display: -ms-grid; display: grid; padding-top: 1rem; padding-bottom: 1rem; cursor: pointer; }
 	.aside-subtitle a { padding: .5rem; }
 	.aside-subtitle1 { display: -webkit-inline-box; display: -ms-inline-flexbox; display: inline-flex; margin-bottom: .25rem; -webkit-box-align: center; -ms-flex-align: center; align-items: center; font-size: 1rem; }
 	.aside-subtitle1 span { margin-left: .25rem; font-weight: 400; }

@@ -27,8 +27,8 @@ public class AdminService {
 		return adminMapper.selectAuthModel();
 	}
 	
-	public AdminDTO selectAuthUser(Long id) {
-		return adminMapper.selectAuthUser(id);
+	public AdminDTO selectAuthUser(String userId) {
+		return adminMapper.selectAuthUser(userId);
 	}
 	
 	public PagingResponse<UserDTO> selectListUser(final SearchDTO params) {
@@ -45,20 +45,20 @@ public class AdminService {
 		return new PagingResponse<>(list, pagination);
 	}
 
-	public AdminDTO findByUserId(Long id) {
-		return adminMapper.findByUserId(id);
+	public AdminDTO findByUserId(String userId) {
+		return adminMapper.findByUserId(userId);
 	}
 	
-	public List<BoardResponseDTO> findByBoardIdAndCommunity(Long id) {
-		return adminMapper.findByBoardIdAndCommunity(id);
+	public List<BoardResponseDTO> findByBoardIdAndCommunity(String userId) {
+		return adminMapper.findByBoardIdAndCommunity(userId);
 	}
 	
-	public List<BoardResponseDTO> findByBoardIdAndReview(Long id) {
-		return adminMapper.findByBoardIdAndReview(id);
+	public List<BoardResponseDTO> findByBoardIdAndReview(String userId) {
+		return adminMapper.findByBoardIdAndReview(userId);
 	}
 	
-	public List<CommentResponseDTO> findByComment(Long id) {
-		return adminMapper.findByComment(id);
+	public List<CommentResponseDTO> findByComment(String userId) {
+		return adminMapper.findByComment(userId);
 	}
 
 	public void updateAuthUser(UpdateUserDTO updateUserDTO) {

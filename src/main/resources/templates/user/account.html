@@ -76,6 +76,7 @@
 	<th:block layout:fragment="script">
 		<!-- SETTINGS -->
 		<script th:inline="javascript">
+			var role = [[ ${role} ]];
 			var certifiedEmail_uri = [[ @{/} + ${userId} + @{/account} ]];
 		</script>
 		<!-- USER -->

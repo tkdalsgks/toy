@@ -2,7 +2,7 @@
 $('#duplicateUserId').on('click' ,function() {
 	const id = document.getElementById('userId').value;
 	const checkUserId = document.getElementById('checkUserId');
-	const exp = /^(?=.*[a-z0-9])[a-z0-9]{4,16}$/;
+	const exp = /^(?=.*[a-zA-Z])(?=.*\d).{4,16}$/;
 	
 	const imgCheckId = document.getElementById('imgCheckId');
 	const imgCancelId = document.getElementById('imgCancelId');

@@ -31,7 +31,7 @@
 		LEFT OUTER JOIN T_PERSON B ON A.MODEL_NAME = B.ROLE
 		WHERE  1=1
 		AND    A.USE_YN = 'Y'
-		AND    B.USER_NO = #{ value }
+		AND    B.USER_ID = #{ value }
 	</select>
 	
 	<select id="selectListUser" resultType="AdminDTO">
@@ -57,7 +57,7 @@
 		SELECT <include refid="userColumns" />
 		FROM   T_PERSON
 		WHERE  1=1
-		AND    USER_NO = #{ value }
+		AND    USER_ID = #{ value }
 	</select>
 	
 	<!-- 커뮤니티 게시글 리스트 -->
@@ -74,7 +74,7 @@
 		WHERE  1=1
 		AND    A.BOARD_SEQ = '1'
 		AND    A.DELETE_YN = '0'
-		AND    B.USER_NO = #{ id }
+		AND    B.USER_ID = #{ userId }
 		ORDER BY A.ID DESC
 	</select>
 	
@@ -93,7 +93,7 @@
 		AND    A.WRITER_ID = B.USER_ID
 		AND    A.BOARD_SEQ = '2'
 		AND    A.DELETE_YN = '0'
-		AND    B.USER_NO = #{ id }
+		AND    B.USER_ID = #{ userId }
 		ORDER BY A.ID DESC
 	</select>
 	
@@ -113,7 +113,7 @@
 		LEFT OUTER JOIN T_PERSON C ON A.WRITER_ID = C.USER_ID
 		WHERE  1=1
 		AND    A.DELETE_YN = 'N'
-		AND    C.USER_NO = #{ id }
+		AND    C.USER_ID = #{ userId }
 		ORDER BY A.ID DESC
 	</select>
 	
