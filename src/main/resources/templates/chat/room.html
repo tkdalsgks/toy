@@ -40,9 +40,10 @@
 	<th:block layout:fragment="script">
 		<!-- SETTINGS -->
 		<script th:inline="javascript">
-	        var roomName = [[${room.name}]];
-	        var roomId = [[${room.roomId}]];
-	        var username = [[${user}]];
+			var role = [[ ${role} ]];
+	        var roomName = [[ ${room.name} ]];
+	        var roomId = [[ ${room.roomId} ]];
+	        var username = [[ ${user} ]];
 		</script>
 		<!-- ROOM -->
 		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>

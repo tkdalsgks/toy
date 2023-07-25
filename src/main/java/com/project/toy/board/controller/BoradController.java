@@ -68,6 +68,7 @@ public class BoradController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("role", user.getRole());
 		}
 		
 		PagingResponse<BoardResponseDTO> boards = boardService.findAll(params);
@@ -127,6 +128,7 @@ public class BoradController {
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("userName", user.getUserNickname());
+			model.addAttribute("role", user.getRole());
 		}
 		
 		BoardResponseDTO board = boardService.findByBoardId(id);
@@ -183,6 +185,7 @@ public class BoradController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("role", user.getRole());
 		}
 		
 		if(id != null) {
@@ -210,6 +213,7 @@ public class BoradController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("role", user.getRole());
 		}
 		
 		if(id != null) {

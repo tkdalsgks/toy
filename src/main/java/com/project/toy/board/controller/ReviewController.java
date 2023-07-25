@@ -68,6 +68,7 @@ public class ReviewController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("role", user.getRole());
 		}
 		
 		PagingResponse<ReviewResponseDTO> reviews = reviewService.findAll(params);
@@ -129,6 +130,7 @@ public class ReviewController {
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("userName", user.getUserNickname());
+			model.addAttribute("role", user.getRole());
 		}
 		
 		ReviewResponseDTO review = reviewService.findByReviewId(id);
@@ -185,6 +187,7 @@ public class ReviewController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("role", user.getRole());
 		}
 		
 		if(id != null) {
@@ -212,6 +215,7 @@ public class ReviewController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("role", user.getRole());
 		}
 		
 		if(id != null) {

@@ -173,6 +173,10 @@
 	
 	<!-- USER_DETAIL : SCRIPT -->
 	<th:block layout:fragment="script">
+		<!-- SETTINGS -->
+		<script th:inline="javascript">
+			var role = [[ ${role} ]];
+		</script>
 		<!-- USER -->
 		<script type="text/javascript" src="/js/app/user/detail.js"></script>
 		<!-- LOADING -->

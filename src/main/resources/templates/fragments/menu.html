@@ -15,7 +15,6 @@
 	   			<div>
 					<a class="popup-content__item" th:href="@{/community}">커뮤니티</a>
 					<a class="popup-content__item" th:href="@{/review}">리뷰</a>
-					<a sec:authorize="hasRole('ROLE_ADMIN')" class="popup-content__item" th:href="@{/chat}">채팅방</a>
 					<a sec:authorize="hasRole('ROLE_ADMIN')" class="popup-content__item" th:href="@{/chat/gpt}">CHAT GPT</a>
 					<a sec:authorize="isAuthenticated()" class="popup-content__item" th:onclick="goProfile([[ ${userId} ]]);">마이페이지</a>
 				</div>

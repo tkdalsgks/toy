@@ -73,6 +73,7 @@
 	<th:block layout:fragment="script">
 		<!-- SETTINGS -->
 		<script th:inline="javascript">
+			var role = [[ ${role} }]];
 			var board = [[ ${board} ]];
 			var saveBoard = [[ ${review == null} ]] ? '/review/save' : '/review/update';
 		</script>

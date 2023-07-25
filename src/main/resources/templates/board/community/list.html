@@ -75,6 +75,7 @@
 	<th:block layout:fragment="script">
 		<!-- SETTINGS -->
 		<script th:inline="javascript">
+			var role = [[ ${role} ]];
 			var notice = [[ ${notice} ]];
 			var list = [[ ${boards.list} ]];
 			var likes = [[ ${likes} ]];

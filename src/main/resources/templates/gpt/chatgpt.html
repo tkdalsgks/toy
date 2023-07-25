@@ -38,6 +38,10 @@
 	
 	<!-- CHAT_GPT : SCRIPT -->
 	<th:block layout:fragment="script">
+		<!-- SETTINGS -->
+		<script th:inline="javascript">
+			var role = [[ ${role} ]];
+		</script>
 		<!-- BOARD -->
 		<script type="text/javascript" src="/js/lib/moment.js"></script>
 		<script type="text/javascript" src="/js/app/board/community/board.js"></script>
