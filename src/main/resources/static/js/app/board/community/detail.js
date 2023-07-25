@@ -46,7 +46,7 @@ function deleteBoard() {
 	            })
 	            
 	            const formHtml = `
-	                <form id="deleteForm" action="/community/delete" method="post">
+	                <form id="deleteForm" action="/${id}/delete" method="post">
 	                    ${inputHtml}
 	                </form>
 	            `;
@@ -80,7 +80,7 @@ function goChangePage() {
 			confirmButtonText: '확인'
 		});
 	} else {
-        location.href = '/community/change' + location.search;
+        location.href = '/' + id + '/modify' + location.search;
 	}
 	/* th:href="@{/community/write( id=${board.id} )}"  */
 }
@@ -329,7 +329,7 @@ function printCommentList() {
 						<div class="comment-img">
 							<img src="/img/app/chat/chat.png">
 							<div class="comment-name">
-								<span class="name"><a href="javascript:void(0);" onclick="goUserPage(${comment.writerNo});">${comment.writer}</a></span>
+								<span class="name"><a href="/${comment.writerId}/activity">${comment.writer}</a></span>
 								<div class="comment-edit" style="display: flex;">
 									<span class="time comment-time">${timeForToday(moment(comment.IDate).format('YYYY/MM/DD HH:mm'))}
 										<span>${comment.UDate != null ? '·' : ''}</span>

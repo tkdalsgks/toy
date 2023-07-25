@@ -48,7 +48,7 @@ function drawList(notice, list, likes, num) {
         	<tr>
                 <td class="list-important">
 	                	<div>
-	                		<a href="javascript:void(0);" onclick="goUserPage(${row.writerNo});">
+	                		<a href="/${row.writerId}/activity">
 		                		<div class="list-img">
 		                			<img src="/img/app/chat/chat.png">
 			                		<span class="list-writer">${row.writer}</span>
@@ -85,7 +85,7 @@ function drawList(notice, list, likes, num) {
         	<tr>
                 <td class="list-important">
 	                	<div>
-	                		<a href="javascript:void(0);" onclick="goUserPage(${row.writerNo});">
+	                		<a href="/${row.writerId}/activity">
 		                		<div class="list-img">
 		                			<img src="/img/app/chat/chat.png">
 			                		<span class="list-writer">${row.writer}</span>
@@ -122,7 +122,7 @@ function drawList(notice, list, likes, num) {
             <tr>
                 <td class="list-general">
 	                	<div>
-	                		<a href="javascript:void(0);" onclick="goUserPage(${row.writerNo});">
+	                		<a href="/${row.writerId}/activity">
 		                		<div class="list-img">
 		                			<img src="/img/app/chat/chat.png">
 			                		<span class="list-writer">${row.writer}</span>
@@ -208,8 +208,9 @@ function movePage(page) {
 
 // 게시글 상세 페이지로 이동
 function goViewPage(id) {
-    const queryString = (location.search) ? location.search + `&id=${id}` : `?id=${id}`;
-    location.href = '/review/detail' + queryString;
+    //const queryString = (location.search) ? location.search + `&id=${id}` : `?id=${id}`;
+    //location.href = '/community/detail' + queryString;
+    location.href = '/' + id;
 }
 
 // 사용자 상세 페이지로 이동

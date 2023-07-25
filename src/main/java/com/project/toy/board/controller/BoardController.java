@@ -17,9 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.toy.board.dto.BoardRequestDTO;
 import com.project.toy.board.dto.BoardResponseDTO;
@@ -41,7 +41,7 @@ import lombok.RequiredArgsConstructor;
 @Tag(name = "community", description = "게시글 API")
 @Controller
 @RequiredArgsConstructor
-public class BoradController {
+public class BoardController {
 	
 	private final UserService userService;
 	private final BoardService boardService;
@@ -61,7 +61,7 @@ public class BoradController {
 	@Operation(summary = "리스트 조회", description = "게시글 리스트 조회")
 	@GetMapping("/community")
 	public String list(@ModelAttribute("params") final SearchDTO params, Authentication auth, Model model) {
-		log.info("***** Community Page Call *****");
+		log.info("##### Board Page List __ Call #####");
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
@@ -92,9 +92,10 @@ public class BoradController {
 	 */
 	@Operation(summary = "상세페이지 조회", description = "게시글 상세페이지 조회")
 	@Transactional
-	@GetMapping("/community/detail")
-	public String detail(@RequestParam Long id, HttpServletRequest request, HttpServletResponse response, Authentication auth, Model model) {
-		log.info("# Community Page Detail?id = " + id);
+	@GetMapping("/{boardId}")
+	public String detail(@PathVariable(value = "boardId", required = false) Long id, 
+			HttpServletRequest request, HttpServletResponse response, Authentication auth, Model model) {
+		log.info("##### Board Page Detail __ Call " + id + " #####");
 		
 		Cookie oldCookie = null;
 		Cookie[] cookies = request.getCookies();
@@ -177,8 +178,8 @@ public class BoradController {
 	 */
 	@Operation(summary = "작성 페이지 조회", description = "게시글 작성 페이지 조회")
 	@GetMapping("/community/write")
-	public String write(@RequestParam(value = "id", required = false) final Long id, Authentication auth, Model model) {
-		log.info("# Community Page Write?id = " + id);
+	public String write(@PathVariable(value = "boardId", required = false) Long id, Authentication auth, Model model) {
+		log.info("##### Board Page Write __ Call #####");
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
@@ -204,9 +205,9 @@ public class BoradController {
 	 * @return
 	 */
 	@Operation(summary = "수정 페이지 조회", description = "게시글 수정 페이지 조회")
-	@GetMapping("/community/change")
-	public String change(@RequestParam(value = "id", required = false) final Long id, Authentication auth, Model model) {
-		log.info("# Community Page Write?id = " + id);
+	@GetMapping("/{boardId}/modify")
+	public String change(@PathVariable(value = "boardId", required = false) Long id, Authentication auth, Model model) {
+		log.info("##### Board Page Modify __ Call " + id + " #####");
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
@@ -221,7 +222,7 @@ public class BoradController {
 			model.addAttribute("board", board);
 		}
 		
-		return "board/community/change";
+		return "board/community/modify";
 	}
 	
 	/**
@@ -233,6 +234,8 @@ public class BoradController {
 	@Operation(summary = "신규 게시글 생성", description = "신규 게시글 생성 메서드")
 	@PostMapping("/community/save")
 	public String save(final BoardRequestDTO params, Model model) {
+		log.info("##### Board Page Save __ API #####");
+		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		params.setWriterNo(user.getUserNo());
@@ -252,8 +255,10 @@ public class BoradController {
 	 * @return
 	 */
 	@Operation(summary = "기존 게시글 수정", description = "기존 게시글 수정 메서드")
-	@PostMapping("/community/update")
-	public String update(final BoardRequestDTO params, Model model) {
+	@PostMapping("/{boardId}/modify")
+	public String update(@PathVariable(value = "boardId", required = false) Long id, final BoardRequestDTO params, Model model) {
+		log.info("##### Board Page Modify __ API " + id + " #####");
+		
 		boardService.updateBoard(params);
 		MessageDTO message = new MessageDTO("게시글 수정이 완료되었습니다.", "/community", RequestMethod.POST, null);
 		
@@ -268,8 +273,9 @@ public class BoradController {
 	 * @return
 	 */
 	@Operation(summary = "게시글 삭제", description = "게시글 삭제 메서드")
-	@PostMapping("/community/delete")
-	public String delete(@RequestParam final Long id, final SearchDTO queryParams, Model model) {
+	@PostMapping("/{boardId}/delete")
+	public String delete(@PathVariable(value = "boardId", required = false) Long id, final SearchDTO queryParams, Model model) {
+		log.info("##### Board Page Delete __ API " + id + " #####");
 		boardService.deleteBoard(id);
 		MessageDTO message = new MessageDTO("게시글 삭제가 완료되었습니다.", "/community", RequestMethod.GET, queryParamsToMap(queryParams));
 		

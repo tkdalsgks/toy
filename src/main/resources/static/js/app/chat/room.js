@@ -19,21 +19,50 @@ $(document).ready(function() {
            var message = content.message;
            var str = '';
            
-           if(message === "[" + writer + "] 님이 채팅방에 참여하였습니다.") {
-        	   str = "<div class='alert alert-secondary'>";
-        	   str += "<p class='chat-enter'>" + message + "</p>";
-        	   str += "</div>";
-           } else {
-        	   if(writer === username) {
-                   str = "<p class='chat-me'>" + message + "</p>";
-        	   } else {
-                   str = "<p class='chat-others'>" + '&#x1F607' + " " + writer + " : " + message + "</p>";
-               }
+           if(writer === username) {
+               str = "<p class='chat-me'>" + message + "</p>";
+    	   } else {
+               str = "<p class='chat-others'>" + '&#x1F607' + " " + writer + " : " + message + "</p>";
            }
+           
            $("#msgArea").append(str);
            chatroom.scrollBy(0, 500);
        });
+       
+       // 4-1. 입장 메세지
+       stomp.subscribe("/sub/chat/entry/" + roomId, function(chat) {
+           var chatroom = document.getElementById("msgArea");
+           var content = JSON.parse(chat.body);
 
+           var writer = content.writer;
+           var message = content.message;
+           var str = '';
+           
+           str = "<div class='alert alert-secondary'>";
+    	   str += "<p class='chat-enter'>" + message + "</p>";
+    	   str += "</div>";
+    	   
+    	   $("#msgArea").append(str);
+           chatroom.scrollBy(0, 500);
+       });
+       
+       // 4-2. 퇴장 메세지
+       stomp.subscribe("/sub/chat/leave/" + roomId, function(chat) {
+           var chatroom = document.getElementById("msgArea");
+           var content = JSON.parse(chat.body);
+
+           var writer = content.writer;
+           var message = content.message;
+           var str = '';
+           
+           str = "<div class='alert alert-secondary'>";
+    	   str += "<p class='chat-enter'>" + message + "</p>";
+    	   str += "</div>";
+    	   
+    	   $("#msgArea").append(str);
+           chatroom.scrollBy(0, 500);
+       });
+       
        // 3. send(path, header, message)로 메세지를 보낼 수 있음
        stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, writer: username}))
     });

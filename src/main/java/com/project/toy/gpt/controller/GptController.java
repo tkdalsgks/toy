@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,8 +31,12 @@ public class GptController {
     
     private final HttpSession session;
     
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+    
     @GetMapping("/gpt")
     public String gpt(Authentication auth, Model model) {
+    	log.info("##### ChatGPT Page __ Call #####");
+    	
     	SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		if(auth != null) {
@@ -43,6 +49,8 @@ public class GptController {
     @PostMapping("/gpt")
     public String generateText(@RequestParam("prompt") String prompt,
                                @RequestParam("maxTokens") int maxTokens) throws IOException {
+    	log.info("##### ChatGPT Page __ API #####");
+    	
         // GPT-3 API를 사용하여 텍스트 생성
         String generatedText = gptClient.generateText(prompt, maxTokens);
 

@@ -50,6 +50,8 @@ public class RoomController {
 	@ResponseBody
 	@PostMapping("/list")
 	public List<ChatRoomDTO> createRoom(String roomId, Authentication auth, Model model) {
+		log.info("##### ChatRoom Page List __ Call #####");
+		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		
@@ -73,7 +75,7 @@ public class RoomController {
 	@ResponseBody
 	@PostMapping("/room")
 	public JsonObject create(@RequestParam String name, RedirectAttributes rttr, Model model) {
-		log.info("# Create Chat Room, name : " + name);
+		log.info("##### ChatRoom Page Save __ API " + name + " #####");
 		
 		JsonObject jsonObj = new JsonObject();
 		
@@ -87,7 +89,7 @@ public class RoomController {
 	
 	@GetMapping("/room")
 	public void getRoom(String roomId, Authentication auth, Model model) {
-		log.info("# get Chat Room, roomId : " + roomId);
+		log.info("##### ChatRoom Page __ Call" + roomId + " #####");
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());

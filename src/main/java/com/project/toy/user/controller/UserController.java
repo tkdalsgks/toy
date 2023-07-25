@@ -48,8 +48,10 @@ public class UserController {
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	@GetMapping("{userId}/profile")
+	@GetMapping("/{userId}/profile")
 	public String profile(@PathVariable(value = "userId", required = false) String userId, Authentication auth, Model model) {
+		log.info("##### User Profile Page __ Call {} #####", userId);
+		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		if(auth != null) {
@@ -57,13 +59,16 @@ public class UserController {
 			model.addAttribute("userNickname", user.getUserNickname());
 			model.addAttribute("userEmail", user.getUserEmail());
 			model.addAttribute("provider", user.getProvider());
+			model.addAttribute("role", user.getRole());
 		}
 		
 		return "user/profile";
 	}
 	
-	@GetMapping("{userId}/account")
+	@GetMapping("/{userId}/account")
 	public String account(@PathVariable(value = "userId", required = false) String userId, Authentication auth, Model model) {
+		log.info("##### User Account Page __ Call {} #####", userId);
+		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		if(auth != null) {
@@ -78,14 +83,15 @@ public class UserController {
 	}
 	
 	@ResponseBody
-	@PutMapping("{userId}/profile")
-	public JsonObject saveProfile(@PathVariable(value = "userId", required = false) String userId, @RequestBody final UpdateUserDTO params, Model model) {
+	@PutMapping("/{userId}/profile")
+	public JsonObject saveProfile(@PathVariable(value = "userId", required = false) String userId, @RequestBody final UpdateUserDTO params) {
+		log.info("##### User Profile __ API {} #####", userId);
+		
 		JsonObject jsonObj = new JsonObject();
 		
 		try {
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 			UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
-			model.addAttribute("role", user.getRole());
 			
 			LocalDateTime pwdUDate = user.getPwdUDate();
 			LocalDateTime now = LocalDateTime.now();
@@ -107,9 +113,11 @@ public class UserController {
 	}
 	
 	@ResponseBody
-	@PostMapping("{userId}/account")
+	@PostMapping("/{userId}/account")
 	public JsonObject certifiedAccount(@PathVariable(value = "userId", required = false) String userId, 
 			@RequestParam("userEmail") String userEmail, @RequestBody UserDTO params, Model model) {
+		log.info("##### User Account __ API {} #####", userId);
+		
 		JsonObject jsonObj = new JsonObject();
 		
 		try {
@@ -123,29 +131,29 @@ public class UserController {
 	}
 	
 	@Transactional
-	@GetMapping("/member/detail")
-	public String detail(@RequestParam Long id, AdminDTO params, 
+	@GetMapping("/{userId}/activity")
+	public String detail(@PathVariable(value = "userId", required = false) String userId, AdminDTO params, 
 			HttpServletRequest request, HttpServletResponse response, Authentication auth, Model model) {
-		log.info("# Admin User Page Detail?id = " + id);
+		log.info("##### User Activity Page __ Call {} #####", userId);
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		model.addAttribute("role", user.getRole());
 		
 		// 게시글 리스트
-		AdminDTO admin = adminService.findByUserId(id);
-		List<BoardResponseDTO> boardCommunity = adminService.findByBoardIdAndCommunity(id);
-		List<BoardResponseDTO> boardReview = adminService.findByBoardIdAndReview(id);
+		AdminDTO admin = adminService.findByUserId(userId);
+		List<BoardResponseDTO> boardCommunity = adminService.findByBoardIdAndCommunity(userId);
+		List<BoardResponseDTO> boardReview = adminService.findByBoardIdAndReview(userId);
 		model.addAttribute("admin", admin);
 		model.addAttribute("boardCommunity", boardCommunity);
 		model.addAttribute("boardReview", boardReview);
 		
 		// 댓글 리스트
-		List<CommentResponseDTO> boardComment = adminService.findByComment(id);
+		List<CommentResponseDTO> boardComment = adminService.findByComment(userId);
 		model.addAttribute("boardComment", boardComment);
 		
 		// 권한 모델
-		AdminDTO userModel = adminService.selectAuthUser(id);
+		AdminDTO userModel = adminService.selectAuthUser(userId);
 		List<AdminDTO> authList = adminService.selectAuthModel();
 		model.addAttribute("userModel", userModel.getModelName());
 		model.addAttribute("authList", authList);

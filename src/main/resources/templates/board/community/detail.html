@@ -95,7 +95,7 @@
 					<img src="" class="board-info__img">
 					<div style="flex-direction: column; flex-grow: 1;">
 						<div style="display: flex; justify-content: space-between; align-items: center;">
-							<a th:href="@{/member/detail?id=} + ${board.writerNo}"><span class="board-writer">[[ ${board.writer} ]]</span></a>
+							<a th:href="@{/} + ${board.writerId} + @{/activity}"><span class="board-writer">[[ ${board.writer} ]]</span></a>
 							<span th:if="${userId == board.writerId}">
 								<a onclick="goChangePage();">수정</a>
 								<a onclick="deleteBoard();">삭제</a>

@@ -15,12 +15,12 @@ import com.project.toy.user.dto.UserDTO;
 public interface AdminMapper {
 
 	public List<AdminDTO> selectAuthModel();
-	public AdminDTO selectAuthUser(Long id);
+	public AdminDTO selectAuthUser(String userId);
 	public List<UserDTO> selectListUser();
-	public AdminDTO findByUserId(Long id);
-	public List<BoardResponseDTO> findByBoardIdAndCommunity(Long id);
-	public List<BoardResponseDTO> findByBoardIdAndReview(Long id);
-	public List<CommentResponseDTO> findByComment(Long id);
+	public AdminDTO findByUserId(String userId);
+	public List<BoardResponseDTO> findByBoardIdAndCommunity(String userId);
+	public List<BoardResponseDTO> findByBoardIdAndReview(String userId);
+	public List<CommentResponseDTO> findByComment(String userId);
 	public int countUser(SearchDTO params);
 	public void updateAuthUser(UpdateUserDTO updateUserDTO);
 }

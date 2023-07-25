@@ -46,7 +46,7 @@ function deleteBoard() {
 	            })
 	            
 	            const formHtml = `
-	                <form id="deleteForm" action="/community/delete" method="post">
+	                <form id="deleteForm" action="/${id}/delete" method="post">
 	                    ${inputHtml}
 	                </form>
 	            `;
@@ -80,7 +80,7 @@ function goChangePage() {
 			confirmButtonText: '확인'
 		});
 	} else {
-        location.href = '/community/change' + location.search;
+        location.href = '/' + id + '/modify' + location.search;
 	}
 	/* th:href="@{/community/write( id=${board.id} )}"  */
 }
