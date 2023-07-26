@@ -1,7 +1,28 @@
 
 /* ROOM */
-.chat-msgArea { width: 300px; margin: 0 auto; }
+.chat__roomName { font-size: 1.25rem; font-weight: 600; }
+.chat__msgArea { width: 530px; height: 70vh; margin: 0 auto; padding: 5px; overflow-y: scroll; scrollbar-width: none; -ms-overflow-style: none; }
 /*.chat__msgArea-input { width: 100%; position: fixed; left: 0; right: 0; }*/
-.chat-enter { text-align: center; margin-bottom: 0; }
-.chat-me { text-align: right; }
-.chat-others { text-align: left; }
+.chat__enter { text-align: center; margin-bottom: 0; }
+.chat__me { text-align: right; }
+.chat__others { text-align: left; }
+
+@media (max-width: 500px) {
+	.chat__msgArea { width: 400px; }
+	
+	@media (max-width: 400px) {
+		.chat__msgArea { width: 350px; }
+		
+		@media (max-width: 350px) {
+			.chat__msgArea { width: 300px; }
+			
+			@media (max-width: 300px) {
+				.chat__msgArea { width: 250px; }
+			}
+		}
+	}
+}
+
+::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}

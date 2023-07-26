@@ -35,6 +35,4 @@ springdoc:
   swagger-ui: 
     path: /swagger-ui.html
     use-root-path: true
-
-apiKey: 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
     

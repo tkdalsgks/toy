@@ -16,13 +16,16 @@ $(document).ready(function() {
            var content = JSON.parse(chat.body);
 
            var writer = content.writer;
+           var writerId = content.writerId;
            var message = content.message;
            var str = '';
            
+           console.log(writer + " " + writerId + " " + message);
+           
            if(writer === username) {
-               str = "<p class='chat-me'>" + message + "</p>";
+               str = "<p class='chat__me'>" + message + "</p>";
     	   } else {
-               str = "<p class='chat-others'>" + '&#x1F607' + " " + writer + " : " + message + "</p>";
+               str = "<p class='chat__others'>" + '&#x1F607' + " " + writer + " : " + message + "</p>";
            }
            
            $("#msgArea").append(str);
@@ -39,7 +42,7 @@ $(document).ready(function() {
            var str = '';
            
            str = "<div class='alert alert-secondary'>";
-    	   str += "<p class='chat-enter'>" + message + "</p>";
+    	   str += "<p class='chat__enter'>" + message + "</p>";
     	   str += "</div>";
     	   
     	   $("#msgArea").append(str);
@@ -56,7 +59,7 @@ $(document).ready(function() {
            var str = '';
            
            str = "<div class='alert alert-secondary'>";
-    	   str += "<p class='chat-enter'>" + message + "</p>";
+    	   str += "<p class='chat__enter'>" + message + "</p>";
     	   str += "</div>";
     	   
     	   $("#msgArea").append(str);
@@ -64,7 +67,7 @@ $(document).ready(function() {
        });
        
        // 3. send(path, header, message)로 메세지를 보낼 수 있음
-       stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, writer: username}))
+       stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, writerId: userId, writer: username}))
     });
     
     $("#msg").keydown(function(e) {
@@ -81,7 +84,7 @@ $(document).ready(function() {
     			msg.focus();
     		} else {
     			//console.log(username + ":" + msg.value);
-    			stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
+    			stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, writerId: userId, writer: username, message: msg.value}));
     		}
     		msg.value = '';
     	}
@@ -100,8 +103,22 @@ $(document).ready(function() {
 			msg.focus();
     	} else {
     		//console.log(username + ":" + msg.value);
-    		stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
+    		stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, writerId: userId, writer: username, message: msg.value}));
     	}
     	msg.value = '';
     });
 });
+
+// 채팅 내역 불러오기
+listchat.forEach(function(value) {
+	var list_key = Object.keys(value);
+	var list_value = value[list_key];
+	
+	if(userId === value.writerId) {
+        str = "<p class='chat__me'>" + value.message + "</p>";
+	} else {
+        str = "<p class='chat__others'>" + '&#x1F607' + " " + value.writer + " : " + value.message + "</p>";
+    }
+	$("#msgArea").append(str);
+});
+

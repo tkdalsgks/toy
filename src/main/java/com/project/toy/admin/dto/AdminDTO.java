@@ -41,5 +41,7 @@ public class AdminDTO {
 	private Role role;
 	
 	private String modelName;
+	
+	private String modelNameKor;
 
 }

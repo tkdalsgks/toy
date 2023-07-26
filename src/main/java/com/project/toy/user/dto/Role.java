@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Role {
 	
+	@Schema(description = "최고 관리자")
+	SUPERADMIN("ROLE_SUPERADMIN", "최고 관리자"),
+	
 	@Schema(description = "관리자")
 	ADMIN("ROLE_ADMIN", "관리자"),
 	

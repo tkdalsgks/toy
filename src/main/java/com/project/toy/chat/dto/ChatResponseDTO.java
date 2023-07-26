@@ -6,24 +6,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "채팅 메세지")
+@Schema(description = "채팅방")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatMessageDTO {
+public class ChatResponseDTO {
 
-	@Schema(description = "메세지 타입")
-	private MessageType type;
-	
-	@Schema(description = "번호")
 	private String roomId;
-	
-	@Schema(description = "채팅 전송자")
-	private String writer;
-	
-	private String writerId;
-	
-	@Schema(description = "메세지")
+	private String name;
 	private String message;
+	private String writer;
+	private String writerId;
+	private String IDate;
 }

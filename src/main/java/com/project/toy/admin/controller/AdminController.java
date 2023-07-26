@@ -67,7 +67,7 @@ public class AdminController {
         	String encPwd = bCryptPasswordEncoder.encode(rawPwd);
 			log.info("PASSWORD : {}", encPwd);
 		}
-		return "admin/admin";
+		return "admin/list";
 	}
 	
 	@Transactional
@@ -75,6 +75,10 @@ public class AdminController {
 	public String detail(@PathVariable(value = "userId", required = false) String userId, AdminDTO params, 
 			HttpServletRequest request, HttpServletResponse response, Authentication auth, Model model) {
 		log.info("##### Admin Page Activity __ Call" + userId + " #####");
+		
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
+		model.addAttribute("role", user.getRole());
 		
 		// 게시글 리스트
 		AdminDTO admin = adminService.findByUserId(userId);
@@ -91,7 +95,7 @@ public class AdminController {
 		// 권한 모델
 		AdminDTO userModel = adminService.selectAuthUser(userId);
 		List<AdminDTO> authList = adminService.selectAuthModel();
-		model.addAttribute("userModel", userModel.getModelName());
+		model.addAttribute("userModel", userModel.getModelNameKor());
 		model.addAttribute("authList", authList);
 		
 		return "admin/detail";

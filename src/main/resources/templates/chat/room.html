@@ -22,10 +22,10 @@
 	<!-- CHAT_ROOM : CONTENT -->
 	<main layout:fragment="content" class="container">
         <div class="col-6">
-            <span><b>[[${room.name}]]</b></span>
+            <span class="chat__roomName">[[${room.name}]]</span>
         </div>
         <div>
-            <div id="msgArea" class="col chat-msgArea"></div>
+            <div id="msgArea" class="col chat__msgArea"></div>
             <div class="chat__msgArea-input input-group mb-3">
                 <input type="text" id="msg" class="form-control">
                 <div class="input-group-append">
@@ -44,6 +44,8 @@
 	        var roomName = [[ ${room.name} ]];
 	        var roomId = [[ ${room.roomId} ]];
 	        var username = [[ ${user} ]];
+	        var userId = [[ ${userId} ]];
+	        var listchat = [[ ${listchat} ]];
 		</script>
 		<!-- ROOM -->
 		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>

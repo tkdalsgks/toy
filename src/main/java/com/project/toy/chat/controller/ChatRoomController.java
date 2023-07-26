@@ -31,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/chat")
-public class RoomController {
+public class ChatRoomController {
 
 	private final UserService userService;
 	private final ChatRoomService chatRoomService;
@@ -79,10 +79,23 @@ public class RoomController {
 		
 		JsonObject jsonObj = new JsonObject();
 		
-		ChatRoomDTO roomName = chatRoomService.createChatRoomDTO(name);
-		jsonObj.addProperty("roomId", roomName.getRoomId());
-		jsonObj.addProperty("roomName", roomName.getName());
-		System.out.println("roomName : " + roomName.getName() + " roomId : "+ roomName.getRoomId());
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
+		
+		ChatRoomDTO room = chatRoomService.createChatRoomDTO(name);
+		String roomId = room.getRoomId();
+		String roomName = room.getName();
+		String userId = user.getUserId();
+		
+		jsonObj.addProperty("roomId", roomId);
+		jsonObj.addProperty("roomName", roomName);
+		
+		ChatRoomDTO chatRoomDTO = new ChatRoomDTO();
+		chatRoomDTO.setRoomId(roomId);
+		chatRoomDTO.setName(roomName);
+		chatRoomDTO.setUserId(userId);
+		log.info("##### ChatRoom INSERT __ API {}, {} #####", roomName, roomId);
+		chatRoomService.insertChatRoom(chatRoomDTO);
 		
 		return jsonObj;
 	}
@@ -99,6 +112,8 @@ public class RoomController {
 			model.addAttribute("role", user.getRole());
 		}
 		
+		model.addAttribute("listchat", chatRoomService.listChatMessage(roomId));
 		model.addAttribute("room", chatRoomService.findRoomById(roomId));
+		
 	}
 }
