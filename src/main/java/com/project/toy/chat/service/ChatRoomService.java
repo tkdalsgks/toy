@@ -10,11 +10,19 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
 
+import com.project.toy.chat.dto.ChatMessageDTO;
+import com.project.toy.chat.dto.ChatResponseDTO;
 import com.project.toy.chat.dto.ChatRoomDTO;
+import com.project.toy.chat.mapper.ChatRoomMapper;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class ChatRoomService {
 
+	private final ChatRoomMapper chatRoomMapper;
+	
 	private Map<String, ChatRoomDTO> chatRoomDTO;
 	
 	@PostConstruct
@@ -53,6 +61,18 @@ public class ChatRoomService {
 		chatRoomDTO.put(room.getRoomId(), room);
 		
 		return room;
+	}
+
+	public void insertChatRoom(ChatRoomDTO params) {
+		chatRoomMapper.insertChatRoom(params);
+	}
+
+	public void insertChatMessage(ChatMessageDTO params) {
+		chatRoomMapper.insertChatMessage(params);
+	}
+
+	public List<ChatResponseDTO> listChatMessage(String roomId) {
+		return chatRoomMapper.listChatMessage(roomId);
 	}
 	
 	/*

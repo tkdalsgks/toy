@@ -14,6 +14,7 @@
 		<typeAlias type="com.project.toy.admin.dto.AdminDTO" alias="AdminDTO" />
 		<typeAlias type="com.project.toy.chat.dto.ChatMessageDTO" alias="ChatMessageDTO" />
 		<typeAlias type="com.project.toy.chat.dto.ChatRoomDTO" alias="ChatRoomDTO" />
+		<typeAlias type="com.project.toy.chat.dto.ChatResponseDTO" alias="ChatResponseDTO" />
 		<typeAlias type="com.project.toy.board.dto.BoardRequestDTO" alias="BoardRequestDTO" />
 		<typeAlias type="com.project.toy.board.dto.BoardResponseDTO" alias="BoardResponseDTO" />
 		<typeAlias type="com.project.toy.board.dto.ReviewRequestDTO" alias="ReviewRequestDTO" />

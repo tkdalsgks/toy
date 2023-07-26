@@ -27,6 +27,8 @@ public class ChatRoomDTO {
 	@Schema(description = "이름")
 	private String name;
 	
+	private String userId;
+	
 	private Set<WebSocketSession> sessions = new HashSet<>();
 	
 	public static ChatRoomDTO create(String name) {
