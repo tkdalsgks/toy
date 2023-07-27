@@ -1,6 +1,6 @@
 
 server:
-  port: 8080
+  port: 8081
   
   servlet: 
     session: 
@@ -12,12 +12,11 @@ server:
     include-stacktrace: always    # 오류 응답에 stacktrace 내용을 포함할지 여부
     whitelabel:
       enabled: false
-      
+
 spring:
-  profiles:
-    active: 
-      on-profile: prod
-    include: profile-prod, oauth_prod, email, awss3, gpt
+  profiles: 
+    default: local
+    include: profile, oauth, email, awss3, gpt
     
   mvc:
     converters:
@@ -36,4 +35,3 @@ springdoc:
 mybatis: 
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mappers/*-mapper.xml
-    
