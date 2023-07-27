@@ -1,6 +1,6 @@
 
 server:
-  port: 8081
+  port: 8080
   
   servlet: 
     session: 
@@ -14,9 +14,10 @@ server:
       enabled: false
       
 spring:
-  profiles: 
-    active: local
-    include: profile, oauth, email, awss3
+  profiles:
+    active: 
+      on-profile: prod
+    include: profile-prod, oauth_prod, email, awss3, gpt
     
   mvc:
     converters:
@@ -26,13 +27,13 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
-    
-mybatis: 
-  config-location: classpath:mybatis/mybatis-config.xml
-  mapper-locations: classpath:mybatis/mappers/*-mapper.xml
-  
+      
 springdoc: 
   swagger-ui: 
     path: /swagger-ui.html
     use-root-path: true
+    
+mybatis: 
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mappers/*-mapper.xml
     
