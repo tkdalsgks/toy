@@ -1,37 +1,28 @@
 
-server:
-  port: 8081
-  
-  servlet: 
-    session: 
-      timeout: 1800
-      
-  error:
-    path: /error
-    include-exception: true       # 오류 응답에 exception 내용을 포함할지 여부
-    include-stacktrace: always    # 오류 응답에 stacktrace 내용을 포함할지 여부
-    whitelabel:
-      enabled: false
-
-spring:
+spring: 
   profiles: 
-    default: local
-    include: profile, oauth, email, awss3, gpt
-    
-  mvc:
-    converters:
-      preferred-json-mapper: gson
-  
-  servlet:
-    multipart:
-      max-file-size: 20MB
-      max-request-size: 20MB
+    group: 
+      local: local, oauth-local, email, awss3, gpt
+      prod1: prod1, oauth, email, awss3, gpt
+      prod2: prod2, oauth, email, awss3, gpt
+
+---
+
+spring: 
+  config: 
+    activate: 
+      on-profile: local
       
-springdoc: 
-  swagger-ui: 
-    path: /swagger-ui.html
-    use-root-path: true
+---
+
+spring: 
+  config: 
+    activate: 
+      on-profile: prod1
     
-mybatis: 
-  config-location: classpath:mybatis/mybatis-config.xml
-  mapper-locations: classpath:mybatis/mappers/*-mapper.xml
+---
+
+spring: 
+  config: 
+    activate: 
+      on-profile: prod2

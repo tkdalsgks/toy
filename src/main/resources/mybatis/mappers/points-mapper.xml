@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.toy.points.mapper.PointsMapper">
+
+	<insert id="savePoints" parameterType="PointsRequestDTO" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO T_POINTS ( POINTS_CD, POINTS, USER_ID )
+		VALUES ( #{ pointsCd }, #{ points }, #{ userId } )
+	</insert>
+	
+	<select id="loginPoints" parameterType="PointsRequestDTO" resultType="int">
+		SELECT COUNT(1)
+		FROM   T_POINTS
+		WHERE  1=1
+		AND    POINTS_CD = #{ pointsCd }
+		AND    DATE_FORMAT(I_DATE, "%Y-%m-%d") = CURDATE()  
+		AND    USER_ID = #{ userId }
+	</select>
+</mapper>
