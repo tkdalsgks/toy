@@ -80,13 +80,15 @@ $(document).ready(function() {
 					icon: 'warning',
 					confirmButtonColor: '#3085d6',
 					confirmButtonText: '확인'
+				}).then((result) => {
+					msg.focus();
 				});
-    			msg.focus();
+				return false;
     		} else {
     			//console.log(username + ":" + msg.value);
     			stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, writerId: userId, writer: username, message: msg.value}));
+	    		msg.value = '';
     		}
-    		msg.value = '';
     	}
     });
     
@@ -99,13 +101,15 @@ $(document).ready(function() {
 				icon: 'warning',
 				confirmButtonColor: '#3085d6',
 				confirmButtonText: '확인'
+			}).then((result) => {
+				msg.focus();
 			});
-			msg.focus();
+			return false;
     	} else {
     		//console.log(username + ":" + msg.value);
     		stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, writerId: userId, writer: username, message: msg.value}));
+	    	msg.value = '';
     	}
-    	msg.value = '';
     });
 });
 

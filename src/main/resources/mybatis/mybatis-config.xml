@@ -25,6 +25,8 @@
 		<typeAlias type="com.project.toy.common.dto.SearchDTO" alias="SearchDTO" />
 		<typeAlias type="com.project.toy.common.dto.LoginLogDTO" alias="LoginLogDTO" />
 		<typeAlias type="com.project.toy.likes.dto.LikesDTO" alias="LikesDTO" />
+		<typeAlias type="com.project.toy.points.dto.PointsRequestDTO" alias="PointsRequestDTO" />
+		<typeAlias type="com.project.toy.points.dto.PointsResponseDTO" alias="PointsResponseDTO" />
 
 	</typeAliases>
 	

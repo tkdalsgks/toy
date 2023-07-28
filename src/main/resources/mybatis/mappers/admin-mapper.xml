@@ -56,18 +56,20 @@
 	<select id="findByUserId" resultType="AdminDTO">
 		/* com.project.toy.admin.mapper.AdminMapper, 해당 사용자 출력 */
 		
-		SELECT A.USER_NO
-		     , A.USER_ID
-		     , A.USER_EMAIL
-		     , A.USER_NICKNAME
-		     , A.PROVIDER
-		     , A.ROLE
-		     , B.MODEL_NAME_KOR
-		     , A.I_DATE
+		SELECT A.USER_NO, 
+		       A.USER_ID, 
+		       A.USER_EMAIL, 
+		       A.USER_NICKNAME, 
+		       A.PROVIDER, 
+		       A.ROLE, 
+		       B.MODEL_NAME_KOR, 
+		       IFNULL(FORMAT(SUM(C.POINTS), 0), 0) AS POINTS, 
+		       A.I_DATE
 		FROM   T_PERSON A
 		LEFT OUTER JOIN T_AUTH_MODEL B ON A.ROLE = B.MODEL_NAME
+		LEFT OUTER JOIN T_POINTS C ON A.USER_ID = C.USER_ID 
 		WHERE  1=1
-		AND    USER_ID = #{ value }
+		AND    A.USER_ID = #{ value }
 	</select>
 	
 	<!-- 커뮤니티 게시글 리스트 -->

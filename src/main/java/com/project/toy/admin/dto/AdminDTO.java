@@ -43,5 +43,7 @@ public class AdminDTO {
 	private String modelName;
 	
 	private String modelNameKor;
+	
+	private String points;
 
 }

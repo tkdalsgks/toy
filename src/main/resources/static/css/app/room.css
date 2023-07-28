@@ -2,7 +2,7 @@
 /* ROOM */
 .chat__roomName { font-size: 1.25rem; font-weight: 600; }
 .chat__msgArea { width: 530px; height: 70vh; margin: 0 auto; padding: 5px; overflow-y: scroll; scrollbar-width: none; -ms-overflow-style: none; }
-/*.chat__msgArea-input { width: 100%; position: fixed; left: 0; right: 0; }*/
+.chat__msgArea-input { z-index: 1; }
 .chat__enter { text-align: center; margin-bottom: 0; }
 .chat__me { text-align: right; }
 .chat__others { text-align: left; }
