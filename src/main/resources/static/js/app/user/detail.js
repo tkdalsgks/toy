@@ -18,5 +18,29 @@ $(document).ready(function(){
 		$(this).addClass('current');
 		$("#"+tab_id).addClass('current');
 	})
-
+	
+	// 사용자 - 적립내역 더보기
+	var points = document.getElementById("user__points");
+	var pointsList = document.getElementById("user__points-list");
+	var profileId = document.getElementById("userId").value;
+	points.style.cursor = 'pointer';
+	pointsList.style.display = 'none';
+	
+	var action = true;
+	$(points).click(function() {
+		if(action) {
+			if(userId == profileId) {
+				pointsList.style.display = 'block';
+			} else {
+				pointsList.style.display = 'block';
+				pointsList.style.textAlign = 'center';
+				pointsList.style.padding = '1rem 0 1rem 0';
+				$("#user__points-list").html('다른 사용자의 적립내역은 볼 수 없습니다.');
+			}
+		} else {
+			pointsList.style.display = 'none';
+		}
+		action = !action;
+	});
 });
+

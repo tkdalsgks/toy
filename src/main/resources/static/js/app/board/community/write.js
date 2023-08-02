@@ -66,6 +66,9 @@ function saveBoard() {
 			return false;
 		});
 	} else {
+		if(board == null) {
+			savePoints();
+		}
 		document.getElementById('saveBtn').disabled = true;
 		form.noticeYn.value = form.isNotice.checked;
 		form.action = saveBoard_formAction;
@@ -87,6 +90,48 @@ function cancelBoard() {
 	}).then((result) => {
 		if(result.isConfirmed) {
 			location.href = "javascript:history.go(-1)";
+		}
+	});
+}
+
+// 포인트 적립
+function savePoints() {
+	var pointsCd = "2";
+	var points = "100";
+	
+	var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
+	var params = { "pointsCd": pointsCd, "points": points, "userId": userId };
+	
+	//console.log("params : " + JSON.stringify(params));
+	
+	$.ajax({
+		url: "/points",
+		type: "POST",
+		headers: headers,
+		dataType: "JSON",
+		data: JSON.stringify(params),
+		success: function(response) {
+			if(response.result == false) {
+				swal.fire({
+					text: '포인트 적립에 실패했습니다.',
+    				icon: 'warning',
+    				confirmButtonColor: '#3085d6',
+    				confirmButtonText: '확인'
+    			});
+				return false;
+			} else {
+				return true;
+			}
+		},
+		error: function(xhr, status, error) {
+			swal.fire({
+				text: '잠시 후 재시도 바랍니다.',
+				footer: '서버와의 통신 에러입니다.',
+				icon: 'error',
+				confirmButtonColor: '#3085d6',
+				confirmButtonText: '확인'
+			});
+			return false;
 		}
 	});
 }

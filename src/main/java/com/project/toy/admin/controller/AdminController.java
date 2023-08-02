@@ -28,6 +28,8 @@ import com.project.toy.board.dto.BoardResponseDTO;
 import com.project.toy.comment.dto.CommentResponseDTO;
 import com.project.toy.common.dto.SearchDTO;
 import com.project.toy.paging.PagingResponse;
+import com.project.toy.points.dto.PointsResponseDTO;
+import com.project.toy.points.service.PointsService;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UpdateUserDTO;
 import com.project.toy.user.dto.UserDTO;
@@ -42,6 +44,7 @@ public class AdminController {
 	
 	private final AdminService adminService;
 	private final UserService userService;
+	private final PointsService pointsService;
 	
 	private final HttpSession session;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -63,9 +66,9 @@ public class AdminController {
 			model.addAttribute("userList", userList);
 			model.addAttribute("authList", authList);
 			
-			String rawPwd = "user01@#";
-        	String encPwd = bCryptPasswordEncoder.encode(rawPwd);
-			log.info("PASSWORD : {}", encPwd);
+			//String rawPwd = "user01@#";
+        	//String encPwd = bCryptPasswordEncoder.encode(rawPwd);
+			//log.info("PASSWORD : {}", encPwd);
 		}
 		return "admin/list";
 	}
@@ -97,6 +100,14 @@ public class AdminController {
 		List<AdminDTO> authList = adminService.selectAuthModel();
 		model.addAttribute("userModel", userModel.getModelNameKor());
 		model.addAttribute("authList", authList);
+		
+		// 소멸예정 활동점수
+		PointsResponseDTO expirePoints = pointsService.expirePoints(userId);
+		model.addAttribute("expirePoints", expirePoints);
+		
+		// 포인트 적립내역
+		List<PointsResponseDTO> earningsPoints = pointsService.earningsPoints(userId);
+		model.addAttribute("earningsPoints", earningsPoints);
 		
 		return "admin/detail";
 	}

@@ -28,6 +28,8 @@ import com.project.toy.admin.service.AdminService;
 import com.project.toy.board.dto.BoardResponseDTO;
 import com.project.toy.comment.dto.CommentResponseDTO;
 import com.project.toy.email.service.EmailService;
+import com.project.toy.points.dto.PointsResponseDTO;
+import com.project.toy.points.service.PointsService;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UpdateUserDTO;
 import com.project.toy.user.dto.UserDTO;
@@ -43,6 +45,7 @@ public class UserController {
 	private final UserService userService;
 	private final EmailService emailService;
 	private final AdminService adminService;
+	private final PointsService pointsService;
 	
 	private final HttpSession session;
 	
@@ -138,6 +141,7 @@ public class UserController {
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
+		model.addAttribute("userId", user.getUserId());
 		model.addAttribute("role", user.getRole());
 		
 		// 게시글 리스트
@@ -157,6 +161,14 @@ public class UserController {
 		List<AdminDTO> authList = adminService.selectAuthModel();
 		model.addAttribute("userModel", userModel.getModelName());
 		model.addAttribute("authList", authList);
+		
+		// 소멸예정 활동점수
+		PointsResponseDTO expirePoints = pointsService.expirePoints(userId);
+		model.addAttribute("expirePoints", expirePoints);
+		
+		// 포인트 적립내역
+		List<PointsResponseDTO> earningsPoints = pointsService.earningsPoints(userId);
+		model.addAttribute("earningsPoints", earningsPoints);
 		
 		return "user/detail";
 	}

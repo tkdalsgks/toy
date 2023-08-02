@@ -24,9 +24,16 @@
 .paging .prev, .paging .last {margin-left:-1px;}
 
 /* detail ------------------------------- */
-.admin-head { font-weight: 600; padding-right: 1rem; }
+.admin__information-head { width: 30%; font-weight: 600; text-align: center; }
+.admin__information-content { width: 70%; }
+.admin__information-content span { font-size: .85rem; font-weight: 500; cursor: pointer; }
+.admin__points-points { width: 20%; font-weight: 600; }
+.admin__points-content { width: 45%; font-weight: 600; }
+.admin__points-date { width: 35%; font-weight: 600; }
 .admin-expulsion { text-align: center; margin-top: 2rem; margin-bottom: 2rem; }
-.admin__detail table { max-width: 550px; margin: 0 auto; }
+.admin__information { margin-bottom: 2rem; }
+.admin__information span, .admin__points span { margin-left: 1rem; font-weight: 600; }
+.admin__points thead { text-align: center; }
 
 /* detail __TAB ------------------------------- */
 ul.tabs { margin: 0px; padding: 0px; list-style: none; }
@@ -51,3 +58,9 @@ ul.tabs li.current { background: #ededed; color: #222; }
 	.user-list { width: 350px; }
 	.admin__detail table { max-width: 350px; }
 }
+
+.admin__detail table { width: 300px; margin: 0 auto; margin-top: 1rem; }
+.admin__points table { width: 400px; margin: 0 auto; margin-top: 1rem; }
+
+
+

@@ -22,13 +22,13 @@ $(document).ready(function(){
 
 // 포인트 적립
 function savePoints() {
-	var pointsCd = "1";	// 1: 로그인
+	var pointsCd = "1";
 	var points = "100";
 	
 	var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
 	var params = { "pointsCd": pointsCd, "points": points, "userId": userId };
 	
-	console.log("params : " + JSON.stringify(params));
+	//console.log("params : " + JSON.stringify(params));
 	
 	$.ajax({
 		url: "/points",
