@@ -29,30 +29,51 @@
 	<!-- USER_DETAIL : CONTENT -->
 	<main layout:fragment="content" class="form__admin">
 		<div class="admin__detail">
-			<table>
-				<tr>
-					<td class="admin-head">아이디</td>
-					<td class="admin-content">[[ ${admin.userId} ]]</td>
-				</tr>
-				<tr>
-					<td class="admin-head">이메일</td>
-					<td class="admin-content">[[ ${admin.userEmail} ]]</td>
-				</tr>
-				<tr>
-					<td class="admin-head">닉네임</td>
-					<td class="admin-content">[[ ${admin.userNickname} ]]</td>
-				</tr>
-				<tr>
-					<td class="admin-head">활동점수</td>
-					<td class="admin-content">[[ ${admin.points} ]] P</td>
-				</tr>
-			</table>
+			<input type="hidden" id="userNo" name="userNo" th:value="${admin.userNo}">
+			<input type="hidden" id="userId" name="userId" th:value="${admin.userId}">
+			<div class="admin__information">
+				<span>&#x1F510 개인정보</span>
+				<table>
+					<tr>
+						<td class="admin__information-head">아이디</td>
+						<td id="userId" class="admin__information-content">[[ ${admin.userId} ]]</td>
+					</tr>
+					<tr>
+						<td class="admin__information-head">이메일</td>
+						<td class="admin__information-content">[[ ${admin.userEmail} ]]</td>
+					</tr>
+					<tr>
+						<td class="admin__information-head">닉네임</td>
+						<td class="admin__information-content">[[ ${admin.userNickname} ]]</td>	
+					</tr>
+					<tr>
+						<td class="admin__information-head">활동점수</td>
+						<td class="admin__information-content">[[ ${admin.points} ]] P <span>(소멸예정 [[ ${expirePoints.points} ]] P) &#x26A1</span></td>
+					</tr>
+				</table>
+			</div>
 			
-			<div>
+			<div class="admin__points">
+				<span>&#x26A1 적립내역<span id="user__points" style="font-size: 0.8rem;">[자세히]</span></span>
+				<div id="user__points-list">
+					<table>
+						<thead>
+							<tr>
+								<td class="admin__points-points">활동점수</td>
+								<td class="admin__points-content">내용</td>
+								<td class="admin__points-date">날짜</td>
+							</tr>
+							<tr th:each="earningsPoints : ${earningsPoints}">
+								<td th:text="${earningsPoints.points}"></td>
+								<td th:text="${earningsPoints.commDNm}"></td>
+								<td style="font-size: 0.85rem;" th:text="${#temporals.format(earningsPoints.IDate, 'yyyy-MM-dd HH:mm')}"></td>
+							</tr>
+						</thead>
+					</table>
+				</div>
 			</div>
 			
 			<div class="admin-expulsion">
-				<button>구독하기</button>
 			</div>
 		</div>
 		
@@ -179,6 +200,7 @@
 	<th:block layout:fragment="script">
 		<!-- SETTINGS -->
 		<script th:inline="javascript">
+			var userId = [[ ${userId} ]];
 			var role = [[ ${role} ]];
 		</script>
 		<!-- USER -->

@@ -16,4 +16,37 @@
 		AND    DATE_FORMAT(I_DATE, "%Y-%m-%d") = CURDATE()  
 		AND    USER_ID = #{ userId }
 	</select>
+	
+	<select id="expirePoints" resultType="PointsResponseDTO">
+		SELECT A.USER_NO, 
+		       A.USER_ID, 
+		       A.USER_NICKNAME, 
+		       IFNULL(FORMAT(SUM(C.POINTS), 0), 0) AS POINTS
+		FROM   T_PERSON A
+		LEFT OUTER JOIN T_AUTH_MODEL B ON A.ROLE = B.MODEL_NAME
+		LEFT OUTER JOIN T_POINTS C ON A.USER_ID = C.USER_ID 
+		WHERE  1=1
+		<![CDATA[
+		AND    C.I_DATE <= DATE_ADD(NOW(), INTERVAL -6 MONTH)
+		]]>
+		AND    A.USER_ID = #{ userId }
+	</select>
+	
+	<select id="earningsPoints" resultType="PointsResponseDTO">
+		SELECT A.USER_NO, 
+		       A.USER_ID, 
+		       A.USER_NICKNAME,
+		       D.COMM_D_NM, 
+		       C.POINTS_CD, 
+		       FORMAT(C.POINTS, 0) AS POINTS,
+		       DATE_FORMAT(C.I_DATE, "%Y-%m-%d %H:%i") AS I_DATE 
+		FROM   T_PERSON A
+		LEFT OUTER JOIN T_AUTH_MODEL B ON A.ROLE = B.MODEL_NAME
+		LEFT OUTER JOIN T_POINTS C ON A.USER_ID = C.USER_ID
+		LEFT OUTER JOIN COMM_D D ON C.POINTS_CD = D.COMM_D_CD
+		WHERE  1=1
+		AND    A.USER_ID = 'i00421'
+		ORDER BY C.I_DATE DESC
+		LIMIT 15
+	</select>
 </mapper>

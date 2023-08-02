@@ -45,6 +45,15 @@ function saveUser() {
 					var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
 					var params = { "userId": userId, "role": selectBox };
 					
+					if(selectBox == 'GUEST') {
+						selectBox = '게스트';
+					} else if(selectBox == 'USER') {
+						selectBox = '사용자';
+					} else if(selectBox == 'ADMIN') {
+						selectBox = '관리자';
+					} else if(selectBox == 'SUPERADMIN') {
+						selectBOx = '최고 관리자';
+					}
 					$.ajax({
 						url: saveUser_uri,
 						type: "POST",
@@ -83,5 +92,22 @@ $(document).ready(function(){
 		$(this).addClass('current');
 		$("#"+tab_id).addClass('current');
 	})
-
+	
+	// 관리자 - 적립내역 더보기
+	var points = document.getElementById("admin__points");
+	var pointsList = document.getElementById("admin__points-list");
+	points.style.cursor = 'pointer';
+	pointsList.style.display = 'none';
+	
+	var action = true;
+	$(points).click(function() {
+		if(action) {
+			pointsList.style.display = 'block';		
+		} else {
+			pointsList.style.display = 'none';
+		}
+		action = !action;
+	});
 })
+
+

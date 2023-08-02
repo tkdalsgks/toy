@@ -1,9 +1,12 @@
 package com.project.toy.points.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.toy.points.dto.PointsRequestDTO;
+import com.project.toy.points.dto.PointsResponseDTO;
 import com.project.toy.points.mapper.PointsMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -50,9 +53,22 @@ public class PointsService {
 				result = (queryResult == 1) ? true : false;
 				
 				return result;
+			} else if("4".equals(params.getPointsCd())) {	// 채팅 입력 시 1포인트
+				queryResult = pointsMapper.savePoints(params);
+				result = (queryResult == 1) ? true : false;
+				
+				return result;
 			}
 		}
 		
 		return result;
+	}
+	
+	public PointsResponseDTO expirePoints(String userId) {
+		return pointsMapper.expirePoints(userId);
+	}
+	
+	public List<PointsResponseDTO> earningsPoints(String userId) {
+		return pointsMapper.earningsPoints(userId);
 	}
 }

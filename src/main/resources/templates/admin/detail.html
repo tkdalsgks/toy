@@ -26,43 +26,63 @@
 		<div class="admin__detail">
 			<input type="hidden" id="userNo" name="userNo" th:value="${admin.userNo}">
 			<input type="hidden" id="userId" name="userId" th:value="${admin.userId}">
-			<table>
-				<tr>
-					<td class="admin-head">아이디</td>
-					<td id="userId" class="admin-content">[[ ${admin.userId} ]]</td>
-				</tr>
-				<tr>
-					<td class="admin-head">이메일</td>
-					<td class="admin-content">[[ ${admin.userEmail} ]]</td>
-				</tr>
-				<tr>
-					<td class="admin-head">닉네임</td>
-					<td class="admin-content">[[ ${admin.userNickname} ]]</td>	
-				</tr>
-				<tr>
-					<td class="admin-head">활동점수</td>
-					<td class="admin-content">[[ ${admin.points} ]] P</td>
-				</tr>
-				<tr>
-					<td class="admin-head">권한</td>
-					<td id="admin__role" class="admin-content">[[ ${admin.modelNameKor} ]]</td>	
-				</tr>
-				<tr>
-					<td class="admin-head">가입일자</td>
-					<td class="admin-content">[[ ${#temporals.format(admin.IDate, 'yyyy-MM-dd HH:mm:ss')} ]]</td>
-				</tr>
-				<tr>
-					<td class="admin-head">권한변경</td>
-					<td class="admin-content">
-						<select th:field="*{authList}" id="userModel">
-							<option value="NONE">선택</option>
-							<option th:each="authList : ${authList}" th:text="${authList.modelNameKor}" th:value="${authList.modelName}" ></option>
-						</select>									
-					</td>
-				</tr>
-			</table>
+			<div class="admin__information">
+				<span>&#x1F510 개인정보</span>
+				<table>
+					<tr>
+						<td class="admin__information-head">아이디</td>
+						<td id="userId" class="admin__information-content">[[ ${admin.userId} ]]</td>
+					</tr>
+					<tr>
+						<td class="admin__information-head">이메일</td>
+						<td class="admin__information-content">[[ ${admin.userEmail} ]]</td>
+					</tr>
+					<tr>
+						<td class="admin__information-head">닉네임</td>
+						<td class="admin__information-content">[[ ${admin.userNickname} ]]</td>	
+					</tr>
+					<tr>
+						<td class="admin__information-head">활동점수</td>
+						<td class="admin__information-content">[[ ${admin.points} ]] P <span>(소멸예정 [[ ${expirePoints.points} ]] P) &#x26A1</span></td>
+					</tr>
+					<tr>
+						<td class="admin__information-head">권한</td>
+						<td id="admin__role" class="admin__information-content">[[ ${admin.modelNameKor} ]]</td>	
+					</tr>
+					<tr>
+						<td class="admin__information-head">가입일자</td>
+						<td class="admin__information-content">[[ ${#temporals.format(admin.IDate, 'yyyy-MM-dd HH:mm:ss')} ]]</td>
+					</tr>
+					<tr>
+						<td class="admin__information-head">권한변경</td>
+						<td class="admin__information-content">
+							<select th:field="*{authList}" id="userModel">
+								<option value="NONE">선택</option>
+								<option th:each="authList : ${authList}" th:text="${authList.modelNameKor}" th:value="${authList.modelName}" ></option>
+							</select>									
+						</td>
+					</tr>
+				</table>
+			</div>
 			
-			<div>
+			<div class="admin__points">
+				<span>&#x26A1 적립내역<span id="admin__points" style="font-size: 0.8rem;">[자세히]</span></span>
+				<div id="admin__points-list">
+					<table>
+						<thead>
+							<tr>
+								<td class="admin__points-points">활동점수</td>
+								<td class="admin__points-content">내용</td>
+								<td class="admin__points-date">날짜</td>
+							</tr>
+							<tr th:each="earningsPoints : ${earningsPoints}">
+								<td th:text="${earningsPoints.points}"></td>
+								<td th:text="${earningsPoints.commDNm}"></td>
+								<td style="font-size: 0.85rem;" th:text="${#temporals.format(earningsPoints.IDate, 'yyyy-MM-dd HH:mm')}"></td>
+							</tr>
+						</thead>
+					</table>
+				</div>
 			</div>
 			
 			<div class="admin-expulsion">
@@ -203,6 +223,7 @@
 		</script>
 		<!-- ADMIN -->
 		<script type="text/javascript" src="/js/app/admin/detail.js"></script>
+		<script type="text/javascript" src="/js/lib/moment.js"></script>
 		<!-- LOADING -->
 		<script type="text/javascript" src="/js/lib/loadingoverlay.min.js"></script>
 		<script type="text/javascript" src="/js/app/loading.js"></script>

@@ -421,13 +421,13 @@ function insertLikes(boardId) {
 
 // 포인트 적립
 function savePoints() {
-	var pointsCd = "3";	// 1: 로그인, 2: 게시글, 3: 댓글
+	var pointsCd = "3";
 	var points = "10";
 	
 	var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
 	var params = { "pointsCd": pointsCd, "points": points, "userId": userId };
 	
-	console.log("params : " + JSON.stringify(params));
+	//console.log("params : " + JSON.stringify(params));
 	
 	$.ajax({
 		url: "/points",

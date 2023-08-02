@@ -8,8 +8,11 @@ import lombok.Getter;
 public class PointsResponseDTO {
 
 	private String id;
+	private String userId;
+	private String userNickname;
 	private String pointsCd;
 	private String points;
-	private String userId;
 	private LocalDateTime IDate;
+	
+	private String commDNm;
 }

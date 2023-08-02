@@ -93,6 +93,7 @@
 	<th:block layout:fragment="script">
 		<!-- SETTINGS -->
 		<script th:inline="javascript">
+			var userId = [[ ${userId} ]];
 			var role = [[ ${role} ]];
 			var board = [[ ${board} ]];
 			var saveBoard_formAction = [[ ${board == null} ]] ? '/review/save' : '/review/update';
