@@ -1,0 +1,27 @@
+
+/* COMMON ------------------------------- */
+.form__rank { width: 550px; margin: 0 auto; margin-bottom: 3rem; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
+
+/* CONTENT ------------------------------- */
+.rank__list-total table { width: 400px; margin: 0 auto; margin-top: 1rem; text-align: center; }
+.rank__list-total span { margin-left: 2rem; font-size: 1rem; font-weight: 600; }
+.rank__list-rank { width: 20%; }
+.rank__list-nickname { width: 50%; }
+.rank__list-points { width: 30%; }
+
+.rank__list-week { margin-top: 2rem; }
+.rank__list-week table { width: 400px; margin: 0 auto; margin-top: 1rem; text-align: center; }
+.rank__list-week span { margin-left: 2rem; font-size: 1rem; font-weight: 600; }
+
+
+@media (max-width: 500px) {
+	.form__rank { width: 400px; }
+	.rank__list-total table,
+	.rank__list-week table { width: 350px; }
+}
+
+@media (max-width: 400px) {
+	.form__rank { width: 360px; }
+	.rank__list-total table,
+	.rank__list-week table { width: 330px; }
+}

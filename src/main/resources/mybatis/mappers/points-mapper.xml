@@ -4,11 +4,15 @@
 <mapper namespace="com.project.toy.points.mapper.PointsMapper">
 
 	<insert id="savePoints" parameterType="PointsRequestDTO" useGeneratedKeys="true" keyProperty="id">
+		/* com.project.toy.points.mapper.PointsMapper, 활동점수 적립 */
+		
 		INSERT INTO T_POINTS ( POINTS_CD, POINTS, USER_ID )
 		VALUES ( #{ pointsCd }, #{ points }, #{ userId } )
 	</insert>
 	
 	<select id="loginPoints" parameterType="PointsRequestDTO" resultType="int">
+		/* com.project.toy.points.mapper.PointsMapper, 하루단위 첫 로그인 판별 */
+		
 		SELECT COUNT(1)
 		FROM   T_POINTS
 		WHERE  1=1
@@ -18,6 +22,8 @@
 	</select>
 	
 	<select id="expirePoints" resultType="PointsResponseDTO">
+		/* com.project.toy.points.mapper.PointsMapper, 소멸예정 활동점수 */
+		
 		SELECT A.USER_NO, 
 		       A.USER_ID, 
 		       A.USER_NICKNAME, 
@@ -33,6 +39,8 @@
 	</select>
 	
 	<select id="earningsPoints" resultType="PointsResponseDTO">
+		/* com.project.toy.points.mapper.PointsMapper, 활동점수 적립내역 */
+		
 		SELECT A.USER_NO, 
 		       A.USER_ID, 
 		       A.USER_NICKNAME,
@@ -49,4 +57,36 @@
 		ORDER BY C.I_DATE DESC
 		LIMIT 15
 	</select>
+	
+	<select id="rankingTotalPoints" resultType="RankDTO">
+		/* com.project.toy.points.mapper.PointsMapper, 누적 활동점수 랭킹 */
+		
+		SELECT RANK() OVER (ORDER BY POINTS DESC) AS RANKING,
+		       A.USER_NO,
+		       A.USER_ID,
+		       A.USER_NICKNAME,
+		       IFNULL(FORMAT(SUM(B.POINTS), 0), 0) AS POINTS
+		FROM   T_PERSON A
+		LEFT OUTER JOIN T_POINTS B ON A.USER_ID = B.USER_ID
+		GROUP BY A.USER_ID
+		ORDER BY RANKING ASC
+	</select>
+	
+	<select id="rankingWeekPoints" resultType="RankDTO">
+		/* com.project.toy.points.mapper.PointsMapper, 1주간(TODAY - 1WEEK) 활동점수 랭킹 */
+		
+		SELECT RANK() OVER (ORDER BY POINTS DESC) AS RANKING,
+		       A.USER_NO,
+		       A.USER_ID,
+		       A.USER_NICKNAME,
+		       IFNULL(FORMAT(SUM(B.POINTS), 0), 0) AS POINTS
+		FROM   T_PERSON A
+		LEFT OUTER JOIN T_POINTS B ON A.USER_ID = B.USER_ID
+		WHERE  1=1
+		AND    B.I_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK) AND NOW() 
+		GROUP BY A.USER_ID
+		ORDER BY RANKING ASC
+	</select>
+	
+	
 </mapper>

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.project.toy.points.dto.PointsRequestDTO;
 import com.project.toy.points.dto.PointsResponseDTO;
+import com.project.toy.points.dto.RankDTO;
 
 @Mapper
 public interface PointsMapper {
@@ -14,4 +15,6 @@ public interface PointsMapper {
 	public int loginPoints(PointsRequestDTO params);
 	public PointsResponseDTO expirePoints(String userId);
 	public List<PointsResponseDTO> earningsPoints(String userId);
+	public List<RankDTO> rankingTotalPoints();
+	public List<RankDTO> rankingWeekPoints();
 }
