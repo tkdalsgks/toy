@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.toy.points.dto.PointsRequestDTO;
 import com.project.toy.points.dto.PointsResponseDTO;
+import com.project.toy.points.dto.RankDTO;
 import com.project.toy.points.mapper.PointsMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -70,5 +71,13 @@ public class PointsService {
 	
 	public List<PointsResponseDTO> earningsPoints(String userId) {
 		return pointsMapper.earningsPoints(userId);
+	}
+
+	public List<RankDTO> rankingTotalPoints() {
+		return pointsMapper.rankingTotalPoints();
+	}
+
+	public List<RankDTO> rankingWeekPoints() {
+		return pointsMapper.rankingWeekPoints();
 	}
 }

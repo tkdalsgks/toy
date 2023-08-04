@@ -27,6 +27,7 @@
 		<typeAlias type="com.project.toy.likes.dto.LikesDTO" alias="LikesDTO" />
 		<typeAlias type="com.project.toy.points.dto.PointsRequestDTO" alias="PointsRequestDTO" />
 		<typeAlias type="com.project.toy.points.dto.PointsResponseDTO" alias="PointsResponseDTO" />
+		<typeAlias type="com.project.toy.points.dto.RankDTO" alias="RankDTO" />
 
 	</typeAliases>
 	
