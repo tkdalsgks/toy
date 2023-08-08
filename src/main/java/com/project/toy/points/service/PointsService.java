@@ -2,6 +2,8 @@ package com.project.toy.points.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 public class PointsService {
 	
 	private final PointsMapper pointsMapper;
+	
+	private final HttpServletRequest request;
 
 	@Transactional
 	public boolean savePoints(PointsRequestDTO params) {
@@ -35,13 +39,9 @@ public class PointsService {
 		boolean result = false;
 		
 		if (params.getId() == null) {
-			if("1".equals(params.getPointsCd())) {	// 하루 단위 첫 로그인시 100포인트
+			if("1".equals(params.getPointsCd())) {	// 하루 단위 첫 로그인시 랜덤박스 OR 100포인트
 				queryResult = pointsMapper.loginPoints(params);
 				result = (queryResult >= 1) ? false : true;
-				
-				if(result == true) {
-					pointsMapper.savePoints(params);
-				}
 				
 				return result;
 			} else if("2".equals(params.getPointsCd())) {	// 게시글 작성 시 100포인트

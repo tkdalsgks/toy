@@ -23,10 +23,9 @@ $(document).ready(function(){
 // 포인트 적립
 function savePoints() {
 	var pointsCd = "1";
-	var points = "100";
 	
 	var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
-	var params = { "pointsCd": pointsCd, "points": points, "userId": userId };
+	var params = { "pointsCd": pointsCd, "userId": userId };
 	
 	//console.log("params : " + JSON.stringify(params));
 	
@@ -45,7 +44,8 @@ function savePoints() {
     				confirmButtonText: '확인'
     			});
 				return false;
-			} else {
+			} else if(response.result == true) {
+				location.href = "/points/box";
 				return true;
 			}
 		},
