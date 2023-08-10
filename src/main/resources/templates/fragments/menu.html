@@ -32,6 +32,7 @@
 			    
 			    <div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN')" class="popup__admin">
 					<a class="popup-content__item" th:href="@{/admin}">관리자</a>
+					<a class="popup-content__item" th:href="@{/points/goods}">도장</a>
 				</div>
 					
 	   		</div>

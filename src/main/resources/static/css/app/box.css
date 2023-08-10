@@ -4,7 +4,7 @@
 
 /* CONTENT ------------------------------- */
 .box__btn { width: 350px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
-.box__btn button { width: 7rem; height: 7rem; border: none; border-radius: .5rem; color: white; background-color: #353535; font-size: 1.25rem; font-weight: 600; }
+.box__btn button { width: 7rem; height: 7rem; border: none; border-radius: .5rem; color: white; background-color: #353535; font-size: 1rem; font-weight: 600; }
 
 .flow-text { display: flex; flex: 0 auto; white-space: nowrap; overflow: hidden; transition: 0.3s; }
 .flow-wrap { animation: textLoop 3.3s linear infinite; font-size: 1.5rem; font-weight: 600; }
