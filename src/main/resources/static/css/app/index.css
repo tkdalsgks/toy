@@ -94,6 +94,8 @@ input:focus { outline: 2.5px solid #00F5FF !important; -webkit-transition: borde
 
 .header-mobile { position: fixed; z-index: 1; top: 0; left: 0; right: 0; width: 100%; max-width: 550px; margin: 0 auto;
 	font-weight: 500; background-color: #FFFFFF; border-bottom: .5px solid #FFCECE; }
+.header-mobile2 { position: fixed; z-index: 1; top: 0; left: 0; right: 0; width: 100%; max-width: 550px; margin: 0 auto;
+font-weight: 500; background-color: #FFFFFF; }
 .header-mobile a { text-decoration: none; color: black; }
 
 .navbar-collapse { display: flex; justify-content: space-between; align-items: center !important; }

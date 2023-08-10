@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.toy.points.dto.GoodsDTO;
 import com.project.toy.points.dto.PointsRequestDTO;
 import com.project.toy.points.dto.PointsResponseDTO;
 import com.project.toy.points.dto.RankDTO;
@@ -79,5 +80,41 @@ public class PointsService {
 
 	public List<RankDTO> rankingWeekPoints() {
 		return pointsMapper.rankingWeekPoints();
+	}
+
+	public boolean saveGoods(GoodsDTO params) {
+		int queryResult = 0;
+
+		if (params.getUserId() != null) {
+			queryResult = pointsMapper.saveGoods(params);
+		}
+
+		return (queryResult == 1) ? true : false;
+	}
+
+	public int selectGoodsUser1(GoodsDTO params) {
+		return pointsMapper.selectGoodsUser1(params);
+	}
+
+	public int selectGoodsUser2(GoodsDTO params) {
+		return pointsMapper.selectGoodsUser2(params);
+	}
+	
+	public int totalGoodsUser1(GoodsDTO params) {
+		return pointsMapper.totalGoodsUser1(params);
+	}
+
+	public int totalGoodsUser2(GoodsDTO params) {
+		return pointsMapper.totalGoodsUser2(params);
+	}
+	
+	public boolean resetGoods(GoodsDTO params) {
+		int queryResult = 0;
+
+		if (params.getUserId() != null) {
+			queryResult = pointsMapper.resetGoods(params);
+		}
+
+		return (queryResult == 1) ? true : false;
 	}
 }

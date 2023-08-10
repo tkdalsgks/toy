@@ -1,0 +1,39 @@
+
+/* COMMON ------------------------------- */
+.form__goods { width: 550px; height: 80vh; margin: 0 auto; -webkit-box-align: center; -ms-flex-alRign: center; align-items: center; overflow: hidden }
+
+/* CONTENT ------------------------------- */
+.goods__table { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.goods__table table { width: 300px; height: 150px; margin: 1rem 0 1.5rem; 0; text-align: center; border: 1px solid gray; }
+.goods__table table td { border: 1px solid gray; }
+.goods__complete { margin-left: .5rem; padding: .125rem .125rem; background-color: #7A7A7A; border: none; border-radius: .5rem; color: white; font-weight: 600; }
+.goods__reset { margin-left: 1rem; padding: .125rem .125rem; background-color: #353535; border: none; border-radius: .5rem; color: white; font-weight: 600; }
+
+#goods__img-user1-1,
+#goods__img-user1-2,
+#goods__img-user1-3,
+#goods__img-user1-4,
+#goods__img-user1-5,
+#goods__img-user1-6,
+#goods__img-user1-7,
+#goods__img-user1-8,
+#goods__img-user1-9,
+#goods__img-user1-10,
+#goods__img-user2-1,
+#goods__img-user2-2,
+#goods__img-user2-3,
+#goods__img-user2-4,
+#goods__img-user2-5,
+#goods__img-user2-6,
+#goods__img-user2-7,
+#goods__img-user2-8,
+#goods__img-user2-9,
+#goods__img-user2-10 { width: 60px; height: 60px; opacity: 0; }
+
+@media (max-width: 500px) {
+	.form__goods { width: 400px; }
+}
+
+@media (max-width: 400px) {
+	.form__goods { width: 350px; }
+}
