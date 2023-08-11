@@ -40,7 +40,7 @@
 						<td th:if="${total.ranking == '3'}">&#x1F949</td>
 						<td th:if="${total.ranking != '1' && total.ranking != '2' && total.ranking != '3'}" th:text="${total.ranking}"></td>
 						<td th:text="${total.userNickname}"></td>
-						<td th:text="${total.points}"></td>
+						<td th:text="${#numbers.formatInteger(total.points, 3, 'COMMA')}"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -63,7 +63,7 @@
 						<td th:if="${week.ranking == '3'}">&#x1F949</td>
 						<td th:if="${week.ranking != '1' && week.ranking != '2' && week.ranking != '3'}" th:text="${week.ranking}"></td>
 						<td th:text="${week.userNickname}"></td>
-						<td th:text="${week.points}"></td>
+						<td th:text="${#numbers.formatInteger(week.points, 3, 'COMMA')}"></td>
 					</tr>
 				</tbody>
 			</table>
