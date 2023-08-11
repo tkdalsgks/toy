@@ -65,14 +65,14 @@
 		       A.USER_NO,
 		       A.USER_ID,
 		       A.USER_NICKNAME,
-		       IFNULL(FORMAT(SUM(B.POINTS), 0), 0) AS POINTS
+		       IFNULL(SUM(B.POINTS), 0) AS POINTS
 		FROM   T_PERSON A
 		LEFT OUTER JOIN T_POINTS B ON A.USER_ID = B.USER_ID
 		WHERE  1=1
 		AND    B.POINTS IS NOT NULL
 		GROUP BY A.USER_ID
 		ORDER BY RANKING
-		LIMIT 10;
+		LIMIT 10
 	</select>
 	
 	<select id="rankingWeekPoints" resultType="RankDTO">
@@ -82,7 +82,7 @@
 		       A.USER_NO,
 		       A.USER_ID,
 		       A.USER_NICKNAME,
-		       IFNULL(FORMAT(SUM(B.POINTS), 0), 0) AS POINTS
+		       IFNULL(SUM(B.POINTS), 0) AS POINTS
 		FROM   T_PERSON A
 		LEFT OUTER JOIN T_POINTS B ON A.USER_ID = B.USER_ID
 		WHERE  1=1
