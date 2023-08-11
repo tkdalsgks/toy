@@ -12,7 +12,9 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -62,19 +64,27 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 	
 	// 유저 생성 및 수정 서비스 로직
 	private UserDTO saveOrUpdate(OAuthAttributes attributes) {
-		UserDTO userDTO;
+		UserDTO userDTO = securityMapper.findByUserEmail(attributes.getUserEmail());
         
-        if(securityMapper.findByUserEmail(attributes.getUserEmail()) != null){
+        if(userDTO != null){
         	log.info("-----");
         	log.info(attributes.getProvider() + ": 이미 가입된 유저입니다.");
             log.info(attributes.getProvider() + ": " + attributes.getUserId());
             log.info("-----");
             userDTO = securityMapper.findByUserEmail(attributes.getUserEmail());
             
-            LoginLogDTO loginLogDTO = new LoginLogDTO();
-            loginLogDTO.setLoginId(userDTO.getUserId());
-            loginLogDTO.setAccessIp(getLocalIpAddress());
-            securityMapper.insertLoginLog(loginLogDTO);
+            if("Y".equals(userDTO.getUseYn())) {
+            	if("N".equals(userDTO.getLockYn())) {
+            		LoginLogDTO loginLogDTO = new LoginLogDTO();
+            		loginLogDTO.setLoginId(userDTO.getUserId());
+            		loginLogDTO.setAccessIp(getLocalIpAddress());
+            		securityMapper.insertLoginLog(loginLogDTO);
+            	} else {
+            		throw new LockedException("해당 계정이 잠겼습니다.\n비밀번호 찾기를 진행하여 새로운 비밀번호로 변경하세요.");
+            	}            	
+            } else {
+            	throw new UsernameNotFoundException("직접 탈퇴했거나 관리자가 추방한 계정입니다.");
+            }
         } else {
         	userDTO = attributes.Entity();
         	
