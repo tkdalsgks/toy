@@ -61,7 +61,7 @@
 	<select id="rankingTotalPoints" resultType="RankDTO">
 		/* com.project.toy.points.mapper.PointsMapper, 누적 활동점수 랭킹 */
 		
-		SELECT RANK() OVER (ORDER BY POINTS ASC) AS RANKING,
+		SELECT RANK() OVER (ORDER BY POINTS DESC) AS RANKING,
 		       A.USER_NO,
 		       A.USER_ID,
 		       A.USER_NICKNAME,
@@ -71,13 +71,14 @@
 		WHERE  1=1
 		AND    B.POINTS IS NOT NULL
 		GROUP BY A.USER_ID
-		LIMIT 10
+		ORDER BY RANKING
+		LIMIT 10;
 	</select>
 	
 	<select id="rankingWeekPoints" resultType="RankDTO">
 		/* com.project.toy.points.mapper.PointsMapper, 1주간(TODAY - 1WEEK) 활동점수 랭킹 */
 		
-		SELECT RANK() OVER (ORDER BY POINTS ASC) AS RANKING,
+		SELECT RANK() OVER (ORDER BY POINTS DESC) AS RANKING,
 		       A.USER_NO,
 		       A.USER_ID,
 		       A.USER_NICKNAME,
@@ -87,6 +88,7 @@
 		WHERE  1=1
 		AND    B.I_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK) AND NOW() 
 		GROUP BY A.USER_ID
+		ORDER BY RANKING
 		LIMIT 10
 	</select>
 	

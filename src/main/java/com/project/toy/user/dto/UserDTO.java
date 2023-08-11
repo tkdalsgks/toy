@@ -34,6 +34,8 @@ public class UserDTO {
 	@Schema(description = "가입 구분")
 	private String provider;
 	
+	private String lockYn;
+	
 	@Schema(description = "사용 구분")
 	private String useYn;
 	
