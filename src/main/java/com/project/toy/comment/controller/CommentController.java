@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -105,6 +106,7 @@ public class CommentController {
 	 * @return
 	 */
 	@Operation(summary = "댓글 수정", description = "댓글 수정 메서드")
+	@Transactional
 	@PatchMapping({"/comments", "/comments/{id}"})
 	public JsonObject updateComment(@PathVariable(value = "id", required = false) Long id, @RequestBody final CommentRequestDTO params) {
 		log.info("##### Comment Page Modify __ API " + id + " #####");
@@ -138,6 +140,7 @@ public class CommentController {
 	 * @return
 	 */
 	@Operation(summary = "댓글 삭제", description = "댓글 삭제 메서드")
+	@Transactional
 	@DeleteMapping("/comments/{id}")
 	public JsonObject deleteComment(@PathVariable("id") final Long id) {
 		log.info("##### Comment Page Delete __ API " + id + " #####");

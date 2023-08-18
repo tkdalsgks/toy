@@ -1,9 +1,12 @@
 package com.project.toy.points.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -47,6 +50,14 @@ public class RankController {
 		List<RankDTO> rankWeekList = pointsService.rankingWeekPoints();
 		model.addAttribute("total", rankTotalList);
 		model.addAttribute("week", rankWeekList);
+		
+		// 주간 랭킹 날짜 구하기
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd");
+    	Date date = new Date();
+    	String today = sdf.format(date);
+    	String minus7day = sdf.format(DateUtils.addDays(date, -7));
+    	model.addAttribute("today", today);
+    	model.addAttribute("minus7day", minus7day);
 		
 		return "points/rank";
 	}

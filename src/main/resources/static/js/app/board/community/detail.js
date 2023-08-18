@@ -110,7 +110,13 @@ function insertComment(boardId) {
 	var content = window.ckeditor_write.getData();
 	
 	var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
-	var params = { "boardId": boardId, "content": content, "writerId": userId, "writer": userName };
+	
+	if(boardSeq == 2) {
+		var rating = document.getElementById('rating');
+		var params = { "boardId": boardId, "content": content, "writerId": userId, "writer": userName, "rating": rating.value };
+	} else {
+		var params = { "boardId": boardId, "content": content, "writerId": userId, "writer": userName };
+	}
 	
 	if(content == "") {
 		window.ckeditor_write.focus();
@@ -166,7 +172,7 @@ function updateComment(id) {
 	//var writer = document.getElementById("modalWriter");
 	//var content = document.getElementById("modalContent");
 	
-	var uri = comment_uri + id;
+	var uri = comment_uri + "/" + id;
 	var content = window.ckeditor_change.getData();
 	
 	var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "PATCH" };
@@ -213,7 +219,7 @@ function updateComment(id) {
 
 // 댓글 삭제
 function deleteComment(id) {
-	var uri = comment_uri + id;
+	var uri = comment_uri + "/" + id;
 	
 	swal.fire({
 		text: '댓글을 삭제할까요?',
@@ -274,6 +280,7 @@ function deleteComment(id) {
 	});
 }
 
+// 댓글 수정(NEW)
 function replyUpdate(id) {
 	
 	const reply = document.getElementById('reply' + id);
@@ -301,6 +308,7 @@ function replyUpdate(id) {
         } );
 }
 
+// 댓글 수정 취소(NEW)
 function replyCancel(id) {
 	
 	const reply = document.getElementById('reply' + id);
@@ -324,50 +332,92 @@ function printCommentList() {
 	$.get(printCommentList_uri, function(response) {
 		if (isEmpty(response) == false) {
 			var commentsHtml = "";
-
-			$(response.commentList).each(function(id, comment) {
-				commentsHtml += `
-					<li class="comment-li">
-						<div class="comment-img">
-							<img src="/img/app/chat/chat.png">
-							<div class="comment-name">
-								<span class="name"><a href="/${comment.writerId}/activity">${comment.writer}</a></span>
-								<div class="comment-edit" style="display: flex;">
-									<span class="time comment-time">${timeForToday(moment(comment.IDate).format('YYYY/MM/DD HH:mm'))}
-										<span>${comment.UDate != null ? '·' : ''}</span>
-										<span class="comment-udate">${comment.UDate != null ? '수정됨' : ''}</span>
-									</span>
-									<!-- 
-									<span onclick="openModal(${comment.id}, '${comment.writer}', '${comment.content}' )" class="material-symbols-outlined comment-edit" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? 'edit' : ''}</span> 
-									-->
+			
+			if(boardSeq == 2) {
+				$(response.commentList).each(function(id, comment) {
+					commentsHtml += `
+						<li class="comment-li">
+							<div class="comment-img">
+								<img src="/img/app/chat/chat.png">
+								<div class="comment-name">
+									<span class="name"><a href="javascript:void(0);" onclick="goUserPage(${comment.writerNo});">${comment.writer}</a></span>
+									<div class="comment-edit" style="display: flex;">
+										<span class="time comment-time">${timeForToday(moment(comment.IDate).format('YYYY/MM/DD HH:mm'))}
+											<span>${comment.UDate != null ? '·' : ''}</span>
+											<span class="comment-udate">${comment.UDate != null ? '수정됨' : ''}</span>
+										</span>
+										<!-- 
+										<span onclick="openModal(${comment.id}, '${comment.writer}', '${comment.content}' )" class="material-symbols-outlined comment-edit" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? 'edit' : ''}</span> 
+										-->
+									</div>
+								</div>
+								<div th:if="${boardSeq == '2'}" style="display: flex; flex-direction: column;">
+									<div>
+										<span class="reply-star">
+											★★★★★
+											<span style="width: ${comment.rating}0%">★★★★★</span>
+										</span>
+									</div>
+									<div th:if="${userId} == ${comment.writerId}" style="text-align: center;">
+										<!--
+										<span onclick="openModal( '${comment.id}', '${comment.writer}' )" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '수정 ' : ''}</span>
+										-->
+										<span onclick="replyUpdate(${comment.id})" id="replyUpdate${comment.id}" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '수정' : ''}</span>
+										<span onclick="replyCancel(${comment.id})" id="replyCancel${comment.id}" style="display: none; align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '취소' : ''}</span>
+										<span onclick="updateComment('${comment.id}', '${comment.writer}')" id="replySave${comment.id}" style="display: none; align-items: center; font-size: 13px; cursor: pointer; background-color: skyblue;">${comment.deleteYn != 'Y' ? '저장' : ''}</span>
+										<span onclick="deleteComment(${comment.id})" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '삭제' : ''}</span>
+									</div>
 								</div>
 							</div>
-							<div style="display: flex; flex-direction: column;">
-								<!--
-								<div style="text-align: center;">
-									<span class="rating-star">★★★★★</span>
-								</div>
-								-->
-								<div th:if="${userId.value} == ${comment.writerId}" style="text-align: center;">
-									<!--
-									<span onclick="openModal( '${comment.id}', '${comment.writer}' )" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '수정 ' : ''}</span>
-									-->
-									<span onclick="replyUpdate(${comment.id})" id="replyUpdate${comment.id}" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '수정' : ''}</span>
-									<span onclick="replyCancel(${comment.id})" id="replyCancel${comment.id}" style="display: none; align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '취소' : ''}</span>
-									<span onclick="updateComment('${comment.id}', '${comment.writer}')" id="replySave${comment.id}" style="display: none; align-items: center; font-size: 13px; cursor: pointer; background-color: skyblue;">${comment.deleteYn != 'Y' ? '저장' : ''}</span>
-									<span onclick="deleteComment(${comment.id})" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '삭제' : ''}</span>
+							<div>
+								<span id="reply${comment.id}" class="desc comment-content">${comment.content}</span>
+								<div id="replyForm${comment.id}">
+									<textarea id="replyEditor${comment.id}" style="display: none;">${comment.content}</textarea>
 								</div>
 							</div>
-						</div>
-						<div>
-							<span id="reply${comment.id}" class="desc comment-content">${comment.content}</span>
-							<div id="replyForm${comment.id}">
-								<textarea id="replyEditor${comment.id}" style="display: none;">${comment.content}</textarea>
+						</li>
+					`;
+				});
+			} else {
+				$(response.commentList).each(function(id, comment) {
+					commentsHtml += `
+						<li class="comment-li">
+							<div class="comment-img">
+								<img src="/img/app/chat/chat.png">
+								<div class="comment-name">
+									<span class="name"><a href="javascript:void(0);" onclick="goUserPage(${comment.writerNo});">${comment.writer}</a></span>
+									<div class="comment-edit" style="display: flex;">
+										<span class="time comment-time">${timeForToday(moment(comment.IDate).format('YYYY/MM/DD HH:mm'))}
+											<span>${comment.UDate != null ? '·' : ''}</span>
+											<span class="comment-udate">${comment.UDate != null ? '수정됨' : ''}</span>
+										</span>
+										<!-- 
+										<span onclick="openModal(${comment.id}, '${comment.writer}', '${comment.content}' )" class="material-symbols-outlined comment-edit" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? 'edit' : ''}</span> 
+										-->
+									</div>
+								</div>
+								<div th:if="${boardSeq == '2'}" style="display: flex; flex-direction: column;">
+									<div th:if="${userId} == ${comment.writerId}" style="text-align: center;">
+										<!--
+										<span onclick="openModal( '${comment.id}', '${comment.writer}' )" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '수정 ' : ''}</span>
+										-->
+										<span onclick="replyUpdate(${comment.id})" id="replyUpdate${comment.id}" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '수정' : ''}</span>
+										<span onclick="replyCancel(${comment.id})" id="replyCancel${comment.id}" style="display: none; align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '취소' : ''}</span>
+										<span onclick="updateComment('${comment.id}', '${comment.writer}')" id="replySave${comment.id}" style="display: none; align-items: center; font-size: 13px; cursor: pointer; background-color: skyblue;">${comment.deleteYn != 'Y' ? '저장' : ''}</span>
+										<span onclick="deleteComment(${comment.id})" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '삭제' : ''}</span>
+									</div>
+								</div>
 							</div>
-						</div>
-					</li>
-				`;
-			});
+							<div>
+								<span id="reply${comment.id}" class="desc comment-content">${comment.content}</span>
+								<div id="replyForm${comment.id}">
+									<textarea id="replyEditor${comment.id}" style="display: none;">${comment.content}</textarea>
+								</div>
+							</div>
+						</li>
+					`;
+				});
+			}
 			
 			$(".notice-list").html(commentsHtml);
 		}

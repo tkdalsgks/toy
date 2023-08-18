@@ -24,46 +24,32 @@
 	<!-- ADMIN_DETAIL : CONTENT -->
 	<main layout:fragment="content" class="form__rank">
 		<div class="rank__list-total">
-			<span>누적 랭킹</span>
+			<span>누적 랭킹 (~<span id="totalToday" style="margin-left: 0;"></span>)</span>
 			<table>
-				<thead>
-					<tr>
-						<td class="rank__list-rank">순위</td>
-						<td class="rank__list-nickname">닉네임</td>
-						<td class="rank__list-points">누적 활동점수</td>
-					</tr>
-				</thead>
 				<tbody th:each="total : ${total}">
 					<tr>
-						<td th:if="${total.ranking == '1'}">&#x1F947</td>
-						<td th:if="${total.ranking == '2'}">&#x1F948</td>
-						<td th:if="${total.ranking == '3'}">&#x1F949</td>
-						<td th:if="${total.ranking != '1' && total.ranking != '2' && total.ranking != '3'}" th:text="${total.ranking}"></td>
-						<td th:text="${total.userNickname}"></td>
-						<td th:text="${#numbers.formatInteger(total.points, 3, 'COMMA')}"></td>
+						<td th:if="${total.ranking == '1'}" class="rank__list-rank">&#x1F947</td>
+						<td th:if="${total.ranking == '2'}" class="rank__list-rank">&#x1F948</td>
+						<td th:if="${total.ranking == '3'}" class="rank__list-rank">&#x1F949</td>
+						<td th:if="${total.ranking != '1' && total.ranking != '2' && total.ranking != '3'}" th:text="${total.ranking}" class="rank__list-rank"></td>
+						<td class="rank__list-nickname">[[ ${total.userNickname} ]]<span style="font-size: .85rem; margin-left: .5rem; font-weight: 400;">([[ ${total.userId} ]])</span></td>
+						<td th:text="${#numbers.formatInteger(total.points, 3, 'COMMA')}" class="rank__list-points"></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		
 		<div class="rank__list-week">
-			<span>주간 랭킹</span>
+			<span>주간 랭킹 (<span id="minus7day" style="margin-left: 0;"></span>~<span id="weekToday" style="margin-left: 0;"></span>)</span>
 			<table>
-				<thead>
-					<tr>
-						<td class="rank__list-rank">순위</td>
-						<td class="rank__list-nickname">닉네임</td>
-						<td class="rank__list-points">주간 활동점수</td>
-					</tr>
-				</thead>
 				<tbody th:each="week : ${week}">
 					<tr>
-						<td th:if="${week.ranking == '1'}">&#x1F947</td>
-						<td th:if="${week.ranking == '2'}">&#x1F948</td>
-						<td th:if="${week.ranking == '3'}">&#x1F949</td>
-						<td th:if="${week.ranking != '1' && week.ranking != '2' && week.ranking != '3'}" th:text="${week.ranking}"></td>
-						<td th:text="${week.userNickname}"></td>
-						<td th:text="${#numbers.formatInteger(week.points, 3, 'COMMA')}"></td>
+						<td th:if="${week.ranking == '1'}" class="rank__list-rank">&#x1F947</td>
+						<td th:if="${week.ranking == '2'}" class="rank__list-rank">&#x1F948</td>
+						<td th:if="${week.ranking == '3'}" class="rank__list-rank">&#x1F949</td>
+						<td th:if="${week.ranking != '1' && week.ranking != '2' && week.ranking != '3'}" th:text="${week.ranking}" class="rank__list-rank"></td>
+						<td class="rank__list-nickname">[[ ${week.userNickname} ]]<span style="font-size: .85rem; margin-left: .5rem; font-weight: 400;">([[ ${week.userId} ]])</span></td>
+						<td th:text="${#numbers.formatInteger(week.points, 3, 'COMMA')}" class="rank__list-points"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -77,6 +63,12 @@
 		    var userId = [[ ${userId} ]];
 		    var user = [[ ${user} ]];
 			var role = [[ ${role} ]];
+			var today = [[ ${today} ]];
+			var minus7day = [[ ${minus7day} ]];
+			
+			document.querySelector("#totalToday").append(today);
+			document.querySelector("#weekToday").append(today);
+			document.querySelector("#minus7day").append(minus7day);
 		</script>
 		<!-- RANK -->
 		<!-- <script type="text/javascript" src="/js/app/points/rank.js"></script> -->
