@@ -19,6 +19,7 @@
 		<typeAlias type="com.project.toy.board.dto.BoardResponseDTO" alias="BoardResponseDTO" />
 		<typeAlias type="com.project.toy.board.dto.ReviewRequestDTO" alias="ReviewRequestDTO" />
 		<typeAlias type="com.project.toy.board.dto.ReviewResponseDTO" alias="ReviewResponseDTO" />
+		<typeAlias type="com.project.toy.board.dto.ReviewFilterDTO" alias="ReviewFilterDTO" />
 		<typeAlias type="com.project.toy.comment.dto.CommentRequestDTO" alias="CommentRequestDTO" />
 		<typeAlias type="com.project.toy.comment.dto.CommentResponseDTO" alias="CommentResponseDTO" />
 		<typeAlias type="com.project.toy.common.dto.MessageDTO" alias="MessageDTO" />
