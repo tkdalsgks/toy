@@ -46,4 +46,6 @@ public class BoardResponseDTO {
 	
 	@Schema(description = "수정일시", defaultValue = "NOW()")
 	private LocalDateTime UDate;
+	
+	private String boardSeq;
 }

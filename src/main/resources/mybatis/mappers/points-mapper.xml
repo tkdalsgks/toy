@@ -6,8 +6,8 @@
 	<insert id="savePoints" parameterType="PointsRequestDTO" useGeneratedKeys="true" keyProperty="id">
 		/* com.project.toy.points.mapper.PointsMapper, 활동점수 적립 */
 		
-		INSERT INTO T_POINTS ( POINTS_CD, POINTS, USER_ID )
-		VALUES ( #{ pointsCd }, #{ points }, #{ userId } )
+		INSERT INTO T_POINTS ( POINTS_ID, POINTS_CD, POINTS, USER_ID )
+		VALUES ( '+', #{ pointsCd }, #{ points }, #{ userId } )
 	</insert>
 	
 	<select id="loginPoints" parameterType="PointsRequestDTO" resultType="int">
@@ -32,6 +32,7 @@
 		LEFT OUTER JOIN T_AUTH_MODEL B ON A.ROLE = B.MODEL_NAME
 		LEFT OUTER JOIN T_POINTS C ON A.USER_ID = C.USER_ID 
 		WHERE  1=1
+		AND    C.POINTS_ID = '+'
 		<![CDATA[
 		AND    C.I_DATE <= DATE_ADD(NOW(), INTERVAL -6 MONTH)
 		]]>
@@ -45,6 +46,7 @@
 		       A.USER_ID, 
 		       A.USER_NICKNAME,
 		       D.COMM_D_NM, 
+		       C.POINTS_ID,
 		       C.POINTS_CD, 
 		       FORMAT(C.POINTS, 0) AS POINTS,
 		       DATE_FORMAT(C.I_DATE, "%Y-%m-%d %H:%i") AS I_DATE 
@@ -69,7 +71,9 @@
 		FROM   T_PERSON A
 		LEFT OUTER JOIN T_POINTS B ON A.USER_ID = B.USER_ID
 		WHERE  1=1
+		AND    B.POINTS_ID = '+'
 		AND    B.POINTS IS NOT NULL
+		AND    A.USER_EMAIL NOT LIKE '%@oyez.kr'
 		GROUP BY A.USER_ID
 		ORDER BY RANKING
 		LIMIT 10
@@ -86,7 +90,9 @@
 		FROM   T_PERSON A
 		LEFT OUTER JOIN T_POINTS B ON A.USER_ID = B.USER_ID
 		WHERE  1=1
+		AND    B.POINTS_ID = '+'
 		AND    B.I_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK) AND NOW() 
+		AND    A.USER_EMAIL NOT LIKE '%@oyez.kr'
 		GROUP BY A.USER_ID
 		ORDER BY RANKING
 		LIMIT 10

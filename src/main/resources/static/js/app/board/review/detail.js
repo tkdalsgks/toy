@@ -341,11 +341,12 @@ function printCommentList() {
 								</div>
 							</div>
 							<div style="display: flex; flex-direction: column;">
-								<!--
-								<div style="text-align: center;">
-									<span class="rating-star">★★★★★</span>
+								<div>
+									<span class="reply-star">
+										★★★★★
+										<span style="width: ${comment.rating}0%">★★★★★</span>
+									</span>
 								</div>
-								-->
 								<div th:if="${userId.value} == ${comment.writerId}" style="text-align: center;">
 									<!--
 									<span onclick="openModal( '${comment.id}', '${comment.writer}' )" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '수정 ' : ''}</span>

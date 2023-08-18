@@ -3,15 +3,15 @@
 .form__rank { width: 550px; margin: 0 auto; margin-bottom: 3rem; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
 
 /* CONTENT ------------------------------- */
-.rank__list-total table { width: 400px; margin: 0 auto; margin-top: 1rem; text-align: center; }
-.rank__list-total span { margin-left: 2rem; font-size: 1rem; font-weight: 600; }
+.rank__list-total table { width: 350px; margin: 0 auto; margin-top: 1rem; text-align: center; }
+.rank__list-total span { margin-left: 3rem; font-size: 1rem; font-weight: 600; }
 .rank__list-rank { width: 20%; }
 .rank__list-nickname { width: 50%; }
 .rank__list-points { width: 30%; }
 
-.rank__list-week { margin-top: 2rem; }
-.rank__list-week table { width: 400px; margin: 0 auto; margin-top: 1rem; text-align: center; }
-.rank__list-week span { margin-left: 2rem; font-size: 1rem; font-weight: 600; }
+.rank__list-week { margin-top: 3rem; }
+.rank__list-week table { width: 350px; margin: 0 auto; margin-top: 1rem; text-align: center; }
+.rank__list-week span { margin-left: 3rem; font-size: 1rem; font-weight: 600; }
 
 
 @media (max-width: 500px) {

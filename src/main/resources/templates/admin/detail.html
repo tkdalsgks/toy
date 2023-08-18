@@ -66,22 +66,29 @@
 			</div>
 			
 			<div class="admin__points">
-				<span>&#x26A1 적립내역<span id="admin__points" style="font-size: 0.8rem;">[자세히]</span></span>
+				<span>&#x26A1 적립 & 사용내역<span id="admin__points" style="font-size: 0.8rem;">[자세히]</span></span>
 				<div id="admin__points-list">
 					<table>
 						<thead>
 							<tr>
+								<td class="admin__points-sep">구분</td>
 								<td class="admin__points-points">활동점수</td>
 								<td class="admin__points-content">내용</td>
 								<td class="admin__points-date">날짜</td>
 							</tr>
 							<tr th:each="earningsPoints : ${earningsPoints}">
+								<td th:style="${earningsPoints.pointsId == '+'} ? 'color: blue; font-weight: 500;' : 'color: red; font-weight: 500;'" 
+									th:text="${earningsPoints.pointsId == '+'} ? '적립' : '사용'"></td>
 								<td th:text="${earningsPoints.points}"></td>
 								<td th:text="${earningsPoints.commDNm}"></td>
 								<td style="font-size: 0.85rem;" th:text="${#temporals.format(earningsPoints.IDate, 'yyyy-MM-dd HH:mm')}"></td>
 							</tr>
 						</thead>
 					</table>
+					<div style="margin-top: .5rem; text-align: center;">
+						<span style="font-size: .85rem; font-weight: 400;">...</span><br>
+						<span style="font-size: .85rem; font-weight: 400;">적립 & 사용내역은 최근 15건까지 조회 가능합니다.</span>
+					</div>
 				</div>
 			</div>
 			

@@ -10,6 +10,7 @@ public class PointsResponseDTO {
 	private String id;
 	private String userId;
 	private String userNickname;
+	private String pointsId;
 	private String pointsCd;
 	private String points;
 	private LocalDateTime IDate;
