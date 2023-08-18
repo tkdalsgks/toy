@@ -11,6 +11,7 @@
 		, WRITER_NO
 		, WRITER_ID
 		, WRITER
+		, FILTER
 		, VIEW_CNT
 		, COMMENT_CNT
 		, LIKES_CNT
@@ -63,9 +64,25 @@
 	<select id="findByBoardId" resultType="BoardResponseDTO">
 		/* com.project.toy.board.mapper.BoardMapper, 커뮤니티 게시글 상세보기 */
 		
-		SELECT <include refid="boardColumns" />
-		FROM   BOARD
+		SELECT A.ID,
+		       A.BOARD_SEQ, 
+		       A.TITLE, 
+		       A.CONTENT, 
+		       A.WRITER_NO, 
+		       A.WRITER_ID, 
+		       A.WRITER, 
+		       B.COMM_D_NM AS FILTER, 
+		       A.VIEW_CNT, 
+		       A.COMMENT_CNT, 
+		       A.LIKES_CNT, 
+		       A.NOTICE_YN, 
+		       A.DELETE_YN, 
+		       A.I_DATE, 
+		       A.U_DATE
+		FROM   BOARD A
+		LEFT OUTER JOIN COMM_D B ON A.FILTER = B.COMM_D_CD
 		WHERE  1=1
+		AND    B.COMM_H_CD = 'B01'
 		AND    ID = #{ value }
 	</select>
 	

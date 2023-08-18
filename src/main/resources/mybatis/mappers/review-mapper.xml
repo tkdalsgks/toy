@@ -11,6 +11,7 @@
 		, WRITER_NO
 		, WRITER_ID
 		, WRITER
+		, FILTER
 		, VIEW_CNT
 		, COMMENT_CNT
 		, LIKES_CNT
@@ -56,7 +57,7 @@
 		/* com.project.toy.board.mapper.ReviewMapper, 리뷰 게시글 작성 */
 		
 		INSERT INTO BOARD ( <include refid="reviewColumns" /> )
-		VALUES ( #{ id }, 2, #{ title }, #{ content }, #{ writerNo }, #{ writerId }, #{ writer }, 0, 0, 0, #{ noticeYn }, 0, NOW(), NULL ) 
+		VALUES ( #{ id }, 2, #{ title }, #{ content }, #{ writerNo }, #{ writerId }, #{ writer }, #{ filter }, 0, 0, 0, #{ noticeYn }, 0, NOW(), NULL ) 
 	</insert>
 	
 	<!-- 상세보기 -->
@@ -181,5 +182,13 @@
 		SET    VIEW_CNT = VIEW_CNT + 1
 		WHERE  ID = #{ id }
 	</update>
+	
+	<select id="reviewFilter" resultType="ReviewFilterDTO">
+		SELECT COMM_D_CD,
+		       COMM_D_NM
+		FROM   COMM_D
+		WHERE  1=1
+		AND    COMM_H_CD = 'B01'
+	</select>
 	
 </mapper>

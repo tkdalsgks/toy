@@ -217,12 +217,19 @@ public class BoardController {
 			model.addAttribute("role", user.getRole());
 		}
 		
+		BoardResponseDTO board = new BoardResponseDTO();
+		
 		if(id != null) {
-			BoardResponseDTO board = boardService.findByBoardId(id);
+			board = boardService.findByBoardId(id);
 			model.addAttribute("board", board);
+			
 		}
 		
-		return "board/community/modify";
+		if("1".equals(board.getBoardSeq())) {
+			return "board/community/modify";
+		} else {
+			return "board/review/modify";
+		}
 	}
 	
 	/**
@@ -260,7 +267,7 @@ public class BoardController {
 		log.info("##### Board Page Modify __ API " + id + " #####");
 		
 		boardService.updateBoard(params);
-		MessageDTO message = new MessageDTO("게시글 수정이 완료되었습니다.", "/community", RequestMethod.POST, null);
+		MessageDTO message = new MessageDTO("게시글 수정이 완료되었습니다.", "javascript:history.go(-2)", RequestMethod.POST, null);
 		
 		return showMessageAndRedirect(message, model);
 	}

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.project.toy.board.dto.ReviewFilterDTO;
 import com.project.toy.board.dto.ReviewRequestDTO;
 import com.project.toy.board.dto.ReviewResponseDTO;
 import com.project.toy.common.dto.SearchDTO;
@@ -21,4 +22,5 @@ public interface ReviewMapper {
 	public void deleteByReviewId(Long id);
 	public int countReview(SearchDTO params);
 	public void countHits(Long id);
+	public List<ReviewFilterDTO> reviewFilter(ReviewFilterDTO filterDTO);
 }

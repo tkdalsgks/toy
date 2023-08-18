@@ -47,9 +47,12 @@ function renderBoardInfo() {
 function saveBoard() {
 	
 	const form = document.getElementById('saveForm');
+	const filter = $("#filter option:selected").val();
 	
 	const fields = [form.title, form.writer];
 	const fieldNames = ['제목', '이름'];
+	
+	console.log(fields);
 	
 	for (let i = 0, len = fields.length; i < len; i++) {
 		isValid(fields[i], fieldNames[i]);

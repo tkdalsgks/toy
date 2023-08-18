@@ -26,6 +26,8 @@ public class ReviewResponseDTO {
 	@Schema(description = "작성자")
 	private String writer;
 	
+	private String filter;
+	
 	@Schema(description = "별점")
 	private int rating;
 	

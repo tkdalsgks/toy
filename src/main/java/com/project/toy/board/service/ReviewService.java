@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.project.toy.board.dto.ReviewFilterDTO;
 import com.project.toy.board.dto.ReviewRequestDTO;
 import com.project.toy.board.dto.ReviewResponseDTO;
 import com.project.toy.board.mapper.ReviewMapper;
@@ -61,5 +62,9 @@ public class ReviewService {
 	
 	public void countHits(Long id) {
 		reviewMapper.countHits(id);
+	}
+
+	public List<ReviewFilterDTO> reviewFilter(ReviewFilterDTO filterDTO) {
+		return reviewMapper.reviewFilter(filterDTO);
 	}
 }

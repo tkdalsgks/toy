@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.toy.board.dto.ReviewFilterDTO;
 import com.project.toy.board.dto.ReviewRequestDTO;
 import com.project.toy.board.dto.ReviewResponseDTO;
 import com.project.toy.board.service.ReviewService;
@@ -86,7 +87,7 @@ public class ReviewController {
 	 */
 	@Operation(summary = "작성 페이지 조회", description = "게시글 작성 페이지 조회")
 	@GetMapping("/review/write")
-	public String write(@RequestParam(value = "id", required = false) final Long id, Authentication auth, Model model) {
+	public String write(@RequestParam(value = "id", required = false) final Long id, ReviewFilterDTO filterDTO, Authentication auth, Model model) {
 		log.info("##### Board Page Write __ Call " + id + " #####");
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
@@ -100,7 +101,12 @@ public class ReviewController {
 		if(id != null) {
 			ReviewResponseDTO review = reviewService.findByReviewId(id);
 			model.addAttribute("review", review);
+			
 		}
+		
+		// 게시글 필터
+		List<ReviewFilterDTO> filter = reviewService.reviewFilter(filterDTO);
+		model.addAttribute("filter", filter);
 		
 		return "board/review/write";
 	}

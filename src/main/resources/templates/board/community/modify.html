@@ -46,6 +46,12 @@
 								<span class="chkbox" style="display: none;"><input type="checkbox" id="isNotice" name="isNotice" class="chk" /><i></i><label for="isNotice"></label></span>
 							</div>
 						</div>
+						<div style="display: flex;">
+							<span>필터</span>
+							<select style="width: 100px; height: 22px; margin-left: .85rem;" id="filter">
+								<option th:text="${board.filter}" th:value="${board.filter}" ></option>
+							</select>
+						</div>
 						<div>
 							<span class="write-title">제목</span>
 							<div class="write-title-input">
