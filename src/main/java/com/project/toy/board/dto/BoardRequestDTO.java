@@ -30,4 +30,6 @@ public class BoardRequestDTO {
 	private Boolean noticeYn;
 	
 	private String filter;
+	
+	private String filterId;
 }

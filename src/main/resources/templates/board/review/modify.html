@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>OYEZ - 리뷰</title>
+<title>OYEZ, 리뷰</title>
 
 <th:block layout:fragment="css">
 	<!-- POPUP -->
@@ -36,6 +36,7 @@
 					<input type="hidden" id="id" name="id" th:if="${board != null}" th:value="${board.id}" />
 					<!-- 서버로 전달할 공지글 여부 -->
 					<input type="hidden" id="noticeYn" name="noticeYn" />
+					<input type="hidden" id="filterId" name="filterId" />
 					<input type="hidden" id="writer" name="writer" class="write-writer" maxlength="10" th:value="${user}" />
 					<input type="hidden" id="IDate" name="IDate" class="write-date" />
 					<div>
@@ -51,7 +52,7 @@
 						<div style="display: flex;">
 							<span>필터</span>
 							<select style="width: 100px; height: 22px; margin-left: .85rem;" id="filter">
-								<option th:text="${board.filter}" th:value="${board.filterId}" selected></option>
+								<option th:text="${board.filter}" th:value="${board.filterId}"></option>
 								<option th:if="${board.filterId != filter.commDCd}" th:each="filter : ${filter}" th:text="${filter.commDNm}" th:value="${filter.commDCd}"></option>
 							</select>
 						</div>

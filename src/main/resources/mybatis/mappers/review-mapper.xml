@@ -57,8 +57,36 @@
 	<insert id="saveReview" parameterType="ReviewRequestDTO">
 		/* com.project.toy.board.mapper.ReviewMapper, 리뷰 게시글 작성 */
 		
-		INSERT INTO BOARD ( <include refid="reviewColumns" /> )
-		VALUES ( #{ id }, 2, #{ title }, #{ content }, #{ writerNo }, #{ writerId }, #{ writer }, #{ filterId }, 0, 0, 0, #{ noticeYn }, 0, NOW(), NULL ) 
+		INSERT INTO BOARD ( ID, 
+		                    BOARD_SEQ, 
+		                    TITLE, 
+		                    CONTENT, 
+		                    WRITER_NO, 
+		                    WRITER_ID, 
+		                    WRITER, 
+		                    FILTER, 
+		                    VIEW_CNT, 
+		                    COMMENT_CNT, 
+		                    LIKES_CNT, 
+		                    NOTICE_YN, 
+		                    DELETE_YN, 
+		                    I_DATE, 
+		                    U_DATE )
+		VALUES ( #{ id }, 
+		         2, 
+		         #{ title }, 
+		         #{ content }, 
+		         #{ writerNo }, 
+		         #{ writerId }, 
+		         #{ writer }, 
+		         #{ filterId }, 
+		         0, 
+		         0, 
+		         0, 
+		         #{ noticeYn }, 
+		         0, 
+		         NOW(), 
+		         NULL ) 
 	</insert>
 	
 	<!-- 상세보기 -->
@@ -70,20 +98,6 @@
 		WHERE  1=1
 		AND    ID = #{ value }
 	</select>
-	
-	<!-- 수정 -->
-	<update id="updateReview" parameterType="ReviewRequestDTO">
-		/* com.project.toy.board.mapper.ReviewMapper, 리뷰 게시글 수정 */
-		
-		UPDATE BOARD
-		SET    U_DATE = NOW()
-		     , TITLE = #{ title }
-		     , CONTENT = #{ content }
-		     , WRITER = #{ writer }
-		     , NOTICE_YN = #{ noticeYn }
-		WHERE  1=1
-		AND    id = #{ id }
-	</update>
 	
 	<!-- 삭제 -->
 	<delete id="deleteByReviewId" parameterType="long">
