@@ -28,4 +28,6 @@ public class BoardRequestDTO {
 	
 	@Schema(description = "공지글 여부")
 	private Boolean noticeYn;
+	
+	private String filter;
 }

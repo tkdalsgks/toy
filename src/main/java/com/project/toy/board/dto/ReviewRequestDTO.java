@@ -29,5 +29,5 @@ public class ReviewRequestDTO {
 	@Schema(description = "공지글 여부")
 	private Boolean noticeYn;
 	
-	private String filter;
+	private String filterId;
 }

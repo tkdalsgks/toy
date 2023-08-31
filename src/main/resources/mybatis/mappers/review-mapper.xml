@@ -11,6 +11,7 @@
 		, WRITER_NO
 		, WRITER_ID
 		, WRITER
+		, FILTER_ID
 		, FILTER
 		, VIEW_CNT
 		, COMMENT_CNT
@@ -57,7 +58,7 @@
 		/* com.project.toy.board.mapper.ReviewMapper, 리뷰 게시글 작성 */
 		
 		INSERT INTO BOARD ( <include refid="reviewColumns" /> )
-		VALUES ( #{ id }, 2, #{ title }, #{ content }, #{ writerNo }, #{ writerId }, #{ writer }, #{ filter }, 0, 0, 0, #{ noticeYn }, 0, NOW(), NULL ) 
+		VALUES ( #{ id }, 2, #{ title }, #{ content }, #{ writerNo }, #{ writerId }, #{ writer }, #{ filterId }, 0, 0, 0, #{ noticeYn }, 0, NOW(), NULL ) 
 	</insert>
 	
 	<!-- 상세보기 -->
@@ -98,12 +99,29 @@
 	<select id="findAll" parameterType="SearchDTO" resultType="ReviewResponseDTO">
 		/* com.project.toy.board.mapper.ReviewMapper, 리뷰 일반 게시글 조회 */
 		
-		SELECT <include refid="reviewColumns" />
-		FROM   BOARD
+		SELECT A.ID,
+		       A.BOARD_SEQ,
+		       A.TITLE,
+		       A.CONTENT,
+		       A.WRITER_NO,
+		       A.WRITER_ID,
+		       A.WRITER,
+		       A.FILTER AS FILTER_ID,
+		       B.COMM_D_NM AS FILTER,
+		       A.VIEW_CNT,
+		       A.COMMENT_CNT,
+		       A.LIKES_CNT,
+		       A.NOTICE_YN,
+		       A.DELETE_YN,
+		       A.I_DATE,
+		       A.U_DATE
+		FROM   BOARD A
+		LEFT OUTER JOIN COMM_D B ON A.FILTER = B.COMM_D_CD
 		WHERE  1=1
-		AND    BOARD_SEQ = 2
-		AND    NOTICE_YN = 0
-		AND    DELETE_YN = 0
+		AND    A.BOARD_SEQ = 2
+		AND    A.NOTICE_YN = 0
+		AND    A.DELETE_YN = 0
+		AND    B.COMM_H_CD = 'B01'
 		<include refid="search" />
 		ORDER BY ID DESC
 		LIMIT  #{ pagination.limitStart }, #{ recordSize }

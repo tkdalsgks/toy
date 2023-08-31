@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.project.toy.board.dto.BoardRequestDTO;
 import com.project.toy.board.dto.BoardResponseDTO;
+import com.project.toy.board.dto.ReviewFilterDTO;
 import com.project.toy.board.service.BoardService;
+import com.project.toy.board.service.ReviewService;
 import com.project.toy.comment.service.CommentService;
 import com.project.toy.common.dto.MessageDTO;
 import com.project.toy.common.dto.SearchDTO;
@@ -47,6 +49,8 @@ public class BoardController {
 	private final BoardService boardService;
 	private final CommentService commentService;
 	private final LikesService likesService;
+	private final ReviewService reviewService;
+	
 	private final HttpSession session;
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -206,7 +210,7 @@ public class BoardController {
 	 */
 	@Operation(summary = "수정 페이지 조회", description = "게시글 수정 페이지 조회")
 	@GetMapping("/{boardId}/modify")
-	public String change(@PathVariable(value = "boardId", required = false) Long id, Authentication auth, Model model) {
+	public String change(@PathVariable(value = "boardId", required = false) Long id, ReviewFilterDTO filterDTO, Authentication auth, Model model) {
 		log.info("##### Board Page Modify __ Call " + id + " #####");
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
@@ -222,8 +226,11 @@ public class BoardController {
 		if(id != null) {
 			board = boardService.findByBoardId(id);
 			model.addAttribute("board", board);
-			
 		}
+		
+		// 게시글 필터
+		List<ReviewFilterDTO> filter = reviewService.reviewFilter(filterDTO);
+		model.addAttribute("filter", filter);
 		
 		if("1".equals(board.getBoardSeq())) {
 			return "board/community/modify";

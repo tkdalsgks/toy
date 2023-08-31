@@ -26,6 +26,8 @@ public class BoardResponseDTO {
 	@Schema(description = "작성자")
 	private String writer;
 	
+	private String filterId;
+	
 	private String filter;
 	
 	@Schema(description = "조회 수")

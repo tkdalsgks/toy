@@ -34,6 +34,7 @@
 				<form id="saveForm" method="post" autocomplete="off">
 					<!-- 서버로 전달할 공지글 여부 -->
 					<input type="hidden" id="noticeYn" name="noticeYn" />
+					<input type="hidden" id="filterId" name="filterId" />
 					<input type="hidden" id="writer" name="writer" class="write-writer" maxlength="10" th:value="${user}" />
 					<input type="hidden" id="IDate" name="IDate" class="write-date" />
 					<div>

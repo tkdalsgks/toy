@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>OYEZ - 리뷰</title>
+<title>OYEZ, [[ ${review.title} ]]</title>
 
 <th:block layout:fragment="css">
 	<!-- POPUP -->
@@ -73,8 +73,8 @@
 						<div style="display: flex; justify-content: space-between; align-items: center;">
 							<a th:href="@{/member/detail?id=} + ${review.writerNo}"><span class="board-writer">[[ ${review.writer} ]]</span></a>
 							<span th:if="${userId == review.writerId}">
-								<a onclick="goChangePage();">수정</a>
-								<a onclick="deleteBoard();">삭제</a>
+								<a class="board-change_btn" style="cursor: pointer;" onclick="goChangePage();">수정</a>
+								<a class="board-delete_btn" style="cursor: pointer;" onclick="deleteBoard();">삭제</a>
 							<!-- <span th:if="${userId == review.writerId}" class="board-btn"> -->
 								<!-- <a class="btn btn-primary board-btn-a community-btn" onclick="goChangePage();">수정</a> -->
 								<!-- <button class="btn btn-danger board-btn-a community-btn" onclick="deleteBoard();">삭제</button> -->
