@@ -14,11 +14,12 @@
 	   			<!-- USER Content -->
 	   			<div>
 	   				<a class="popup-content__item" th:href="@{/rank}">&#x1F947 활동 순위</a>
+	   				<a class="popup-content__item" th:href="@{/points/bet}">&#x1F947 게임</a>
 	   			</div>
 	   			<div class="popup__line"></div>
 	   			
 	   			<div>
-					<a class="popup-content__item" th:href="@{/community}">&#x1F440 커뮤니티</a>
+					<a class="popup-content__item" th:href="@{/community}">&#x1F440 오늘 하루</a>
 					<a class="popup-content__item" th:href="@{/review}">&#x270D 리뷰</a>
 					<a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN')" class="popup-content__item" th:href="@{/chat/gpt}">&#x1F4BB CHAT GPT</a>
 					<a sec:authorize="isAuthenticated()" class="popup-content__item" th:onclick="goProfile([[ ${userId} ]]);">&#x1F510 마이페이지</a>

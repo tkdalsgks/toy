@@ -57,7 +57,7 @@
 		/* com.project.toy.board.mapper.BoardMapper, 커뮤니티 게시글 작성 */
 		
 		INSERT INTO BOARD ( <include refid="boardColumns" /> )
-		VALUES ( #{ id }, 1, #{ title }, #{ content }, #{ writerNo }, #{ writerId }, #{ writer }, 0, 0, 0, #{ noticeYn }, 0, NOW(), NULL ) 
+		VALUES ( #{ id }, 1, #{ title }, #{ content }, #{ writerNo }, #{ writerId }, #{ writer }, 0, 0, 0, 0, #{ noticeYn }, 0, NOW(), NULL ) 
 	</insert>
 	
 	<!-- 상세보기 -->
@@ -71,6 +71,7 @@
 		       A.WRITER_NO, 
 		       A.WRITER_ID, 
 		       A.WRITER, 
+		       B.COMM_D_CD AS FILTER_ID,
 		       B.COMM_D_NM AS FILTER, 
 		       A.VIEW_CNT, 
 		       A.COMMENT_CNT, 
@@ -96,6 +97,7 @@
 		     , CONTENT = #{ content }
 		     , WRITER = #{ writer }
 		     , NOTICE_YN = #{ noticeYn }
+		     , FILTER = #{ filterId }
 		WHERE  1=1
 		AND    id = #{ id }
 	</update>

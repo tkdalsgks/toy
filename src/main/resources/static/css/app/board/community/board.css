@@ -17,10 +17,12 @@ section { margin-top: 1.5rem; }
 .board-writer { font-weight: 500; }
 .board-view { font-weight: 400; }
 .board-view svg { width: 18px; height: 16px; margin-bottom: 2px; color: dimgray; }
-.board-contents { padding: 0.75rem 1.25rem 1.25rem 1.25rem; min-height: 200px; margin-bottom: 1.25rem; border-bottom: 1px solid #e5e7eb; }
+.board-contents { padding: 0.75rem 1.25rem 1.25rem 1.25rem; margin-bottom: 1.25rem; border-bottom: 1px solid #e5e7eb; }
 .board-contents img { max-width: 100%; }
 .board-content { width: 100%; min-height: 200px; color: #374151; background: white !important; border: none; }
 
+.board-change_btn:hover	{ background-color: #0B5ED7; color: white; border-radius: .25rem; padding: .1rem; }
+.board-delete_btn:hover { background-color: red; color: white; border-radius: .25rem; padding: .1rem; }
 .ck-editor p { margin-bottom: 0; }
 p { margin-bottom: 0; }
 
