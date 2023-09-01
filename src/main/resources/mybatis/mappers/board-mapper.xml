@@ -53,7 +53,7 @@
 	</sql>
 	
 	<!-- 작성 -->
-	<insert id="saveBoard" parameterType="BoardRequestDTO">
+	<insert id="saveBoard" useGeneratedKeys="true" keyProperty="boardId" keyColumn="id" parameterType="BoardRequestDTO">
 		/* com.project.toy.board.mapper.BoardMapper, 커뮤니티 게시글 작성 */
 		
 		INSERT INTO BOARD ( <include refid="boardColumns" /> )
@@ -91,15 +91,18 @@
 	<update id="updateBoard" parameterType="BoardRequestDTO">
 		/* com.project.toy.board.mapper.BoardMapper, 커뮤니티 게시글 수정 */
 		
-		UPDATE BOARD
-		SET    U_DATE = NOW()
-		     , TITLE = #{ title }
-		     , CONTENT = #{ content }
-		     , WRITER = #{ writer }
-		     , NOTICE_YN = #{ noticeYn }
-		     , FILTER = #{ filterId }
+		UPDATE BOARD A, 
+		       HASHTAG B
+		SET    A.U_DATE = NOW(), 
+		       A.TITLE = #{ title }, 
+		       A.CONTENT = #{ content }, 
+		       A.WRITER = #{ writer }, 
+		       A.NOTICE_YN = #{ noticeYn }, 
+		       A.FILTER = #{ filterId }, 
+		       B.HASHTAG = #{ hashtag }
 		WHERE  1=1
-		AND    id = #{ id }
+		AND    A.ID = #{ id }
+		AND    B.BOARD_ID = #{ id }
 	</update>
 	
 	<!-- 삭제 -->
@@ -116,12 +119,28 @@
 	<select id="findAll" parameterType="SearchDTO" resultType="BoardResponseDTO">
 		/* com.project.toy.board.mapper.BoardMapper, 커뮤니티 일반 게시글 리스트 조회 */
 		
-		SELECT <include refid="boardColumns" />
-		FROM   BOARD
+		SELECT A.ID, 
+		       A.BOARD_SEQ, 
+		       A.TITLE, 
+		       A.CONTENT, 
+		       A.WRITER_NO, 
+		       A.WRITER_ID, 
+		       A.WRITER, 
+		       A.FILTER,
+		       B.HASHTAG,  
+		       A.VIEW_CNT, 
+		       A.COMMENT_CNT, 
+		       A.LIKES_CNT, 
+		       A.NOTICE_YN, 
+		       A.DELETE_YN, 
+		       A.I_DATE, 
+		       A.U_DATE
+		FROM   BOARD A
+		LEFT OUTER JOIN HASHTAG B ON A.ID = B.BOARD_ID
 		WHERE  1=1
-		AND    BOARD_SEQ = 1
-		AND    NOTICE_YN = 0
-		AND    DELETE_YN = 0
+		AND    A.BOARD_SEQ = 1
+		AND    A.NOTICE_YN = 0
+		AND    A.DELETE_YN = 0
 		<include refid="search" />
 		ORDER BY ID DESC
 		LIMIT  #{ pagination.limitStart }, #{ recordSize }
@@ -201,5 +220,10 @@
 		SET    VIEW_CNT = VIEW_CNT + 1
 		WHERE  ID = #{ id }
 	</update>
+	
+	<insert id="saveHashtag" parameterType="BoardRequestDTO">
+		INSERT INTO HASHTAG ( ID, BOARD_ID, HASHTAG, USE_YN )
+		VALUES ( #{ id }, #{ boardId }, #{ hashtag }, 'Y' )
+	</insert>
 	
 </mapper>

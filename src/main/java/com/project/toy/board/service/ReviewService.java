@@ -67,4 +67,8 @@ public class ReviewService {
 	public List<ReviewFilterDTO> reviewFilter(ReviewFilterDTO filterDTO) {
 		return reviewMapper.reviewFilter(filterDTO);
 	}
+
+	public void saveHashtag(ReviewRequestDTO params) {
+		reviewMapper.saveHashtag(params);
+	}
 }

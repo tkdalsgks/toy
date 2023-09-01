@@ -30,6 +30,8 @@ public class ReviewResponseDTO {
 	
 	private String filter;
 	
+	private String hashtag;
+	
 	@Schema(description = "별점")
 	private int rating;
 	

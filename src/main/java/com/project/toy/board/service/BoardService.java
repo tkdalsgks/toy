@@ -62,4 +62,8 @@ public class BoardService {
 	public void countHits(Long id) {
 		boardMapper.countHits(id);
 	}
+
+	public void saveHashtag(BoardRequestDTO params) {
+		boardMapper.saveHashtag(params);
+	}
 }

@@ -129,6 +129,8 @@ public class ReviewController {
 		
 		//params.setContent(params.getContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
 		reviewService.saveReview(params);
+		reviewService.saveHashtag(params);
+		
 		MessageDTO message = new MessageDTO("게시글 생성이 완료되었습니다.", "/review", RequestMethod.POST, null);
 		
 		return showMessageAndRedirect(message, model);

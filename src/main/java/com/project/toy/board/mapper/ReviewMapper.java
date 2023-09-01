@@ -23,4 +23,5 @@ public interface ReviewMapper {
 	public int countReview(SearchDTO params);
 	public void countHits(Long id);
 	public List<ReviewFilterDTO> reviewFilter(ReviewFilterDTO filterDTO);
+	public void saveHashtag(ReviewRequestDTO params);
 }

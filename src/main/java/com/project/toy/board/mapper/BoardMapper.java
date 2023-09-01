@@ -21,4 +21,5 @@ public interface BoardMapper {
 	public void deleteByBoardId(Long id);
 	public int countBoard(SearchDTO params);
 	public void countHits(Long id);
+	public void saveHashtag(BoardRequestDTO params);
 }

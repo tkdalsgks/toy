@@ -261,6 +261,8 @@ public class BoardController {
 		
 		//params.setContent(params.getContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
 		boardService.saveBoard(params);
+		boardService.saveHashtag(params);
+		
 		MessageDTO message = new MessageDTO("게시글 생성이 완료되었습니다.", "/community", RequestMethod.POST, null);
 		
 		return showMessageAndRedirect(message, model);
