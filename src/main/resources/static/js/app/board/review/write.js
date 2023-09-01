@@ -147,3 +147,15 @@ function savePoints() {
 		}
 	});
 }
+
+$('#hashtag-input').on('keyup', function(e) {
+	if(e.keyCode === 13) {
+		hashtag();
+	}
+});
+
+function hashtag() {
+	var hashtag = document.getElementById('hashtag-input');
+	$("#hashtag-output").append(`<span id="hashtag" class="hashtag">` + "#" + hashtag.value + `</span>`);
+	hashtag.value = null;
+}

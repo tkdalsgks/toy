@@ -182,7 +182,7 @@ public class BoardController {
 	 */
 	@Operation(summary = "작성 페이지 조회", description = "게시글 작성 페이지 조회")
 	@GetMapping("/community/write")
-	public String write(@PathVariable(value = "boardId", required = false) Long id, Authentication auth, Model model) {
+	public String write(@PathVariable(value = "boardId", required = false) Long id, ReviewFilterDTO filterDTO, Authentication auth, Model model) {
 		log.info("##### Board Page Write __ Call #####");
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
@@ -197,6 +197,10 @@ public class BoardController {
 			BoardResponseDTO board = boardService.findByBoardId(id);
 			model.addAttribute("board", board);
 		}
+		
+		// 게시글 필터
+		List<ReviewFilterDTO> filter = reviewService.reviewFilter(filterDTO);
+		model.addAttribute("filter", filter);
 		
 		return "board/community/write";
 	}

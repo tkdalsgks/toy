@@ -64,12 +64,18 @@ p { margin-bottom: 0; }
 
 .write-contents { width: 95%; margin: 0 auto; }
 .write-notice { display: -webkit-box; display: -ms-flexbox; display: flex; margin-bottom: 10px;  }
-.write-notice span { font-size: 16px; font-weight: 300; color: #444444; margin-right: 10px; }
-.write-title { display: -webkit-box; display: -ms-flexbox; display: flex; margin-bottom: 10px; font-size: 16px; font-weight: 300; color: #444444; }
+.write-notice span { font-size: 16px; font-weight: 600; color: #444444; margin-right: 10px; }
+.write-filter { display: -webkit-box; display: -ms-flexbox; display: flex; margin-bottom: 10px; font-size: 16px; font-weight: 600; color: #444444; }
+.write-title { display: -webkit-box; display: -ms-flexbox; display: flex; margin-bottom: 5px; font-size: 16px; font-weight: 600; color: #444444; }
 .write-title-input { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; margin-bottom: 10px; }
 .write-title-input input { border: 1px solid #CCCED1; border-radius: 5px; padding: 0.5rem; }
-.write-content { display: -webkit-box; display: -ms-flexbox; display: flex; margin-bottom: 10px; font-size: 16px; font-weight: 300; color: #444444; }
+.write-content { display: -webkit-box; display: -ms-flexbox; display: flex; margin-bottom: 5px; font-size: 16px; font-weight: 600; color: #444444; }
+.write-hashtag { display: -webkit-box; display: -ms-flexbox; display: flex; margin-bottom: 5px; font-size: 16px; font-weight: 600; color: #444444; }
+.write-hashtag-input { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; }
+.write-hashtag-input input { border: 1px solid #CCCED1; border-radius: 5px; padding: 0.5rem; }
 .write-star { margin-top: 1rem; margin-bottom: 2rem; }
+
+.hashtag { background-color: #A99A99; color: white; border: none; border-radius: .15rem; margin-right: .3rem; padding: .1rem; }
 
 .ck-content { min-height: 380px !important; }
 
