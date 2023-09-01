@@ -28,7 +28,7 @@ p { margin-bottom: 0; }
 
 /* 테이블 스타일 ------------------------------- */
 .tb { width: 100%; border: none; }
-.tb th, .tb td { border-bottom: 1px solid hsla(220,9%,46%,.3); padding: 0.75rem 0.75rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
+.tb th, .tb td { border-bottom: 1px solid hsla(220,9%,46%,.3); padding: .5rem .75rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
 .tb_col td { background: white; }
 .bt_search { width: 100px; }
 
@@ -45,10 +45,10 @@ p { margin-bottom: 0; }
 .list-writer { font-size: .875rem; font-weight: 400; --tw-text-opacity: 1; color: rgb(55 65 81/var(--tw-text-opacity)) }
 .list-time { font-size: .875rem; font-weight: 400; --tw-text-opacity: 1; color: rgb(55 65 81/var(--tw-text-opacity)) }
 .list-udate { font-size: .875rem; font-weight: 400; color: #A0A0FF; }
-.list-title { display: -webkit-box; display: -ms-flexbox; display: flex; margin-top: 0.3rem; }
-.list-title span { font-size: 1rem; font-weight: 400; color: #111827; }
+.list-title { display: -webkit-box; display: -ms-flexbox; display: flex; margin-top: .15rem; }
+.list-title span { font-size: 1rem; font-weight: 500; color: #111827; }
 .list-title a:hover { color: #A0A0FF; }
-.list-info { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; margin-top: 0.3rem; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
+.list-info { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; margin-top: .15rem; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
 .list-notice { border-radius: 0.25rem; background: #E0F2F1; padding: 0.125rem 0.625rem 0.125rem 0.625rem; font-size: .75rem; font-weight: 600; color: #A0A0FF; }
 .list-view { font-size: .875rem; font-weight: 400; }
 .list-view-svg { width: 1.125rem; height: 1.125rem; }
@@ -57,6 +57,7 @@ p { margin-bottom: 0; }
 .list-likes { font-size: .875rem; font-weight: 400; }
 .list-likes-svg { margin-left: 0.15rem; }
 .list__rating-star { font-size: 1.05rem; color: #DABD18B2; }
+.list-hashtag { flex-grow: 1; color: #999999 !important; border: none; border-radius: .1rem; color: gray; font-size: .85rem; font-weight: 400; margin-left: .5rem; }
 
 /* 글 작성 */
 .write-name-a { font-size: 1.25rem; font-weight: 500; }
@@ -64,12 +65,18 @@ p { margin-bottom: 0; }
 
 .write-contents { width: 95%; margin: 0 auto; }
 .write-notice { display: -webkit-box; display: -ms-flexbox; display: flex; margin-bottom: 10px;  }
-.write-notice span { font-size: 16px; font-weight: 300; color: #444444; margin-right: 10px; }
-.write-title { display: -webkit-box; display: -ms-flexbox; display: flex; margin-bottom: 10px; font-size: 16px; font-weight: 300; color: #444444; }
+.write-notice span { font-size: 16px; font-weight: 600; color: #444444; margin-right: 10px; }
+.write-filter { display: -webkit-box; display: -ms-flexbox; display: flex; margin-bottom: 10px; font-size: 16px; font-weight: 600; color: #444444; }
+.write-title { display: -webkit-box; display: -ms-flexbox; display: flex; margin-bottom: 5px; font-size: 16px; font-weight: 600; color: #444444; }
 .write-title-input { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; margin-bottom: 10px; }
 .write-title-input input { border: 1px solid #CCCED1; border-radius: 5px; padding: 0.5rem; }
-.write-content { display: -webkit-box; display: -ms-flexbox; display: flex; margin-bottom: 10px; font-size: 16px; font-weight: 300; color: #444444; }
+.write-content { display: -webkit-box; display: -ms-flexbox; display: flex; margin-bottom: 5px; font-size: 16px; font-weight: 600; color: #444444; }
+.write-hashtag { display: -webkit-box; display: -ms-flexbox; display: flex; margin-bottom: 5px; font-size: 16px; font-weight: 600; color: #444444; }
+.write-hashtag-input { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; }
+.write-hashtag-input input { border: 1px solid #CCCED1; border-radius: 5px; padding: 0.5rem; }
 .write-star { margin-top: 1rem; margin-bottom: 2rem; }
+
+.hashtag { background-color: #999999; color: white; border: none; border-radius: .15rem; margin-right: .3rem; padding: .1rem; }
 
 .ck-content { min-height: 380px !important; }
 

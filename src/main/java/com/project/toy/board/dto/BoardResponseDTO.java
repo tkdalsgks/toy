@@ -30,6 +30,8 @@ public class BoardResponseDTO {
 	
 	private String filter;
 	
+	private String hashtag;
+	
 	@Schema(description = "조회 수")
 	private int viewCnt;
 	

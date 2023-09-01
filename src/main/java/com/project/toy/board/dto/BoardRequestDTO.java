@@ -32,4 +32,8 @@ public class BoardRequestDTO {
 	private String filter;
 	
 	private String filterId;
+	
+	private String boardId;
+	
+	private String hashtag;
 }

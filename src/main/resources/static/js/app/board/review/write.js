@@ -48,6 +48,7 @@ function saveBoard() {
 	
 	const form = document.getElementById('saveForm');
 	const filter = $("#filter option:selected").val();
+	const hashtag = document.getElementById('hashtag');
 	
 	const fields = [form.title, form.writer];
 	const fieldNames = ['제목', '이름'];
@@ -73,6 +74,13 @@ function saveBoard() {
 				confirmButtonColor: '#3085d6',
 				confirmButtonText: '확인'
 			});
+		} else if(hashtag == null) {
+			swal.fire({
+				title: '해시태그를 입력하세요.',
+				icon: 'warning',
+				confirmButtonColor: '#3085d6',
+				confirmButtonText: '확인'
+			});
 		} else {
 			if(board == null) {
 				savePoints();
@@ -80,6 +88,7 @@ function saveBoard() {
 			document.getElementById('saveBtn').disabled = true;
 			form.noticeYn.value = form.isNotice.checked;
 			form.filterId.value = filter;
+			form.hashtag.value = hashtag.innerHTML;
 			form.action = saveBoard_formAction;
 			form.submit();
 		}
@@ -146,4 +155,16 @@ function savePoints() {
 			return false;
 		}
 	});
+}
+
+$('#hashtag-input').on('keyup', function(e) {
+	if(e.keyCode === 13) {
+		hashtag();
+	}
+});
+
+function hashtag() {
+	var hashtag = document.getElementById('hashtag-input');
+	$("#hashtag-output").append(`<span id="hashtag" class="hashtag">` + "#" + hashtag.value + `</span>`);
+	hashtag.value = null;
 }

@@ -23,9 +23,9 @@
 	<!-- REVIEW_WRITE : CONTENT -->
 	<main layout:fragment="content" class="container">
 		<div class="page_tits">
-			<span class="write-name-a">함께 할 때 더 즐거운 순간</span><br>
+			<span class="write-name-a">함께 할 때 더 즐거운 순간,</span><br>
 			<span class="write-name-b">
-				<b>[[ ${user} ]]</b><span class="write-name-c">님 지식공유 플랫폼 OYEZ에서 다양한 사람을 만나고 생각의 폭을 넓혀보세요.</span>
+				<b>[[ ${user} ]]</b><span class="write-name-c">님 다양한 사람과 의견을 공유하고 생각의 폭을 넓혀보세요.</span>
 			</span>
 		</div>
 		
@@ -50,22 +50,31 @@
 							</div>
 						</div>
 						<div style="display: flex;">
-							<span>필터</span>
-							<select style="width: 100px; height: 22px; margin-left: .85rem;" id="filter">
+							<span class="write-filter">필터</span>
+							<select style="width: 100px; height: 22px; margin-left: .85rem; padding-left: 0; border: none;" id="filter">
 								<option th:text="${board.filter}" th:value="${board.filterId}"></option>
-								<option th:if="${board.filterId != filter.commDCd}" th:each="filter : ${filter}" th:text="${filter.commDNm}" th:value="${filter.commDCd}"></option>
+								<option th:if="${board.filterId != filter.commDCd && board.filterId != 0}" th:each="filter : ${filter}" th:text="${filter.commDNm}" th:value="${filter.commDCd}"></option>
 							</select>
 						</div>
 						<div>
 							<span class="write-title">제목</span>
 							<div class="write-title-input">
-								<input id="title" name="title" class="write-title" maxlength="22" placeholder="제목을 입력해 주세요." />
+								<input id="title" name="title" maxlength="20" />
 							</div>
 						</div>
 						<div>
 							<span class="write-content">내용</span>
-							<div class="wirte-title-input" style="display: flex; flex-direction: column;">
+							<div class="wirte-title-input" style="display: flex; flex-direction: column; margin-bottom: 10px;">
 								<textarea id="content" name="content" th:utext="${board.content}"></textarea>
+							</div>
+						</div>
+						<div>
+							<span class="write-hashtag">해시태그</span>
+							<div class="write-hashtag-input">
+								<input id="hashtag-input" name="hashtag" maxlength="6" placeholder="작성 후 엔터를 눌러주세요." />
+							</div>
+							<div>
+								<span id="hashtag-output"></span>
 							</div>
 						</div>
 						<!-- 
