@@ -49,9 +49,9 @@
 						</div>
 						<div style="display: flex;">
 							<span class="write-filter">필터</span>
-							<select style="width: 100px; height: 22px; margin-left: .85rem; padding-left: 0; border: none;" id="filter">
+							<select style="width: 100px; height: 22px; margin-left: .85rem; margin-bottom: 0; padding-left: 0; border: none;" id="filter">
 								<option value="NONE">선택</option>
-								<option th:each="filter : ${filter}" th:text="${filter.commDNm}" th:value="${filter.commDCd}" ></option>
+								<option th:if="${filter.commDCd != '0'}" th:each="filter : ${filter}" th:text="${filter.commDNm}" th:value="${filter.commDCd}" ></option>
 							</select>
 						</div>
 						<div>
