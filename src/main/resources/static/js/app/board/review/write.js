@@ -88,7 +88,7 @@ function saveBoard() {
 			document.getElementById('saveBtn').disabled = true;
 			form.noticeYn.value = form.isNotice.checked;
 			form.filterId.value = filter;
-			form.hashtag.value = hashtag.innerHTML;
+			form.hashtag.value = hashtag.value;
 			form.action = saveBoard_formAction;
 			form.submit();
 		}
@@ -157,14 +157,58 @@ function savePoints() {
 	});
 }
 
-$('#hashtag-input').on('keyup', function(e) {
-	if(e.keyCode === 13) {
-		hashtag();
+// 해시태그
+const hashtagInput = document.getElementById('hashtags');
+const hashtagOutput = document.getElementById('hashtag-output');
+const hiddenHashtagInput = document.getElementById('hashtag');
+var cnt = 0;
+
+let hashtags = [];
+
+function addHashtag(tag) {
+	tag = "#" + hashtagInput.value;
+	const span = document.createElement("span");
+	span.innerText = tag + " ";
+	span.classList.add("hashtag");
+	span.classList.add("tagify__tag");
+	
+	const removeButton = document.createElement("button");
+	removeButton.classList.add("tagify__tag__removeBtn");
+	removeButton.classList.add("remove-button");
+	removeButton.addEventListener("click", () => {
+		hashtagOutput.removeChild(span);
+		hashtags = hashtags.filter((hashtag) => hashtag !== tag);
+		hiddenHashtagInput.value = hashtags.join(" ");
+		cnt--;
+	});
+	
+	span.appendChild(removeButton);
+	hashtagOutput.appendChild(span);
+	hashtags.push("#" + hashtagInput.value);
+	hiddenHashtagInput.value = hashtags.join(" ");
+	cnt++;
+}
+
+hashtagInput.addEventListener("keydown", (event) => {
+	if(event.keyCode === 13) {
+		event.preventDefault();
+		const tag = hashtagInput.value.trim();
+		if(cnt >= 3) {
+			swal.fire({
+				title: '갯수를 초과하였습니다.',
+				icon: 'warning',
+				confirmButtonColor: '#3085d6',
+				confirmButtonText: '확인'
+			}).then((result) => {
+				if(result.isConfirmed) {
+					hashtagInput.value = null;
+				}
+			});
+		} else {
+			if(tag) {
+				addHashtag();
+				hashtagInput.value = null;
+			}
+		}
 	}
 });
-
-function hashtag() {
-	var hashtag = document.getElementById('hashtag-input');
-	$("#hashtag-output").append(`<span id="hashtag" class="hashtag">` + "#" + hashtag.value + `</span>`);
-	hashtag.value = null;
-}

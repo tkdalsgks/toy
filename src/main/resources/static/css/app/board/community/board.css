@@ -73,12 +73,21 @@ p { margin-bottom: 0; }
 .write-content { display: -webkit-box; display: -ms-flexbox; display: flex; margin-bottom: 5px; font-size: 16px; font-weight: 600; color: #444444; }
 .write-hashtag { display: -webkit-box; display: -ms-flexbox; display: flex; margin-bottom: 5px; font-size: 16px; font-weight: 600; color: #444444; }
 .write-hashtag-input { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; margin-bottom: .15rem; }
-.write-hashtag-input input { border: 1px solid #CCCED1; border-radius: 5px; padding: 0.5rem; }
+.write-hashtag-input input { border: 1px solid #CCCED1; border-radius: 5px; padding: 0.5rem; margin-bottom: .15rem; }
+.remove-button { background: none; border: none; border-radius: 10rem; margin-left: .1rem; margin-right: .15rem; }
+.remove-button:focus { border: none; outline: none; }
+/* .remove-button:active { opacity: 0; transform: translateX(-6px) scale(0.5); transition: 0.12s; } */
 .write-star { margin-top: 1rem; margin-bottom: 2rem; }
 
-.hashtag { background-color: #999999; color: white; border: none; border-radius: .15rem; margin-right: .3rem; padding: .1rem; }
+.hashtag { /* background-color: #999999; */ color: #444444; font-weight: 500; border: none; border-radius: .15rem; margin-right: .3rem; padding: .35rem; }
+/* .hashtag:hover { color: white !important; } */
 
 .ck-content { min-height: 380px !important; }
+
+/* 해시태그 */
+.tagify__tag { background-color: #B9B9B9; border: none; border-radius: .75rem; }
+.tagify__tag-text { color: #444444; font-weight: 600; }
+.tagify__tag__removeBtn { font-weight: 600; }
 
 
 /* 필수입력표시 */
