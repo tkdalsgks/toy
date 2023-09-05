@@ -73,6 +73,7 @@
 		       A.WRITER, 
 		       B.COMM_D_CD AS FILTER_ID,
 		       B.COMM_D_NM AS FILTER, 
+		       C.HASHTAG, 
 		       A.VIEW_CNT, 
 		       A.COMMENT_CNT, 
 		       A.LIKES_CNT, 
@@ -82,9 +83,10 @@
 		       A.U_DATE
 		FROM   BOARD A
 		LEFT OUTER JOIN COMM_D B ON A.FILTER = B.COMM_D_CD
+		LEFT OUTER JOIN HASHTAG C ON A.ID = C.BOARD_ID
 		WHERE  1=1
 		AND    B.COMM_H_CD = 'B01'
-		AND    ID = #{ value }
+		AND    A.ID = #{ value }
 	</select>
 	
 	<!-- 수정 -->

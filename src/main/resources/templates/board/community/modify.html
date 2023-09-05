@@ -12,6 +12,7 @@
 	<!-- POPUP -->
 	<link rel="stylesheet" th:href="@{/css/app/popup.css}" />
 	<!-- BOARD -->
+	<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" th:href="@{/css/app/board/community/board.css}" />
 	<link rel="stylesheet" th:href="@{/css/app/button.css}" />
 </th:block>
@@ -24,7 +25,9 @@
 	<main layout:fragment="content" class="container">
 		<div class="page_tits">
 			<span class="write-name-a">함께 할 때 더 즐거운 순간,</span><br>
-			<span class="write-name-b">[[ ${user} ]]<span class="write-name-c">님 다양한 사람을 만나고 생각의 폭을 넓혀보세요.</span></span>
+			<span class="write-name-b">
+				<b>[[ ${user} ]]</b><span class="write-name-c">님 다양한 사람을 만나고 생각의 폭을 넓혀보세요.</span>
+			</span>
 		</div>
 		
 		<div class="content write-contents">
@@ -68,10 +71,13 @@
 						<div>
 							<span class="write-hashtag">해시태그</span>
 							<div class="write-hashtag-input">
-								<input id="hashtag-input" name="hashtag" maxlength="6" placeholder="작성 후 엔터를 눌러주세요." />
-							</div>
-							<div>
-								<span id="hashtag-output"></span>
+								<!-- <input id="hashtags" maxlength="7" placeholder="해시태그는 수정이 불가합니다." disabled /> -->
+								<div id="hashtag-output">
+									<span id="hashtag-change" class="hashtag tagify__tag" th:text="${board.hashtag}">
+										<button class="tagify__tag__removeBtn remove-button"></button>
+									</span>
+								</div>
+								<input type="hidden" id="hashtag" name="hashtag" th:value="${board.hashtag}" />
 							</div>
 						</div>
 					</div>
