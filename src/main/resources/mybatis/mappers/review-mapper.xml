@@ -127,6 +127,7 @@
 		       A.COMMENT_CNT,
 		       A.LIKES_CNT,
 		       A.NOTICE_YN,
+		       A.PRIVATE_YN, 
 		       A.DELETE_YN,
 		       A.I_DATE,
 		       A.U_DATE
@@ -159,6 +160,7 @@
 		       A.COMMENT_CNT, 
 		       A.LIKES_CNT, 
 		       A.NOTICE_YN, 
+		       A.PRIVATE_YN, 
 		       A.DELETE_YN, 
 		       A.I_DATE, 
 		       A.U_DATE
@@ -185,6 +187,7 @@
 		       C.USER_NO AS WRITER_NO, 
 		       B.WRITER, 
 		       NVL(D.HASHTAG, '') AS HASHTAG, 
+		       B.PRIVATE_YN, 
 		       B.I_DATE, 
 		       A.I_DATE
 		FROM   BOARD_LIKES A

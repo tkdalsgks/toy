@@ -66,4 +66,12 @@ public class BoardService {
 	public void saveHashtag(BoardRequestDTO params) {
 		boardMapper.saveHashtag(params);
 	}
+
+	public void publicBoard(Long id) {
+		boardMapper.publicBoard(id);
+	}
+
+	public void privateBoard(Long id) {
+		boardMapper.privateBoard(id);
+	}
 }

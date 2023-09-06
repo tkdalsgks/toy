@@ -303,6 +303,31 @@ public class BoardController {
 	}
 	
 	/**
+	 * 게시글 공개/비공개
+	 * @param id
+	 * @param queryParams
+	 * @param model
+	 * @return
+	 */
+	@Operation(summary = "게시글 공개/비공개 전환", description = "게시글 공개/비공개 전환 메서드")
+	@PostMapping("/{boardId}/private")
+	public String publicOrPrivate(@PathVariable(value = "boardId", required = false) Long id, final SearchDTO queryParams, Model model) {
+		log.info("##### Board Page Public OR Private __ API " + id + " #####");
+		BoardResponseDTO params = boardService.findByBoardId(id);
+		String privateYn = params.getPrivateYn();
+		
+		if("Y".equals(privateYn)) {
+			boardService.publicBoard(id);
+		} else if("N".equals(privateYn)) {
+			boardService.privateBoard(id);
+		}	
+		
+		MessageDTO message = new MessageDTO("게시글 전환이 완료되었습니다.", "/community", RequestMethod.POST, queryParamsToMap(queryParams));
+		
+		return showMessageAndRedirect(message, model);
+	}
+	
+	/**
 	 * 성공/실패 메세지를 띄우고 해당 주소 리다이렉트
 	 * @param message
 	 * @param model

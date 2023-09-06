@@ -97,6 +97,8 @@
 						<div style="display: flex; justify-content: space-between; align-items: center;">
 							<a th:href="@{/} + ${board.writerId} + @{/activity}"><span class="board-writer">[[ ${board.writer} ]]</span></a>
 							<span th:if="${userId == board.writerId}">
+								<a th:if="${board.privateYn == 'N'}" class="board-private_btn" style="cursor: pointer;" onclick="publicOrPrivate();">공개</a>
+								<a th:unless="${board.privateYn == 'N'}" class="board-private_btn" style="cursor: pointer;" onclick="publicOrPrivate();">비공개</a>
 								<a class="board-change_btn" style="cursor: pointer;" onclick="goChangePage();">수정</a>
 								<a class="board-delete_btn" style="cursor: pointer;" onclick="deleteBoard();">삭제</a>
 							<!-- <span th:if="${userId == review.writerId}" class="board-btn"> -->
@@ -112,7 +114,7 @@
 								</span>
 								[[ ${board.viewCnt} ]]
 							</span>
-							<span th:text="${#temporals.format( board.IDate, 'YYYY/MM/dd HH:mm' )}"></span>
+							<span style="letter-spacing: -1px;" th:text="${#temporals.format( board.IDate, 'YYYY/MM/dd HH:mm' )}"></span>
 							<button id="board-likes" class="btns btn_mid board-likes">
 				            	<img th:src="${likes != 0 ? '/img/app/board/likes.png' : '/img/app/board/unlikes.png'}" th:onclick="insertLikes([[ ${board.id} ]]);" class="board-likes">
 				            	<span>[[ ${likesAll} ]]</span>
@@ -139,7 +141,7 @@
 						<div class="comment-input-group">
 							<textarea sec:authorize="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_USER')" id="content" class="form-control comment-input" placeholder="댓글은 누구나 편안하게 남겨주세요."></textarea><br>
 							<textarea sec:authorize="hasRole('ROLE_GUEST')" id="content" class="form-control comment-input" disabled="disabled"></textarea><br>
-							<div th:if="${board.boardSeq == '2'}" class="write-star">
+							<div th:if="${board.boardSeq == '2'}">
 								<span class="star-name">별점</span>
 								<span id="star" class="star">
 									★★★★★
@@ -148,7 +150,7 @@
 								</span>
 								<button sec:authorize="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_USER')" class="btn btn-primary community-btn" th:onclick="insertComment([[ ${board.id} ]]);">댓글작성</button>
 							</div>
-							<div th:unless="${board.boardSeq == '2'}" class="write-star">
+							<div th:unless="${board.boardSeq == '2'}">
 								<button sec:authorize="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_USER')" class="btn btn-primary community-btn" th:onclick="insertComment([[ ${board.id} ]]);">댓글작성</button>
 							</div>
 							<span sec:authorize="hasRole('ROLE_GUEST')" style="display: inline-flex; align-items: center; transform: translate(10%, -310%);">
@@ -178,6 +180,7 @@
 			var printCommentList_uri = [[ @{/comments/} ]] + [[ ${board.id} ]];
 			var insertLikes_uri = [[ @{/community/likes} ]];
 			var boardSeq = [[ ${board.boardSeq} ]];
+			var privateYn = [[ ${board.privateYn} ]];
 		</script>
 		<!-- BOARD -->
 		<script type="text/javascript" src="/js/lib/ckeditor.js"></script>
