@@ -48,16 +48,16 @@ function drawList(notice, list, likes, num) {
         	<tr>
                 <td class="list-important">
 	                	<div>
-	                		<a href="/${row.writerId}/activity">
-		                		<div class="list-img">
+	                		<div class="list-img">
+		                		<a href="/${row.writerId}/activity">
 		                			<img src="/img/app/chat/chat.png">
 			                		<span class="list-writer">${row.writer}</span>
-			                		<span>&nbsp;·&nbsp;</span>
-				                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
-				                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
-				                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
-			                	</div>
-			                </a>
+				                </a>
+		                		<span>&nbsp;·&nbsp;</span>
+			                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
+			                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
+			                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
+		                	</div>
 		        			<a href="javascript:void(0);" onclick="goViewPage(${row.id});">
 			                	<div class="list-title">
 			                		<span>${row.title}</span>
@@ -86,16 +86,16 @@ function drawList(notice, list, likes, num) {
         	<tr>
                 <td class="list-important">
 	                	<div>
-	                		<a href="/${row.writerId}/activity">
-		                		<div class="list-img">
+	                		<div class="list-img">
+		                		<a href="/${row.writerId}/activity">
 		                			<img src="/img/app/chat/chat.png">
 			                		<span class="list-writer">${row.writer}</span>
-			                		<span>&nbsp;·&nbsp;</span>
-				                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
-				                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
-				                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
-			                	</div>
-			                </a>
+				                </a>
+		                		<span>&nbsp;·&nbsp;</span>
+			                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
+			                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
+			                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
+		                	</div>
 		                	<a href="javascript:void(0);" onclick="goViewPage(${row.id});">
 			                	<div class="list-title">
 			                		<span>${row.title}</span>
@@ -124,16 +124,16 @@ function drawList(notice, list, likes, num) {
             <tr>
                 <td class="list-general">
 	                	<div>
-	                		<a href="/${row.writerId}/activity">
-		                		<div class="list-img">
+	                		<div class="list-img">
+		                		<a href="/${row.writerId}/activity">
 		                			<img src="/img/app/chat/chat.png">
 			                		<span class="list-writer">${row.writer}</span>
-			                		<span>&nbsp;·&nbsp;</span>
-				                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
-				                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
-				                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
-			                	</div>
-			                </a>
+				                </a>
+		                		<span>&nbsp;·&nbsp;</span>
+			                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
+			                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
+			                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
+		                	</div>
 		                	<a href="javascript:void(0);" onclick="goViewPage(${row.id});">
 			                	<div class="list-title">
 			                		<span>${row.title}</span>
