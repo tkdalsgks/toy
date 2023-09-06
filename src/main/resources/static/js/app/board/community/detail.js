@@ -1,3 +1,9 @@
+$(document).ready(function(){
+	if(referer == null) {
+		location.href = "/";
+	}
+});
+
 ClassicEditor
     .create( document.querySelector( '#content' ), {
         extraPlugins: [uploadAdapterPlugin],
