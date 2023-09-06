@@ -511,6 +511,48 @@ function savePoints() {
 	});
 }
 
+// 게시글 공개/비공개 전환
+function publicOrPrivate() {
+	var uri = "/" + id + "/private";
+	
+	if(privateYn == 'Y') {
+		privateYn = '공개';
+	} else if(privateYn = 'N') {
+		privateYn = '비공개';
+	}
+	
+	swal.fire({
+		text: privateYn + ' 게시글로 전환할까요?',
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		confirmButtonText: '확인',
+		cancelButtonColor: '#d33',
+		cancelButtonText: '취소'
+	}).then((result) => {
+		if(result.isConfirmed) {
+			$.ajax({
+				url: uri,
+				type: "POST",
+				dataType: "TEXT",
+				success: function(response) {
+					history.go(-1);
+				},
+				error: function(xhr, status, error) {
+					swal.fire({
+						text: '잠시 후 재시도 바랍니다.',
+						footer: '서버와의 통신 에러입니다.',
+						icon: 'error',
+						confirmButtonColor: '#3085d6',
+						confirmButtonText: '확인'
+					});
+					return false;
+				}
+			});
+		}
+	});
+}
+
 function goSettings(userId) {
     location.href = '/' + `${userId}` + '/account';
 }

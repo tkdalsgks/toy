@@ -21,8 +21,12 @@ section { margin-top: 1.5rem; }
 .board-contents img { max-width: 100%; }
 .board-content { width: 100%; min-height: 200px; color: #374151; background: white !important; border: none; }
 
-.board-change_btn:hover	{ background-color: #0B5ED7; color: white; border-radius: .25rem; padding: .1rem; }
-.board-delete_btn:hover { background-color: red; color: white; border-radius: .25rem; padding: .1rem; }
+.board-private_btn,
+.board-change_btn,
+.board-delete_btn { background-color: #E5E5E5; color: #111827; border-radius: .15rem; font-size: .85rem; font-weight: 500; margin-left: 2px; padding: .2rem; }
+.board-private_btn:hover { color: #111827; border-radius: .25rem; padding: .2rem; }
+.board-change_btn:hover	{ background-color: #0B5ED7; color: white; border-radius: .25rem; padding: .2rem; }
+.board-delete_btn:hover { background-color: red; color: white; border-radius: .25rem; padding: .2rem; }
 .ck-editor p { margin-bottom: 0; }
 p { margin-bottom: 0; }
 
@@ -47,6 +51,7 @@ p { margin-bottom: 0; }
 .list-udate { font-size: .875rem; font-weight: 400; color: #A0A0FF; letter-spacing: -1.5px; }
 .list-title { display: -webkit-box; display: -ms-flexbox; display: flex; margin-top: .3rem; margin-bottom: .3rem; letter-spacing: -1.5px; }
 .list-title span { font-size: 1rem; font-weight: 500; color: #111827; }
+.list-title img { vertical-align: text-top; }
 .list-title a:hover { color: #A0A0FF; }
 .list-info { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
 .list-notice { border-radius: 0.25rem; background: #E0F2F1; padding: 0.125rem 0.625rem 0.125rem 0.625rem; font-size: .75rem; font-weight: 600; color: #A0A0FF; letter-spacing: -1.5px; }
@@ -58,6 +63,9 @@ p { margin-bottom: 0; }
 .list-likes-svg { margin-left: 0.15rem; }
 .list__rating-star { font-size: 1.05rem; color: #DABD18B2; }
 .list-hashtag { display: -webkit-box; display: -ms-flexbox; flex-grow: 1; color: #787878; border: none; border-radius: .1rem; font-size: .85rem; font-weight: 400; margin-left: .3rem; letter-spacing: -1.5px; }
+
+.swal2-title { margin-bottom: 1rem !important; }
+.swal2-input { width: 70% !important; margin: 0 auto !important; }
 
 /* 글 작성 */
 .write-name-a { font-size: 1.25rem; font-weight: 500; }
@@ -85,7 +93,8 @@ p { margin-bottom: 0; }
 .ck-content { min-height: 380px !important; }
 
 /* 해시태그 */
-.tagify__tag { background-color: #B9B9B9; border: none; border-radius: .75rem; }
+.tagify__tag { background-color: #E5E5E5; border: none; border-radius: .35rem; }
+.tagify__tag:hover { background-color: #D3E2E2; transform: scale(1.1); -webkit-transform: scale(1.1); }
 .tagify__tag-text { color: #444444; font-weight: 600; }
 .tagify__tag__removeBtn { font-weight: 600; }
 

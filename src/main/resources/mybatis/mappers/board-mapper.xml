@@ -78,6 +78,7 @@
 		       A.COMMENT_CNT, 
 		       A.LIKES_CNT, 
 		       A.NOTICE_YN, 
+		       A.PRIVATE_YN, 
 		       A.DELETE_YN, 
 		       A.I_DATE, 
 		       A.U_DATE
@@ -134,6 +135,7 @@
 		       A.COMMENT_CNT, 
 		       A.LIKES_CNT, 
 		       A.NOTICE_YN, 
+		       A.PRIVATE_YN, 
 		       A.DELETE_YN, 
 		       A.I_DATE, 
 		       A.U_DATE
@@ -165,6 +167,7 @@
 		       A.COMMENT_CNT, 
 		       A.LIKES_CNT, 
 		       A.NOTICE_YN, 
+		       A.PRIVATE_YN, 
 		       A.DELETE_YN, 
 		       A.I_DATE, 
 		       A.U_DATE
@@ -191,6 +194,7 @@
 		       C.USER_NO AS WRITER_NO, 
 		       B.WRITER, 
 		       NVL(D.HASHTAG, '') AS HASHTAG, 
+		       B.PRIVATE_YN, 
 		       B.I_DATE, 
 		       A.I_DATE
 		FROM   BOARD_LIKES A
@@ -228,8 +232,30 @@
 	</update>
 	
 	<insert id="saveHashtag" parameterType="BoardRequestDTO">
+		/* com.project.toy.board.mapper.BoardMapper, 게시글 해시태그 저장 */
+		
 		INSERT INTO HASHTAG ( ID, BOARD_ID, HASHTAG, USE_YN )
 		VALUES ( #{ id }, #{ boardId }, #{ hashtag }, 'Y' )
 	</insert>
+	
+	<update id="publicBoard" parameterType="BoardRequestDTO">
+		/* com.project.toy.board.mapper.BoardMapper, 게시글 공개 전환 */
+		
+		UPDATE BOARD
+		SET    U_DATE = NOW(), 
+		       PRIVATE_YN = 'N'
+		WHERE  1=1
+		AND    ID = #{ id }
+	</update>
+	
+	<update id="privateBoard" parameterType="BoardRequestDTO">
+		/* com.project.toy.board.mapper.BoardMapper, 게시글 비공개 전환 */
+		
+		UPDATE BOARD
+		SET    U_DATE = NOW(), 
+		       PRIVATE_YN = 'Y'
+		WHERE  1=1
+		AND    ID = #{ id }
+	</update>
 	
 </mapper>

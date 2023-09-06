@@ -58,11 +58,9 @@ function drawList(notice, list, likes, num) {
 			                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
 			                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
 		                	</div>
-		        			<a href="javascript:void(0);" onclick="goViewPage(${row.id});">
-			                	<div class="list-title">
-			                		<span>${row.title}</span>
-			                	</div>
-			                </a>
+		        			${row.privateYn == 'N' ? 
+		                		`<a href="javascript:void(0);" onclick="goViewPage(` + row.id + `);"><div class="list-title"><span>` + row.title + `</span></div></a>` : 
+		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage()"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
 		                	<div class="list-info">
 			                	<span class="list-notice">${row.noticeYn === false ? '리뷰' : '공지사항'}</span>
 			                	<span class="list-hashtag">${row.hashtag}</span>
@@ -96,11 +94,9 @@ function drawList(notice, list, likes, num) {
 			                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
 			                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
 		                	</div>
-		                	<a href="javascript:void(0);" onclick="goViewPage(${row.id});">
-			                	<div class="list-title">
-			                		<span>${row.title}</span>
-			                	</div>
-			                </a>
+		                	${row.privateYn == 'N' ? 
+		                		`<a href="javascript:void(0);" onclick="goViewPage(` + row.id + `);"><div class="list-title"><span>` + row.title + `</span></div></a>` : 
+		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage()"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
 		                	<div class="list-info">
 			                	<span class="list-notice">${row.likesCnt >= 1 ? '좋아요' : row.id}</span>
 			                	<span class="list-hashtag">${row.hashtag}</span>
@@ -134,11 +130,9 @@ function drawList(notice, list, likes, num) {
 			                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
 			                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
 		                	</div>
-		                	<a href="javascript:void(0);" onclick="goViewPage(${row.id});">
-			                	<div class="list-title">
-			                		<span>${row.title}</span>
-			                	</div>
-			                </a>
+		                	${row.privateYn == 'N' ? 
+		                		`<a href="javascript:void(0);" onclick="goViewPage(` + row.id + `);"><div class="list-title"><span>` + row.title + `</span></div></a>` : 
+		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage()"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
 		                	<div class="list-info">
 			                	<span class="list-notice">${row.noticeYn === false ? row.filter : '공지'}</span>
 			                	<span class="list-hashtag">${row.hashtag}</span>
@@ -220,6 +214,35 @@ function goViewPage(id) {
 function goUserPage(id) {
     const queryString = (location.search) ? location.search + `&id=${id}` : `?id=${id}`;
     location.href = '/member/detail' + queryString;
+}
+
+// 비공개 게시글 접근
+function privatePage() {
+	swal.fire({
+		title: '비공개 게시글입니다.',
+		icon: 'error',
+		confirmButtonColor: '#3085d6',
+		confirmButtonText: '확인',
+	});
+	/*
+	(async () => {
+	    const { value: getName } = await Swal.fire({
+	        title: '비공개 게시글입니다.',
+	        input: 'password',
+	        inputPlaceholder: '계정 암호를 입력하세요.',
+	        showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			confirmButtonText: '확인',
+			cancelButtonColor: '#d33',
+			cancelButtonText: '취소'
+	    });
+	    
+	    
+	    //if (getName) {
+	    //    Swal.fire(`: ${getName}`)
+	    //}
+	})()
+	*/
 }
 
 // 게시글 리프레쉬

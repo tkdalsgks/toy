@@ -22,4 +22,6 @@ public interface BoardMapper {
 	public int countBoard(SearchDTO params);
 	public void countHits(Long id);
 	public void saveHashtag(BoardRequestDTO params);
+	public void publicBoard(Long id);
+	public void privateBoard(Long id);
 }

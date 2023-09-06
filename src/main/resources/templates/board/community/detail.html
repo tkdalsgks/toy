@@ -97,6 +97,8 @@
 						<div style="display: flex; justify-content: space-between; align-items: center;">
 							<a th:href="@{/} + ${board.writerId} + @{/activity}"><span class="board-writer">[[ ${board.writer} ]]</span></a>
 							<span th:if="${userId == board.writerId}">
+								<a th:if="${board.privateYn == 'N'}" class="board-private_btn" style="cursor: pointer;" onclick="publicOrPrivate();">공개</a>
+								<a th:unless="${board.privateYn == 'N'}" class="board-private_btn" style="cursor: pointer;" onclick="publicOrPrivate();">비공개</a>
 								<a class="board-change_btn" style="cursor: pointer;" onclick="goChangePage();">수정</a>
 								<a class="board-delete_btn" style="cursor: pointer;" onclick="deleteBoard();">삭제</a>
 							<!-- <span th:if="${userId == review.writerId}" class="board-btn"> -->
@@ -178,6 +180,7 @@
 			var printCommentList_uri = [[ @{/comments/} ]] + [[ ${board.id} ]];
 			var insertLikes_uri = [[ @{/community/likes} ]];
 			var boardSeq = [[ ${board.boardSeq} ]];
+			var privateYn = [[ ${board.privateYn} ]];
 		</script>
 		<!-- BOARD -->
 		<script type="text/javascript" src="/js/lib/ckeditor.js"></script>
