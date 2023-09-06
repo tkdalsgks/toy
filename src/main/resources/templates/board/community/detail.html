@@ -171,6 +171,7 @@
 	<th:block layout:fragment="script">
 		<!-- SETTINGS -->
 		<script th:inline="javascript">
+			var referer = [[ ${referer} ]];
 			var role = [[ ${role} ]];
 			var id = [[ ${board.id} ]];
 			var userId = [[ ${userId} ]];

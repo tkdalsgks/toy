@@ -101,6 +101,9 @@ public class BoardController {
 			HttpServletRequest request, HttpServletResponse response, Authentication auth, Model model) {
 		log.info("##### Board Page Detail __ Call " + id + " #####");
 		
+		String referer = request.getHeader("referer");
+		model.addAttribute("referer", referer);
+		
 		Cookie oldCookie = null;
 		Cookie[] cookies = request.getCookies();
 		if(cookies != null) {
