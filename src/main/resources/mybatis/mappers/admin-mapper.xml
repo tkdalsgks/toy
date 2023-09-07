@@ -80,12 +80,14 @@
 		     , A.BOARD_SEQ
 		     , A.TITLE
 		     , A.DELETE_YN
+		     , A.PRIVATE_YN
 		     , A.I_DATE
 		FROM   BOARD A
 		LEFT OUTER JOIN T_PERSON B ON A.WRITER_ID = B.USER_ID
 		WHERE  1=1
 		AND    A.BOARD_SEQ = '1'
 		AND    A.DELETE_YN = '0'
+		AND    A.PRIVATE_YN = 'N'
 		AND    B.USER_ID = #{ userId }
 		ORDER BY A.ID DESC
 	</select>
@@ -98,6 +100,7 @@
 		     , A.BOARD_SEQ
 		     , A.TITLE
 		     , A.DELETE_YN
+		     , A.PRIVATE_YN
 		     , A.I_DATE
 		FROM   BOARD A
 		     , T_PERSON B
@@ -105,6 +108,7 @@
 		AND    A.WRITER_ID = B.USER_ID
 		AND    A.BOARD_SEQ = '2'
 		AND    A.DELETE_YN = '0'
+		AND    A.PRIVATE_YN = 'N'
 		AND    B.USER_ID = #{ userId }
 		ORDER BY A.ID DESC
 	</select>
@@ -119,12 +123,14 @@
 		       A.CONTENT,
 		       C.USER_ID AS WRITER_ID,
 		       C.USER_NICKNAME AS WRITER,
+		       B.PRIVATE_YN, 
 		       A.I_DATE 
 		FROM   COMMENT A
 		LEFT OUTER JOIN BOARD B ON A.BOARD_ID = B.ID
 		LEFT OUTER JOIN T_PERSON C ON A.WRITER_ID = C.USER_ID
 		WHERE  1=1
 		AND    A.DELETE_YN = 'N'
+		AND    B.PRIVATE_YN = 'N'
 		AND    C.USER_ID = #{ userId }
 		ORDER BY A.ID DESC
 	</select>

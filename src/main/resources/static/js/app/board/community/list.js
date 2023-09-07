@@ -132,7 +132,7 @@ function drawList(notice, list, likes, num) {
 		                	</div>
 		                	${row.privateYn == 'N' ? 
 		                		`<a href="javascript:void(0);" onclick="goViewPage(` + row.id + `);"><div class="list-title"><span>` + row.title + `</span></div></a>` : 
-		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage()"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
+		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage(` + row.id + `)"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
 		                	<div class="list-info">
 			                	<span class="list-notice">${row.noticeYn === false ? '일상' : '공지'}</span>
 			                	<span class="list-hashtag">${row.hashtag}</span>
@@ -211,32 +211,30 @@ function goViewPage(id) {
 }
 
 // 비공개 게시글 접근
-function privatePage() {
-	swal.fire({
-		title: '비공개 게시글입니다.',
-		icon: 'error',
-		confirmButtonColor: '#3085d6',
-		confirmButtonText: '확인',
+function privatePage(id) {
+	list.forEach(function(value) {
+		if(value.id == id) {
+			if(userId == value.writerId) {
+				swal.fire({
+					title: '비공개 게시글입니다.',
+					text: '본인이 등록한 게시글이므로 상세페이지로 이동합니다.',
+					icon: 'warning',
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: '확인',
+				}).then((result) => {
+					goViewPage(id);
+				});
+			} else {
+				swal.fire({
+					title: '비공개 게시글입니다.',
+					text: '다른 사용자가 등록한 게시글입니다. 접근이 불가합니다.',
+					icon: 'error',
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: '확인',
+				});
+			}
+		} 
 	});
-	/*
-	(async () => {
-	    const { value: getName } = await Swal.fire({
-	        title: '비공개 게시글입니다.',
-	        input: 'password',
-	        inputPlaceholder: '계정 암호를 입력하세요.',
-	        showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: '확인',
-			cancelButtonColor: '#d33',
-			cancelButtonText: '취소'
-	    });
-	    
-	    
-	    //if (getName) {
-	    //    Swal.fire(`: ${getName}`)
-	    //}
-	})()
-	*/
 }
 
 // 사용자 상세 페이지로 이동
