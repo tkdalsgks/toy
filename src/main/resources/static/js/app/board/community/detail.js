@@ -346,7 +346,7 @@ function printCommentList() {
 							<div class="comment-img">
 								<img src="/img/app/chat/chat.png">
 								<div class="comment-name">
-									<span class="name"><a href="javascript:void(0);" onclick="goUserPage(${comment.writerNo});">${comment.writer}</a></span>
+									<span class="name"><a href="/${comment.writerId}/activity">${comment.writer}</a></span>
 									<div class="comment-edit" style="display: flex;">
 										<span class="time comment-time">${timeForToday(moment(comment.IDate).format('YYYY/MM/DD HH:mm'))}
 											<span>${comment.UDate != null ? '·' : ''}</span>
@@ -365,13 +365,12 @@ function printCommentList() {
 										</span>
 									</div>
 									<div th:if="${userId} == ${comment.writerId}" style="text-align: center;">
-										<!--
-										<span onclick="openModal( '${comment.id}', '${comment.writer}' )" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '수정 ' : ''}</span>
-										-->
-										<span onclick="replyUpdate(${comment.id})" id="replyUpdate${comment.id}" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '수정' : ''}</span>
-										<span onclick="replyCancel(${comment.id})" id="replyCancel${comment.id}" style="display: none; align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '취소' : ''}</span>
-										<span onclick="updateComment('${comment.id}', '${comment.writer}')" id="replySave${comment.id}" style="display: none; align-items: center; font-size: 13px; cursor: pointer; background-color: skyblue;">${comment.deleteYn != 'Y' ? '저장' : ''}</span>
-										<span onclick="deleteComment(${comment.id})" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '삭제' : ''}</span>
+										${userId == comment.writerId ? 
+											`<span onclick="replyUpdate(${comment.id})" id="replyUpdate${comment.id}" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '수정' : ''}</span>
+											<span onclick="replyCancel(${comment.id})" id="replyCancel${comment.id}" style="display: none; align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '취소' : ''}</span>
+											<span onclick="updateComment('${comment.id}', '${comment.writer}')" id="replySave${comment.id}" style="display: none; align-items: center; font-size: 13px; cursor: pointer; background-color: skyblue;">${comment.deleteYn != 'Y' ? '저장' : ''}</span>
+											<span onclick="deleteComment(${comment.id})" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '삭제' : ''}</span>` :
+											`` }
 									</div>
 								</div>
 							</div>
@@ -391,7 +390,7 @@ function printCommentList() {
 							<div class="comment-img">
 								<img src="/img/app/chat/chat.png">
 								<div class="comment-name">
-									<span class="name"><a href="javascript:void(0);" onclick="goUserPage(${comment.writerNo});">${comment.writer}</a></span>
+									<span class="name"><a href="/${comment.writerId}/activity">${comment.writer}</a></span>
 									<div class="comment-edit" style="display: flex;">
 										<span class="time comment-time">${timeForToday(moment(comment.IDate).format('YYYY/MM/DD HH:mm'))}
 											<span>${comment.UDate != null ? '·' : ''}</span>
@@ -404,13 +403,12 @@ function printCommentList() {
 								</div>
 								<div th:if="${boardSeq == '2'}" style="display: flex; flex-direction: column;">
 									<div th:if="${userId} == ${comment.writerId}" style="text-align: center;">
-										<!--
-										<span onclick="openModal( '${comment.id}', '${comment.writer}' )" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '수정 ' : ''}</span>
-										-->
-										<span onclick="replyUpdate(${comment.id})" id="replyUpdate${comment.id}" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '수정' : ''}</span>
-										<span onclick="replyCancel(${comment.id})" id="replyCancel${comment.id}" style="display: none; align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '취소' : ''}</span>
-										<span onclick="updateComment('${comment.id}', '${comment.writer}')" id="replySave${comment.id}" style="display: none; align-items: center; font-size: 13px; cursor: pointer; background-color: skyblue;">${comment.deleteYn != 'Y' ? '저장' : ''}</span>
-										<span onclick="deleteComment(${comment.id})" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '삭제' : ''}</span>
+										${userId == comment.writerId ? 
+											`<span onclick="replyUpdate(${comment.id})" id="replyUpdate${comment.id}" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '수정' : ''}</span>
+											<span onclick="replyCancel(${comment.id})" id="replyCancel${comment.id}" style="display: none; align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '취소' : ''}</span>
+											<span onclick="updateComment('${comment.id}', '${comment.writer}')" id="replySave${comment.id}" style="display: none; align-items: center; font-size: 13px; cursor: pointer; background-color: skyblue;">${comment.deleteYn != 'Y' ? '저장' : ''}</span>
+											<span onclick="deleteComment(${comment.id})" style="align-items: center; font-size: 13px; cursor: pointer;">${comment.deleteYn != 'Y' ? '삭제' : ''}</span>` :
+											`` }
 									</div>
 								</div>
 							</div>

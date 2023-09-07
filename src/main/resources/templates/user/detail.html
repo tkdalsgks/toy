@@ -69,7 +69,7 @@
 									th:text="${earningsPoints.pointsId == '+'} ? '적립' : '사용'"></td>
 								<td th:text="${earningsPoints.points}"></td>
 								<td th:text="${earningsPoints.commDNm}"></td>
-								<td style="font-size: 0.85rem;" th:text="${#temporals.format(earningsPoints.IDate, 'yyyy-MM-dd HH:mm')}"></td>
+								<td style="font-size: 0.85rem; letter-spacing: -1.5px" th:text="${#temporals.format(earningsPoints.IDate, 'yyyy-MM-dd HH:mm')}"></td>
 							</tr>
 						</thead>
 					</table>
@@ -109,7 +109,7 @@
 							<tr th:each="community : ${boardCommunity}">
 								<td style="text-align: center; font-weight: 600;" th:text="${community.id}"></td>
 								<td><a th:href="@{/} + ${community.id}"><span th:text="${community.title}"></span></a></td>
-								<td style="text-align: center; font-size: .9rem;" th:text="${#temporals.format(community.IDate, 'yyyy-MM-dd HH:mm')}"></td>
+								<td style="text-align: center; font-size: .9rem; letter-spacing: -1.5px" th:text="${#temporals.format(community.IDate, 'yyyy-MM-dd HH:mm')}"></td>
 							</tr>
 						</tbody>
 					</table>
@@ -134,7 +134,7 @@
 							<tr th:each="review : ${boardReview}">
 								<td style="text-align: center; font-weight: 600;" th:text="${review.id}"></td>
 								<td><a th:href="@{/} + ${review.id}"><span th:text="${review.title}"></span></a></td>
-								<td style="text-align: center; font-size: .9rem;" th:text="${#temporals.format(review.IDate, 'yyyy-MM-dd HH:mm')}"></td>
+								<td style="text-align: center; font-size: .9rem; letter-spacing: -1.5px" th:text="${#temporals.format(review.IDate, 'yyyy-MM-dd HH:mm')}"></td>
 							</tr>
 						</tbody>
 					</table>
@@ -159,7 +159,7 @@
 							<tr th:each="comment : ${boardComment}">
 								<td style="text-align: center; font-weight: 600;" th:text="${comment.id}"></td>
 								<td><a th:href="@{/} + ${comment.boardId}"><span th:text="${comment.content}"></span></a></td>
-								<td style="text-align: center; font-size: .9rem;" th:text="${#temporals.format(comment.IDate, 'yyyy-MM-dd HH:mm')}"></td>
+								<td style="text-align: center; font-size: .9rem; letter-spacing: -1.5px" th:text="${#temporals.format(comment.IDate, 'yyyy-MM-dd HH:mm')}"></td>
 							</tr>
 						</tbody>
 					</table>
