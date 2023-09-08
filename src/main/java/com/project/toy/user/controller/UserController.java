@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.JsonObject;
 import com.project.toy.admin.dto.AdminDTO;
@@ -65,6 +68,12 @@ public class UserController {
 			model.addAttribute("role", user.getRole());
 		}
 		
+		if(user.getProfileImg() == null) {
+			model.addAttribute("profileImg", null);
+		} else {
+			model.addAttribute("profileImg", user.getProfileImg());
+		}
+		
 		return "user/profile";
 	}
 	
@@ -87,7 +96,9 @@ public class UserController {
 	
 	@ResponseBody
 	@PutMapping("/{userId}/profile")
-	public JsonObject saveProfile(@PathVariable(value = "userId", required = false) String userId, @RequestBody final UpdateUserDTO params) {
+	public JsonObject saveProfile(@PathVariable(value = "userId", required = false) String userId, 
+			@RequestPart(value = "profileImg", required = false) MultipartFile profileImg, 
+			@RequestBody final UpdateUserDTO params) {
 		log.info("##### User Profile __ API {} #####", userId);
 		
 		JsonObject jsonObj = new JsonObject();
@@ -171,5 +182,11 @@ public class UserController {
 		model.addAttribute("earningsPoints", earningsPoints);
 		
 		return "user/detail";
+	}
+	
+	@PostMapping("/upload/profileImg")
+	public void profileImageUrlUpdate(HttpServletRequest request, HttpServletResponse response, MultipartHttpServletRequest upload) throws Exception {
+		
+		userService.upload(request, response, upload);
 	}
 }

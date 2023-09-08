@@ -11,4 +11,5 @@ public class UpdateUserDTO {
 	private String userNickname;
 	private String userEmail;
 	private String role;
+	private String fileUrl;
 }

@@ -31,6 +31,8 @@ public class UserDTO {
 	@Schema(description = "닉네임", nullable = false)
 	private String userNickname;
 	
+	private String profileImg;
+	
 	@Schema(description = "가입 구분")
 	private String provider;
 	

@@ -80,6 +80,7 @@
 		       B.USER_NO AS WRITER_NO, 
 		       A.WRITER_ID, 
 		       A.WRITER, 
+		       B.PROFILE_IMG, 
 		       A.RATING, 
 		       A.DELETE_YN, 
 		       A.I_DATE, 

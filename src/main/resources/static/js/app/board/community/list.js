@@ -50,17 +50,16 @@ function drawList(notice, list, likes, num) {
 	                	<div>
 	                		<div class="list-img">
 		                		<a href="/${row.writerId}/activity">
-		                			<img src="/img/app/chat/chat.png">
-			                		<span class="list-writer">${row.writer}</span>
+			                		<span class="list-writer" style="font-weight: 800;">관리자</span>
 				                </a>
 		                		<span>&nbsp;·&nbsp;</span>
 			                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
-			                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
-			                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
+			                	<!-- <span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span> -->
+			                	<!-- <span class="list-udate">${row.udate != null ? '수정됨' : ''}</span> -->
 		                	</div>
 		        			${row.privateYn == 'N' ? 
 		                		`<a href="javascript:void(0);" onclick="goViewPage(` + row.id + `);"><div class="list-title"><span>` + row.title + `</span></div></a>` : 
-		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage()"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
+		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage(` + row.id + `)"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
 		                	<div class="list-info">
 			                	<span class="list-notice">${row.noticeYn === false ? '일상' : '공지사항'}</span>
 			                	<span class="list-hashtag">${row.hashtag}</span>
@@ -86,7 +85,9 @@ function drawList(notice, list, likes, num) {
 	                	<div>
 	                		<div class="list-img">
 		                		<a href="/${row.writerId}/activity">
-		                			<img src="/img/app/chat/chat.png">
+		                			${row.profileImg != null ? 
+		                				`<img src="${row.profileImg}">` :
+		                				`<span>${row.writer}<span>` }
 			                		<span class="list-writer">${row.writer}</span>
 				                </a>
 		                		<span>&nbsp;·&nbsp;</span>
@@ -96,7 +97,7 @@ function drawList(notice, list, likes, num) {
 		                	</div>
 		                	${row.privateYn == 'N' ? 
 		                		`<a href="javascript:void(0);" onclick="goViewPage(` + row.id + `);"><div class="list-title"><span>` + row.title + `</span></div></a>` : 
-		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage()"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
+		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage(` + row.id + `)"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
 		                	<div class="list-info">
 			                	<span class="list-notice">${row.likesCnt >= 1 ? '좋아요' : row.id}</span>
 			                	<span class="list-hashtag">${row.hashtag}</span>
@@ -122,7 +123,9 @@ function drawList(notice, list, likes, num) {
 	                	<div>
 	                		<div class="list-img">
 		                		<a href="/${row.writerId}/activity">
-		                			<img src="/img/app/chat/chat.png">
+		                			${row.profileImg != null ? 
+		                				`<img src="${row.profileImg}">` :
+		                				`<span>${row.writer}<span>` }
 			                		<span class="list-writer">${row.writer}</span>
 			                	</a>
 		                		<span>&nbsp;·&nbsp;</span>

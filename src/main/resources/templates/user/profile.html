@@ -65,7 +65,12 @@
 							</div>
 						</div>
 						<div class="profile-contents2">
-							<img src="">
+							<img th:src="${profileImg}" id="userProfileImg" style="border: 3px solid #EDEDED;">
+							
+							<form name="profileUploadForm" action="/upload/profileImg" method="post" enctype="multipart/form-data">
+								<label class="file-label" for="upload">업로드</label>
+								<input type="file" onchange="profileUpload();" id="upload" name="upload" class="form-control" style="display: none;" accept=".jpg, .jpeg, .png">
+							</form>				
 						</div>
 					</div>
 				</div>

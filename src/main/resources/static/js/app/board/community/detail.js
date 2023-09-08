@@ -344,7 +344,7 @@ function printCommentList() {
 					commentsHtml += `
 						<li class="comment-li">
 							<div class="comment-img">
-								<img src="/img/app/chat/chat.png">
+								<img src="${comment.profileImg}" style="border-radius: 999px;">
 								<div class="comment-name">
 									<span class="name"><a href="/${comment.writerId}/activity">${comment.writer}</a></span>
 									<div class="comment-edit" style="display: flex;">
@@ -388,7 +388,7 @@ function printCommentList() {
 					commentsHtml += `
 						<li class="comment-li">
 							<div class="comment-img">
-								<img src="/img/app/chat/chat.png">
+								<img src="${comment.profileImg}" style="border-radius: 999px;">
 								<div class="comment-name">
 									<span class="name"><a href="/${comment.writerId}/activity">${comment.writer}</a></span>
 									<div class="comment-edit" style="display: flex;">

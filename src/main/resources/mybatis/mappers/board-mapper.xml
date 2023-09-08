@@ -71,6 +71,7 @@
 		       A.WRITER_NO, 
 		       A.WRITER_ID, 
 		       A.WRITER, 
+		       D.PROFILE_IMG, 
 		       B.COMM_D_CD AS FILTER_ID,
 		       B.COMM_D_NM AS FILTER, 
 		       C.HASHTAG, 
@@ -85,6 +86,7 @@
 		FROM   BOARD A
 		LEFT OUTER JOIN COMM_D B ON A.FILTER = B.COMM_D_CD
 		LEFT OUTER JOIN HASHTAG C ON A.ID = C.BOARD_ID
+		LEFT OUTER JOIN T_PERSON D ON A.WRITER_ID = D.USER_ID
 		WHERE  1=1
 		AND    B.COMM_H_CD = 'B01'
 		AND    A.ID = #{ value }
@@ -129,6 +131,7 @@
 		       A.WRITER_NO, 
 		       A.WRITER_ID, 
 		       A.WRITER, 
+		       C.PROFILE_IMG, 
 		       A.FILTER, 
 		       NVL(B.HASHTAG, '') AS HASHTAG, 
 		       A.VIEW_CNT, 
@@ -141,6 +144,7 @@
 		       A.U_DATE
 		FROM   BOARD A
 		LEFT OUTER JOIN HASHTAG B ON A.ID = B.BOARD_ID
+		LEFT OUTER JOIN T_PERSON C ON A.WRITER_ID = C.USER_ID
 		WHERE  1=1
 		AND    A.BOARD_SEQ = 1
 		AND    A.NOTICE_YN = 0
@@ -162,6 +166,7 @@
 		       B.USER_NO AS WRITER_NO, 
 		       A.WRITER_ID, 
 		       A.WRITER, 
+		       B.PROFILE_IMG, 
 		       NVL(C.HASHTAG, '') AS HASHTAG, 
 		       A.VIEW_CNT, 
 		       A.COMMENT_CNT, 
@@ -193,6 +198,7 @@
 		       B.NOTICE_YN, 
 		       C.USER_NO AS WRITER_NO, 
 		       B.WRITER, 
+		       C.PROFILE_IMG, 
 		       NVL(D.HASHTAG, '') AS HASHTAG, 
 		       B.PRIVATE_YN, 
 		       B.I_DATE, 

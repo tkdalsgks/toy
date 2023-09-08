@@ -143,6 +143,8 @@ function updateProfile(userId) {
 										return false;
 									}
 								});
+								
+								
 							}
 						});
 					}
@@ -359,6 +361,31 @@ $(function() {
 		});
 	});
 });
+
+// 프로필 사진 업로드
+function profileUpload() {
+	if(document.profileUploadForm.upload.value != "") {
+		const Toast = Swal.mixin({
+		    toast: true,
+		    position: 'center-center',
+		    showConfirmButton: false,
+		    timer: 1500,
+		    timerProgressBar: true,
+		    didOpen: (toast) => {
+		        //toast.addEventListener('mouseenter', Swal.stopTimer)
+		        //toast.addEventListener('mouseleave', Swal.resumeTimer)
+		    }
+		})
+
+		Toast.fire({
+		    icon: 'success',
+		    title: '프로필 사진을 등록하고 있습니다.'
+		}).then((result) => {
+			document.profileUploadForm.action = "/upload/profileImg";
+			document.profileUploadForm.submit();
+		});
+	}
+}
 
 function goProfile(userId) {
 	location.href = '/' + `${userId}` + '/profile';
