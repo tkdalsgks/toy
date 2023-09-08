@@ -108,4 +108,20 @@
 		AND    USER_ID = #{ userId }
 	</update>
 	
+	<insert id="updateProfileImg" parameterType="UpdateUserDTO">
+		UPDATE T_PERSON
+		SET    U_DATE = NOW(),
+		       PROFILE_IMG = #{ fileUrl }
+		WHERE  1=1
+		AND    USER_ID = #{ userId }
+	</insert>
+	
+	<select id="selectProfileImg" resultType="UpdateUserDTO">
+		SELECT USER_ID, 
+		       PROFILE_IMG
+		FROM   T_PERSON
+		WHERE  1=1
+		AND    USER_ID = #{ userId }
+	</select>
+	
 </mapper>

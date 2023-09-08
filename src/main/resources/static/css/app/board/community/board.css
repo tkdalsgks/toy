@@ -44,8 +44,8 @@ p { margin-bottom: 0; }
 .list-refresh { display: -webkit-box; display: -ms-flexbox; display: flex; width: 1.5rem; height: 1.5rem; }
 .list-refresh:hover { cursor: pointer; }
 .list-important { background: rgb(240 246 250) !important; }
-.list-img { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
-.list-img img { width: 1.25rem; height: 1.25rem; }
+.list-img { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center;  }
+.list-img img { width: 1.25rem; height: 1.25rem; border-radius: 999px; vertical-align: sub; }
 .list-writer { font-size: .875rem; font-weight: 400; color: #111827; letter-spacing: -1.5px; }
 .list-time { font-size: .875rem; font-weight: 400; color: 111827; letter-spacing: -1.5px; }
 .list-udate { font-size: .875rem; font-weight: 400; color: #A0A0FF; letter-spacing: -1.5px; }

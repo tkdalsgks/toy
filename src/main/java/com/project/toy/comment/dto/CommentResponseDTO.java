@@ -21,6 +21,8 @@ public class CommentResponseDTO {
 	
 	private String writerId;
 	
+	private String profileImg;
+	
 	private int rating;
 	
 	private String deleteYn;

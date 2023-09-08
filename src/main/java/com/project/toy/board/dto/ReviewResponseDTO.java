@@ -26,6 +26,8 @@ public class ReviewResponseDTO {
 	@Schema(description = "작성자")
 	private String writer;
 	
+	private String profileImg;
+	
 	private String filterId;
 	
 	private String filter;

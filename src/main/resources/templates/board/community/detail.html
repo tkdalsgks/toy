@@ -92,7 +92,7 @@
 				</div>
 				
 				<div class="board-info">
-					<img src="" class="board-info__img">
+					<img th:src="${board.profileImg}" class="board-info__img">
 					<div style="flex-direction: column; flex-grow: 1;">
 						<div style="display: flex; justify-content: space-between; align-items: center;">
 							<a th:href="@{/} + ${board.writerId} + @{/activity}"><span class="board-writer">[[ ${board.writer} ]]</span></a>

@@ -22,5 +22,5 @@ public interface UserMapper {
 	public void successCertifiedEmail(CertifiedUserDTO params);
 	public CertifiedUserDTO selectCertifiedEmail(CertifiedUserDTO params);
 	public void successCertifiedRole(UserDTO userDTO);
-
+	public void updateProfileImg(String fileUrl, String userId);
 }

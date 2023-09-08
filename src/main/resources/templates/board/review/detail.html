@@ -68,7 +68,7 @@
 				</div>
 				
 				<div class="board-info">
-					<img src="" class="board-info__img">
+					<img th:src="${review.profileImg}" class="board-info__img">
 					<div style="flex-direction: column; flex-grow: 1;">
 						<div style="display: flex; justify-content: space-between; align-items: center;">
 							<a th:href="@{/member/detail?id=} + ${review.writerNo}"><span class="board-writer">[[ ${review.writer} ]]</span></a>

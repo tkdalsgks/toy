@@ -50,17 +50,16 @@ function drawList(notice, list, likes, num) {
 	                	<div>
 	                		<div class="list-img">
 		                		<a href="/${row.writerId}/activity">
-		                			<img src="/img/app/chat/chat.png">
-			                		<span class="list-writer">${row.writer}</span>
+			                		<span class="list-writer" style="font-weight: 800;">관리자</span>
 				                </a>
 		                		<span>&nbsp;·&nbsp;</span>
 			                	<span class="list-time">${timeForToday(moment(row.idate).format('YYYY/MM/DD HH:mm'))}</span>
-			                	<span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span>
-			                	<span class="list-udate">${row.udate != null ? '수정됨' : ''}</span>
+			                	<!-- <span>${row.udate != null ? '&nbsp;·&nbsp;' : ''}</span> -->
+			                	<!-- <span class="list-udate">${row.udate != null ? '수정됨' : ''}</span> -->
 		                	</div>
 		        			${row.privateYn == 'N' ? 
 		                		`<a href="javascript:void(0);" onclick="goViewPage(` + row.id + `);"><div class="list-title"><span>` + row.title + `</span></div></a>` : 
-		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage()"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
+		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage(` + row.id + `)"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
 		                	<div class="list-info">
 			                	<span class="list-notice">${row.noticeYn === false ? '리뷰' : '공지사항'}</span>
 			                	<span class="list-hashtag">${row.hashtag}</span>
@@ -86,7 +85,9 @@ function drawList(notice, list, likes, num) {
 	                	<div>
 	                		<div class="list-img">
 		                		<a href="/${row.writerId}/activity">
-		                			<img src="/img/app/chat/chat.png">
+		                			${row.profileImg != null ? 
+		                				`<img src="${row.profileImg}">` :
+		                				`<span>${row.writer}<span>` }
 			                		<span class="list-writer">${row.writer}</span>
 				                </a>
 		                		<span>&nbsp;·&nbsp;</span>
@@ -96,7 +97,7 @@ function drawList(notice, list, likes, num) {
 		                	</div>
 		                	${row.privateYn == 'N' ? 
 		                		`<a href="javascript:void(0);" onclick="goViewPage(` + row.id + `);"><div class="list-title"><span>` + row.title + `</span></div></a>` : 
-		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage()"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
+		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage(` + row.id + `)"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
 		                	<div class="list-info">
 			                	<span class="list-notice">${row.likesCnt >= 1 ? '좋아요' : row.id}</span>
 			                	<span class="list-hashtag">${row.hashtag}</span>
@@ -122,7 +123,9 @@ function drawList(notice, list, likes, num) {
 	                	<div>
 	                		<div class="list-img">
 		                		<a href="/${row.writerId}/activity">
-		                			<img src="/img/app/chat/chat.png">
+		                			${row.profileImg != null ? 
+		                				`<img src="${row.profileImg}">` :
+		                				`<span>${row.writer}<span>` }
 			                		<span class="list-writer">${row.writer}</span>
 				                </a>
 		                		<span>&nbsp;·&nbsp;</span>
@@ -132,7 +135,7 @@ function drawList(notice, list, likes, num) {
 		                	</div>
 		                	${row.privateYn == 'N' ? 
 		                		`<a href="javascript:void(0);" onclick="goViewPage(` + row.id + `);"><div class="list-title"><span>` + row.title + `</span></div></a>` : 
-		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage()"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
+		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage(` + row.id + `)"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
 		                	<div class="list-info">
 			                	<span class="list-notice">${row.noticeYn === false ? row.filter : '공지'}</span>
 			                	<span class="list-hashtag">${row.hashtag}</span>
@@ -217,32 +220,36 @@ function goUserPage(id) {
 }
 
 // 비공개 게시글 접근
-function privatePage() {
-	swal.fire({
-		title: '비공개 게시글입니다.',
-		icon: 'error',
-		confirmButtonColor: '#3085d6',
-		confirmButtonText: '확인',
+function privatePage(id) {
+	list.forEach(function(value) {
+		if(value.id == id) {
+			if(userId == value.writerId) {
+				console.log("id: " + id);
+				console.log("value.id: " + value.id);
+				console.log("value.writerId: " + value.writerId);
+				swal.fire({
+					title: '비공개 게시글입니다.',
+					text: '본인이 등록한 게시글이므로 상세페이지로 이동합니다.',
+					icon: 'warning',
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: '확인',
+				}).then((result) => {
+					goViewPage(id);
+				});
+			} else {
+				console.log("id: " + id);
+				console.log("value.id: " + value.id);
+				console.log("value.writerId: " + value.writerId);
+				swal.fire({
+					title: '비공개 게시글입니다.',
+					text: '다른 사용자가 등록한 게시글입니다. 접근이 불가합니다.',
+					icon: 'error',
+					confirmButtonColor: '#3085d6',
+					confirmButtonText: '확인',
+				});
+			}
+		} 
 	});
-	/*
-	(async () => {
-	    const { value: getName } = await Swal.fire({
-	        title: '비공개 게시글입니다.',
-	        input: 'password',
-	        inputPlaceholder: '계정 암호를 입력하세요.',
-	        showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: '확인',
-			cancelButtonColor: '#d33',
-			cancelButtonText: '취소'
-	    });
-	    
-	    
-	    //if (getName) {
-	    //    Swal.fire(`: ${getName}`)
-	    //}
-	})()
-	*/
 }
 
 // 게시글 리프레쉬
