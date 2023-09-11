@@ -56,11 +56,11 @@
 							<div style="display: flex;">
 								<input id="userEmail" name="userEmail" th:value="${userEmail}" th:if="${provider == 'general'}">
 								<input id="userEmail" name="userEmail" th:value="${userEmail}" th:if="${provider != 'general'}" disabled="disabled">
-								<button type="button" id="check-email" class="btn btn-primary profile-check-email">이메일 인증</button>
+								<button type="button" id="check-email" class="profile-check-email">이메일 인증</button>
 							</div>
 							<div id="profile-verify" class="profile-verify">
 								<input type="text" id="check-email-number" class="form-control required" placeholder="인증번호를 입력해주세요." disabled="disabled">
-								<button type="button" id="check-email-verify" class="btn btn-primary profile-check-verify" disabled="disabled">인증확인</button>
+								<button type="button" id="check-email-verify" class="profile-check-verify" disabled="disabled">인증확인</button>
 								<div id="check-email-time" class="check-email-time"></div>
 							</div>
 						</div>
@@ -92,7 +92,7 @@
 				</div>
 				<div class="profile-line"></div>
 				<div class="profile-save">
-					<button id="saveProfile" class="btn btn-primary" th:onclick="updateProfile([[ ${userId} ]]);" disabled="disabled">저장</button>
+					<button id="saveProfile" th:onclick="updateProfile([[ ${userId} ]]);" disabled="disabled">저장</button>
 				</div>
 			</div>
 		</div>

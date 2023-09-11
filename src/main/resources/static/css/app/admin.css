@@ -15,7 +15,7 @@
 .paging > p > a:first-child, .paging > p > span:first-child {margin-left:0;}
 .paging a, .paging span {display:inline-block; width:30px; height:30px; line-height:240%; color:#999; font-size:12px;}
 .paging a:hover {background:#f7f7f7;}
-.paging a.on, .paging span.on {background:#666; border-color:transparent; border-radius:4px; color:#fff;}
+.paging a.on, .paging span.on {--tw-bg-opacity: 1; background: rgb(240 246 250/var(--tw-bg-opacity)); border-color:transparent; border-radius:4px;}
 .paging .page_bt {position:relative;}
 .paging .page_bt::after {background-position:-30px 0; width:6px; height:11px; position:absolute; top:50%; left:50%; margin:-5px 0 0 -3px;}
 .paging .first::after {background-position:-15px 0; width:12px; margin-left:-6px;}
@@ -31,7 +31,8 @@
 .admin__points-points { width: 20%; font-weight: 600; }
 .admin__points-content { width: 35%; font-weight: 600; }
 .admin__points-date { width: 35%; font-weight: 600; }
-.admin-expulsion { text-align: center; margin-top: 2rem; margin-bottom: 2rem; }
+.admin__expulsion { text-align: center; margin-top: 2rem; margin-bottom: 2rem; }
+.admin__expulsion button { background: #A0A0FF; border: none; border-radius: 5px; padding: .25rem .85rem; color: #fff; }
 .admin__information { margin-bottom: 2rem; }
 .admin__information span, .admin__points span { margin-left: 1rem; font-weight: 600; }
 .admin__points thead { text-align: center; }

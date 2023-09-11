@@ -87,7 +87,7 @@
 	.profile-contents2 img { width: 8rem; height: 8rem; border: 1px solid hsla(220, 9%, 46%, .3); border-radius: 50%; }
 	
 	.profile-email { margin-top: 1rem; }
-	.profile-check-email, .profile-check-verify, .profile-img { margin-left: .5rem; width: 8rem; height: 2.75rem; font-size: .75rem; }
+	.profile-check-email, .profile-check-verify, .profile-img { background: #A0A0FF; border: none; border-radius: 5px; color: #fff; margin-left: .5rem; width: 8rem; height: 2.75rem; font-size: .75rem; }
 	.profile-verify { display: -webkit-box; display: -ms-flexbox; display: flex; margin-top: .5rem; }
 	.check-email-time { font-size: 1rem !important; -webkit-transform: translate(100%, 155%) !important; -ms-transform: translate(100%, 155%) !important; transform: translate(100%, 155%) !important; }
 	
@@ -97,7 +97,7 @@
 	.profile-info { padding-top: 2rem; padding-bottom: 2rem; }
 	
 	.profile-save { padding-top: 2rem; padding-bottom: 7rem; text-align: right; }
-	.profile-save button { width: 5rem; cursor: pointer; font-size: .75rem; }
+	.profile-save button { background: #A0A0FF; border: none; border-radius: 5px; color: #fff; width: 5rem; height: 2rem; font-size: .75rem; cursor: pointer; }
 	
 	/* ACCOUNT */
 	.account-contents { padding-top: 2rem; padding-bottom: 2rem; }
@@ -106,7 +106,7 @@
 	.account-contents2 { padding-top: 2rem; text-align: center; }
 	.account-contents2 img { width: 5rem; height: 5rem; border: 1px solid hsla(220,9%,46%,.3); border-radius: 50%; }
 	
-	.account-check-email, .account-check-verify { margin-left: .5rem; width: 8rem; height: 2.75rem; font-size: .75rem; }
+	.account-check-email, .account-check-verify { background: #A0A0FF; border: none; border-radius: 5px; color: #fff; margin-left: .5rem; width: 8rem; height: 2.75rem; font-size: .75rem; }
 	.account-verify { display: -webkit-box; display: -ms-flexbox; display: flex; margin-top: .5rem; }
 	.account-info { display: -webkit-inline-box; display: -ms-inline-flexbox; display: inline-flex; margin-top: 1rem; }
 	.account-info span { margin-left: .25rem; font-size: .875rem !important; }
@@ -117,9 +117,9 @@
 	.account-withdraw { padding-top: 2rem; padding-bottom: 2rem; }
 	
 	.account-withdraw-btn { padding-top: 2rem; text-align: right; }
-	.account-withdraw-btn button { width: 8rem; height: 2.75rem; cursor: pointer; font-size: .75rem; }
+	.account-withdraw-btn button { background: #A0A0FF; border: none; border-radius: 5px; color: #fff; width: 8rem; height: 2.75rem; cursor: pointer; font-size: .75rem; }
 	
-	.file-label { margin-top: 30px; background-color: #0B5ED7; color: #fff; text-align: center; padding: 10px 0; width: 20%; border-radius: 6px; cursor: pointer; }
+	.file-label { margin-top: 30px; background: #A0A0FF; color: #fff; text-align: center; padding: 10px 0; width: 15%; border-radius: 5px; font-size: .75rem; cursor: pointer; }
 /*
 }
 */

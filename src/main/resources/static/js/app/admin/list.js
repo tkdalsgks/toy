@@ -32,7 +32,7 @@ function drawList(list, num) {
             		<span>${row.modelNameKor}</span>
             	</td>
             	<td>
-            		<a href="/admin/${row.userId}/activity"><button>상세보기</button></a>
+            		<a href="/admin/${row.userId}/activity"><button style="background: #A0A0FF; border: none; border-radius: 5px; color: #fff; padding: .15rem .5rem;">상세보기</button></a>
             	</td>
             </tr>
         `;

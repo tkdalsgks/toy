@@ -50,7 +50,7 @@
 	<select id="findByUserNickname" resultType="UserDTO">
 		/* com.project.toy.security.mapper.SecurityMapper, 닉네임 중복확인 */
 		
-		SELECT * FROM toy.T_PERSON WHERE AND USER_NICKNAME = #{ userNickname }
+		SELECT * FROM toy.T_PERSON WHERE USER_NICKNAME = #{ userNickname }
 	</select>
 	
 </mapper>
