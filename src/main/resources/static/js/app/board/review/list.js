@@ -59,9 +59,9 @@ function drawList(notice, list, likes, num) {
 		                	</div>
 		        			${row.privateYn == 'N' ? 
 		                		`<a href="javascript:void(0);" onclick="goViewPage(` + row.id + `);"><div class="list-title"><span>` + row.title + `</span></div></a>` : 
-		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage(` + row.id + `)"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
+		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePageNotice(` + row.id + `)"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
 		                	<div class="list-info">
-			                	<span class="list-notice">${row.noticeYn === false ? '리뷰' : '공지사항'}</span>
+			                	<span class="list-filter1">${row.noticeYn === false ? '리뷰' : '공지사항'}</span>
 			                	<span class="list-hashtag">${row.hashtag}</span>
 			                	<div>
 			                		<svg class="list-view-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -87,7 +87,7 @@ function drawList(notice, list, likes, num) {
 		                		<a href="/${row.writerId}/activity">
 		                			${row.profileImg != null ? 
 		                				`<img src="${row.profileImg}">` :
-		                				`<span>${row.writer}<span>` }
+		                				`<span>${row.subWriter}<span>` }
 			                		<span class="list-writer">${row.writer}</span>
 				                </a>
 		                		<span>&nbsp;·&nbsp;</span>
@@ -97,9 +97,9 @@ function drawList(notice, list, likes, num) {
 		                	</div>
 		                	${row.privateYn == 'N' ? 
 		                		`<a href="javascript:void(0);" onclick="goViewPage(` + row.id + `);"><div class="list-title"><span>` + row.title + `</span></div></a>` : 
-		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage(` + row.id + `)"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
+		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePageLikes(` + row.id + `)"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
 		                	<div class="list-info">
-			                	<span class="list-notice">${row.likesCnt >= 1 ? '좋아요' : row.id}</span>
+			                	<span class="list-filter1">${row.likesCnt >= 1 ? '좋아요' : row.id}</span>
 			                	<span class="list-hashtag">${row.hashtag}</span>
 			                	<div>
 			                		<svg class="list-view-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -125,7 +125,7 @@ function drawList(notice, list, likes, num) {
 		                		<a href="/${row.writerId}/activity">
 		                			${row.profileImg != null ? 
 		                				`<img src="${row.profileImg}">` :
-		                				`<span>${row.writer}<span>` }
+		                				`<span>${row.subWriter}<span>` }
 			                		<span class="list-writer">${row.writer}</span>
 				                </a>
 		                		<span>&nbsp;·&nbsp;</span>
@@ -135,9 +135,9 @@ function drawList(notice, list, likes, num) {
 		                	</div>
 		                	${row.privateYn == 'N' ? 
 		                		`<a href="javascript:void(0);" onclick="goViewPage(` + row.id + `);"><div class="list-title"><span>` + row.title + `</span></div></a>` : 
-		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePage(` + row.id + `)"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
+		                		`<div class="list-title" style="cursor: pointer;" onclick="privatePageList(` + row.id + `)"><span><img style="margin-right: 5px;" src="/img/app/board/lock.png">` + row.title + `</span></div>` }
 		                	<div class="list-info">
-			                	<span class="list-notice">${row.noticeYn === false ? row.filter : '공지'}</span>
+			                	<span class="list-filter2">${row.noticeYn === false ? row.filter : '공지'}</span>
 			                	<span class="list-hashtag">${row.hashtag}</span>
 			                	<div>
 			                		<svg class="list-view-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -219,34 +219,73 @@ function goUserPage(id) {
     location.href = '/member/detail' + queryString;
 }
 
-// 비공개 게시글 접근
-function privatePage(id) {
+// 비공개 게시글 접근 : 리스트
+function privatePageList(id) {
 	list.forEach(function(value) {
 		if(value.id == id) {
 			if(userId == value.writerId) {
-				console.log("id: " + id);
-				console.log("value.id: " + value.id);
-				console.log("value.writerId: " + value.writerId);
-				swal.fire({
-					title: '비공개 게시글입니다.',
-					text: '본인이 등록한 게시글이므로 상세페이지로 이동합니다.',
-					icon: 'warning',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인',
-				}).then((result) => {
-					goViewPage(id);
-				});
+				toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.options.onHidden = function() { goViewPage(id); };
+				toastr.warning('본인이 등록한 게시글로 상세페이지로 이동합니다.', '비공개 게시글입니다.');
 			} else {
-				console.log("id: " + id);
-				console.log("value.id: " + value.id);
-				console.log("value.writerId: " + value.writerId);
-				swal.fire({
-					title: '비공개 게시글입니다.',
-					text: '다른 사용자가 등록한 게시글입니다. 접근이 불가합니다.',
-					icon: 'error',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인',
-				});
+				toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.error('다른 사용자가 등록한 게시물은 접근이 불가합니다.', '비공개 게시글입니다.');
+			}
+		} 
+	});
+}
+
+// 비공개 게시글 접근 : 좋아요
+function privatePageLikes(id) {
+	likes.forEach(function(value) {
+		if(value.id == id) {
+			if(userId == value.writerId) {
+				toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.options.onHidden = function() { goViewPage(id); };
+				toastr.warning('본인이 등록한 게시글로 상세페이지로 이동합니다.', '비공개 게시글입니다.');
+			} else {
+				toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.error('다른 사용자가 등록한 게시물은 접근이 불가합니다.', '비공개 게시글입니다.');
+			}
+		} 
+	});
+}
+
+// 비공개 게시글 접근 : 공지
+function privatePageNotice(id) {
+	notice.forEach(function(value) {
+		if(value.id == id) {
+			if(userId == value.writerId) {
+				toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.options.onHidden = function() { goViewPage(id); };
+				toastr.warning('본인이 등록한 게시글로 상세페이지로 이동합니다.', '비공개 게시글입니다.');
+			} else {
+				toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.error('다른 사용자가 등록한 게시물은 접근이 불가합니다.', '비공개 게시글입니다.');
 			}
 		} 
 	});

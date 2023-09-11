@@ -36,13 +36,12 @@ $('#duplicateUserId').on('click' ,function() {
 		        }
 		    },
 		    error: function(data){
-		    	swal.fire({
-					title: '잠시 후 재시도 바랍니다.',
-					footer: '서버와의 통신 에러입니다.',
-					icon: 'error',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인'
-				});
+		    	toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 		    }
 		});
 	}
@@ -123,13 +122,12 @@ $('#userNickname').on('keyup' ,function() {
 		        }
 		    },
 			error: function(data) {
-				swal.fire({
-					text: '잠시 후 재시도 바랍니다.',
-					footer: '서버와의 통신 에러입니다.',
-					icon: 'error',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인'
-				});
+				toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 			}
 		});
 	}
@@ -171,13 +169,12 @@ $('#userEmail').on('keyup' ,function() {
 		        }
 		    },
 			error: function(data) {
-				swal.fire({
-					text: '잠시 후 재시도 바랍니다.',
-					footer: '서버와의 통신 에러입니다.',
-					icon: 'error',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인'
-				});
+				toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 			}
 		});
 	}
@@ -211,21 +208,20 @@ $(function() {
 				$('#check-email-verify').prop('disabled', false);
 				$('#check-email').prop('disabled', true);
 				code = data;
-				swal.fire({
-					text: '이메일로 인증번호가 전송되었습니다.',
-					icon: 'success',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인'
-				});
+				toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.success('이메일로 인증번호가 전송되었습니다.');
 			},
 			error: function(data) {
-				swal.fire({
-					text: '잠시 후 재시도 바랍니다.',
-					footer: '서버와의 통신 에러입니다.',
-					icon: 'error',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인'
-				});
+				toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 			}
 		});
 	});
@@ -269,31 +265,30 @@ $(function() {
 					$('#check-email-number').prop('disabled', true);
 					$('#check-email-verify').prop('disabled', true);
 					$("#check-email-verify").attr("value", "Y");
-					swal.fire({
-						text: '인증되었습니다.',
-						icon: 'success',
-						confirmButtonColor: '#3085d6',
-						confirmButtonText: '확인'
-					});
+					toastr.options = {
+						progressBar: true,
+					 	showMethod: 'slideDown',
+					 	timeOut: 1500
+					};
+					toastr.success('인증되었습니다.');
 				} else {
 					isCertification = false;
 					$("#check-email-verify").attr("value", "");
-					swal.fire({
-						text: '인증번호를 정확하게 입력해주세요.',
-						icon: 'warning',
-						confirmButtonColor: '#3085d6',
-						confirmButtonText: '확인'
-					});
+					toastr.options = {
+						progressBar: true,
+					 	showMethod: 'slideDown',
+					 	timeOut: 1500
+					};
+					toastr.warning('인증번호를 정확하게 입력해주세요.');
 				}
 			},
 			error: function(result) {
-				swal.fire({
-					text: '잠시 후 재시도 바랍니다.',
-					footer: '서버와의 통신 에러입니다.',
-					icon: 'error',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인',
-				});
+				toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 			}
 		});
 	});
@@ -308,19 +303,19 @@ $('#joinSubmit').click(function() {
 	const verify = document.getElementById('check-email-verify').value;
 	
 	if(duplicate != 'Y') {
-		swal.fire({
-			text: '아이디 중복확인이 필요합니다.',
-			icon: 'warning',
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: '확인'
-		});
+		toastr.options = {
+			progressBar: true,
+		 	showMethod: 'slideDown',
+		 	timeOut: 1500
+		};
+		toastr.warning('아이디 중복확인이 필요합니다.');
 	} else if(verify != 'Y') {
-		swal.fire({
-			text: '이메일 인증이 필요합니다.',
-			icon: 'warning',
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: '확인'
-		});
+		toastr.options = {
+			progressBar: true,
+		 	showMethod: 'slideDown',
+		 	timeOut: 1500
+		};
+		toastr.warning('이메일 인증이 필요합니다.');
 	} else {
 		$.ajax({
 			type : 'post',
@@ -344,13 +339,12 @@ $('#joinSubmit').click(function() {
 				});
 			},
 			error: function(data) {
-				swal.fire({
-					title: '잠시 후 재시도 바랍니다.',
-					footer: '서버와의 통신 에러입니다.',
-					icon: 'error',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인'
-				});
+				toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 			}
 		});
 	}

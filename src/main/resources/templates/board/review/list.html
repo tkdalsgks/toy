@@ -35,10 +35,12 @@
 				<div class="refresh_box">
 					<div class="sch_group fl">
 						<div class="list-search">
-							<img class="list-refresh" src="/img/app/common/refresh.png" onclick="refreshBoard();">
+							<div style="display: flex">
+								<i class="fas fa-refresh search_box_btn" onclick="refreshBoard();"></i>
+								<i class="fas fa-search search_box_btn" onclick="searchBox();"></i>
+							</div>
 							<div>
-								<button type="button" class="search_box_btn community-btn" onclick="searchBox();"><i class="fas fa-search"></i><span class="skip_info">&nbsp;검색</span></button>
-								<button type="button" sec:authorize="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_USER')" class="search_box_btn write_box community-btn" onclick="writeBoard();"><i class="fas fa-pen"></i><span class="skip_info">&nbsp;작성</span></button>
+								<button type="button" sec:authorize="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_USER')" class="write_box" onclick="writeBoard();"><i class="fas fa-pen"></i><span class="skip_info">&nbsp;작성하기</span></button>
 							</div>
 						</div>
 					</div>

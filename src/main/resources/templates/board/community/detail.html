@@ -139,8 +139,8 @@
 				<form class="form-horizontal form-view" onsubmit="return false;">
 					<div class="comment-write">
 						<div class="comment-input-group">
-							<textarea sec:authorize="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_USER')" id="content" class="form-control comment-input" placeholder="댓글은 누구나 편안하게 남겨주세요."></textarea><br>
-							<textarea sec:authorize="hasRole('ROLE_GUEST')" id="content" class="form-control comment-input" disabled="disabled"></textarea><br>
+							<textarea sec:authorize="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_USER')" id="content" class="form-control comment-input" placeholder="댓글은 누구나 편안하게 남겨주세요."></textarea>
+							<textarea sec:authorize="hasRole('ROLE_GUEST')" id="content" class="form-control comment-input" disabled="disabled"></textarea>
 							<div th:if="${board.boardSeq == '2'}">
 								<span class="star-name">별점</span>
 								<span id="star" class="star">
@@ -148,10 +148,10 @@
 									<span>★★★★★</span>
 									<input id="rating" type="range" oninput="drawStar(this)" value="1" step="1" min="0" max="10">
 								</span>
-								<button sec:authorize="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_USER')" class="btn btn-primary community-btn" th:onclick="insertComment([[ ${board.id} ]]);">댓글작성</button>
+								<button sec:authorize="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_USER')" class="comment-btn" th:onclick="insertComment([[ ${board.id} ]]);">댓글작성</button>
 							</div>
 							<div th:unless="${board.boardSeq == '2'}">
-								<button sec:authorize="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_USER')" class="btn btn-primary community-btn" th:onclick="insertComment([[ ${board.id} ]]);">댓글작성</button>
+								<button sec:authorize="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_USER')" class="comment-btn" th:onclick="insertComment([[ ${board.id} ]]);">댓글작성</button>
 							</div>
 							<span sec:authorize="hasRole('ROLE_GUEST')" style="display: inline-flex; align-items: center; transform: translate(10%, -310%);">
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 w-5 shrink-0 text-gray-400 group-hover:text-gray-500">
