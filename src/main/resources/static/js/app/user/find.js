@@ -44,12 +44,7 @@ $('#findUserId').on('click' ,function() {
 		dataType: "json",
 		success: function(data) {
 			if(data.result == "false") {
-				swal.fire({
-					title: '에러',
-					icon: 'error',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인'
-				});
+				toastr.warning('다시 한 번 시도해주세요.');
 			} else if(data.result == "true") {
 				swal.fire({
 					title: '아이디를 찾았습니다.',
@@ -61,13 +56,12 @@ $('#findUserId').on('click' ,function() {
 			}
 		},
 		error: function(data) {
-			swal.fire({
-				text: '잠시 후 재시도 바랍니다.',
-				footer: '서버와의 통신 에러입니다.',
-				icon: 'error',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인'
-			});
+			toastr.options = {
+				progressBar: true,
+			 	showMethod: 'slideDown',
+			 	timeOut: 1500
+			};
+			toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 		}
 	});
 });
@@ -77,20 +71,10 @@ $('#findUserPwd').on('click' ,function() {
 	const findPwdEmail = document.getElementById('findPwdEmail').value;
 	
 	if( findPwdId == null || findPwdId == '' ) {
-		swal.fire({
-			text: '아이디를 입력하세요.',
-			icon: 'warning',
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: '확인'
-		});
+		toastr.warning('아이디를 입력하세요.');
 		$("#findPwdId").focus();
 	} else if( findPwdEmail == null || findPwdEmail == '' ) {
-		swal.fire({
-			text: '이메일을 입력하세요.',
-			icon: 'warning',
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: '확인'
-		});
+		toastr.warning('이메일을 입력하세요.');
 		$("#findPwdEmail").focus();
 	} else {
 		$.ajax({
@@ -101,29 +85,18 @@ $('#findUserPwd').on('click' ,function() {
 			dataType: "json",
 			success: function(data) {
 				if(data.result == "false") {
-					swal.fire({
-						text: '등록된 아이디나 이메일이 아니거나 입력한 정보가 일치하지 않습니다.',
-						icon: 'warning',
-						confirmButtonColor: '#3085d6',
-						confirmButtonText: '확인'
-					});
+					toastr.warning('입력한 정보가 일치하지 않습니다.');
 				} else if(data.result == "true") {
-					swal.fire({
-						text: '계정 이메일로 임시 비밀번호가 전송 되었습니다.',
-						icon: 'success',
-						confirmButtonColor: '#3085d6',
-						confirmButtonText: '확인'
-					});
+					toastr.success('이메일로 임시 비밀번호가 전송되었습니다.');
 				}
 			},
 			error: function(data) {
-				swal.fire({
-					text: '잠시 후 재시도 바랍니다.',
-					footer: '서버와의 통신 에러입니다.',
-					icon: 'error',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인'
-				});
+				toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 			}
 		});
 	}

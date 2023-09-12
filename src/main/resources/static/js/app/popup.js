@@ -34,12 +34,7 @@ $(document).ready(function() {
         var name = $("input[name='name']").val();
 
         if(name == "") {
-			swal.fire({
-				text: '채팅방 이름을 입력하세요.',
-				icon: 'warning',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인'
-			});
+			toastr.warning('채팅방 이름을 입력하세요.');
 		} else {
             var roomName = $("#roomName").val();
 	
@@ -49,17 +44,15 @@ $(document).ready(function() {
 				dataType: "JSON",
 				data: { "name": roomName },
 				success: function() {
-					
 					loadChatRoom();
 				},
 				error: function() {
-					swal.fire({
-						text: '잠시 후 재시도 바랍니다.',
-						footer: '서버와의 통신 에러입니다.',
-						icon: 'error',
-						confirmButtonColor: '#3085d6',
-						confirmButtonText: '확인'
-					});
+					toastr.options = {
+						progressBar: true,
+					 	showMethod: 'slideDown',
+					 	timeOut: 1500
+					};
+					toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 				}
 			});
 		}
@@ -84,13 +77,17 @@ function openChatRoom() {
 				location.href = '/' + userId + '/account';
 			}
 		});
-	} else if(role == 'USER' || role == 'ADMIN' || role == 'SUPERADMIN') {
-		// 게스트 이외의 인증된 권한
-		// 채팅 팝업 열림
-		document.querySelector(".background__chat").className = "background__chat show__chat";
-		
-		// 채팅방 리스트 조회
-		loadChatRoom();
+	} else {
+		if(certified != null) {
+			// 게스트 이외의 인증된 권한
+			// 채팅 팝업 열림
+			document.querySelector(".background__chat").className = "background__chat show__chat";
+			
+			// 채팅방 리스트 조회
+			loadChatRoom();
+		} else {
+			toastr.warning('계정 인증이 필요한 메뉴입니다.');
+		}
 	}
 }
 
@@ -116,13 +113,12 @@ function loadChatRoom() {
             });
         },
         error: function() {
-        	swal.fire({
-				text: '잠시 후 재시도 바랍니다.',
-				footer: '서버와의 통신 에러입니다.',
-				icon: 'error',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인'
-			});
+        	toastr.options = {
+				progressBar: true,
+			 	showMethod: 'slideDown',
+			 	timeOut: 1500
+			};
+			toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
         }
 	});
 }

@@ -69,6 +69,8 @@
 	<th:block layout:fragment="script">
 		<!-- SETTINGS -->
 		<script th:inline="javascript">
+			var certified = [[ ${certified} ]];
+			var role = [[ ${role} ]];
 			var list = [[ ${userList.list} ]];
 			var pagination = [[ ${userList.pagination} ]];
 			var params = [[ ${params} ]];

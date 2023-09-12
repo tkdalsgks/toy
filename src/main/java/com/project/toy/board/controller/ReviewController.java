@@ -25,6 +25,8 @@ import com.project.toy.common.dto.MessageDTO;
 import com.project.toy.common.dto.SearchDTO;
 import com.project.toy.likes.dto.LikesDTO;
 import com.project.toy.paging.PagingResponse;
+import com.project.toy.security.service.SecurityService;
+import com.project.toy.user.dto.CertifiedUserDTO;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UserDTO;
 import com.project.toy.user.service.UserService;
@@ -40,6 +42,8 @@ public class ReviewController {
 	
 	private final UserService userService;
 	private final ReviewService reviewService;
+	private final SecurityService securityService;
+	
 	private final HttpSession session;
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -62,16 +66,23 @@ public class ReviewController {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("role", user.getRole());
+			
+			// 계정 인증 여부
+			CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+			if(certified != null) {
+				model.addAttribute("certified", certified.getUserId());				
+			}
 		}
 		
+		// 일반 게시글 리스트
 		PagingResponse<ReviewResponseDTO> reviews = reviewService.findAll(params);
 		model.addAttribute("reviews", reviews);
 		
-		
+		// 공지 게시글 리스트
 		List<ReviewResponseDTO> notice = reviewService.findNotice(params);
 		model.addAttribute("notice", notice);
 		 
-		
+		// 좋아요 게시글 리스트
 		List<LikesDTO> likes = reviewService.findLikesBestReview(params);
 		model.addAttribute("likes", likes);
 		
@@ -96,6 +107,12 @@ public class ReviewController {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("role", user.getRole());
+			
+			// 계정 인증 여부
+			CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+			if(certified != null) {
+				model.addAttribute("certified", certified.getUserId());				
+			}
 		}
 		
 		if(id != null) {

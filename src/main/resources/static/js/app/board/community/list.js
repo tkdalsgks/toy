@@ -298,7 +298,11 @@ function refreshBoard() {
 
 // 게시글 작성하기
 function writeBoard() {
-	location.href = '/community/write';
+	if(certified == null) {
+		toastr.warning('계정 인증이 필요한 기능입니다.');
+	} else {
+		location.href = '/community/write';
+	}
 }
 
 // 검색 박스 생성

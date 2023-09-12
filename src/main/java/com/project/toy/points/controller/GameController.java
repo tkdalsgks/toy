@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.JsonObject;
 import com.project.toy.points.dto.GoodsDTO;
 import com.project.toy.points.service.PointsService;
+import com.project.toy.security.service.SecurityService;
+import com.project.toy.user.dto.CertifiedUserDTO;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UserDTO;
 import com.project.toy.user.service.UserService;
@@ -28,6 +30,7 @@ public class GameController {
 	
 	private final UserService userService;
 	private final PointsService pointsService;
+	private final SecurityService securityService;
 	
 	private final HttpServletRequest request;
 	private final HttpSession session;
@@ -41,6 +44,12 @@ public class GameController {
 		String referer = request.getHeader("referer");
 		model.addAttribute("referer", referer);
 		
+		// 계정 인증 여부
+		CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+		if(certified != null) {
+			model.addAttribute("certified", certified.getUserId());				
+		}
+		
 		return "points/game/box";
 	}
 	
@@ -52,6 +61,12 @@ public class GameController {
 		
 		String referer = request.getHeader("referer");
 		model.addAttribute("referer", referer);
+		
+		// 계정 인증 여부
+		CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+		if(certified != null) {
+			model.addAttribute("certified", certified.getUserId());				
+		}
 		
 		// 도장 개수
 		int goodsCntUser1 = pointsService.selectGoodsUser1(params);
@@ -106,5 +121,50 @@ public class GameController {
 		}
 		
 		return jsonObj;
+	}
+	
+	@GetMapping("/bet")
+	public String bet(GoodsDTO params, Model model) {
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
+		model.addAttribute("userId", user.getUserId());
+		
+		// 계정 인증 여부
+		CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+		if(certified != null) {
+			model.addAttribute("certified", certified.getUserId());				
+		}
+		
+		return "points/game/betting/betting";
+	}
+	
+	@GetMapping("/round1")
+	public String round1(GoodsDTO params, Model model) {
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
+		model.addAttribute("userId", user.getUserId());
+		
+		// 계정 인증 여부
+		CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+		if(certified != null) {
+			model.addAttribute("certified", certified.getUserId());				
+		}
+		
+		return "points/game/betting/round1";
+	}
+	
+	@GetMapping("/round2")
+	public String round2(GoodsDTO params, Model model) {
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
+		model.addAttribute("userId", user.getUserId());
+		
+		// 계정 인증 여부
+		CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+		if(certified != null) {
+			model.addAttribute("certified", certified.getUserId());				
+		}
+		
+		return "points/game/betting/round2";
 	}
 }

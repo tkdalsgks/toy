@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.toy.gpt.dto.GptClient;
+import com.project.toy.security.service.SecurityService;
+import com.project.toy.user.dto.CertifiedUserDTO;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UserDTO;
 import com.project.toy.user.service.UserService;
@@ -28,6 +30,7 @@ public class GptController {
 	
     private final GptClient gptClient;
     private final UserService userService;
+    private final SecurityService securityService;
     
     private final HttpSession session;
     
@@ -41,6 +44,12 @@ public class GptController {
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		if(auth != null) {
 			model.addAttribute("role", user.getRole());
+			
+			// 계정 인증 여부
+			CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+			if(certified != null) {
+				model.addAttribute("certified", certified.getUserId());				
+			}
 		}
 		
     	return "gpt/chatgpt";

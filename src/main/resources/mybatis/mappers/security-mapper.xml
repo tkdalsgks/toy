@@ -53,4 +53,8 @@
 		SELECT * FROM toy.T_PERSON WHERE USER_NICKNAME = #{ userNickname }
 	</select>
 	
+	<select id="selectCertifiedUser" resultType="CertifiedUserDTO">
+		SELECT * FROM toy.T_PERSON_CERTIFIED WHERE CERTIFIED_YN = 'Y' AND USER_ID = #{ userId }
+	</select>
+	
 </mapper>

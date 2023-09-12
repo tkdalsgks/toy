@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.project.toy.common.dto.LoginLogDTO;
+import com.project.toy.user.dto.CertifiedUserDTO;
 import com.project.toy.user.dto.UserDTO;
 
 @Mapper
@@ -27,4 +28,5 @@ public interface SecurityMapper {
 	public void saveUser(UserDTO userDTO);
 	
 	public void insertLoginLog(LoginLogDTO loginLogDTO);
+	public CertifiedUserDTO selectCertifiedUser(String userId);
 }

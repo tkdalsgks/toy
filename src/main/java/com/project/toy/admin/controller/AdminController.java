@@ -30,6 +30,8 @@ import com.project.toy.common.dto.SearchDTO;
 import com.project.toy.paging.PagingResponse;
 import com.project.toy.points.dto.PointsResponseDTO;
 import com.project.toy.points.service.PointsService;
+import com.project.toy.security.service.SecurityService;
+import com.project.toy.user.dto.CertifiedUserDTO;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UpdateUserDTO;
 import com.project.toy.user.dto.UserDTO;
@@ -45,6 +47,7 @@ public class AdminController {
 	private final AdminService adminService;
 	private final UserService userService;
 	private final PointsService pointsService;
+	private final SecurityService securityService;
 	
 	private final HttpSession session;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -57,6 +60,7 @@ public class AdminController {
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
+		model.addAttribute("role", user.getRole());
 		
 		if(auth != null) {
 			PagingResponse<UserDTO> userList = adminService.selectListUser(params);
@@ -65,6 +69,12 @@ public class AdminController {
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("userList", userList);
 			model.addAttribute("authList", authList);
+			
+			// 계정 인증 여부
+			CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+			if(certified != null) {
+				model.addAttribute("certified", certified.getUserId());				
+			}
 			
 			//String rawPwd = "user01@#";
         	//String encPwd = bCryptPasswordEncoder.encode(rawPwd);
@@ -108,6 +118,12 @@ public class AdminController {
 		// 포인트 적립내역
 		List<PointsResponseDTO> earningsPoints = pointsService.earningsPoints(userId);
 		model.addAttribute("earningsPoints", earningsPoints);
+		
+		// 계정 인증 여부
+		CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+		if(certified != null) {
+			model.addAttribute("certified", certified.getUserId());				
+		}
 		
 		return "admin/detail";
 	}

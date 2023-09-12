@@ -71,12 +71,7 @@ function saveUser() {
 			});
 		}
 	} else {
-		swal.fire({
-			text: '최고 관리자만 설정 가능한 기능입니다.',
-			icon: 'error',
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: '확인'
-		});
+		toastr.error('최고 관리자만 설정 가능합니다.');
 	}
 }
 

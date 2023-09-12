@@ -326,17 +326,13 @@ $('#joinSubmit').click(function() {
 					"userNickname" : $("#userNickname").val(),
 					"userEmail" : $("#userEmail").val() },
 			success : function(data) {
-				swal.fire({
-					title: '회원가입이 완료되었습니다.',
-					text: '추가 인증으로 OYEZ의 모든 콘텐츠를 이용해보세요.',
-					icon: 'success',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인'
-				}).then((result) => {
-					if(result.isConfirmed) {
-						location.href = "/";
-					}
-				});
+				toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.options.onHidden = function() { location.href = "/"; };
+				toastr.success('회원가입이 완료되었습니다.');
 			},
 			error: function(data) {
 				toastr.options = {

@@ -20,7 +20,8 @@ import com.project.toy.chat.dto.ChatRoomDTO;
 import com.project.toy.chat.service.ChatRoomService;
 import com.project.toy.common.dto.MessageDTO;
 import com.project.toy.email.service.EmailService;
-import com.project.toy.security.mapper.SecurityMapper;
+import com.project.toy.security.service.SecurityService;
+import com.project.toy.user.dto.CertifiedUserDTO;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UserDTO;
 import com.project.toy.user.service.UserService;
@@ -35,7 +36,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityController {
 	
 	private final UserService userService;
-	private final SecurityMapper securityMapper;
+	private final SecurityService securityService;
 	private final ChatRoomService chatRoomService;
 	private final EmailService emailService;
 	
@@ -52,6 +53,12 @@ public class SecurityController {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("role", user.getRole());
+			
+			// 계정 인증 여부
+			CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+			if(certified != null) {
+				model.addAttribute("certified", certified.getUserId());				
+			}
 			
 			log.info("##### Main Page __ Call {} #####", user.getUserId());
 			
@@ -91,7 +98,7 @@ public class SecurityController {
 		
 		MessageDTO message;
 		
-		if(securityMapper.findByUserId(userId) != null) {
+		if(securityService.findByUserId(userId) != null) {
 			message = new MessageDTO("회원가입 오류 !\n회원가입을 처음부터 다시 진행해주세요.", "/join", RequestMethod.POST, null);
 		} else {
 			userService.saveUser(userDTO);
@@ -106,7 +113,7 @@ public class SecurityController {
 	public Map<String, String> checkId(String userId) {
 		Map<String, String> map = new HashMap<String, String>();
 		
-		if(securityMapper.findByUserId(userId) == null) {
+		if(securityService.findByUserId(userId) == null) {
 			log.info("##### Join USER_ID {} #####", userId);
 			
 			map.put("result", "true");
@@ -125,7 +132,7 @@ public class SecurityController {
 	public Map<String, String> checkNickname(String userNickname) {
 		Map<String, String> map = new HashMap<String, String>();
 		
-		if(securityMapper.findByUserNickname(userNickname) == null) {
+		if(securityService.findByUserNickname(userNickname) == null) {
 			log.info("##### Join USER_ID {} #####", userNickname);
 			
 			map.put("result", "true");
@@ -145,7 +152,7 @@ public class SecurityController {
 	public Map<String, String> checkEmail(String userEmail) {
 		Map<String, String> map = new HashMap<String, String>();
 		
-		if(securityMapper.findByUserEmail(userEmail) == null) {
+		if(securityService.findByUserEmail(userEmail) == null) {
 			log.info("##### Join USER_ID {} #####", userEmail);
 			
 			map.put("result", "true");

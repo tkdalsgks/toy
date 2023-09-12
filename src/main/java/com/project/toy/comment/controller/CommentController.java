@@ -121,6 +121,7 @@ public class CommentController {
 			if(user.getUserId().equals(comment.getWriterId())) {
 				boolean update = commentService.updateComment(params);
 				jsonObj.addProperty("result", update);
+				jsonObj.addProperty("message", "댓글이 수정되었습니다.");
 			} else {
 				jsonObj.addProperty("result", "isUnauthorized");
 				jsonObj.addProperty("message", "권한이 없는 댓글입니다.");

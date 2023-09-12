@@ -43,12 +43,7 @@ function equals(field1, field2, fieldName) {
 			message = fieldName + "가 일치하지 않습니다.";
 		}
 		field2.focus();
-		swal.fire({
-			text: message,
-			icon: 'warning',
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: '확인'
-		});
+		toastr.warning(message);
 		return false;
 	}
 }
@@ -66,12 +61,7 @@ function isValid(field, fieldName, focusField) {
 	if (isEmpty(field.value) == true) {
 		/* 종성으로 조사(을 또는 를) 구분 */
 		var message = (charToUnicode(fieldName) > 0) ? fieldName + "을 입력하세요." : fieldName + "를 입력하세요.";
-		swal.fire({
-			title: message,
-			icon: 'warning',
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: '확인'
-		});
+		toastr.warning(message);
 		throw new Error( '빈칸을 확인해주세요.' );
 	} else {
 		return true;

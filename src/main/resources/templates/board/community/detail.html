@@ -138,25 +138,27 @@
 
 				<form class="form-horizontal form-view" onsubmit="return false;">
 					<div class="comment-write">
-						<div class="comment-input-group">
-							<textarea sec:authorize="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_USER')" id="content" class="form-control comment-input" placeholder="댓글은 누구나 편안하게 남겨주세요."></textarea>
-							<textarea sec:authorize="hasRole('ROLE_GUEST')" id="content" class="form-control comment-input" disabled="disabled"></textarea>
-							<div th:if="${board.boardSeq == '2'}">
-								<span class="star-name">별점</span>
-								<span id="star" class="star">
-									★★★★★
-									<span>★★★★★</span>
-									<input id="rating" type="range" oninput="drawStar(this)" value="1" step="1" min="0" max="10">
+						<div th:if="${certified != null}" class="comment-input-group">
+							<textarea id="content" class="form-control comment-input" placeholder="댓글은 누구나 편안하게 남겨주세요."></textarea>
+							<div th:if="${board.boardSeq == '2' && certified != null}" style="margin-top: 1rem; align-items: baseline;">
+								<span class="star-name">
+									<span id="star" class="star">
+										★★★★★
+										<span>★★★★★</span>
+										<input id="rating" type="range" oninput="drawStar(this)" value="0" step="1" min="0" max="10">
+									</span>
 								</span>
-								<button sec:authorize="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_USER')" class="comment-btn" th:onclick="insertComment([[ ${board.id} ]]);">댓글작성</button>
+								<button th:if="${certified != null}" class="comment-btn" th:onclick="insertComment([[ ${board.id} ]]);">댓글작성</button>
 							</div>
-							<div th:unless="${board.boardSeq == '2'}">
-								<button sec:authorize="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_USER')" class="comment-btn" th:onclick="insertComment([[ ${board.id} ]]);">댓글작성</button>
+							<div th:unless="${board.boardSeq == '2'}" style="margin-top: 1rem;">
+								<button th:if="${certified != null}" class="comment-btn" th:onclick="insertComment([[ ${board.id} ]]);">댓글작성</button>
 							</div>
-							<span sec:authorize="hasRole('ROLE_GUEST')" style="display: inline-flex; align-items: center; transform: translate(10%, -310%);">
+						</div>
+						<div th:unless="${certified != null}" class="comment-input-group">
+							<span style="margin-left: .5rem;">
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-5 w-5 shrink-0 text-gray-400 group-hover:text-gray-500">
 									<path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"></path></svg>
-								<span style="margin-left: .25rem;"> 댓글을 쓰려면 <a th:onclick="goSettings([[ ${userId} ]]);" style="color: blue; text-decoration: underline; cursor: pointer;">이메일 인증</a>이 필요합니다.</span>
+								<span style="margin-left: .25rem;"> 댓글을 작성하려면 <a th:onclick="goSettings([[ ${userId} ]]);" style="color: blue; text-decoration: underline; cursor: pointer;">계정 인증</a>이 필요합니다.</span>
 							</span>
 						</div>
 						<div class="comment-input-btn"></div>
@@ -172,6 +174,7 @@
 		<!-- SETTINGS -->
 		<script th:inline="javascript">
 			var referer = [[ ${referer} ]];
+			var certified = [[ ${certified} ]];
 			var role = [[ ${role} ]];
 			var id = [[ ${board.id} ]];
 			var userId = [[ ${userId} ]];

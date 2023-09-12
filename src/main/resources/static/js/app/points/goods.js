@@ -166,7 +166,7 @@ user1.addEventListener('click', (event) => {
 	const userId = 'dwc06131';
 	if(goodsCntUser1 < 10) {
 		swal.fire({
-			text: '도장을 찍을까요?',
+			title: '도장을 찍을까요?',
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
@@ -179,12 +179,7 @@ user1.addEventListener('click', (event) => {
 			}
 		});
 	} else {
-		swal.fire({
-			text: '도장을 모두 채웠습니다.',
-			icon: 'warning',
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: '확인'
-		});
+		toastr.success('도장을 모두 채웠습니다.');
 	}
 });
 
@@ -205,12 +200,7 @@ user2.addEventListener('click', (event) => {
 			}
 		});
 	} else {
-		swal.fire({
-			text: '도장을 모두 채웠습니다.',
-			icon: 'warning',
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: '확인'
-		});
+		toastr.success('도장을 모두 채웠습니다.');
 	}
 });
 
@@ -228,12 +218,7 @@ function saveGoods(userId) {
 		data: JSON.stringify(params),
 		success: function(response) {
 			if(response.result == false) {
-				swal.fire({
-					text: '포인트 적립에 실패했습니다.',
-    				icon: 'warning',
-    				confirmButtonColor: '#3085d6',
-    				confirmButtonText: '확인'
-    			});
+				toastr.warning('포인트 적립에 실패했습니다.');
 				return false;
 			} else if(response.result == true) {
 				if(response.goodsCntUser1 == 1) {
@@ -400,13 +385,12 @@ function saveGoods(userId) {
 			}
 		},
 		error: function(xhr, status, error) {
-			swal.fire({
-				text: '잠시 후 재시도 바랍니다.',
-				footer: '서버와의 통신 에러입니다.',
-				icon: 'error',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인'
-			});
+			toastr.options = {
+				progressBar: true,
+			 	showMethod: 'slideDown',
+			 	timeOut: 1500
+			};
+			toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 			return false;
 		}
 	});
@@ -444,25 +428,19 @@ function resetGoods(userId) {
 		data: JSON.stringify(params),
 		success: function(response) {
 			if(response.result == false) {
-				swal.fire({
-					text: '리셋에 실패했습니다.',
-    				icon: 'warning',
-    				confirmButtonColor: '#3085d6',
-    				confirmButtonText: '확인'
-    			});
+				toastr.warning('리셋에 실패했습니다.');
 				return false;
 			} else if(response.result == true) {
 				location.reload();
 			}
 		},
 		error: function(xhr, status, error) {
-			swal.fire({
-				text: '잠시 후 재시도 바랍니다.',
-				footer: '서버와의 통신 에러입니다.',
-				icon: 'error',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인'
-			});
+			toastr.options = {
+				progressBar: true,
+			 	showMethod: 'slideDown',
+			 	timeOut: 1500
+			};
+			toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 			return false;
 		}
 	});

@@ -33,6 +33,8 @@ import com.project.toy.comment.dto.CommentResponseDTO;
 import com.project.toy.email.service.EmailService;
 import com.project.toy.points.dto.PointsResponseDTO;
 import com.project.toy.points.service.PointsService;
+import com.project.toy.security.service.SecurityService;
+import com.project.toy.user.dto.CertifiedUserDTO;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UpdateUserDTO;
 import com.project.toy.user.dto.UserDTO;
@@ -49,6 +51,7 @@ public class UserController {
 	private final EmailService emailService;
 	private final AdminService adminService;
 	private final PointsService pointsService;
+	private final SecurityService securityService;
 	
 	private final HttpSession session;
 	
@@ -66,6 +69,12 @@ public class UserController {
 			model.addAttribute("userEmail", user.getUserEmail());
 			model.addAttribute("provider", user.getProvider());
 			model.addAttribute("role", user.getRole());
+			
+			// 계정 인증 여부
+			CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+			if(certified != null) {
+				model.addAttribute("certified", certified.getUserId());				
+			}
 		}
 		
 		if(user.getProfileImg() == null) {
@@ -89,6 +98,12 @@ public class UserController {
 			model.addAttribute("userEmail", user.getUserEmail());
 			model.addAttribute("provider", user.getProvider());
 			model.addAttribute("role", user.getRole());
+			
+			// 계정 인증 여부
+			CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+			if(certified != null) {
+				model.addAttribute("certified", certified.getUserId());				
+			}
 		}
 		
 		return "user/account";
@@ -154,6 +169,12 @@ public class UserController {
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		model.addAttribute("userId", user.getUserId());
 		model.addAttribute("role", user.getRole());
+		
+		// 계정 인증 여부
+		CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+		if(certified != null) {
+			model.addAttribute("certified", certified.getUserId());				
+		}
 		
 		// 게시글 리스트
 		AdminDTO admin = adminService.findByUserId(userId);
