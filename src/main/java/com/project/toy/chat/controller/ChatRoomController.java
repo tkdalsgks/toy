@@ -19,6 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.google.gson.JsonObject;
 import com.project.toy.chat.dto.ChatRoomDTO;
 import com.project.toy.chat.service.ChatRoomService;
+import com.project.toy.security.service.SecurityService;
+import com.project.toy.user.dto.CertifiedUserDTO;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UserDTO;
 import com.project.toy.user.service.UserService;
@@ -35,6 +37,7 @@ public class ChatRoomController {
 
 	private final UserService userService;
 	private final ChatRoomService chatRoomService;
+	private final SecurityService securityService;
 	
 	private final HttpSession session;
 	
@@ -54,10 +57,18 @@ public class ChatRoomController {
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
+		if(auth != null) {
+			model.addAttribute("userId", user.getUserId());
+			model.addAttribute("user", user.getUserNickname());
+			
+			// 계정 인증 여부
+			CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+			if(certified != null) {
+				model.addAttribute("certified", certified.getUserId());				
+			}
+		}
 		
-		model.addAttribute("userId", user.getUserId());
-		model.addAttribute("user", user.getUserNickname());
-		
+		// 채팅방 리스트
 		List<ChatRoomDTO> roomList = chatRoomService.findAllRooms();
 		model.addAttribute("roomList", roomList);
 		
@@ -110,6 +121,12 @@ public class ChatRoomController {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("role", user.getRole());
+			
+			// 계정 인증 여부
+			CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+			if(certified != null) {
+				model.addAttribute("certified", certified.getUserId());				
+			}
 		}
 		
 		model.addAttribute("listchat", chatRoomService.listChatMessage(roomId));

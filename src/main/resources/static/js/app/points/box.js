@@ -89,13 +89,12 @@ function savePoints(result) {
 			}
 		},
 		error: function(xhr, status, error) {
-			swal.fire({
-				text: '잠시 후 재시도 바랍니다.',
-				footer: '서버와의 통신 에러입니다.',
-				icon: 'error',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인'
-			});
+			toastr.options = {
+				progressBar: true,
+			 	showMethod: 'slideDown',
+			 	timeOut: 1500
+			};
+			toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 			return false;
 		}
 	});

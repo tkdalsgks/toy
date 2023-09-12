@@ -29,7 +29,7 @@ function deleteBoard() {
 	const userId = document.getElementById('userId').value;
 	
 	swal.fire({
-		text: '게시글을 삭제할까요?',
+		title: '게시글을 삭제할까요?',
 		icon: 'warning',
 		showCancelButton: true,
 		confirmButtonColor: '#3085d6',
@@ -39,12 +39,7 @@ function deleteBoard() {
 	}).then((result) => {
 		if(result.isConfirmed) {
 			if(writer != userId) {
-        		swal.fire({
-        			text: '권한이 없는 게시글입니다.',
-    				icon: 'warning',
-    				confirmButtonColor: '#3085d6',
-    				confirmButtonText: '확인'
-    			});
+				toastr.warning('권한이 없는 게시글입니다.');
         	} else {
         		let inputHtml = '';
 	            new URLSearchParams(location.search).forEach((value, key) => {
@@ -79,12 +74,7 @@ function goChangePage() {
 	const userId = document.getElementById('userId').value;
 	
 	if(writer != userId) {
-		swal.fire({
-			text: '권한이 없는 게시글입니다.',
-			icon: 'warning',
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: '확인'
-		});
+		toastr.warning('권한이 없는 게시글입니다.');
 	} else {
         location.href = '/' + id + '/modify' + location.search;
 	}
@@ -126,43 +116,75 @@ function insertComment(boardId) {
 	
 	if(content == "") {
 		window.ckeditor_write.focus();
+		toastr.warning('댓글을 작성하세요.');
 		return false;
 	} else {
-		$.ajax({
-			url: comment_uri,
-			type: "POST",
-			headers: headers,
-			dataType: "json",
-			data: JSON.stringify(params),
-			success: function(response) {
-				if(response.result == false) {
-					swal.fire({
-						text: '댓글 등록에 실패했습니다.',
-	    				icon: 'warning',
-	    				confirmButtonColor: '#3085d6',
-	    				confirmButtonText: '확인'
-	    			});
-					return false;
-				} else {
-					// 포인트 적립
-					savePoints();
-					// 에디터 내용 초기화
-					window.ckeditor_write.setData("");
-					// 댓글 리스트 출력
-					printCommentList();
-				}
-			},
-			error: function(xhr, status, error) {
-				swal.fire({
-					text: '잠시 후 재시도 바랍니다.',
-					footer: '서버와의 통신 에러입니다.',
-					icon: 'error',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인'
+		if(boardSeq == 2) {
+			if(rating.value >= 1) {
+				$.ajax({
+					url: comment_uri,
+					type: "POST",
+					headers: headers,
+					dataType: "json",
+					data: JSON.stringify(params),
+					success: function(response) {
+						if(response.result == false) {
+							toastr.warning('댓글을 등록하지 못하였습니다.');
+							return false;
+						} else {
+							// 포인트 적립
+							savePoints();
+							// 에디터 내용 초기화
+							window.ckeditor_write.setData("");
+							// 댓글 리스트 출력
+							printCommentList();
+						}
+					},
+					error: function(xhr, status, error) {
+						toastr.options = {
+							progressBar: true,
+						 	showMethod: 'slideDown',
+						 	timeOut: 1500
+						};
+						toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
+						return false;
+					}
 				});
-				return false;
+			} else {
+				toastr.warning('별점을 입력하세요.');
+				return false;			
 			}
-		});
+		} else {
+			$.ajax({
+				url: comment_uri,
+				type: "POST",
+				headers: headers,
+				dataType: "json",
+				data: JSON.stringify(params),
+				success: function(response) {
+					if(response.result == false) {
+						toastr.warning('댓글을 등록하지 못하였습니다.');
+						return false;
+					} else {
+						// 포인트 적립
+						savePoints();
+						// 에디터 내용 초기화
+						window.ckeditor_write.setData("");
+						// 댓글 리스트 출력
+						printCommentList();
+					}
+				},
+				error: function(xhr, status, error) {
+					toastr.options = {
+						progressBar: true,
+					 	showMethod: 'slideDown',
+					 	timeOut: 1500
+					};
+					toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
+					return false;
+				}
+			});
+		}
 	}
 }
 
@@ -192,32 +214,23 @@ function updateComment(id) {
 		data: JSON.stringify(params),
 		success: function(response) {
 			if (response.result == false) {
-				swal.fire({
-					text: '댓글 수정에 실패했습니다.',
-    				icon: 'warning',
-    				confirmButtonColor: '#3085d6',
-    				confirmButtonText: '확인'
-    			});
+				toastr.warning('댓글을 수정하지 못하였습니다.');
 				return false;
 			} else if(response.result == "isUnauthorized") {
-				swal.fire({
-					text: response.message,
-    				icon: 'warning',
-    				confirmButtonColor: '#3085d6',
-    				confirmButtonText: '확인'
-    			});
+				toastr.warning(response.message);
+			} else {
+				toastr.success(response.message);			
 			}
 			printCommentList();
 			$("#commentModal").modal("hide");
 		},
 		error: function(response) {
-			swal.fire({
-				text: '잠시 후 재시도 바랍니다.',
-				footer: '서버와의 통신 에러입니다.',
-				icon: 'error',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인'
-			});
+			toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 			return false;
 		}
 	});
@@ -228,7 +241,7 @@ function deleteComment(id) {
 	var uri = comment_uri + "/" + id;
 	
 	swal.fire({
-		text: '댓글을 삭제할까요?',
+		title: '댓글을 삭제할까요?',
 		icon: 'warning',
 		showCancelButton: true,
 		confirmButtonColor: '#3085d6',
@@ -246,39 +259,23 @@ function deleteComment(id) {
 				dataType: "json",
 				success: function(response) {
 					if (response.result == false) {
-						swal.fire({
-							text: '댓글 삭제에 실패했습니다.',
-		    				icon: 'warning',
-		    				confirmButtonColor: '#3085d6',
-		    				confirmButtonText: '확인'
-		    			});
+						toastr.warning('댓글을 삭제하지 못하였습니다.');
 						return false;
 					} else if(response.result == "isUnauthorized") {
-						swal.fire({
-							text: response.message,
-		    				icon: 'warning',
-		    				confirmButtonColor: '#3085d6',
-		    				confirmButtonText: '확인'
-		    			});
+						toastr.warning(response.message);
 					} else {
-						swal.fire({
-							text: response.message,
-		    				icon: 'warning',
-		    				confirmButtonColor: '#3085d6',
-		    				confirmButtonText: '확인'
-		    			});
+						toastr.success(response.message);
 					}
 					printCommentList();
 					$("#commentModal").modal("hide");							
 				},
 				error: function(xhr, status, error) {
-					swal.fire({
-						text: '잠시 후 재시도 바랍니다.',
-						footer: '서버와의 통신 에러입니다.',
-						icon: 'error',
-						confirmButtonColor: '#3085d6',
-						confirmButtonText: '확인'
-					});
+					toastr.options = {
+						progressBar: true,
+					 	showMethod: 'slideDown',
+					 	timeOut: 1500
+					};
+					toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 					return false;
 				}
 			});
@@ -441,33 +438,22 @@ function insertLikes(boardId) {
 		data: JSON.stringify(params),
 		success: function(response) {
 			if(response.todayLikes >= 5) {
-				swal.fire({
-					text: response.message,
-					icon: 'warning',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인'
-				});
+				toastr.warning(response.message);
 				return false;
 			} else if(response.result == false) {
-				swal.fire({
-					text: '게시글 좋아요에 실패했습니다.',
-					icon: 'warning',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인'
-				});
+				toastr.warning('다시 한 번 눌러주세요.');
 				return false;
 			} else {
-				window.location.reload(true);						
+				window.location.reload(true);
 			}
 		},
 		error: function(xhr, status, error) {
-			swal.fire({
-				text: '잠시 후 재시도 바랍니다.',
-				footer: '서버와의 통신 에러입니다.',
-				icon: 'error',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인'
-			});
+			toastr.options = {
+				progressBar: true,
+			 	showMethod: 'slideDown',
+			 	timeOut: 1500
+			};
+			toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 			return false;
 		}
 	});
@@ -491,25 +477,19 @@ function savePoints() {
 		data: JSON.stringify(params),
 		success: function(response) {
 			if(response.result == false) {
-				swal.fire({
-					text: '포인트 적립에 실패했습니다.',
-    				icon: 'warning',
-    				confirmButtonColor: '#3085d6',
-    				confirmButtonText: '확인'
-    			});
+				toastr.warning('포인트 적립에 실패했습니다.');
 				return false;
 			} else {
 				return true;
 			}
 		},
 		error: function(xhr, status, error) {
-			swal.fire({
-				text: '잠시 후 재시도 바랍니다.',
-				footer: '서버와의 통신 에러입니다.',
-				icon: 'error',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인'
-			});
+			toastr.options = {
+				progressBar: true,
+			 	showMethod: 'slideDown',
+			 	timeOut: 1500
+			};
+			toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 			return false;
 		}
 	});
@@ -526,7 +506,7 @@ function publicOrPrivate() {
 	}
 	
 	swal.fire({
-		text: privateYn + ' 게시글로 전환할까요?',
+		title: privateYn + ' 게시글로 전환할까요?',
 		icon: 'warning',
 		showCancelButton: true,
 		confirmButtonColor: '#3085d6',
@@ -543,13 +523,12 @@ function publicOrPrivate() {
 					history.go(-1);
 				},
 				error: function(xhr, status, error) {
-					swal.fire({
-						text: '잠시 후 재시도 바랍니다.',
-						footer: '서버와의 통신 에러입니다.',
-						icon: 'error',
-						confirmButtonColor: '#3085d6',
-						confirmButtonText: '확인'
-					});
+					toastr.options = {
+						progressBar: true,
+					 	showMethod: 'slideDown',
+					 	timeOut: 1500
+					};
+					toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 					return false;
 				}
 			});

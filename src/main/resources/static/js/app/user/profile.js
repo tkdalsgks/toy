@@ -4,12 +4,7 @@ function updateProfile(userId) {
 	const exp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
 	
 	if(!nickname.match(exp)) {
-		swal.fire({
-			text: '닉네임은 2~10자 사이의 한글, 영문, 숫자로 이루어져야 합니다.',
-			icon: 'warning',
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: '확인'
-		});
+		toastr.warning('닉네임은 2~10자 사이의 한글, 영문, 숫자로 이루어져야 합니다.');
     } else if(nickname.match(exp)) {
 		$.ajax({
 			url : "/check/nickname",
@@ -41,37 +36,22 @@ function updateProfile(userId) {
 								data: params,
 								success: function(response) {
 									if(response.result == false) {
-										swal.fire({
-											text: '내 정보 변경에 실패했습니다.',
-											icon: 'warning',
-											confirmButtonColor: '#3085d6',
-											confirmButtonText: '확인'
-										});
+										toastr.warning('내 정보 변경에 실패했습니다.');
 										return false;
 									} else if(response.result == 'exceedCount') {
-										swal.fire({
-											text: response.message,
-											icon: 'warning',
-											confirmButtonColor: '#3085d6',
-											confirmButtonText: '확인'
-										});
+										toastr.warning(response.message);
 										return false;
+									} else {
+										toastr.success('내 정보 변경을 완료했습니다.');
 									}
-									swal.fire({
-										text: '내 정보 변경을 완료했습니다.',
-										icon: 'success',
-										confirmButtonColor: '#3085d6',
-										confirmButtonText: '확인'
-									});
 								},
 								error: function(response) {
-									swal.fire({
-										text: '잠시 후 재시도 바랍니다.',
-										footer: '서버와의 통신 에러입니다.',
-										icon: 'error',
-										confirmButtonColor: '#3085d6',
-										confirmButtonText: '확인'
-									});
+									toastr.options = {
+										progressBar: true,
+									 	showMethod: 'slideDown',
+									 	timeOut: 1500
+									};
+									toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 									return false;
 								}
 							});
@@ -79,12 +59,7 @@ function updateProfile(userId) {
 					});
 				} else {
 					if($("#userNickname").val() == data.userNickname) {
-						swal.fire({
-							text: '이미 사용중인 닉네임입니다.',
-							icon: 'warning',
-							confirmButtonColor: '#3085d6',
-							confirmButtonText: '확인'
-						});
+						toastr.warning('이미 사용중인 닉네임입니다.');
 					} else {
 						swal.fire({
 							title: '회원정보를 변경할까요?',
@@ -109,37 +84,22 @@ function updateProfile(userId) {
 									data: params,
 									success: function(response) {
 										if(response.result == false) {
-											swal.fire({
-												text: '내 정보 변경에 실패했습니다.',
-												icon: 'warning',
-												confirmButtonColor: '#3085d6',
-												confirmButtonText: '확인'
-											});
+											toastr.warning('내 정보 변경에 실패했습니다.');
 											return false;
 										} else if(response.result == 'exceedCount') {
-											swal.fire({
-												text: response.message,
-												icon: 'warning',
-												confirmButtonColor: '#3085d6',
-												confirmButtonText: '확인'
-											});
+											toastr.warning(response.message);
 											return false;
+										} else {
+											toastr.success('내 정보 변경을 완료했습니다.');
 										}
-										swal.fire({
-											text: '내 정보 변경을 완료했습니다.',
-											icon: 'success',
-											confirmButtonColor: '#3085d6',
-											confirmButtonText: '확인'
-										});
 									},
 									error: function(response) {
-										swal.fire({
-											text: '잠시 후 재시도 바랍니다.',
-											footer: '서버와의 통신 에러입니다.',
-											icon: 'error',
-											confirmButtonColor: '#3085d6',
-											confirmButtonText: '확인'
-										});
+										toastr.options = {
+											progressBar: true,
+										 	showMethod: 'slideDown',
+										 	timeOut: 1500
+										};
+										toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 										return false;
 									}
 								});
@@ -151,13 +111,12 @@ function updateProfile(userId) {
 				}
 		    },
 			error: function(data) {
-				swal.fire({
-					text: '잠시 후 재시도 바랍니다.',
-					footer: '서버와의 통신 에러입니다.',
-					icon: 'error',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인'
-				});
+				toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 			}
 		});
 	}
@@ -181,12 +140,7 @@ $(function() {
 		const exp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 		
 		if(!email.match(exp)) {
-			swal.fire({
-				text: '올바르지 않은 이메일 형식입니다.',
-				icon: 'warning',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인'
-			});
+			toastr.warning('올바르지 않은 이메일 형식입니다.');
 	    	$('#check-email').prop('disabled', false);
 	    } else if(email.match(exp)) {
 	    	$.ajax({
@@ -216,31 +170,20 @@ $(function() {
 								$('#check-email-verify').prop('disabled', false);
 								$('#check-email').prop('disabled', true);
 								code = data;
-								swal.fire({
-									text: '인증번호가 전송되었습니다.',
-									icon: 'success',
-									confirmButtonColor: '#3085d6',
-									confirmButtonText: '확인'
-								});
+								toastr.success('인증번호가 전송되었습니다.');
 							},
 							error: function(data) {
-								swal.fire({
-									text: '잠시 후 재시도 바랍니다.',
-									footer: '서버와의 통신 에러입니다.',
-									icon: 'error',
-									confirmButtonColor: '#3085d6',
-									confirmButtonText: '확인'
-								});
+								toastr.options = {
+									progressBar: true,
+								 	showMethod: 'slideDown',
+								 	timeOut: 1500
+								};
+								toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 							}
 						});
 					} else {
 						if($("#userEmail").val() == data.userEmail) {
-							swal.fire({
-								text: '이미 사용중인 이메일입니다.',
-								icon: 'warning',
-								confirmButtonColor: '#3085d6',
-								confirmButtonText: '확인'
-							});
+							toastr.warning('이미 사용중인 이메일입니다.');
 						} else {
 							verify.style.display = 'flex';
 				        	
@@ -262,34 +205,27 @@ $(function() {
 									$('#check-email-verify').prop('disabled', false);
 									$('#check-email').prop('disabled', true);
 									code = data;
-									swal.fire({
-										text: '인증번호가 전송되었습니다.',
-										icon: 'success',
-										confirmButtonColor: '#3085d6',
-										confirmButtonText: '확인'
-									});
+									toastr.sucess('인증번호가 전송되었습니다.');
 								},
 								error: function(data) {
-									swal.fire({
-										text: '잠시 후 재시도 바랍니다.',
-										footer: '서버와의 통신 에러입니다.',
-										icon: 'error',
-										confirmButtonColor: '#3085d6',
-										confirmButtonText: '확인'
-									});
+									toastr.options = {
+										progressBar: true,
+									 	showMethod: 'slideDown',
+									 	timeOut: 1500
+									};
+									toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 								}
 							});
 						}
 					}
 			    },
 				error: function(data) {
-					swal.fire({
-						text: '잠시 후 재시도 바랍니다.',
-						footer: '서버와의 통신 에러입니다.',
-						icon: 'error',
-						confirmButtonColor: '#3085d6',
-						confirmButtonText: '확인'
-					});
+					toastr.options = {
+						progressBar: true,
+					 	showMethod: 'slideDown',
+					 	timeOut: 1500
+					};
+					toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 				}
 			});
 	    }
@@ -333,30 +269,19 @@ $(function() {
 					$('#saveProfile').prop('disabled', false);
 					$('#check-email-number').prop('disabled', true);
 					$('#check-email-verify').prop('disabled', true);
-					swal.fire({
-						text: '정상 인증되었습니다.',
-						icon: 'success',
-						confirmButtonColor: '#3085d6',
-						confirmButtonText: '확인'
-					});
+					toastr.success('정상 인증 되었습니다.');
 				} else {
 					isCertification = false;
-					swal.fire({
-						text: '인증번호를 정확하게 입력하세요.',
-						icon: 'warning',
-						confirmButtonColor: '#3085d6',
-						confirmButtonText: '확인'
-					});
+					toastr.warning('인증번호를 정확하게 입력하세요.');
 				}
 			},
 			error: function(result) {
-				swal.fire({
-					text: '잠시 후 재시도 바랍니다.',
-					footer: '서버와의 통신 에러입니다.',
-					icon: 'error',
-					confirmButtonColor: '#3085d6',
-					confirmButtonText: '확인'
-				});
+				toastr.options = {
+					progressBar: true,
+				 	showMethod: 'slideDown',
+				 	timeOut: 1500
+				};
+				toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 			}
 		});
 	});

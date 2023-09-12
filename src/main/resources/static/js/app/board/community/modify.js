@@ -57,12 +57,8 @@ function saveBoard() {
 	}
 	
 	if(ckeditor.getData() == '' || ckeditor.getData() == 0) {
-		swal.fire({
-			text: '내용을 입력하세요.',
-			icon: 'warning',
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: '확인'
-		});
+		window.ckeditor.focus();
+		toastr.warning('내용을 입력하세요.');
 		return false;
 	} else {
 		document.getElementById('saveBtn').disabled = true;

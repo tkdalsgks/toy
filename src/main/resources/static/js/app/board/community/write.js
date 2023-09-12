@@ -58,30 +58,16 @@ function saveBoard() {
 	}
 	
 	if(ckeditor.getData() == '' || ckeditor.getData() == 0) {
-		swal.fire({
-			title: '내용을 입력하세요.',
-			icon: 'warning',
-			confirmButtonColor: '#3085d6',
-			confirmButtonText: '확인'
-		}).then((result) => {
-			window.ckeditor.focus();
-			return false;
-		});
+		toastr.warning('내용을 입력하세요.');
+		ckeditor.editing.view.focus();
+		return false;
 	} else {
 		if(filter == 'NONE') {
-			swal.fire({
-				title: '필터를 선택하세요.',
-				icon: 'warning',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인'
-			});
+			toastr.warning('필터를 선택하세요.');
+			return false;
 		} else if(hashtag == null) {
-			swal.fire({
-				title: '해시태그를 입력하세요.',
-				icon: 'warning',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인'
-			});
+			toastr.warning('해시태그를 최소 1개 입력하세요.');
+			return false;
 		} else {
 			if(board == null) {
 				savePoints();
@@ -132,25 +118,19 @@ function savePoints() {
 		data: JSON.stringify(params),
 		success: function(response) {
 			if(response.result == false) {
-				swal.fire({
-					text: '포인트 적립에 실패했습니다.',
-    				icon: 'warning',
-    				confirmButtonColor: '#3085d6',
-    				confirmButtonText: '확인'
-    			});
+				toastr.warning('포인트 적립에 실패했습니다.');
 				return false;
 			} else {
 				return true;
 			}
 		},
 		error: function(xhr, status, error) {
-			swal.fire({
-				text: '잠시 후 재시도 바랍니다.',
-				footer: '서버와의 통신 에러입니다.',
-				icon: 'error',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인'
-			});
+			toastr.options = {
+				progressBar: true,
+			 	showMethod: 'slideDown',
+			 	timeOut: 1500
+			};
+			toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 			return false;
 		}
 	});
@@ -193,16 +173,8 @@ hashtagInput.addEventListener("keydown", (event) => {
 		event.preventDefault();
 		const tag = hashtagInput.value.trim();
 		if(cnt >= 3) {
-			swal.fire({
-				title: '갯수를 초과하였습니다.',
-				icon: 'warning',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인'
-			}).then((result) => {
-				if(result.isConfirmed) {
-					hashtagInput.value = null;
-				}
-			});
+			toastr.warning('작성 갯수를 초과했습니다.');
+			hashtagInput.value = null;
 		} else {
 			if(tag) {
 				addHashtag();

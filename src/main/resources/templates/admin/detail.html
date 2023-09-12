@@ -221,6 +221,7 @@
 	<th:block layout:fragment="script">
 		<!-- SETTINGS -->
 		<script th:inline="javascript">
+			var certified = [[ ${certified} ]];
 			var role = [[ ${role} ]];
 			var admin_userId = [[ ${admin.userId} ]];
 		    var admin_userNickname = [[ ${admin.userNickname} ]];

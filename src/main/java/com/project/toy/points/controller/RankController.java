@@ -13,10 +13,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.project.toy.points.dto.RankDTO;
 import com.project.toy.points.service.PointsService;
+import com.project.toy.security.service.SecurityService;
+import com.project.toy.user.dto.CertifiedUserDTO;
 import com.project.toy.user.dto.SessionUser;
 import com.project.toy.user.dto.UserDTO;
 import com.project.toy.user.service.UserService;
@@ -29,6 +30,7 @@ public class RankController {
 	
 	private final PointsService pointsService;
 	private final UserService userService;
+	private final SecurityService securityService;
 	
 	private final HttpSession session;
 	
@@ -43,6 +45,12 @@ public class RankController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
+			
+			// 계정 인증 여부
+			CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
+			if(certified != null) {
+				model.addAttribute("certified", certified.getUserId());				
+			}
 		}
 		
 		// 활동점수 랭킹

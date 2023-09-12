@@ -28,6 +28,7 @@
 	<th:block layout:fragment="script">
 		<!-- SETTINGS -->
 		<script th:inline="javascript">
+			var certified = [[ ${certified} ]];
 			var role = [[ ${role} ]];
 			var userId = [[ ${userId} ]];
 		</script>

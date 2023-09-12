@@ -16,21 +16,15 @@ function certifiedEmail(userId) {
 		dataType: "json",
 		data: params,
 		success: function(response) {
-			swal.fire({
-				text: '등록된 이메일로 인증 링크를 보냈습니다.',
-				icon: 'success',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인'
-			});
+			toastr.success('이메일로 인증링크를 보냈습니다.');
 		},
 		error: function(response) {
-			swal.fire({
-				text: '잠시 후 재시도 바랍니다.',
-				footer: '서버와의 통신 에러입니다.',
-				icon: 'error',
-				confirmButtonColor: '#3085d6',
-				confirmButtonText: '확인'
-			});
+			toastr.options = {
+				progressBar: true,
+			 	showMethod: 'slideDown',
+			 	timeOut: 1500
+			};
+			toastr.error('서버와의 통신 에러입니다.', '잠시 후 재시도 바랍니다.');
 			return false;
 		}
 	});
