@@ -11,6 +11,8 @@ public class CommentResponseDTO {
 	
 	private String boardId;
 	
+	private String title;
+	
 	private String boardSeq;
 	
 	private String content;

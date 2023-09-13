@@ -67,6 +67,7 @@ public class AdminController {
 			List<AdminDTO> authList = adminService.selectAuthModel();
 
 			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("userEmail", user.getUserEmail());
 			model.addAttribute("userList", userList);
 			model.addAttribute("authList", authList);
 			
@@ -74,6 +75,12 @@ public class AdminController {
 			CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
 			if(certified != null) {
 				model.addAttribute("certified", certified.getUserId());				
+			}
+			
+			if(user.getProfileImg() == null) {
+				model.addAttribute("profileImg", null);
+			} else {
+				model.addAttribute("profileImg", user.getProfileImg());
 			}
 			
 			//String rawPwd = "user01@#";
@@ -91,6 +98,8 @@ public class AdminController {
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
+		model.addAttribute("user", user.getUserNickname());
+		model.addAttribute("userEmail", user.getUserEmail());
 		model.addAttribute("role", user.getRole());
 		
 		// 게시글 리스트
@@ -123,6 +132,12 @@ public class AdminController {
 		CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
 		if(certified != null) {
 			model.addAttribute("certified", certified.getUserId());				
+		}
+		
+		if(user.getProfileImg() == null) {
+			model.addAttribute("profileImg", null);
+		} else {
+			model.addAttribute("profileImg", user.getProfileImg());
 		}
 		
 		return "admin/detail";

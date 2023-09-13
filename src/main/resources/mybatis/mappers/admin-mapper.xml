@@ -117,10 +117,10 @@
 	<select id="findByComment" resultType="CommentResponseDTO">
 		/* com.project.toy.admin.mapper.AdminMapper, 전체 작성한 댓글 출력 */
 		
-		SELECT A.ID,
-		       A.BOARD_ID,
+		SELECT A.BOARD_ID,
+		       B.TITLE, 
 		       B.BOARD_SEQ,
-		       A.CONTENT,
+		       REPLACE(REPLACE(A.CONTENT, <![CDATA[ '<p>', ''), '</p>', '\n' ]]>) AS CONTENT, 
 		       C.USER_ID AS WRITER_ID,
 		       C.USER_NICKNAME AS WRITER,
 		       B.PRIVATE_YN, 
