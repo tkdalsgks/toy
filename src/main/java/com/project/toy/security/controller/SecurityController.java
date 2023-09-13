@@ -49,8 +49,9 @@ public class SecurityController {
 	public String index(Authentication auth, Model model, String roomId) {
 		
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		if(auth != null) {
+			UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
+			
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("userEmail", user.getUserEmail());
