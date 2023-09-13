@@ -50,9 +50,9 @@ ul.tabs li.current { background: #ededed; color: #222; }
 
 
 @media (max-width: 500px) {
-	.form__admin { width: 400px; }
-	.user-list { width: 400px; }
-	.admin__detail table { max-width: 400px; }
+	.form__admin { width: 450px; }
+	.user-list { width: 450px; }
+	.admin__detail table { max-width: 450px; }
 }
 
 @media (max-width: 400px) {

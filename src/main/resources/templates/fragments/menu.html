@@ -13,22 +13,30 @@
 	   			
 	   			<!-- USER Content -->
 	   			<div>
-	   				<a class="popup-content__item" th:href="@{/rank}">&#x1F947 활동 순위</a>
-	   				<a class="popup-content__item" th:href="@{/points/bet}">&#x1F947 게임</a>
-	   			</div>
-	   			<div class="popup__line"></div>
-	   			
-	   			<div>
-					<a class="popup-content__item" th:href="@{/community}">&#x1F440 오늘 하루</a>
-					<a class="popup-content__item" th:href="@{/review}">&#x270D 리뷰</a>
-					<a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN')" class="popup-content__item" th:href="@{/chat/gpt}">&#x1F4BB CHAT GPT</a>
-					<a sec:authorize="isAuthenticated()" class="popup-content__item" th:onclick="goProfile([[ ${userId} ]]);">&#x1F510 마이페이지</a>
+					<a class="popup-content__item" th:href="@{/community}">오늘 하루</a>
+					<a class="popup-content__item" th:href="@{/review}">리뷰</a>
+	   				<a class="popup-content__item" th:href="@{/points/bet}">게임</a>
+					<a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN')" class="popup-content__item" th:href="@{/chat/gpt}">CHAT GPT</a>
+				</div>
+				<div class="popup__line"></div>
+				
+				<div>
+					<div style="margin: .75rem 1.25rem; display: flex; align-items: center;">
+						<img th:src="${profileImg}" style="width: 3rem; height: 3rem; border: none; border-radius: 999px;">
+						<div style="display: flex; flex-direction: column; margin-left: .75rem;">
+							<span th:text="${user}" style="font-size: .9rem; font-weight: 600; color: #111827;"></span>
+							<span th:text="${userEmail}" style="font-size: .9rem; font-weight: 600; color: #6B7280;">이메일</span>
+						</div>
+					</div>
+					<a sec:authorize="isAuthenticated()" class="popup-content__item" th:onclick="goProfile([[ ${userId} ]]);">프로필</a>
+					<a sec:authorize="isAuthenticated()" class="popup-content__item" th:onclick="goAccount([[ ${userId} ]]);">계정 관리</a>
+					<a class="popup-content__item" th:href="@{/rank}">활동 순위</a>
 				</div>
 				<div class="popup__line"></div>
 				
 				<!-- Login Content -->
 				<div sec:authorize="isAuthenticated()">
-					<a class="popup-content__item" th:href="@{/logout}">&#x1F319 로그아웃</a>
+					<a class="popup-content__item" th:href="@{/logout}">로그아웃</a>
 				</div>
 			    
 			    <div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN')" class="popup__admin">

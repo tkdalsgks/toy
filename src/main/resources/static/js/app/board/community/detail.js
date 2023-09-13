@@ -109,9 +109,9 @@ function insertComment(boardId) {
 	
 	if(boardSeq == 2) {
 		var rating = document.getElementById('rating');
-		var params = { "boardId": boardId, "content": content, "writerId": userId, "writer": userName, "rating": rating.value };
+		var params = { "boardId": boardId, "content": content, "writerId": userId, "writer": user, "rating": rating.value };
 	} else {
-		var params = { "boardId": boardId, "content": content, "writerId": userId, "writer": userName };
+		var params = { "boardId": boardId, "content": content, "writerId": userId, "writer": user };
 	}
 	
 	if(content == "") {

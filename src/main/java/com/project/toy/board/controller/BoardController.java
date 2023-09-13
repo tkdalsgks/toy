@@ -75,12 +75,19 @@ public class BoardController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("userEmail", user.getUserEmail());
 			model.addAttribute("role", user.getRole());
 			
 			// 계정 인증 여부
 			CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
 			if(certified != null) {
 				model.addAttribute("certified", certified.getUserId());				
+			}
+			
+			if(user.getProfileImg() == null) {
+				model.addAttribute("profileImg", null);
+			} else {
+				model.addAttribute("profileImg", user.getProfileImg());
 			}
 		}
 		
@@ -146,15 +153,21 @@ public class BoardController {
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		UserDTO user = userService.findByUserId(sessionUser.getUserEmail());
 		if(auth != null) {
-			model.addAttribute("user", user.getUserNickname());
 			model.addAttribute("userId", user.getUserId());
-			model.addAttribute("userName", user.getUserNickname());
+			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("userEmail", user.getUserEmail());
 			model.addAttribute("role", user.getRole());
 			
 			// 계정 인증 여부
 			CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
 			if(certified != null) {
 				model.addAttribute("certified", certified.getUserId());				
+			}
+			
+			if(user.getProfileImg() == null) {
+				model.addAttribute("profileImg", null);
+			} else {
+				model.addAttribute("profileImg", user.getProfileImg());
 			}
 		}
 		
@@ -212,12 +225,19 @@ public class BoardController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("userEmail", user.getUserEmail());
 			model.addAttribute("role", user.getRole());
 			
 			// 계정 인증 여부
 			CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
 			if(certified != null) {
 				model.addAttribute("certified", certified.getUserId());				
+			}
+			
+			if(user.getProfileImg() == null) {
+				model.addAttribute("profileImg", null);
+			} else {
+				model.addAttribute("profileImg", user.getProfileImg());
 			}
 		}
 		
@@ -250,12 +270,19 @@ public class BoardController {
 		if(auth != null) {
 			model.addAttribute("userId", user.getUserId());
 			model.addAttribute("user", user.getUserNickname());
+			model.addAttribute("userEmail", user.getUserEmail());
 			model.addAttribute("role", user.getRole());
 			
 			// 계정 인증 여부
 			CertifiedUserDTO certified = securityService.selectCertifiedUser(user.getUserId());
 			if(certified != null) {
 				model.addAttribute("certified", certified.getUserId());				
+			}
+			
+			if(user.getProfileImg() == null) {
+				model.addAttribute("profileImg", null);
+			} else {
+				model.addAttribute("profileImg", user.getProfileImg());
 			}
 		}
 		
