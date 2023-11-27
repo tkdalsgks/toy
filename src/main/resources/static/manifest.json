@@ -1,0 +1,20 @@
+{
+  "background_color": "#ffffff",
+  "description": "OYEZ - All That Community",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "oyez",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "oyez",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "categories": [],
+  "screenshots": [],
+  "icons": [
+    {
+      "src": "/img/upload/favicon.ico"
+    }
+  ],
+  "shortcuts": []
+}
